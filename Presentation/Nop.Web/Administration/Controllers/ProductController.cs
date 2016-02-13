@@ -47,6 +47,7 @@ namespace Nop.Admin.Controllers
 
         private readonly IProductService _productService;
         private readonly IProductTemplateService _productTemplateService;
+        private readonly IAdditionalTierPriceService _additionalTierPriceService;
         private readonly ICategoryService _categoryService;
         private readonly IManufacturerService _manufacturerService;
         private readonly ICustomerService _customerService;
@@ -92,6 +93,7 @@ namespace Nop.Admin.Controllers
 
         public ProductController(IProductService productService, 
             IProductTemplateService productTemplateService,
+            IAdditionalTierPriceService additionalTierPriceService,
             ICategoryService categoryService, 
             IManufacturerService manufacturerService,
             ICustomerService customerService,
@@ -133,6 +135,7 @@ namespace Nop.Admin.Controllers
         {
             this._productService = productService;
             this._productTemplateService = productTemplateService;
+            this._additionalTierPriceService = additionalTierPriceService;
             this._categoryService = categoryService;
             this._manufacturerService = manufacturerService;
             this._customerService = customerService;
@@ -3163,6 +3166,8 @@ namespace Nop.Admin.Controllers
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
                 return Content("This is not your product");
 
+            
+
             var tierPricesModel = product.TierPrices
                 .OrderBy(x => x.StoreId)
                 .ThenBy(x => x.Quantity)
@@ -3179,6 +3184,24 @@ namespace Nop.Admin.Controllers
                     {
                         storeName = _localizationService.GetResource("Admin.Catalog.Products.TierPrices.Fields.Store.All");
                     }
+                    List<ProductModel.AdditionalTierPriceModel> additionalTierPrices = new List<ProductModel.AdditionalTierPriceModel>();
+                    if (x.AdditionalTierPrices.Any())
+                    {
+                        foreach (var additionalTierPrice in x.AdditionalTierPrices)
+                        {
+                            var additionalPriceTier = new ProductModel.AdditionalTierPriceModel();
+                            var priceType = _additionalTierPriceService.GetAddtionalPriceType(additionalTierPrice.TypeId);
+                            if(priceType != null)
+                            {
+                                additionalPriceTier.PriceType = priceType.Type;
+                                additionalPriceTier.Price = additionalTierPrice.Price;
+                                additionalPriceTier.Code = additionalTierPrice.Code;
+                                additionalPriceTier.TierPriceId = additionalTierPrice.TierPriceId;
+                            }
+                            additionalTierPrices.Add(additionalPriceTier);
+                        }
+                    }
+                    var additionalPriceType = _additionalTierPriceService.GetAddtionalPriceType(x.AdditionalTierPrices.ToList()[0].TypeId);
                     return new ProductModel.TierPriceModel
                     {
                         Id = x.Id,
@@ -3190,7 +3213,9 @@ namespace Nop.Admin.Controllers
                         Quantity = x.Quantity,
                         Price = x.Price,
                         Disc = x.Disc,
-                        PriceCode = x.PriceCode
+                        PriceCode = x.PriceCode,
+                        AdditionalTierPrices = additionalTierPrices
+
                     };
                 })
                 .ToList();

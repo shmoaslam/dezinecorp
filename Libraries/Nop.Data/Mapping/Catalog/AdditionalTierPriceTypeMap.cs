@@ -17,6 +17,8 @@ namespace Nop.Data.Mapping.Catalog
             this.Property(atpt => atpt.Type).IsRequired();
             this.Property(atpt => atpt.Description).IsOptional();
 
+
+    
         }
     }
 }

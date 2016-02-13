@@ -719,6 +719,8 @@ namespace Nop.Admin.Models.Catalog
             [NopResourceDisplayName("Admin.Catalog.Products.TierPrices.Fields.PriceCode")]
             public string PriceCode { get; set; }
 
+            public List<AdditionalTierPriceModel> AdditionalTierPrices { get; set; }
+
         }
 
         public partial class AdditionalTierPriceTypeModel : BaseNopEntityModel

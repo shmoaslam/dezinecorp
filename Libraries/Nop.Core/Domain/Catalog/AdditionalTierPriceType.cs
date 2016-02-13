@@ -12,7 +12,7 @@ namespace Nop.Core.Domain.Catalog
     public class AdditionalTierPriceType : BaseEntity
     {
         private ICollection<AdditionalTierPrice> _additionalTierPrices;
-
+        
         /// <summary>
         /// Gets or sets the type
         /// </summary>
@@ -23,6 +23,7 @@ namespace Nop.Core.Domain.Catalog
         /// Gets or sets the description
         /// </summary>
         public string Description { get; set; }
+
 
         /// <summary>
         /// Gets or sets the additional prices

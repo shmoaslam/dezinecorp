@@ -24,6 +24,7 @@ namespace Nop.Data.Mapping.Catalog
             this.HasRequired(atp => atp.AdditionalTierPriceType)
                 .WithMany(atpt => atpt.AdditionalTierPrices)
                 .HasForeignKey(atp => atp.TypeId);
+
         }
     }
 }
