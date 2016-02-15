@@ -90,29 +90,29 @@ namespace Nop.Admin.Controllers
 
         #endregion
 
-		#region Constructors
+        #region Constructors
 
-        public ProductController(IProductService productService, 
+        public ProductController(IProductService productService,
             IProductTemplateService productTemplateService,
             IAdditionalTierPriceService additionalTierPriceService,
-            ICategoryService categoryService, 
+            ICategoryService categoryService,
             IManufacturerService manufacturerService,
             ICustomerService customerService,
-            IUrlRecordService urlRecordService, 
-            IWorkContext workContext, 
-            ILanguageService languageService, 
-            ILocalizationService localizationService, 
+            IUrlRecordService urlRecordService,
+            IWorkContext workContext,
+            ILanguageService languageService,
+            ILocalizationService localizationService,
             ILocalizedEntityService localizedEntityService,
-            ISpecificationAttributeService specificationAttributeService, 
+            ISpecificationAttributeService specificationAttributeService,
             IPictureService pictureService,
-            ITaxCategoryService taxCategoryService, 
+            ITaxCategoryService taxCategoryService,
             IProductTagService productTagService,
-            ICopyProductService copyProductService, 
+            ICopyProductService copyProductService,
             IPdfService pdfService,
-            IExportManager exportManager, 
+            IExportManager exportManager,
             IImportManager importManager,
             ICustomerActivityService customerActivityService,
-            IPermissionService permissionService, 
+            IPermissionService permissionService,
             IAclService aclService,
             IStoreService storeService,
             IOrderService orderService,
@@ -120,7 +120,7 @@ namespace Nop.Admin.Controllers
              IVendorService vendorService,
             IShippingService shippingService,
             IShipmentService shipmentService,
-            ICurrencyService currencyService, 
+            ICurrencyService currencyService,
             CurrencySettings currencySettings,
             IMeasureService measureService,
             MeasureSettings measureSettings,
@@ -247,7 +247,7 @@ namespace Nop.Admin.Controllers
             foreach (var pp in product.ProductPictures)
                 _pictureService.SetSeoFilename(pp.PictureId, _pictureService.GetPictureSeName(product.Name));
         }
-        
+
         [NonAction]
         protected virtual void PrepareAclModel(ProductModel model, Product product, bool excludeProperties)
         {
@@ -331,7 +331,7 @@ namespace Nop.Admin.Controllers
                 }
             }
         }
-        
+
         [NonAction]
         protected virtual void PrepareAddProductAttributeCombinationModel(AddProductAttributeCombinationModel model, Product product)
         {
@@ -379,14 +379,14 @@ namespace Nop.Admin.Controllers
                 model.ProductAttributes.Add(attributeModel);
             }
         }
-        
+
         [NonAction]
         protected virtual string[] ParseProductTags(string productTags)
         {
             var result = new List<string>();
             if (!String.IsNullOrWhiteSpace(productTags))
             {
-                string[] values = productTags.Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] values = productTags.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (string val1 in values)
                     if (!String.IsNullOrEmpty(val1.Trim()))
                         result.Add(val1.Trim());
@@ -520,13 +520,13 @@ namespace Nop.Admin.Controllers
                         {
                             availableSpecificationAttributes.Add(new SelectListItem
                             {
-                                Text = sa.Name, 
+                                Text = sa.Name,
                                 Value = sa.Id.ToString()
                             });
                         }
                         return availableSpecificationAttributes;
                     });
-                
+
                 //options of preselected specification attribute
                 if (model.AddSpecificationAttributeModel.AvailableAttributes.Any())
                 {
@@ -722,7 +722,7 @@ namespace Nop.Admin.Controllers
             foreach (var warehouse in warehouses)
             {
                 //parse stock quantity
-                int stockQuantity = 0; 
+                int stockQuantity = 0;
                 foreach (string formKey in this.Request.Form.AllKeys)
                     if (formKey.Equals(string.Format("warehouse_qty_{0}", warehouse.Id), StringComparison.InvariantCultureIgnoreCase))
                     {
@@ -832,7 +832,7 @@ namespace Nop.Admin.Controllers
 
             //product types
             model.AvailableProductTypes = ProductType.SimpleProduct.ToSelectList(false).ToList();
-            model.AvailableProductTypes.Insert(0, new SelectListItem { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0"});
+            model.AvailableProductTypes.Insert(0, new SelectListItem { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
 
             //"published" property
             //0 - all (according to "ShowHidden" parameter)
@@ -877,7 +877,7 @@ namespace Nop.Admin.Controllers
                 storeId: model.SearchStoreId,
                 vendorId: model.SearchVendorId,
                 warehouseId: model.SearchWarehouseId,
-                productType: model.SearchProductTypeId > 0 ? (ProductType?)model.SearchProductTypeId: null,
+                productType: model.SearchProductTypeId > 0 ? (ProductType?)model.SearchProductTypeId : null,
                 keywords: model.SearchProductName,
                 pageIndex: command.Page - 1,
                 pageSize: command.PageSize,
@@ -932,7 +932,7 @@ namespace Nop.Admin.Controllers
 
             if (product != null)
                 return RedirectToAction("Edit", "Product", new { id = product.Id });
-            
+
             //not found
             return List();
         }
@@ -1000,7 +1000,7 @@ namespace Nop.Admin.Controllers
 
                 //activity log
                 _customerActivityService.InsertActivity("AddNewProduct", _localizationService.GetResource("ActivityLog.AddNewProduct"), product.Name);
-                
+
                 SuccessNotification(_localizationService.GetResource("Admin.Catalog.Products.Added"));
                 return continueEditing ? RedirectToAction("Edit", new { id = product.Id }) : RedirectToAction("List");
             }
@@ -1143,7 +1143,7 @@ namespace Nop.Admin.Controllers
 
                 //activity log
                 _customerActivityService.InsertActivity("EditProduct", _localizationService.GetResource("ActivityLog.EditProduct"), product.Name);
-                
+
                 SuccessNotification(_localizationService.GetResource("Admin.Catalog.Products.Updated"));
 
                 if (continueEditing)
@@ -1151,7 +1151,7 @@ namespace Nop.Admin.Controllers
                     //selected tab
                     SaveSelectedTabIndex();
 
-                    return RedirectToAction("Edit", new {id = product.Id});
+                    return RedirectToAction("Edit", new { id = product.Id });
                 }
                 return RedirectToAction("List");
             }
@@ -1183,7 +1183,7 @@ namespace Nop.Admin.Controllers
 
             //activity log
             _customerActivityService.InsertActivity("DeleteProduct", _localizationService.GetResource("ActivityLog.DeleteProduct"), product.Name);
-                
+
             SuccessNotification(_localizationService.GetResource("Admin.Catalog.Products.Deleted"));
             return RedirectToAction("List");
         }
@@ -1229,7 +1229,7 @@ namespace Nop.Admin.Controllers
                 if (_workContext.CurrentVendor != null && originalProduct.VendorId != _workContext.CurrentVendor.Id)
                     return RedirectToAction("List");
 
-                var newProduct = _copyProductService.CopyProduct(originalProduct, 
+                var newProduct = _copyProductService.CopyProduct(originalProduct,
                     copyModel.Name, copyModel.Published, copyModel.CopyImages);
                 SuccessNotification("The product has been copied successfully");
                 return RedirectToAction("Edit", new { id = newProduct.Id });
@@ -1240,7 +1240,7 @@ namespace Nop.Admin.Controllers
                 return RedirectToAction("Edit", new { id = copyModel.Id });
             }
         }
-        
+
         #endregion
 
         #region Required products
@@ -1258,7 +1258,7 @@ namespace Nop.Admin.Controllers
             {
                 var ids = new List<int>();
                 var rangeArray = productIds
-                    .Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => x.Trim())
                     .ToList();
 
@@ -1353,7 +1353,7 @@ namespace Nop.Admin.Controllers
         }
 
         #endregion
-        
+
         #region Product categories
 
         [HttpPost]
@@ -1366,7 +1366,7 @@ namespace Nop.Admin.Controllers
             if (_workContext.CurrentVendor != null)
             {
                 var product = _productService.GetProductById(productId);
-                if (product != null&& product.VendorId != _workContext.CurrentVendor.Id)
+                if (product != null && product.VendorId != _workContext.CurrentVendor.Id)
                 {
                     return Content("This is not your product");
                 }
@@ -1381,7 +1381,7 @@ namespace Nop.Admin.Controllers
                     ProductId = x.ProductId,
                     CategoryId = x.CategoryId,
                     IsFeaturedProduct = x.IsFeaturedProduct,
-                    DisplayOrder  = x.DisplayOrder
+                    DisplayOrder = x.DisplayOrder
                 })
                 .ToList();
 
@@ -1631,7 +1631,7 @@ namespace Nop.Admin.Controllers
 
             return new NullJsonResult();
         }
-        
+
         #endregion
 
         #region Related products
@@ -1725,7 +1725,7 @@ namespace Nop.Admin.Controllers
 
             return new NullJsonResult();
         }
-        
+
         public ActionResult RelatedProductAddPopup(int productId)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
@@ -1833,7 +1833,7 @@ namespace Nop.Admin.Controllers
             ViewBag.formId = formId;
             return View(model);
         }
-        
+
         #endregion
 
         #region Cross-sell products
@@ -2035,7 +2035,7 @@ namespace Nop.Admin.Controllers
                 vendorId = _workContext.CurrentVendor.Id;
             }
 
-            var associatedProducts = _productService.GetAssociatedProducts(parentGroupedProductId: productId, 
+            var associatedProducts = _productService.GetAssociatedProducts(parentGroupedProductId: productId,
                 vendorId: vendorId,
                 showHidden: true);
             var associatedProductsModel = associatedProducts
@@ -2213,7 +2213,7 @@ namespace Nop.Admin.Controllers
         #region Product pictures
 
         [ValidateInput(false)]
-        public ActionResult ProductPictureAdd(int pictureId, int displayOrder, 
+        public ActionResult ProductPictureAdd(int pictureId, int displayOrder,
             string overrideAltAttribute, string overrideTitleAttribute,
             int productId)
         {
@@ -2226,11 +2226,11 @@ namespace Nop.Admin.Controllers
             var product = _productService.GetProductById(productId);
             if (product == null)
                 throw new ArgumentException("No product found with the specified id");
-            
+
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
                 return RedirectToAction("List");
-            
+
             var picture = _pictureService.GetPictureById(pictureId);
             if (picture == null)
                 throw new ArgumentException("No picture found with the specified id");
@@ -2245,8 +2245,8 @@ namespace Nop.Admin.Controllers
             _pictureService.UpdatePicture(picture.Id,
                 _pictureService.LoadPictureBinary(picture),
                 picture.MimeType,
-                picture.SeoFilename, 
-                overrideAltAttribute, 
+                picture.SeoFilename,
+                overrideAltAttribute,
                 overrideTitleAttribute);
 
             _pictureService.SetSeoFilename(pictureId, _pictureService.GetPictureSeName(product.Name));
@@ -2278,15 +2278,15 @@ namespace Nop.Admin.Controllers
                             if (picture == null)
                                 throw new Exception("Picture cannot be loaded");
                             var m = new ProductModel.ProductPictureModel
-                                    {
-                                        Id = x.Id,
-                                        ProductId = x.ProductId,
-                                        PictureId = x.PictureId,
-                                        PictureUrl = _pictureService.GetPictureUrl(picture),
-                                        OverrideAltAttribute = picture.AltAttribute,
-                                        OverrideTitleAttribute = picture.TitleAttribute,
-                                        DisplayOrder = x.DisplayOrder
-                                    };
+                            {
+                                Id = x.Id,
+                                ProductId = x.ProductId,
+                                PictureId = x.PictureId,
+                                PictureUrl = _pictureService.GetPictureUrl(picture),
+                                OverrideAltAttribute = picture.AltAttribute,
+                                OverrideTitleAttribute = picture.TitleAttribute,
+                                DisplayOrder = x.DisplayOrder
+                            };
                             return m;
                         })
                 .ToList();
@@ -2331,7 +2331,7 @@ namespace Nop.Admin.Controllers
                 _pictureService.LoadPictureBinary(picture),
                 picture.MimeType,
                 picture.SeoFilename,
-                model.OverrideAltAttribute, 
+                model.OverrideAltAttribute,
                 model.OverrideTitleAttribute);
 
             return new NullJsonResult();
@@ -2375,7 +2375,7 @@ namespace Nop.Admin.Controllers
 
         [ValidateInput(false)]
         public ActionResult ProductSpecificationAttributeAdd(int attributeTypeId, int specificationAttributeOptionId,
-            string customValue, bool allowFiltering, bool showOnProductPage, 
+            string customValue, bool allowFiltering, bool showOnProductPage,
             int displayOrder, int productId)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
@@ -2411,7 +2411,7 @@ namespace Nop.Admin.Controllers
 
             return Json(new { Result = true }, JsonRequestBehavior.AllowGet);
         }
-        
+
         [HttpPost]
         public ActionResult ProductSpecAttrList(DataSourceRequest command, int productId)
         {
@@ -2659,7 +2659,7 @@ namespace Nop.Admin.Controllers
 
             var orders = _orderService.SearchOrders(
                 productId: productId,
-                pageIndex: command.Page - 1, 
+                pageIndex: command.Page - 1,
                 pageSize: command.PageSize);
             var gridModel = new DataSourceResult
             {
@@ -2805,7 +2805,7 @@ namespace Nop.Admin.Controllers
             if (selectedIds != null)
             {
                 var ids = selectedIds
-                    .Split(new [] {','}, StringSplitOptions.RemoveEmptyEntries)
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => Convert.ToInt32(x))
                     .ToArray();
                 products.AddRange(_productService.GetProductsByIds(ids));
@@ -2886,7 +2886,7 @@ namespace Nop.Admin.Controllers
             if (selectedIds != null)
             {
                 var ids = selectedIds
-                    .Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => Convert.ToInt32(x))
                     .ToArray();
                 products.AddRange(_productService.GetProductsByIds(ids));
@@ -3042,7 +3042,7 @@ namespace Nop.Admin.Controllers
             if (_workContext.CurrentVendor != null)
                 vendorId = _workContext.CurrentVendor.Id;
 
-            var products = _productService.SearchProducts(categoryIds: new List<int> { model.SearchCategoryId},
+            var products = _productService.SearchProducts(categoryIds: new List<int> { model.SearchCategoryId },
                 manufacturerId: model.SearchManufacturerId,
                 vendorId: vendorId,
                 productType: model.SearchProductTypeId > 0 ? (ProductType?)model.SearchProductTypeId : null,
@@ -3163,15 +3163,89 @@ namespace Nop.Admin.Controllers
             if (addtionalTierPrice == null)
                 throw new ArgumentException("No Additional Price for this product");
 
+
+
+            var addtionalTierPriceModel = addtionalTierPrice.Select(x =>
+            {
+
+                var priceType = _additionalTierPriceService.GetPriceType(x.TypeId);
+
+                if (priceType == null)
+                    return null;
+
+                return new ProductModel.AdditionalTierPriceModel
+                {
+                    Id = x.Id,
+                    TierPriceId = x.TierPriceId,
+                    Price = x.Price,
+                    Code = x.Code,
+                    TierPriceTypeId = x.TypeId,
+                    PriceType = priceType.Type,
+
+                };
+            }).ToList();
+
             var gridModel = new DataSourceResult
             {
-                Data = addtionalTierPrice,
-                Total = addtionalTierPrice.Count
+                Data = addtionalTierPriceModel,
+                Total = addtionalTierPriceModel.Count
             };
 
             return Json(gridModel);
         }
 
+        [HttpPost]
+        public ActionResult AdditionalTierPriceInsert(ProductModel.AdditionalTierPriceModel model)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+            var additionalPriceType = new AdditionalTierPrice
+            {
+                TypeId = model.TierPriceTypeId,
+                TierPriceId = model.TierPriceId,
+                Price = model.Price,
+                Code = model.Code,
+            };
+
+
+            _additionalTierPriceService.InsertAdditionalTierPrice(additionalPriceType);
+            return new NullJsonResult();
+        }
+
+
+        public ActionResult AdditionalTierPriceUpdate(ProductModel.AdditionalTierPriceModel model)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+            var additionalPriceType = new AdditionalTierPrice
+            {
+                TypeId = model.TierPriceTypeId,
+                TierPriceId = model.TierPriceId,
+                Price = model.Price,
+                Code = model.Code,
+            };
+
+
+            _additionalTierPriceService.UpdateAdditionalTierPrice(additionalPriceType);
+            return new NullJsonResult();
+        }
+
+        [HttpPost]
+        public ActionResult AdditionalTierPriceDelete(int id)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+            _additionalTierPriceService.DeleteAdditionalTierPrice(id);
+            //_productService.DeleteTierPrice(id);
+
+            //update "HasTierPrices" property
+            //_productService.UpdateHasTierPricesProperty(product);
+
+            return new NullJsonResult();
+        }
 
 
         [HttpPost]
@@ -3188,7 +3262,7 @@ namespace Nop.Admin.Controllers
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
                 return Content("This is not your product");
 
-            
+
 
             var tierPricesModel = product.TierPrices
                 .OrderBy(x => x.StoreId)
@@ -3206,25 +3280,8 @@ namespace Nop.Admin.Controllers
                     {
                         storeName = _localizationService.GetResource("Admin.Catalog.Products.TierPrices.Fields.Store.All");
                     }
-                    //List<ProductModel.AdditionalTierPriceModel> additionalTierPrices = new List<ProductModel.AdditionalTierPriceModel>();
-                    //if (x.AdditionalTierPrices.Any())
-                    //{
-                    //    foreach (var additionalTierPrice in x.AdditionalTierPrices)
-                    //    {
-                    //        var additionalPriceTier = new ProductModel.AdditionalTierPriceModel();
-                    //        var priceType = _additionalTierPriceService.GetAddtionalPriceType(additionalTierPrice.TypeId);
-                    //        if(priceType != null)
-                    //        {
-                    //            additionalPriceTier.PriceType = priceType.Type;
-                    //            additionalPriceTier.Price = additionalTierPrice.Price;
-                    //            additionalPriceTier.Code = additionalTierPrice.Code;
-                    //            additionalPriceTier.TierPriceId = additionalTierPrice.TierPriceId;
-                    //        }
-                    //        additionalTierPrices.Add(additionalPriceTier);
-                    //    }
-                    //}
-                    //var additionalPriceType = _additionalTierPriceService.GetAddtionalPriceType(x.AdditionalTierPrices.ToList()[0].TypeId);
-                    return new ProductModel.TierPriceModel
+
+                return new ProductModel.TierPriceModel
                     {
                         Id = x.Id,
                         StoreId = x.StoreId,
@@ -3236,9 +3293,9 @@ namespace Nop.Admin.Controllers
                         Price = x.Price,
                         Disc = x.Disc,
                         PriceCode = x.PriceCode,
-                        //AdditionalTierPrices = additionalTierPrices
+                    //AdditionalTierPrices = additionalTierPrices
 
-                    };
+                };
                 })
                 .ToList();
 
@@ -3302,7 +3359,7 @@ namespace Nop.Admin.Controllers
                 return Content("This is not your product");
 
             tierPrice.StoreId = model.StoreId;
-            tierPrice.CustomerRoleId = model.CustomerRoleId > 0 ? model.CustomerRoleId : (int?) null;
+            tierPrice.CustomerRoleId = model.CustomerRoleId > 0 ? model.CustomerRoleId : (int?)null;
             tierPrice.Quantity = model.Quantity;
             tierPrice.Price = model.Price;
             tierPrice.Disc = model.Disc;
@@ -3382,8 +3439,8 @@ namespace Nop.Admin.Controllers
                     }
 
                     attributeModel.ValidationRulesAllowed = x.ValidationRulesAllowed();
-                    //currenty any attribute can have condition. why not?
-                    attributeModel.ConditionAllowed = true;
+                //currenty any attribute can have condition. why not?
+                attributeModel.ConditionAllowed = true;
                     return attributeModel;
                 })
                 .ToList();
@@ -3562,7 +3619,7 @@ namespace Nop.Admin.Controllers
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
                 return RedirectToAction("List", "Product");
-            
+
             if (ModelState.IsValid)
             {
                 productAttributeMapping.ValidationMinLength = model.ValidationMinLength;
@@ -3657,7 +3714,7 @@ namespace Nop.Admin.Controllers
                     {
                         //attribute
                         model.SelectedProductAttributeId = selectedPva.Id;
-                        
+
                         //values
                         switch (attribute.AttributeControlType)
                         {
@@ -3767,7 +3824,7 @@ namespace Nop.Admin.Controllers
                                 if (!String.IsNullOrEmpty(cblAttributes))
                                 {
                                     bool anyValueSelected = false;
-                                    foreach (var item in cblAttributes.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries))
+                                    foreach (var item in cblAttributes.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                                     {
                                         int selectedAttributeId = int.Parse(item);
                                         if (selectedAttributeId > 0)
@@ -3864,7 +3921,7 @@ namespace Nop.Admin.Controllers
                 throw new ArgumentException("No product found with the specified id");
 
             //a vendor should have access only to his products
-            if (_workContext.CurrentVendor != null  && product.VendorId != _workContext.CurrentVendor.Id)
+            if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
                 return Content("This is not your product");
 
             var values = _productAttributeService.GetProductAttributeValues(productAttributeMappingId);
@@ -3878,8 +3935,8 @@ namespace Nop.Admin.Controllers
                         associatedProduct = _productService.GetProductById(x.AssociatedProductId);
                     }
                     var pictureThumbnailUrl = _pictureService.GetPictureUrl(x.PictureId, 75, false);
-                    //little hack here. Grid is rendered wrong way with <inmg> without "src" attribute
-                    if (String.IsNullOrEmpty(pictureThumbnailUrl))
+                //little hack here. Grid is rendered wrong way with <inmg> without "src" attribute
+                if (String.IsNullOrEmpty(pictureThumbnailUrl))
                         pictureThumbnailUrl = _pictureService.GetPictureUrl(null, 1, true);
                     return new ProductModel.ProductAttributeValueModel
                     {
@@ -3888,7 +3945,7 @@ namespace Nop.Admin.Controllers
                         AttributeValueTypeId = x.AttributeValueTypeId,
                         AttributeValueTypeName = x.AttributeValueType.GetLocalizedEnum(_localizationService, _workContext),
                         AssociatedProductId = x.AssociatedProductId,
-                        AssociatedProductName = associatedProduct != null ? associatedProduct.Name  : "",
+                        AssociatedProductName = associatedProduct != null ? associatedProduct.Name : "",
                         Name = x.ProductAttributeMapping.AttributeControlType != AttributeControlType.ColorSquares ? x.Name : string.Format("{0} - {1}", x.Name, x.ColorSquaresRgb),
                         ColorSquaresRgb = x.ColorSquaresRgb,
                         PriceAdjustment = x.PriceAdjustment,
@@ -3971,7 +4028,7 @@ namespace Nop.Admin.Controllers
                 throw new ArgumentException("No product found with the specified id");
 
             //a vendor should have access only to his products
-            if (_workContext.CurrentVendor != null&& product.VendorId != _workContext.CurrentVendor.Id)
+            if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
                 return RedirectToAction("List", "Product");
 
             if (productAttributeMapping.AttributeControlType == AttributeControlType.ColorSquares)
@@ -4337,9 +4394,9 @@ namespace Nop.Admin.Controllers
                         OverriddenPrice = x.OverriddenPrice,
                         NotifyAdminForQuantityBelow = x.NotifyAdminForQuantityBelow
                     };
-                    //warnings
-                    var warnings = _shoppingCartService.GetShoppingCartItemAttributeWarnings(_workContext.CurrentCustomer,
-                        ShoppingCartType.ShoppingCart, x.Product, 1, x.AttributesXml, true);
+                //warnings
+                var warnings = _shoppingCartService.GetShoppingCartItemAttributeWarnings(_workContext.CurrentCustomer,
+                ShoppingCartType.ShoppingCart, x.Product, 1, x.AttributesXml, true);
                     for (int i = 0; i < warnings.Count; i++)
                     {
                         pacModel.Warnings += warnings[i];
@@ -4447,7 +4504,7 @@ namespace Nop.Admin.Controllers
                 return RedirectToAction("List", "Product");
 
             //a vendor should have access only to his products
-            if (_workContext.CurrentVendor != null&& product.VendorId != _workContext.CurrentVendor.Id)
+            if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
                 return RedirectToAction("List", "Product");
 
             ViewBag.btnId = btnId;
@@ -4487,7 +4544,7 @@ namespace Nop.Admin.Controllers
                             var cblAttributes = form[controlId];
                             if (!String.IsNullOrEmpty(cblAttributes))
                             {
-                                foreach (var item in cblAttributes.Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                                foreach (var item in cblAttributes.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                                 {
                                     int selectedAttributeId = int.Parse(item);
                                     if (selectedAttributeId > 0)
@@ -4617,13 +4674,13 @@ namespace Nop.Admin.Controllers
                 ViewBag.RefreshPage = true;
                 return View(model);
             }
-            
+
             //If we got this far, something failed, redisplay form
             PrepareAddProductAttributeCombinationModel(model, product);
             model.Warnings = warnings;
             return View(model);
         }
-        
+
         [HttpPost]
         public ActionResult GenerateAllAttributeCombinations(int productId)
         {

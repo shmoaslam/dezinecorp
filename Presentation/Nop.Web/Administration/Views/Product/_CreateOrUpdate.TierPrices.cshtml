@@ -1,11 +1,11 @@
 ﻿@using Nop.Services.Customers
 @using Nop.Services.Stores
 @using Nop.Services.Catalog
-    @model ProductModel
+@model ProductModel
 
-    @if (Model.Id > 0)
-    {
-        <div id="tierprices-grid"></div>
+@if (Model.Id > 0)
+{
+    <div id="tierprices-grid"></div>
         <div id="additional-prices">
             <div id="additional-price-grid"></div>
         </div>
@@ -23,7 +23,8 @@
 
                 var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
 
-                $("additional-price-grid").kendoGrid({
+
+                $("#additional-price-grid").kendoGrid({
                     dataSource:{
                         type:"json",
                         transport:{
@@ -59,10 +60,10 @@
                             model: {
                                 id: "Id",
                                 fields: {
-                                    TierPriceId: { editable: false, type: "number" },
+                                    TierPriceId: { editable: false, type: "number", defaultValue:dataItem.Id },
                                     TierPriceTypeId: { editable: true, type: "number" },
                                     PriceType: { editable: true, type: "string" },
-                                    Price: { editable: true, type: "string" },
+                                    Price: { editable: true, type: "string",   },
                                     Code: { editable: true, type: "string" },
                                 }
                             }
@@ -101,6 +102,10 @@
                         template: "#:PriceType#"
                     },
                        {
+                           field: "TierPriceId",
+                           hidden:true,
+
+                       },{
                            field: "Price",
                            title: "Price",
                            width: 150,
@@ -140,7 +145,7 @@
                                                 modal: true,
                                                 visible: false,
                                                 resizable: false,
-                                                width: 300
+                                                width: 600
                                             }).data("kendoWindow");
 
 
