@@ -14,7 +14,9 @@ namespace Nop.Services.Catalog
     public partial interface IAdditionalTierPriceService
     {
 
-        AdditionalTierPriceType GetAddtionalPriceType(int typeId);
+        IList<AdditionalTierPrice> GetAddtionalPrice(int tierPriceId);
+
+        IList<AdditionalTierPriceType> GetAllAdditionalPriceType();
 
     }
 }

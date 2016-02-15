@@ -27,7 +27,8 @@
 
     function toggleProductType() {
         var selectedProductTypeId = $("#@Html.FieldIdFor(model => model.AttributeValueTypeId)").val();
-        if (selectedProductTypeId == @(((int)AttributeValueType.Simple).ToString())) {
+        if (selectedProductTypeId == @(((int)AttributeValueType.Simple).ToString())) 
+        {
             $('#group-associated-product').hide();
             $('#group-quantity').hide();
             $('#group-price-adjustment').show();

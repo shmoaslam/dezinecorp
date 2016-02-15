@@ -702,7 +702,6 @@ namespace Nop.Admin.Models.Catalog
             [NopResourceDisplayName("Admin.Catalog.Products.TierPrices.Fields.CustomerRole")]
             public string CustomerRole { get; set; }
 
-
             public int StoreId { get; set; }
             [NopResourceDisplayName("Admin.Catalog.Products.TierPrices.Fields.Store")]
             public string Store { get; set; }
@@ -718,22 +717,14 @@ namespace Nop.Admin.Models.Catalog
 
             [NopResourceDisplayName("Admin.Catalog.Products.TierPrices.Fields.PriceCode")]
             public string PriceCode { get; set; }
-
-            public List<AdditionalTierPriceModel> AdditionalTierPrices { get; set; }
-
+            
         }
 
-        public partial class AdditionalTierPriceTypeModel : BaseNopEntityModel
-        {
-            public string Type { get; set; }
-            public string Description { get; set; }
-        }
 
         public partial class AdditionalTierPriceModel : BaseNopEntityModel
         {
             public int TierPriceId { get; set; }
             public int TierPriceTypeId { get; set; }
-            public IList<SelectListItem> AdditionalTierPriceType { get; set; }
             public string PriceType { get; set; }
             public decimal Price { get; set; }
             public string Code { get; set; }

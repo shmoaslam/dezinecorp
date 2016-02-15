@@ -87,6 +87,7 @@ namespace Nop.Admin.Controllers
         private readonly IProductAttributeParser _productAttributeParser;
         private readonly IDownloadService _downloadService;
 
+
         #endregion
 
 		#region Constructors
@@ -3151,6 +3152,27 @@ namespace Nop.Admin.Controllers
         #endregion
 
         #region Tier prices
+        [HttpPost]
+        public ActionResult AdditionalTierPriceList(DataSourceRequest command, int tierPriceId)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+            var addtionalTierPrice = _additionalTierPriceService.GetAddtionalPrice(tierPriceId);
+
+            if (addtionalTierPrice == null)
+                throw new ArgumentException("No Additional Price for this product");
+
+            var gridModel = new DataSourceResult
+            {
+                Data = addtionalTierPrice,
+                Total = addtionalTierPrice.Count
+            };
+
+            return Json(gridModel);
+        }
+
+
 
         [HttpPost]
         public ActionResult TierPriceList(DataSourceRequest command, int productId)
@@ -3184,24 +3206,24 @@ namespace Nop.Admin.Controllers
                     {
                         storeName = _localizationService.GetResource("Admin.Catalog.Products.TierPrices.Fields.Store.All");
                     }
-                    List<ProductModel.AdditionalTierPriceModel> additionalTierPrices = new List<ProductModel.AdditionalTierPriceModel>();
-                    if (x.AdditionalTierPrices.Any())
-                    {
-                        foreach (var additionalTierPrice in x.AdditionalTierPrices)
-                        {
-                            var additionalPriceTier = new ProductModel.AdditionalTierPriceModel();
-                            var priceType = _additionalTierPriceService.GetAddtionalPriceType(additionalTierPrice.TypeId);
-                            if(priceType != null)
-                            {
-                                additionalPriceTier.PriceType = priceType.Type;
-                                additionalPriceTier.Price = additionalTierPrice.Price;
-                                additionalPriceTier.Code = additionalTierPrice.Code;
-                                additionalPriceTier.TierPriceId = additionalTierPrice.TierPriceId;
-                            }
-                            additionalTierPrices.Add(additionalPriceTier);
-                        }
-                    }
-                    var additionalPriceType = _additionalTierPriceService.GetAddtionalPriceType(x.AdditionalTierPrices.ToList()[0].TypeId);
+                    //List<ProductModel.AdditionalTierPriceModel> additionalTierPrices = new List<ProductModel.AdditionalTierPriceModel>();
+                    //if (x.AdditionalTierPrices.Any())
+                    //{
+                    //    foreach (var additionalTierPrice in x.AdditionalTierPrices)
+                    //    {
+                    //        var additionalPriceTier = new ProductModel.AdditionalTierPriceModel();
+                    //        var priceType = _additionalTierPriceService.GetAddtionalPriceType(additionalTierPrice.TypeId);
+                    //        if(priceType != null)
+                    //        {
+                    //            additionalPriceTier.PriceType = priceType.Type;
+                    //            additionalPriceTier.Price = additionalTierPrice.Price;
+                    //            additionalPriceTier.Code = additionalTierPrice.Code;
+                    //            additionalPriceTier.TierPriceId = additionalTierPrice.TierPriceId;
+                    //        }
+                    //        additionalTierPrices.Add(additionalPriceTier);
+                    //    }
+                    //}
+                    //var additionalPriceType = _additionalTierPriceService.GetAddtionalPriceType(x.AdditionalTierPrices.ToList()[0].TypeId);
                     return new ProductModel.TierPriceModel
                     {
                         Id = x.Id,
@@ -3214,7 +3236,7 @@ namespace Nop.Admin.Controllers
                         Price = x.Price,
                         Disc = x.Disc,
                         PriceCode = x.PriceCode,
-                        AdditionalTierPrices = additionalTierPrices
+                        //AdditionalTierPrices = additionalTierPrices
 
                     };
                 })

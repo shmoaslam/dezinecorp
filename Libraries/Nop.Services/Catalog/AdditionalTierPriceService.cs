@@ -14,21 +14,28 @@ namespace Nop.Services.Catalog
     {
         #region Fields
         private readonly IRepository<AdditionalTierPriceType> _additinalTierPriceTypeRepository;
+        private readonly IRepository<AdditionalTierPrice> _additionalTierPriceRepository;
         #endregion
 
         #region Ctor
-        public AdditionalTierPriceService(IRepository<AdditionalTierPriceType> additinalTierPriceTypeRepository)
+        public AdditionalTierPriceService(IRepository<AdditionalTierPriceType> additinalTierPriceTypeRepository, IRepository<AdditionalTierPrice> additionalTierPriceRepository)
         {
             this._additinalTierPriceTypeRepository = additinalTierPriceTypeRepository;
+            this._additionalTierPriceRepository = additionalTierPriceRepository;
         }
         #endregion
 
-        public AdditionalTierPriceType GetAddtionalPriceType(int typeId)
+        public IList<AdditionalTierPrice> GetAddtionalPriceType(int tierPriceId)
         {
-            if (typeId == 0)
+            if (tierPriceId == 0)
                 return null;
 
-            return _additinalTierPriceTypeRepository.GetById(typeId);
+            return _additionalTierPriceRepository.Table.Where(x=>x.TierPriceId == tierPriceId).ToList();
+        }
+
+        public IList<AdditionalTierPriceType> GetAllAdditionalPriceType()
+        {
+            return _additinalTierPriceTypeRepository.Table.ToList();
         }
     }
 }
