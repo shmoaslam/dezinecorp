@@ -17,20 +17,23 @@ namespace Nop.Services.Catalog
         #region Fields
         private readonly IRepository<AdditionalTierPriceType> _additinalTierPriceTypeRepository;
         private readonly IRepository<AdditionalTierPrice> _additionalTierPriceRepository;
+        private readonly IRepository<TierPrice> _tierPrice;
         private readonly IEventPublisher _eventPublisher;
         private readonly IDataProvider _dataProvider;
-        IDbContext _dbContext;
+        private readonly IDbContext _dbContext;
         #endregion
 
         #region Ctor
         public AdditionalTierPriceService(IRepository<AdditionalTierPriceType> additinalTierPriceTypeRepository
             , IRepository<AdditionalTierPrice> additionalTierPriceRepository
+            , IRepository<TierPrice> tierPrice
             , IEventPublisher eventPublisher
             , IDbContext dbContext
             , IDataProvider dataProvider)
         {
             this._additinalTierPriceTypeRepository = additinalTierPriceTypeRepository;
             this._additionalTierPriceRepository = additionalTierPriceRepository;
+            this._tierPrice = tierPrice;
             this._eventPublisher = eventPublisher;
             this._dbContext = dbContext;
             this._dataProvider = dataProvider;
@@ -45,9 +48,15 @@ namespace Nop.Services.Catalog
             return _additionalTierPriceRepository.Table.Where(x => x.TierPriceId == tierPriceId).ToList();
         }
 
-        public IList<AdditionalTierPriceType> GetAllAdditionalPriceType()
+        public IList<AdditionalTierPriceType> GetAllAdditionalPriceType(int id = 0)
         {
-            return _additinalTierPriceTypeRepository.Table.ToList();
+            if (id == 0) return _additinalTierPriceTypeRepository.Table.ToList();
+            else
+            {
+                var alreadyAddedTierPriceTypeIds = _additionalTierPriceRepository.Table.Where(x=>x.TierPriceId == id).Select(x => x.TypeId).ToList();
+                return _additinalTierPriceTypeRepository.Table.Where(x => !alreadyAddedTierPriceTypeIds.Contains(x.Id)).ToList();
+            }
+
         }
 
         public AdditionalTierPriceType GetPriceType(int id)
@@ -138,6 +147,16 @@ namespace Nop.Services.Catalog
 
             //event notification
             _eventPublisher.EntityDeleted(obj);
+        }
+
+        public bool IsAdditionalExists(int tierPriceId, int tierPriceTypeId=0)
+        {
+            if (tierPriceId == 0)
+                throw new ArgumentNullException("Parameter not provided!");
+
+            
+            return tierPriceTypeId == 0 ? _additionalTierPriceRepository.Table.Any(x=>x.TierPriceId == tierPriceId)
+                :  _additionalTierPriceRepository.Table.Any(x => x.TypeId == tierPriceTypeId && x.TierPriceId == tierPriceId);
         }
     }
 }

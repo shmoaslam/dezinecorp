@@ -16,12 +16,13 @@ namespace Nop.Services.Catalog
 
         IList<AdditionalTierPrice> GetAddtionalPrice(int tierPriceId);
 
-        IList<AdditionalTierPriceType> GetAllAdditionalPriceType();
+        IList<AdditionalTierPriceType> GetAllAdditionalPriceType(int id=0);
 
         AdditionalTierPriceType GetPriceType(int id);
 
         void InsertAdditionalTierPrice(AdditionalTierPrice additionalPriceType);
         void UpdateAdditionalTierPrice(AdditionalTierPrice additionalPriceType);
         void DeleteAdditionalTierPrice(int id);
+        bool IsAdditionalExists(int tierPriceId, int tierPriceTypeId=0);
     }
 }

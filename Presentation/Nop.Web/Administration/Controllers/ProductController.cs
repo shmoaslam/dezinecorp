@@ -38,6 +38,7 @@ using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Kendoui;
 using Nop.Web.Framework.Mvc;
 using Nop.Core.Caching;
+using System.Net;
 
 namespace Nop.Admin.Controllers
 {
@@ -3193,12 +3194,29 @@ namespace Nop.Admin.Controllers
 
             return Json(gridModel);
         }
+        
+        [HttpGet]
+        public JsonResult AvailableTierPriceType(int tierPriceId)
+        {
+            var additionalPriceType = _additionalTierPriceService.GetAllAdditionalPriceType(tierPriceId);
+
+            var obj = additionalPriceType.Select(x => new {
+                Id = x.Id,
+                Name = x.Type,
+            }).ToList();
+
+            return Json(obj, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpPost]
         public ActionResult AdditionalTierPriceInsert(ProductModel.AdditionalTierPriceModel model)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return AccessDeniedView();
+
+            if (model.TierPriceId == 0 || model.TierPriceTypeId == 0) return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Please select price type!");
+
+            if (_additionalTierPriceService.IsAdditionalExists(model.TierPriceId, model.TierPriceTypeId)) return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Selected type already exists please delete that first!");
 
             var additionalPriceType = new AdditionalTierPrice
             {
@@ -3210,6 +3228,7 @@ namespace Nop.Admin.Controllers
 
 
             _additionalTierPriceService.InsertAdditionalTierPrice(additionalPriceType);
+
             return new NullJsonResult();
         }
 
@@ -3218,7 +3237,7 @@ namespace Nop.Admin.Controllers
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return AccessDeniedView();
-
+            if (model.TierPriceId == 0 || model.TierPriceTypeId == 0) return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Please select price type!");
             var additionalPriceType = new AdditionalTierPrice
             {
                 TypeId = model.TierPriceTypeId,
@@ -3281,7 +3300,7 @@ namespace Nop.Admin.Controllers
                         storeName = _localizationService.GetResource("Admin.Catalog.Products.TierPrices.Fields.Store.All");
                     }
 
-                return new ProductModel.TierPriceModel
+                    return new ProductModel.TierPriceModel
                     {
                         Id = x.Id,
                         StoreId = x.StoreId,
@@ -3293,9 +3312,9 @@ namespace Nop.Admin.Controllers
                         Price = x.Price,
                         Disc = x.Disc,
                         PriceCode = x.PriceCode,
-                    //AdditionalTierPrices = additionalTierPrices
+                        //AdditionalTierPrices = additionalTierPrices
 
-                };
+                    };
                 })
                 .ToList();
 
@@ -3388,6 +3407,9 @@ namespace Nop.Admin.Controllers
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
                 return Content("This is not your product");
 
+            if (_additionalTierPriceService.IsAdditionalExists(id)) return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Please delete extra price first!");
+
+
             _productService.DeleteTierPrice(tierPrice);
 
             //update "HasTierPrices" property
@@ -3439,8 +3461,8 @@ namespace Nop.Admin.Controllers
                     }
 
                     attributeModel.ValidationRulesAllowed = x.ValidationRulesAllowed();
-                //currenty any attribute can have condition. why not?
-                attributeModel.ConditionAllowed = true;
+                    //currenty any attribute can have condition. why not?
+                    attributeModel.ConditionAllowed = true;
                     return attributeModel;
                 })
                 .ToList();
@@ -3935,8 +3957,8 @@ namespace Nop.Admin.Controllers
                         associatedProduct = _productService.GetProductById(x.AssociatedProductId);
                     }
                     var pictureThumbnailUrl = _pictureService.GetPictureUrl(x.PictureId, 75, false);
-                //little hack here. Grid is rendered wrong way with <inmg> without "src" attribute
-                if (String.IsNullOrEmpty(pictureThumbnailUrl))
+                    //little hack here. Grid is rendered wrong way with <inmg> without "src" attribute
+                    if (String.IsNullOrEmpty(pictureThumbnailUrl))
                         pictureThumbnailUrl = _pictureService.GetPictureUrl(null, 1, true);
                     return new ProductModel.ProductAttributeValueModel
                     {
@@ -4394,9 +4416,9 @@ namespace Nop.Admin.Controllers
                         OverriddenPrice = x.OverriddenPrice,
                         NotifyAdminForQuantityBelow = x.NotifyAdminForQuantityBelow
                     };
-                //warnings
-                var warnings = _shoppingCartService.GetShoppingCartItemAttributeWarnings(_workContext.CurrentCustomer,
-                ShoppingCartType.ShoppingCart, x.Product, 1, x.AttributesXml, true);
+                    //warnings
+                    var warnings = _shoppingCartService.GetShoppingCartItemAttributeWarnings(_workContext.CurrentCustomer,
+                    ShoppingCartType.ShoppingCart, x.Product, 1, x.AttributesXml, true);
                     for (int i = 0; i < warnings.Count; i++)
                     {
                         pacModel.Warnings += warnings[i];
