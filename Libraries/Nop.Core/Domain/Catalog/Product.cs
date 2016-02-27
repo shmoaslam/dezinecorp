@@ -55,6 +55,11 @@ namespace Nop.Core.Domain.Catalog
         public string FullDescription { get; set; }
 
         /// <summary>
+        /// Gets or sets the family code
+        /// </summary>
+        public string FamilyCode { get; set; }
+
+        /// <summary>
         /// Gets or sets the admin comment
         /// </summary>
         public string AdminComment { get; set; }
