@@ -10,6 +10,7 @@ using Nop.Admin.Validators.Catalog;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Localization;
 using Nop.Web.Framework.Mvc;
+using System.ComponentModel;
 
 namespace Nop.Admin.Models.Catalog
 {
@@ -34,6 +35,8 @@ namespace Nop.Admin.Models.Catalog
             AddPictureModel = new ProductPictureModel();
             AddSpecificationAttributeModel = new AddProductSpecificationAttributeModel();
             ProductWarehouseInventoryModels = new List<ProductWarehouseInventoryModel>();
+            DezinceCorpData = new DezinceCorpDataViewModel();
+            DezinceCorpDataRefOnly = new DezineCorpDataRefOnlyViewModel();
         }
 
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.ID")]
@@ -371,6 +374,7 @@ namespace Nop.Admin.Models.Catalog
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.UpdatedOn")]
         public DateTime? UpdatedOn { get; set; }
 
+        
 
         public string PrimaryStoreCurrencyCode { get; set; }
         public string BaseDimensionIn { get; set; }
@@ -405,8 +409,9 @@ namespace Nop.Admin.Models.Catalog
         public IList<SelectListItem> AvailableManufacturers { get; set; }
         //product attributes
         public IList<SelectListItem> AvailableProductAttributes { get; set; }
-        
 
+        public DezinceCorpDataViewModel DezinceCorpData { get; set; }
+        public DezineCorpDataRefOnlyViewModel DezinceCorpDataRefOnly { get; set; }
 
         //pictures
         public ProductPictureModel AddPictureModel { get; set; }
@@ -523,7 +528,8 @@ namespace Nop.Admin.Models.Catalog
             [AllowHtml]
             public string OverrideTitleAttribute { get; set; }
         }
-        
+
+
         public partial class ProductCategoryModel : BaseNopEntityModel
         {
             [NopResourceDisplayName("Admin.Catalog.Products.Categories.Fields.Category")]
@@ -723,6 +729,315 @@ namespace Nop.Admin.Models.Catalog
             
         }
 
+
+        public partial class DezineCorpDataRefOnlyViewModel : BaseNopEntityModel
+        {
+            public int ProductId { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Old Page # 2012")]
+            public string OldPage2012 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Net price 1")]
+            public string Net1 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Net price 2")]
+            public string Net2 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Net price 3")]
+            public string Net3 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Net price 4")]
+            public string Net4 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Net price 5")]
+            public string Net5 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Net price 6")]
+            public string Net6 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Net price 7")]
+            public string Net7 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Net price 8")]
+            public string Net8 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("LOWEST INVOICE VALUE EQP MOQ")]
+            public string LOWESTINVOICEVALUEEQPMOQ { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Current EQP")]
+            public string CurrentEQP { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Current EQP less 5%")]
+            public string CurrentEQPLess5PerCent { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Change 2010 to 2011 EQP to EQP")]
+            public string Change2010to2011EQPtoEQP { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Country of Origin")]
+            public string CountryofOrigin { get; set; }
+
+            [AllowHtml]
+            [DisplayName("HS Code")]
+            public string HSCode { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Master Pack")]
+            public string MasterPack { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Lenght")]
+            public string L { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Widht")]
+            public string W { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Height")]
+            public string H { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Volume")]
+            public string Volume { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Freight Unit")]
+            public string FreightUnit { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Date Revised")]
+            public string DateRevised { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Revised By")]
+            public string RevisedBy { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Internal Comments")]
+            public string InternalComments { get; set; }
+
+            [AllowHtml]
+            [DisplayName("PPPC Notes")]
+            public string PPPCNotes { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Dezine Category")]
+            public string DezineCategory { get; set; }
+
+            [AllowHtml]
+            [DisplayName("INFOtrac Import Result if Error")]
+            public string INFOtracImportResultifError { get; set; }
+        }
+
+        public partial class DezinceCorpDataViewModel : BaseNopEntityModel
+        {
+            public int ProductId { get; set; }
+            [AllowHtml]
+            [DisplayName("New Page")]
+            public string NewPage { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Item is New")]
+            public string ItemIsNew { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Guarenteed Stock")]
+            public string GuarenteedStock { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Materials")]
+            public string Materials { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Features")]
+            public string Features { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Includes")]
+            public string Includes { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Specail Packaging")]
+            public string SpecailPackaging { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Capacity")]
+            public string Capacity { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Size")]
+            public string Size { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Imprint Area In Outboard")]
+            public string ImprintAreaInOutboard { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Imprint Area Wrap Around")]
+            public string ImprintAreaWrapAround { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Decorating Option")]
+            public string DecoratingOption { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Peices Per Cartoon")]
+            public string PeicesPerCartoon { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Weight Per Cartoon")]
+            public string WeightPerCartoon { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Blank Line")]
+            public string BlankLine { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Protective Packaging")]
+            public string ProtectivePackaging { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Refer To Catalogue Page")]
+            public string ReferToCataloguePage { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Pricing Flag")]
+            public string PricingFlag { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Made in Canada")]
+            public string MadeinCanada { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Made in North America")]
+            public string MadeinNorthAmerica { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Inventory Flag")]
+            public string InventoryFlag { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Pricing Code")]
+            public string PricingCode { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Pricing Footer Note")]
+            public string PricingFooterNote { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Setup Per Colour")]
+            public string SetupPerColour { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Repeat Setup")]
+            public string RepeatSetup { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Deboss Setup")]
+            public string DebossSetup { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Repeat Deboss")]
+            public string RepeatDeboss { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Decal Setup")]
+            public string DecalSetup { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Repeat Decal")]
+            public string RepeatDecal { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Laser Setup")]
+            public string LaserSetup { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Repeat Laser")]
+            public string RepeatLaser { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Additional Charge 1")]
+            public string AdditionalCharge1 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Additional Charge 2")]
+            public string AdditionalCharge2 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Additional Charge 3")]
+            public string AdditionalCharge3 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Additional Charge 4")]
+            public string AdditionalCharge4 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Repeat Term")]
+            public string RepeatTerm { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Final Note")]
+            public string FinalNote { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Regular Price")]
+            public string RegularPrice { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Regular Price 1")]
+            public string RegularPrice1 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Regular Price 2")]
+            public string RegularPrice2 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Regular Price 3")]
+            public string RegularPrice3 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Regular Price 4")]
+            public string RegularPrice4 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Regular Price Code")]
+            public string RegularPriceCode { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Special Price Ends")]
+            public string SpecialPriceEnds { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Carton Dimensions")]
+            public string CartonDimensions { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Visual Heading")]
+            public string VisualHeading { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Family Code")]
+            public string FamilyCode { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Visual Price")]
+            public string VisualPrice { get; set; }
+        }
 
         public partial class AdditionalTierPriceModel : BaseNopEntityModel
         {

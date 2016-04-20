@@ -396,6 +396,14 @@ namespace Nop.Services.Catalog
         void DeleteProductPicture(ProductPicture productPicture);
 
         /// <summary>
+        /// Get all productId with same familyCode
+        /// </summary>
+        /// <param name="familyCode"></param>
+        /// <param name="productId">to exclude this id in output</param>
+        /// <returns></returns>
+        int[] GetProductIdWithMatchFamilyCode(string familyCode, int productId = 0);
+
+        /// <summary>
         /// Gets a product pictures by product identifier
         /// </summary>
         /// <param name="productId">The product identifier</param>

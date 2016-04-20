@@ -24,7 +24,8 @@ namespace Nop.Core.Domain.Catalog
         private ICollection<TierPrice> _tierPrices;
         private ICollection<Discount> _appliedDiscounts;
         private ICollection<ProductWarehouseInventory> _productWarehouseInventory;
-
+        private ICollection<DezineCorpData> _dezineCorpData;
+        private ICollection<DezineCorpDataRefOnly> _dezineCorpDataRefOnly;
 
         /// <summary>
         /// Gets or sets the product type identifier
@@ -698,6 +699,23 @@ namespace Nop.Core.Domain.Catalog
             protected set { _tierPrices = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the DezineCorpData
+        /// </summary>
+        public virtual ICollection<DezineCorpData> DezineCorpDatas
+        {
+            get { return _dezineCorpData ?? (_dezineCorpData = new List<DezineCorpData>()); }
+            protected set { _dezineCorpData = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the DezineCorpDataRefOnly
+        /// </summary>
+        public virtual ICollection<DezineCorpDataRefOnly> DezineCorpDataRefOnlys
+        {
+            get { return _dezineCorpDataRefOnly ?? (_dezineCorpDataRefOnly = new List<DezineCorpDataRefOnly>()); }
+            protected set { _dezineCorpDataRefOnly = value; }
+        }
         /// <summary>
         /// Gets or sets the collection of applied discounts
         /// </summary>

@@ -64,6 +64,8 @@
   <ItemGroup>
     <Compile Include="Mapping\Catalog\AdditionalTierPriceMap.cs" />
     <Compile Include="Mapping\Catalog\AdditionalTierPriceTypeMap.cs" />
+    <Compile Include="Mapping\Catalog\DezineCorpDataMap.cs" />
+    <Compile Include="Mapping\Catalog\DezineCorpDataRefOnlyMap.cs" />
     <Compile Include="Mapping\Catalog\PredefinedProductAttributeValueMap.cs" />
     <Compile Include="Mapping\Common\AddressAttributeMap.cs" />
     <Compile Include="Mapping\Common\AddressAttributeValueMap.cs" />

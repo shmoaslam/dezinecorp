@@ -481,6 +481,7 @@ namespace Nop.Admin.Controllers
             //anyway they're not used (you need to save a product before you map add them)
             if (product != null)
             {
+                model.DezinceCorpData = new ProductModel.DezinceCorpDataViewModel();
                 //product attributes
                 foreach (var productAttribute in _productAttributeService.GetAllProductAttributes())
                 {

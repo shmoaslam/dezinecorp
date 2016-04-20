@@ -626,7 +626,8 @@ namespace Nop.Services.Media
         {
             if (productId == 0)
                 return new List<Picture>();
-
+             
+            
             
             var query = from p in _pictureRepository.Table
                         join pp in _productPictureRepository.Table on p.Id equals pp.PictureId

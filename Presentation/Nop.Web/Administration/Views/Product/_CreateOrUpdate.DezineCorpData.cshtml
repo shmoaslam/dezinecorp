@@ -1,0 +1,386 @@
+﻿@model ProductModel
+
+<table class="adminContent">
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.NewPage)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.NewPage)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.NewPage)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.ItemIsNew)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.ItemIsNew)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.ItemIsNew)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.GuarenteedStock)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.GuarenteedStock)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.GuarenteedStock)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.GuarenteedStock)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.GuarenteedStock)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.GuarenteedStock)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.Features)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.Features)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.Features)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.Includes)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.Includes)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.Includes)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.SpecailPackaging)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.SpecailPackaging)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.SpecailPackaging)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.Capacity)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.Capacity)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.Capacity)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.Size)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.Size)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.Size)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.ImprintAreaInOutboard)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.ImprintAreaInOutboard)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.ImprintAreaInOutboard)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.ImprintAreaWrapAround)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.ImprintAreaWrapAround)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.ImprintAreaWrapAround)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.DecoratingOption)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.DecoratingOption)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.DecoratingOption)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.PeicesPerCartoon)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.PeicesPerCartoon)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.PeicesPerCartoon)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.WeightPerCartoon)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.WeightPerCartoon)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.WeightPerCartoon)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.BlankLine)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.BlankLine)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.BlankLine)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.ProtectivePackaging)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.ProtectivePackaging)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.ProtectivePackaging)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.ReferToCataloguePage)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.ReferToCataloguePage)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.ReferToCataloguePage)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.PricingFlag)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.PricingFlag)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.PricingFlag)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.MadeinCanada)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.MadeinCanada)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.MadeinCanada)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.MadeinNorthAmerica)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.MadeinNorthAmerica)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.MadeinNorthAmerica)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.InventoryFlag)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.InventoryFlag)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.InventoryFlag)
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table>
+               
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.PricingCode)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.PricingCode)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.PricingCode)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.PricingFooterNote)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.PricingFooterNote)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.PricingFooterNote)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.SetupPerColour)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.SetupPerColour)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.SetupPerColour)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.AdditionalCharge1)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.AdditionalCharge1)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.AdditionalCharge1)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.AdditionalCharge2)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.AdditionalCharge2)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.AdditionalCharge2)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.AdditionalCharge3)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.AdditionalCharge3)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.AdditionalCharge3)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.AdditionalCharge4)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.AdditionalCharge4)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.AdditionalCharge4)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.RepeatTerm)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.RepeatTerm)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.RepeatTerm)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.FinalNote)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.FinalNote)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.FinalNote)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.RegularPrice)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.RegularPrice)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.RegularPrice)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.RegularPrice1)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.RegularPrice1)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.RegularPrice1)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.RegularPrice2)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.RegularPrice2)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.RegularPrice2)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.RegularPrice3)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.RegularPrice3)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.RegularPrice3)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.RegularPrice4)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.RegularPrice4)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.RegularPrice4)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.RegularPriceCode)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.RegularPriceCode)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.RegularPriceCode)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.SpecialPriceEnds)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.SpecialPriceEnds)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.SpecialPriceEnds)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.CartonDimensions)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.CartonDimensions)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.CartonDimensions)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.VisualHeading)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.VisualHeading)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.VisualHeading)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.VisualHeading)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.VisualHeading)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.VisualHeading)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpData.VisualHeading)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpData.VisualHeading)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpData.SpecialPriceEnds)
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

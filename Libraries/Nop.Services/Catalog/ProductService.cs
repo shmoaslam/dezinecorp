@@ -1921,6 +1921,26 @@ namespace Nop.Services.Catalog
             _cacheManager.RemoveByPattern(PRODUCTS_PATTERN_KEY);
         }
 
+        /// <summary>
+        /// Get all productId with same familyCode
+        /// </summary>
+        /// <param name="familyCode"></param>
+        /// <param name="productId">to exclude this id in output</param> 
+        /// <returns></returns>
+        public int[] GetProductIdWithMatchFamilyCode(string familyCode, int productId = 0)
+        {
+            if (string.IsNullOrEmpty(familyCode)) return null;
+
+            if (!_productRepository.Table.Any(x => x.FamilyCode == familyCode)) return null;
+
+            var ids = _productRepository.Table.Where(x => x.FamilyCode == familyCode).Select(x => x.Id);
+
+            if (ids == null) return null;
+
+            if (productId != 0) return ids.Where(x => x != productId).ToArray();
+            return ids.ToArray();
+        }
+
         #endregion
 
         #endregion

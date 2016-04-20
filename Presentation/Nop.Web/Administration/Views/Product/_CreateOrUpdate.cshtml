@@ -64,6 +64,12 @@
                 @T("Admin.Catalog.Products.PurchasedWithOrders")
             </li>
         }
+        <li @Html.RenderSelectedTabIndex(15, GetSelectedTabIndex())>
+            @T("Admin.Catalog.Products.DezineCorpData")
+        </li>
+        <li @Html.RenderSelectedTabIndex(16, GetSelectedTabIndex())>
+            @T("Admin.Catalog.Products.DezineCorpDataRefOnly")
+        </li>
     </ul>
     <div>
         @TabInfo()
@@ -113,6 +119,12 @@
             @TabPurchasedWithOrders()
         </div>
     }
+    <div>
+        @TabDezineCorpData()
+    </div>
+    <div>
+        @TabDezineCorpDataRefOnly()
+    </div>
 </div>
 
 @{
@@ -131,6 +143,10 @@
 @helper TabInfo()
 { 
     @Html.Partial("_CreateOrUpdate.Info", Model)
+}
+@helper TabDetails()
+{
+    @Html.Partial("_CreateOrUpdate.Detail", Model)
 }
 @helper TabSeo()
 {
@@ -188,5 +204,13 @@
 @helper TabPurchasedWithOrders()
 {
     @Html.Partial("_CreateOrUpdate.PurchasedWithOrders", Model)
+}
+@helper TabDezineCorpData()
+{
+    @Html.Partial("_CreateOrUpdate.DezineCorpData", Model)
+}
+@helper TabDezineCorpDataRefOnly()
+{
+    @Html.Partial("_CreateOrUpdate.DezineCorpDataRefOnly", Model)
 }
 

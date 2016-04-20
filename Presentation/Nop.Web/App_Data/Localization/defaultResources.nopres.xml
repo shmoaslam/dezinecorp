@@ -2340,11 +2340,14 @@
   <LocaleResource Name="Admin.Catalog.Products.Fields.FullDescription">
     <Value>Full description</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.Fields.FamilyCode">
-    <Value>Family of the product</Value>
-  </LocaleResource>
   <LocaleResource Name="Admin.Catalog.Products.Fields.FullDescription.Hint">
     <Value>The full description of the product.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.Fields.FamilyCode">
+    <Value>Product family</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.Fields.FamilyCode.Hint">
+    <Value>Family name of the product</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Catalog.Products.Fields.GiftCardType">
     <Value>Gift card type</Value>
