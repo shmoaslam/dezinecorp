@@ -230,6 +230,7 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.Deleted, mo => mo.Ignore());
 
             //products
+           
             Mapper.CreateMap<Product, ProductModel>()
                 .ForMember(dest => dest.ProductTypeName, mo => mo.Ignore())
                 .ForMember(dest => dest.AssociatedToProductId, mo => mo.Ignore())
@@ -891,6 +892,8 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<TopicTemplate, TopicTemplateModel>()
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<TopicTemplateModel, TopicTemplate>();
+
+            
         }
         
         public int Order

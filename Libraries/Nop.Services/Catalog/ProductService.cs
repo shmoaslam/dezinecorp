@@ -45,6 +45,12 @@ namespace Nop.Services.Catalog
 
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<RelatedProduct> _relatedProductRepository;
+        private readonly IRepository<DezineCorpData> _dezineCorpDataRepository;
+        private readonly IRepository<DezineCorpDataRefOnly> _dezineCorpDataRefOnlyRepository;
+        private readonly IRepository<DezineCorpProductKeyword> _dezineCorpProductKeywordRepository;
+        private readonly IRepository<DezineCorpRelatedProduct> _dezineCorpRelatedProductRepository;
+        private readonly IRepository<DezineCorpTierPrice> _dezineCorpTierPriceRepository;
+        private readonly IRepository<DezineCorpAdditionalPricing> _dezineCorpAdditionalPricingRepository;
         private readonly IRepository<CrossSellProduct> _crossSellProductRepository;
         private readonly IRepository<TierPrice> _tierPriceRepository;
         private readonly IRepository<LocalizedProperty> _localizedPropertyRepository;
@@ -106,6 +112,12 @@ namespace Nop.Services.Catalog
             IRepository<RelatedProduct> relatedProductRepository,
             IRepository<CrossSellProduct> crossSellProductRepository,
             IRepository<TierPrice> tierPriceRepository,
+            IRepository<DezineCorpData> dezineCorpDataRepository,
+            IRepository<DezineCorpDataRefOnly> dezineCorpDataRefOnlyRepository,
+            IRepository<DezineCorpProductKeyword> dezineCorpProductKeywordRepository,
+            IRepository<DezineCorpRelatedProduct> dezineCorpRelatedProductRepository,
+            IRepository<DezineCorpTierPrice> dezineCorpTierPriceRepository,
+            IRepository<DezineCorpAdditionalPricing> dezineCorpAdditionalPricingRepository,
             IRepository<ProductPicture> productPictureRepository,
             IRepository<LocalizedProperty> localizedPropertyRepository,
             IRepository<AclRecord> aclRepository,
@@ -131,6 +143,12 @@ namespace Nop.Services.Catalog
             this._productRepository = productRepository;
             this._relatedProductRepository = relatedProductRepository;
             this._crossSellProductRepository = crossSellProductRepository;
+            this._dezineCorpDataRepository = dezineCorpDataRepository;
+            this._dezineCorpDataRefOnlyRepository = dezineCorpDataRefOnlyRepository;
+            this._dezineCorpProductKeywordRepository = dezineCorpProductKeywordRepository;
+            this._dezineCorpRelatedProductRepository = dezineCorpRelatedProductRepository;
+            this._dezineCorpTierPriceRepository = dezineCorpTierPriceRepository;
+            this._dezineCorpAdditionalPricingRepository = dezineCorpAdditionalPricingRepository;
             this._tierPriceRepository = tierPriceRepository;
             this._productPictureRepository = productPictureRepository;
             this._localizedPropertyRepository = localizedPropertyRepository;
@@ -1940,6 +1958,55 @@ namespace Nop.Services.Catalog
             if (productId != 0) return ids.Where(x => x != productId).ToArray();
             return ids.ToArray();
         }
+
+        public DezineCorpDataRefOnly GetDezinceCorpDataRefOnly(int productId)
+        {
+            if (productId == 0)
+                return null;
+
+            return _dezineCorpDataRefOnlyRepository.Table.FirstOrDefault(x => x.ProductId == productId);
+        }
+
+        public DezineCorpData GetDezineCorpData(int productId)
+        {
+            if (productId == 0)
+                return null;
+
+            return _dezineCorpDataRepository.Table.FirstOrDefault(x => x.ProductId == productId);
+        }
+
+        public DezineCorpProductKeyword GetDezineCorpProductKeyword(int productId)
+        {
+            if (productId == 0)
+                return null;
+
+            return _dezineCorpProductKeywordRepository.Table.FirstOrDefault(x => x.ProductId == productId);
+        }
+
+        public DezineCorpRelatedProduct GetDezineCorpRelatedProduct(int productId)
+        {
+            if (productId == 0)
+                return null;
+
+            return _dezineCorpRelatedProductRepository.Table.FirstOrDefault(x => x.ProductId == productId);
+        }
+
+        public DezineCorpTierPrice GetDezineCorpTierPrice(int productId)
+        {
+            if (productId == 0)
+                return null;
+
+            return _dezineCorpTierPriceRepository.Table.FirstOrDefault(x => x.ProductId == productId);
+        }
+
+        public DezineCorpAdditionalPricing GetDezineCorpAdditionalPricing(int productId)
+        {
+            if (productId == 0)
+                return null;
+
+            return _dezineCorpAdditionalPricingRepository.Table.FirstOrDefault(x => x.ProductId == productId);
+        }
+
 
         #endregion
 

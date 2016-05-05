@@ -24,8 +24,13 @@ namespace Nop.Core.Domain.Catalog
         private ICollection<TierPrice> _tierPrices;
         private ICollection<Discount> _appliedDiscounts;
         private ICollection<ProductWarehouseInventory> _productWarehouseInventory;
+
         private ICollection<DezineCorpData> _dezineCorpData;
         private ICollection<DezineCorpDataRefOnly> _dezineCorpDataRefOnly;
+        private ICollection<DezineCorpTierPrice> _dezineCorpTierPrice;
+        private ICollection<DezineCorpAdditionalPricing> _dezineCorpAdditionalPricing;
+        private ICollection<DezineCorpRelatedProduct> _dezineCorpRelatedProduct;
+        private ICollection<DezineCorpProductKeyword> _dezineCorpProductKeyword;
 
         /// <summary>
         /// Gets or sets the product type identifier
@@ -715,6 +720,41 @@ namespace Nop.Core.Domain.Catalog
         {
             get { return _dezineCorpDataRefOnly ?? (_dezineCorpDataRefOnly = new List<DezineCorpDataRefOnly>()); }
             protected set { _dezineCorpDataRefOnly = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the DezineCorpTierPrice
+        /// </summary>
+        public virtual ICollection<DezineCorpTierPrice> DezineCorpTierPrices
+        {
+            get { return _dezineCorpTierPrice ?? (_dezineCorpTierPrice = new List<DezineCorpTierPrice>()); }
+            protected set { _dezineCorpTierPrice = value; }
+        }
+        /// <summary>
+        /// Gets or sets the DezineCorpProductKeyword
+        /// </summary>
+        public virtual ICollection<DezineCorpProductKeyword> DezineCorpProductKeywords
+        {
+            get { return _dezineCorpProductKeyword ?? (_dezineCorpProductKeyword = new List<DezineCorpProductKeyword>()); }
+            protected set { _dezineCorpProductKeyword = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the DezineCorpTierPrice
+        /// </summary>
+        public virtual ICollection<DezineCorpRelatedProduct> DezineCorpRelatedProducts
+        {
+            get { return _dezineCorpRelatedProduct ?? (_dezineCorpRelatedProduct = new List<DezineCorpRelatedProduct>()); }
+            protected set { _dezineCorpRelatedProduct = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the DezineCorpAdditionalPricing
+        /// </summary>
+        public virtual ICollection<DezineCorpAdditionalPricing> DezineCorpAdditionalPricings
+        {
+            get { return _dezineCorpAdditionalPricing ?? (_dezineCorpAdditionalPricing = new List<DezineCorpAdditionalPricing>()); }
+            protected set { _dezineCorpAdditionalPricing = value; }
         }
         /// <summary>
         /// Gets or sets the collection of applied discounts

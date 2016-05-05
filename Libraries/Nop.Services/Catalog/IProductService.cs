@@ -476,6 +476,18 @@ namespace Nop.Services.Catalog
         /// <param name="pwi">ProductWarehouseInventory</param>
         void DeleteProductWarehouseInventory(ProductWarehouseInventory pwi);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>DezineCorpData</returns>
+        DezineCorpData GetDezineCorpData(int id);
+        DezineCorpDataRefOnly GetDezinceCorpDataRefOnly(int id);
+        DezineCorpProductKeyword GetDezineCorpProductKeyword(int id);
+        DezineCorpRelatedProduct GetDezineCorpRelatedProduct(int id);
+        DezineCorpTierPrice GetDezineCorpTierPrice(int id);
+        DezineCorpAdditionalPricing GetDezineCorpAdditionalPricing(int id);
+
         #endregion
     }
 }

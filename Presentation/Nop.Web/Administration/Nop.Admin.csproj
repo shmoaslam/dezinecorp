@@ -937,6 +937,10 @@
     <Content Include="Views\Product\_CreateOrUpdate.Detail.cshtml" />
     <Content Include="Views\Product\_CreateOrUpdate.DezineCorpData.cshtml" />
     <Content Include="Views\Product\_CreateOrUpdate.DezineCorpDataRefOnly.cshtml" />
+    <Content Include="Views\Product\_CreateOrUpdate.DezineCorpTierPrice.cshtml" />
+    <Content Include="Views\Product\_CreateOrUpdate.DezineCorpAdditionalPricing.cshtml" />
+    <Content Include="Views\Product\_CreateOrUpdate.DezineCorpRelatedProduct.cshtml" />
+    <Content Include="Views\Product\_CreateOrUpdate.DezineCorpProductKeyword.cshtml" />
     <None Include="Views\Product\_ProductAttributes.cshtml" />
     <Content Include="Views\Setting\_ReturnRequestReasons.cshtml" />
     <Content Include="Views\Setting\ReturnRequestReasonEdit.cshtml" />
@@ -1334,7 +1338,7 @@
           </IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>True</UseCustomServer>
-          <CustomServerUrl>http://www.nopcommerce.com/</CustomServerUrl>
+          <CustomServerUrl>http://localhost:15536/</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

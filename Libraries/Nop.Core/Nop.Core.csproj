@@ -94,8 +94,12 @@
     <Compile Include="ComponentModel\WriteLockDisposable.cs" />
     <Compile Include="Domain\Catalog\AdditionalTierPrice.cs" />
     <Compile Include="Domain\Catalog\AdditionalTierPriceType.cs" />
+    <Compile Include="Domain\Catalog\DezineCorpAdditionalPricing.cs" />
     <Compile Include="Domain\Catalog\DezineCorpData.cs" />
     <Compile Include="Domain\Catalog\DezineCorpDataRefOnly.cs" />
+    <Compile Include="Domain\Catalog\DezineCorpProductKeyword.cs" />
+    <Compile Include="Domain\Catalog\DezineCorpRelatedProduct.cs" />
+    <Compile Include="Domain\Catalog\DezineCorpTierPrice.cs" />
     <Compile Include="Domain\Catalog\Events.cs" />
     <Compile Include="Domain\Catalog\PredefinedProductAttributeValue.cs" />
     <Compile Include="Domain\Catalog\RentalPricePeriod.cs" />

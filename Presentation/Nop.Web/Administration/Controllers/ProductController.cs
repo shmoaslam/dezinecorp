@@ -466,7 +466,7 @@ namespace Nop.Admin.Controllers
                     model.AssociatedToProductName = parentGroupedProduct.Name;
                 }
             }
-
+           
             model.PrimaryStoreCurrencyCode = _currencyService.GetCurrencyById(_currencySettings.PrimaryStoreCurrencyId).CurrencyCode;
             model.BaseWeightIn = _measureService.GetMeasureWeightById(_measureSettings.BaseWeightId).Name;
             model.BaseDimensionIn = _measureService.GetMeasureDimensionById(_measureSettings.BaseDimensionId).Name;
@@ -481,7 +481,7 @@ namespace Nop.Admin.Controllers
             //anyway they're not used (you need to save a product before you map add them)
             if (product != null)
             {
-                model.DezinceCorpData = new ProductModel.DezinceCorpDataViewModel();
+                //model.DezinceCorpData = new ProductModel.DezinceCorpDataViewModel();
                 //product attributes
                 foreach (var productAttribute in _productAttributeService.GetAllProductAttributes())
                 {
@@ -692,6 +692,11 @@ namespace Nop.Admin.Controllers
                 model.Published = true;
                 model.VisibleIndividually = true;
             }
+        }
+        [NonAction]
+        private void PrepareDezineCorpModel(ProductModel model, int productId)
+        {
+            throw new NotImplementedException();
         }
 
         [NonAction]
@@ -1021,6 +1026,7 @@ namespace Nop.Admin.Controllers
                 return AccessDeniedView();
 
             var product = _productService.GetProductById(id);
+            
             if (product == null || product.Deleted)
                 //No product found with the specified id
                 return RedirectToAction("List");
@@ -1031,6 +1037,12 @@ namespace Nop.Admin.Controllers
 
             var model = product.ToModel();
             PrepareProductModel(model, product, false, false);
+            model.DezinceCorpData = GetDezineCorpData(id);
+            model.DezinceCorpDataRefOnly = GetDezinceCorpDataRefOnly(id);
+            model.DezineCorpProductKeyword = GetDezineCorpProductKeyword(id);
+            model.DezineCorpRelatedProduct = GetDezineCorpRelatedProduct(id);
+            model.DezineCorpTierPrice = GetDezineCorpTierPrice(id);
+            model.DezineCorpAdditionalPricing = GetDezineCorpAdditionalPricing(id);
             AddLocales(_languageService, model.Locales, (locale, languageId) =>
                 {
                     locale.Name = product.GetLocalized(x => x.Name, languageId, false, false);
@@ -1046,6 +1058,195 @@ namespace Nop.Admin.Controllers
             PrepareAclModel(model, product, false);
             PrepareStoresMappingModel(model, product, false);
             return View(model);
+        }
+
+        private ProductModel.DezineCorpAdditionalPricingViewModel GetDezineCorpAdditionalPricing(int id)
+        {
+            if (id == 0) return null;
+            var model = _productService.GetDezineCorpAdditionalPricing(id);
+            return new ProductModel.DezineCorpAdditionalPricingViewModel
+            {
+                Id = model.Id,
+                ProductId = model.ProductId,
+                AddColourOption = model.AddColourOption,
+                AddCol_1 = model.AddCol_1,
+                AddCol_2 = model.AddCol_2,
+                AddCol_3 = model.AddCol_3,
+                AddCol_4 = model.AddCol_4,
+                AddColPriceCode = model.AddColPriceCode,
+                DecalOption = model.DecalOption,
+                Decal_1 = model.Decal_1,
+                Decal_2 = model.Decal_2,
+                Decal_3 = model.Decal_3,
+                Decal_4 = model.Decal_4,
+                DecalPriceCode = model.DecalPriceCode,
+                LaserEngravingOption = model.LaserEngravingOption,
+                Laser_1 = model.Laser_1,
+                Laser_2 = model.Laser_2,
+                Laser_3 = model.Laser_3,
+                Laser_4 = model.Laser_4,
+                LaserPriceCode = model.LaserPriceCode
+            };
+        }
+
+        private ProductModel.DezineCorpTierPriceViewModel GetDezineCorpTierPrice(int id)
+        {
+            if (id == 0) return null;
+            var model = _productService.GetDezineCorpTierPrice(id);
+            return new ProductModel.DezineCorpTierPriceViewModel
+            {
+                Id = model.Id,
+                ProductId = model.ProductId,
+                QuantityLevel = model.QuantityLevel,
+                Price1 = model.Price1,
+                Price2 = model.Price2,
+                Price3 = model.Price3,
+                Price4 = model.Price4,
+                Price5 = model.Price5,
+                Price6 = model.Price6,
+                Price7 = model.Price7,
+                Price8 = model.Price8,
+                DiscountCode = model.DiscountCode
+            };
+        }
+
+        private ProductModel.DezineCorpRelatedProductViewModel GetDezineCorpRelatedProduct(int id)
+        {
+            if (id == 0) return null;
+            var model = _productService.GetDezineCorpRelatedProduct(id);
+            return new ProductModel.DezineCorpRelatedProductViewModel
+            {
+                Id = model.Id,
+                ProductId = model.ProductId,
+                Related_1 = model.Related_1,
+                Related_2 = model.Related_2,
+                Related_3 = model.Related_3,
+                Related_4 = model.Related_4,
+                Related_5 = model.Related_5,
+                Related_6 = model.Related_6
+            };
+        }
+
+        private ProductModel.DezineCorpProductKeywordViewModel GetDezineCorpProductKeyword(int id)
+        {
+            if (id == 0) return null;
+            var model = _productService.GetDezineCorpProductKeyword(id);
+            return new ProductModel.DezineCorpProductKeywordViewModel
+            {
+                Id = model.Id,
+                ProductId = model.ProductId,
+                Keyword_1 = model.Keyword_1,
+                Keyword_2 = model.Keyword_2,
+                Keyword_3 = model.Keyword_3,
+                Keyword_4 = model.Keyword_4,
+                Keyword_5 = model.Keyword_5,
+                Keyword_6 = model.Keyword_6,
+                Keyword_Color = model.Keyword_Color,
+                keyword_Linename = model.keyword_Linename,
+                Keyword_Colour_Primary = model.Keyword_Colour_Primary,
+                Keyword_Colour_Secondary = model.Keyword_Colour_Secondary
+            };
+        }
+
+        private ProductModel.DezineCorpDataRefOnlyViewModel GetDezinceCorpDataRefOnly(int id)
+        {
+            if (id == 0) return null;
+
+            var model = _productService.GetDezinceCorpDataRefOnly(id);
+            return new ProductModel.DezineCorpDataRefOnlyViewModel
+            {
+                Id = model.Id,
+                ProductId = model.ProductId,
+                OldPage2012 = model.OldPage2012,
+                Net1 = model.Net1,
+                Net2 = model.Net2,
+                Net3 = model.Net3,
+                Net4 = model.Net4,
+                Net5 = model.Net5,
+                Net6 = model.Net6,
+                Net7 = model.Net7,
+                Net8 = model.Net8,
+                LOWESTINVOICEVALUEEQPMOQ = model.LOWESTINVOICEVALUEEQPMOQ,
+                CurrentEQP = model.CurrentEQP,
+                CurrentEQPLess5PerCent = model.CurrentEQPLess5PerCent,
+                Change2010to2011EQPtoEQP = model.Change2010to2011EQPtoEQP,
+                CountryofOrigin = model.CountryofOrigin,
+                HSCode = model.HSCode,
+                MasterPack = model.MasterPack,
+                L = model.L,
+                W = model.W,
+                H = model.H,
+                Volume = model.Volume,
+                FreightUnit = model.FreightUnit,
+                DateRevised = model.DateRevised,
+                RevisedBy = model.RevisedBy,
+                InternalComments = model.InternalComments,
+                PPPCNotes = model.PPPCNotes,
+                DezineCategory = model.DezineCategory,
+                INFOtracImportResultifError = model.INFOtracImportResultifError,
+            };
+        }
+
+        private ProductModel.DezinceCorpDataViewModel GetDezineCorpData(int id)
+        {
+            if (id == 0) return null;
+
+            var dezineCorpDataModel = _productService.GetDezineCorpData(id);
+
+            return new ProductModel.DezinceCorpDataViewModel
+            {
+                Id = dezineCorpDataModel.Id,
+                ProductId = dezineCorpDataModel.ProductId,
+                NewPage = dezineCorpDataModel.NewPage,
+                ItemIsNew = dezineCorpDataModel.ItemIsNew,
+                GuarenteedStock = dezineCorpDataModel.GuarenteedStock,
+                Materials = dezineCorpDataModel.Materials,
+                Features = dezineCorpDataModel.Features,
+                Includes = dezineCorpDataModel.Includes,
+                SpecailPackaging = dezineCorpDataModel.SpecailPackaging,
+                Capacity = dezineCorpDataModel.Capacity,
+                Size = dezineCorpDataModel.Size,
+                ImprintAreaInOutboard = dezineCorpDataModel.ImprintAreaInOutboard,
+                ImprintAreaWrapAround = dezineCorpDataModel.ImprintAreaWrapAround,
+                DecoratingOption = dezineCorpDataModel.DecoratingOption,
+                PeicesPerCartoon = dezineCorpDataModel.PeicesPerCartoon,
+                WeightPerCartoon = dezineCorpDataModel.WeightPerCartoon,
+                BlankLine = dezineCorpDataModel.BlankLine,
+                ProtectivePackaging = dezineCorpDataModel.ProtectivePackaging,
+                ReferToCataloguePage = dezineCorpDataModel.ReferToCataloguePage,
+                PricingFlag = dezineCorpDataModel.PricingFlag,
+                MadeinCanada = dezineCorpDataModel.MadeinCanada,
+                MadeinNorthAmerica = dezineCorpDataModel.MadeinNorthAmerica,
+                InventoryFlag = dezineCorpDataModel.InventoryFlag,
+                PricingCode = dezineCorpDataModel.PricingCode,
+                PricingFooterNote = dezineCorpDataModel.PricingFooterNote,
+                SetupPerColour = dezineCorpDataModel.SetupPerColour,
+                RepeatSetup = dezineCorpDataModel.RepeatSetup,
+                DebossSetup = dezineCorpDataModel.DebossSetup,
+                RepeatDeboss = dezineCorpDataModel.RepeatDeboss,
+                DecalSetup = dezineCorpDataModel.DecalSetup,
+                RepeatDecal = dezineCorpDataModel.RepeatDecal,
+                LaserSetup = dezineCorpDataModel.LaserSetup,
+                RepeatLaser = dezineCorpDataModel.RepeatLaser,
+                AdditionalCharge1 = dezineCorpDataModel.AdditionalCharge1,
+                AdditionalCharge2 = dezineCorpDataModel.AdditionalCharge2,
+                AdditionalCharge3 = dezineCorpDataModel.AdditionalCharge3,
+                AdditionalCharge4 = dezineCorpDataModel.AdditionalCharge4,
+                RepeatTerm = dezineCorpDataModel.RepeatTerm,
+                FinalNote = dezineCorpDataModel.FinalNote,
+                RegularPrice = dezineCorpDataModel.RegularPrice,
+                RegularPrice1 = dezineCorpDataModel.RegularPrice1,
+                RegularPrice2 = dezineCorpDataModel.RegularPrice2,
+                RegularPrice3 = dezineCorpDataModel.RegularPrice3,
+                RegularPrice4 = dezineCorpDataModel.RegularPrice4,
+                RegularPriceCode = dezineCorpDataModel.RegularPriceCode,
+                SpecialPriceEnds = dezineCorpDataModel.SpecialPriceEnds,
+                CartonDimensions = dezineCorpDataModel.CartonDimensions,
+                VisualHeading = dezineCorpDataModel.VisualHeading,
+                FamilyCode = dezineCorpDataModel.FamilyCode,
+                VisualPrice = dezineCorpDataModel.VisualPrice,
+
+            };
         }
 
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]

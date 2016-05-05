@@ -37,6 +37,10 @@ namespace Nop.Admin.Models.Catalog
             ProductWarehouseInventoryModels = new List<ProductWarehouseInventoryModel>();
             DezinceCorpData = new DezinceCorpDataViewModel();
             DezinceCorpDataRefOnly = new DezineCorpDataRefOnlyViewModel();
+            DezineCorpProductKeyword = new DezineCorpProductKeywordViewModel();
+            DezineCorpRelatedProduct = new DezineCorpRelatedProductViewModel();
+            DezineCorpAdditionalPricing = new DezineCorpAdditionalPricingViewModel();
+            DezineCorpTierPrice = new DezineCorpTierPriceViewModel();
         }
 
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.ID")]
@@ -412,7 +416,10 @@ namespace Nop.Admin.Models.Catalog
 
         public DezinceCorpDataViewModel DezinceCorpData { get; set; }
         public DezineCorpDataRefOnlyViewModel DezinceCorpDataRefOnly { get; set; }
-
+        public DezineCorpProductKeywordViewModel DezineCorpProductKeyword { get; set; }
+        public DezineCorpRelatedProductViewModel DezineCorpRelatedProduct { get; set; }
+        public DezineCorpAdditionalPricingViewModel DezineCorpAdditionalPricing { get; set; }
+        public DezineCorpTierPriceViewModel DezineCorpTierPrice { get; set; }
         //pictures
         public ProductPictureModel AddPictureModel { get; set; }
         public IList<ProductPictureModel> ProductPictureModels { get; set; }
@@ -729,7 +736,132 @@ namespace Nop.Admin.Models.Catalog
             
         }
 
+        public partial class DezineCorpAdditionalPricingViewModel : BaseNopEntityModel
+        {
+            /// <summary>
+            /// Gets or sets the product identifier
+            /// </summary>
+            public int ProductId { get; set; }
+            [AllowHtml]
+            [DisplayName("Add Colour Option")]
+            public string AddColourOption { get; set; }
+            [AllowHtml]
+            [DisplayName("AddCol 1")]
+            public string AddCol_1 { get; set; }
+            [AllowHtml]
+            [DisplayName("AddCol 2")]
+            public string AddCol_2 { get; set; }
+            [AllowHtml]
+            [DisplayName("AddCol 3")]
+            public string AddCol_3 { get; set; }
+            [AllowHtml]
+            [DisplayName("AddCol 4")]
+            public string AddCol_4 { get; set; }
+            [AllowHtml]
+            [DisplayName("Add Col Price Code")]
+            public string AddColPriceCode { get; set; }
+            [AllowHtml]
+            [DisplayName("Decal Option")]
+            public string DecalOption { get; set; }
+            [AllowHtml]
+            [DisplayName("Decal 1")]
+            public string Decal_1 { get; set; }
+            [AllowHtml]
+            [DisplayName("Decal 2")]
+            public string Decal_2 { get; set; }
+            [AllowHtml]
+            [DisplayName("Decal 3")]
+            public string Decal_3 { get; set; }
+            [AllowHtml]
+            [DisplayName("Decal 4")]
+            public string Decal_4 { get; set; }
+            [AllowHtml]
+            [DisplayName("Decal Price Code")]
+            public string DecalPriceCode { get; set; }
+            [AllowHtml]
+            [DisplayName("Laser Engraving Option")]
+            public string LaserEngravingOption { get; set; }
+            [AllowHtml]
+            [DisplayName("Laser_ ")]
+            public string Laser_1 { get; set; }
+            [AllowHtml]
+            [DisplayName("Laser 2")]
+            public string Laser_2 { get; set; }
+            [AllowHtml]
+            [DisplayName("Laser 3")]
+            public string Laser_3 { get; set; }
+            [AllowHtml]
+            [DisplayName("Laser 4")]
+            public string Laser_4 { get; set; }
+            [AllowHtml]
+            [DisplayName("Laser Price Code")]
+            public string LaserPriceCode { get; set; }
 
+        }
+
+
+        public partial class DezineCorpRelatedProductViewModel : BaseNopEntityModel
+        {
+            /// <summary>
+            /// Gets or sets the product identifier
+            /// </summary>
+            public int ProductId { get; set; }
+            [AllowHtml]
+            [DisplayName("Keyword 1")]
+            public string Related_1 { get; set; }
+            [AllowHtml]
+            [DisplayName("Keyword 2")]
+            public string Related_2 { get; set; }
+            [AllowHtml]
+            [DisplayName("Keyword 3")]
+            public string Related_3 { get; set; }
+            [AllowHtml]
+            [DisplayName("Keyword 4")]
+            public string Related_4 { get; set; }
+            [AllowHtml]
+            [DisplayName("Keyword 5")]
+            public string Related_5 { get; set; }
+            [AllowHtml]
+            [DisplayName("Keyword 6")]
+            public string Related_6 { get; set; }
+
+        }
+
+        public partial class DezineCorpProductKeywordViewModel : BaseNopEntityModel
+        {
+            public int ProductId { get; set; }
+            [AllowHtml]
+            [DisplayName("Keyword 1")]
+            public string Keyword_1 { get; set; }
+            [AllowHtml]
+            [DisplayName("Keyword 2")]
+            public string Keyword_2 { get; set; }
+            [AllowHtml]
+            [DisplayName("Keyword 3")]
+            public string Keyword_3 { get; set; }
+            [AllowHtml]
+            [DisplayName("Keyword 4")]
+            public string Keyword_4 { get; set; }
+            [AllowHtml]
+            [DisplayName("Keyword 5")]
+            public string Keyword_5 { get; set; }
+            [AllowHtml]
+            [DisplayName("Keyword 6")]
+            public string Keyword_6 { get; set; }
+            [AllowHtml]
+            [DisplayName("Keyword Color")]
+            public string Keyword_Color { get; set; }
+            [AllowHtml]
+            [DisplayName("Keyword Linename")]
+            public string keyword_Linename { get; set; }
+            [AllowHtml]
+            [DisplayName("Keyword color Primary")]
+            public string Keyword_Colour_Primary { get; set; }
+            [AllowHtml]
+            [DisplayName("Keyword color secondary")]
+            public string Keyword_Colour_Secondary { get; set; }
+
+        }
         public partial class DezineCorpDataRefOnlyViewModel : BaseNopEntityModel
         {
             public int ProductId { get; set; }
@@ -842,7 +974,52 @@ namespace Nop.Admin.Models.Catalog
             [DisplayName("INFOtrac Import Result if Error")]
             public string INFOtracImportResultifError { get; set; }
         }
+        public class DezineCorpTierPriceViewModel : BaseNopEntityModel
+        {
 
+            public int ProductId { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Quantity Level Code")]
+            public string QuantityLevel { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Price 1")]
+            public string Price1 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Price 2")]
+            public string Price2 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Price 3")]
+            public string Price3 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Price 4")]
+            public string Price4 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Price 5")]
+            public string Price5 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Price 6")]
+            public string Price6 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Price 7")]
+            public string Price7 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Price 8")]
+            public string Price8 { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Discount Code")]
+            public string DiscountCode { get; set; }
+
+        }
         public partial class DezinceCorpDataViewModel : BaseNopEntityModel
         {
             public int ProductId { get; set; }

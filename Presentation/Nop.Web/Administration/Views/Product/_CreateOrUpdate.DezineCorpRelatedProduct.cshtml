@@ -1,0 +1,72 @@
+﻿@model ProductModel
+
+<table class="adminContent">
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezineCorpRelatedProduct.Related_1)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezineCorpRelatedProduct.Related_1)
+                        @Html.ValidationMessageFor(model => model.DezineCorpRelatedProduct.Related_1)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezineCorpRelatedProduct.Related_2)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezineCorpRelatedProduct.Related_2)
+                        @Html.ValidationMessageFor(model => model.DezineCorpRelatedProduct.Related_2)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezineCorpRelatedProduct.Related_3)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezineCorpRelatedProduct.Related_3)
+                        @Html.ValidationMessageFor(model => model.DezineCorpRelatedProduct.Related_3)
+                    </td>
+                </tr>
+          
+                
+            </table>
+        </td>
+        <td>
+            <table>
+               
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezineCorpRelatedProduct.Related_4)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezineCorpRelatedProduct.Related_4)
+                        @Html.ValidationMessageFor(model => model.DezineCorpRelatedProduct.Related_4)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezineCorpRelatedProduct.Related_5)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezineCorpRelatedProduct.Related_5)
+                        @Html.ValidationMessageFor(model => model.DezineCorpRelatedProduct.Related_5)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezineCorpRelatedProduct.Related_6)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezineCorpRelatedProduct.Related_6)
+                        @Html.ValidationMessageFor(model => model.DezineCorpRelatedProduct.Related_6)
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
