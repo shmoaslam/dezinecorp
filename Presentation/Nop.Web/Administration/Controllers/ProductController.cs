@@ -39,6 +39,7 @@ using Nop.Web.Framework.Kendoui;
 using Nop.Web.Framework.Mvc;
 using Nop.Core.Caching;
 using System.Net;
+using System.Threading;
 
 namespace Nop.Admin.Controllers
 {
@@ -466,7 +467,7 @@ namespace Nop.Admin.Controllers
                     model.AssociatedToProductName = parentGroupedProduct.Name;
                 }
             }
-           
+
             model.PrimaryStoreCurrencyCode = _currencyService.GetCurrencyById(_currencySettings.PrimaryStoreCurrencyId).CurrencyCode;
             model.BaseWeightIn = _measureService.GetMeasureWeightById(_measureSettings.BaseWeightId).Name;
             model.BaseDimensionIn = _measureService.GetMeasureDimensionById(_measureSettings.BaseDimensionId).Name;
@@ -1026,7 +1027,7 @@ namespace Nop.Admin.Controllers
                 return AccessDeniedView();
 
             var product = _productService.GetProductById(id);
-            
+
             if (product == null || product.Deleted)
                 //No product found with the specified id
                 return RedirectToAction("List");
@@ -1037,12 +1038,16 @@ namespace Nop.Admin.Controllers
 
             var model = product.ToModel();
             PrepareProductModel(model, product, false, false);
+
+            #region DezineCorp
             model.DezinceCorpData = GetDezineCorpData(id);
             model.DezinceCorpDataRefOnly = GetDezinceCorpDataRefOnly(id);
             model.DezineCorpProductKeyword = GetDezineCorpProductKeyword(id);
             model.DezineCorpRelatedProduct = GetDezineCorpRelatedProduct(id);
             model.DezineCorpTierPrice = GetDezineCorpTierPrice(id);
             model.DezineCorpAdditionalPricing = GetDezineCorpAdditionalPricing(id);
+            #endregion
+
             AddLocales(_languageService, model.Locales, (locale, languageId) =>
                 {
                     locale.Name = product.GetLocalized(x => x.Name, languageId, false, false);
@@ -1060,6 +1065,54 @@ namespace Nop.Admin.Controllers
             return View(model);
         }
 
+        //bult dezinecorp import product
+        public ActionResult DezineCorpImport()
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DezineCorpImport(FormCollection formCollection)
+        {
+            if (Request != null)
+            {
+                HttpPostedFileBase file = Request.Files["UploadedFile"];
+                var allowedExtensions = new[] { ".xls" };
+                var ext = Path.GetExtension(file.FileName);
+                if (allowedExtensions.Contains(ext))
+                    if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+                    {
+                        string name = Path.GetFileNameWithoutExtension(file.FileName);
+                        string myfile = name + "_" + Guid.NewGuid() + ".xls";
+                        string fileName = file.FileName;
+                        string fileContentType = file.ContentType;
+                        byte[] fileBytes = new byte[file.ContentLength];
+                        var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                        var path = Path.Combine(Server.MapPath("~/Administration/DezineCorpImport"), myfile);
+                        file.SaveAs(path);
+                        DezineCorpImportService importservice = new DezineCorpImportService(path);
+                        Thread thread = new Thread(importservice.READExcel);
+                        thread.Start();
+
+
+                    }
+            }
+            return View();
+        }
+        public static string sharedData = "test";
+
+        public JsonResult GetImportStatus()
+        {
+            DezineCorpImportService importservice = new DezineCorpImportService(string.Empty);
+            var model = importservice.GetImportStatus();
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+        #region DezineCorp
+        [NonAction]
         private ProductModel.DezineCorpAdditionalPricingViewModel GetDezineCorpAdditionalPricing(int id)
         {
             if (id == 0) return null;
@@ -1088,7 +1141,7 @@ namespace Nop.Admin.Controllers
                 LaserPriceCode = model.LaserPriceCode
             };
         }
-
+        [NonAction]
         private ProductModel.DezineCorpTierPriceViewModel GetDezineCorpTierPrice(int id)
         {
             if (id == 0) return null;
@@ -1109,7 +1162,7 @@ namespace Nop.Admin.Controllers
                 DiscountCode = model.DiscountCode
             };
         }
-
+        [NonAction]
         private ProductModel.DezineCorpRelatedProductViewModel GetDezineCorpRelatedProduct(int id)
         {
             if (id == 0) return null;
@@ -1126,7 +1179,7 @@ namespace Nop.Admin.Controllers
                 Related_6 = model.Related_6
             };
         }
-
+        [NonAction]
         private ProductModel.DezineCorpProductKeywordViewModel GetDezineCorpProductKeyword(int id)
         {
             if (id == 0) return null;
@@ -1147,7 +1200,7 @@ namespace Nop.Admin.Controllers
                 Keyword_Colour_Secondary = model.Keyword_Colour_Secondary
             };
         }
-
+        [NonAction]
         private ProductModel.DezineCorpDataRefOnlyViewModel GetDezinceCorpDataRefOnly(int id)
         {
             if (id == 0) return null;
@@ -1186,7 +1239,7 @@ namespace Nop.Admin.Controllers
                 INFOtracImportResultifError = model.INFOtracImportResultifError,
             };
         }
-
+        [NonAction]
         private ProductModel.DezinceCorpDataViewModel GetDezineCorpData(int id)
         {
             if (id == 0) return null;
@@ -1248,6 +1301,7 @@ namespace Nop.Admin.Controllers
 
             };
         }
+        #endregion
 
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public ActionResult Edit(ProductModel model, bool continueEditing)
@@ -3397,13 +3451,14 @@ namespace Nop.Admin.Controllers
 
             return Json(gridModel);
         }
-        
+
         [HttpGet]
         public JsonResult AvailableTierPriceType(int tierPriceId)
         {
             var additionalPriceType = _additionalTierPriceService.GetAllAdditionalPriceType(tierPriceId);
 
-            var obj = additionalPriceType.Select(x => new {
+            var obj = additionalPriceType.Select(x => new
+            {
                 Id = x.Id,
                 Name = x.Type,
             }).ToList();

@@ -1959,6 +1959,13 @@ namespace Nop.Services.Catalog
             return ids.ToArray();
         }
 
+        #endregion
+
+        #endregion
+
+
+        #region DezineCorp
+
         public DezineCorpDataRefOnly GetDezinceCorpDataRefOnly(int productId)
         {
             if (productId == 0)
@@ -2005,10 +2012,7 @@ namespace Nop.Services.Catalog
                 return null;
 
             return _dezineCorpAdditionalPricingRepository.Table.FirstOrDefault(x => x.ProductId == productId);
-        }
-
-
-        #endregion
+        } 
 
         #endregion
     }
