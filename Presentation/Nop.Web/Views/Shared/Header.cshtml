@@ -10,25 +10,25 @@
     //store name
     var storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
 }
-<div class="header">
-    @Html.Widget("header")
-    <div class="header-upper">
+@Html.Widget("header")
+<!--Commenting Default header of nopCommerce Start -->
+@*<div class="header-upper">
         <div class="header-selectors-wrapper">
-            
+
             @Html.Action("TaxTypeSelector", "Common")
-            
+
             @Html.Action("CurrencySelector", "Common")
-            
+
             @Html.Action("LanguageSelector", "Common")
-            
+
             @Html.Widget("header_selectors")
         </div>
         <div class="header-links-wrapper">
             @Html.Action("HeaderLinks", "Common")
             @Html.Action("FlyoutShoppingCart", "ShoppingCart")
         </div>
-    </div>
-    <div class="header-lower">
+    </div>*@
+@*<div class="header-lower">
         <div class="header-logo">
             <a href="@Url.RouteUrl("HomePage")">
                 <img title="" alt="@storeName" src="@Url.Content(logoPath)">
@@ -37,5 +37,22 @@
         <div class="search-box store-search-box">
             @Html.Action("SearchBox", "Catalog")
         </div>
+    </div>*@
+<!--Commenting Default header of nopCommerce  End -->
+<!-- Adding Dezinecorp Header Start -->
+<div class="pd-top-1o5per">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><a href="/"><img src="~/Content/DezineCorpImages/DezineLogo.gif" alt="DezineCorp Logo" width="270px" /></a> </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 pd-top-1o5per ">
+        <div class="input-group">
+            @Html.Action("SearchBox", "Catalog")
+
+        </div>
     </div>
+    <div class="col-lg-1 col-md-1 col-sm-3  col-xs-6 pd-top-1o5per"><img src="~/Content/DezineCorpImages/flag.jpg" width="21" height="14" alt="" /></div>
+    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 pd-top-1o5per">
+        <div class="login_box"> <span><i class="fa fa-sign-in"></i>&nbsp;&nbsp;Login</span> </div>
+    </div>
+    <div class="clearfix"></div>
 </div>
+
+<!-- Adding Dezinecorp Header End -->

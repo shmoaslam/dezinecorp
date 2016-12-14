@@ -87,6 +87,7 @@ namespace Nop.Web.Framework.Themes
             string[] searched;
             var theme = GetCurrentTheme();
             string controllerName = controllerContext.RouteData.GetRequiredString("controller");
+
             string partialPath = GetPath(controllerContext, PartialViewLocationFormats, AreaPartialViewLocationFormats, "PartialViewLocationFormats", partialViewName, controllerName, theme, CacheKeyPrefixPartial, useCache, out searched);
 
             if (String.IsNullOrEmpty(partialPath))
@@ -154,6 +155,7 @@ namespace Nop.Web.Framework.Themes
 
             bool nameRepresentsPath = IsSpecificPath(name);
             string cacheKey = CreateCacheKey(cacheKeyPrefix, name, (nameRepresentsPath) ? String.Empty : controllerName, areaName, theme);
+
 
             if (useCache)
             {

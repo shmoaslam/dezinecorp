@@ -19,8 +19,11 @@ namespace Nop.Web.Models.Catalog
         public string ShortDescription { get; set; }
         public string FullDescription { get; set; }
         public string SeName { get; set; }
-
+        public string SKU { get; set; }
         public bool MarkAsNew { get; set; }
+
+
+        public string ItemIsNew { get; set; }
 
         //price
         public ProductPriceModel ProductPrice { get; set; }
@@ -54,6 +57,8 @@ namespace Nop.Web.Models.Catalog
             /// A value indicating whether we should display tax/shipping info (used in Germany)
             /// </summary>
             public bool DisplayTaxShippingInfo { get; set; }
+
+            public string PriceDesc { get; set; }
         }
 
 		#endregion

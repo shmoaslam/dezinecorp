@@ -1,20 +1,254 @@
 ﻿@{
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 }
-<div class="page home-page">
-    <div class="page-body">
-        @Html.Widget("home_page_top")
-        @Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
-        @Html.Widget("home_page_before_categories")
-        @Html.Action("HomepageCategories", "Catalog")
-        @Html.Widget("home_page_before_products")
-        @Html.Action("HomepageProducts", "Product")
-        @Html.Widget("home_page_before_best_sellers")
-        @Html.Action("HomepageBestSellers", "Product")
-        @Html.Widget("home_page_before_news")
-        @Html.Action("HomePageNews", "News")
-        @Html.Widget("home_page_before_poll")
-        @Html.Action("HomePagePolls", "Poll")
-        @Html.Widget("home_page_bottom")
+<style>
+    .carousel-indicators li {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        margin: 1px;
+        text-indent: -999px;
+        cursor: pointer;
+        background-color: #000;
+        border: 1px solid #8c2830;
+        border-radius: 10px;
+    }
+
+    .carousel-indicators .active {
+        Width: 12px;
+        Height: 12px;
+        margin: 0;
+        background-color: #8c2830;
+    }
+    .banner-image{
+        width:100%;
+    }
+</style>
+
+@Html.Widget("home_page_top")
+@*<div class="bnr" id="home">
+    <div id="top" class="callbacks_container">
+        <ul class="rslides" id="slider4">
+            <li>
+                <div class="banner-1"></div>
+            </li>
+            <li>
+                <div class="banner-2"></div>
+            </li>
+            <li>
+                <div class="banner-3"></div>
+            </li>
+            <li>
+                <div class="banner-4"></div>
+            </li>
+            <li>
+                <div class="banner-5"></div>
+            </li>
+        </ul>
+    </div>
+    <div class="clearfix"> </div>
+</div>*@
+<div id="carousel1" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carousel1" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel1" data-slide-to="1"></li>
+        <li data-target="#carousel1" data-slide-to="2"></li>
+        <li data-target="#carousel1" data-slide-to="3"></li>
+        <li data-target="#carousel1" data-slide-to="4"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <img src="~/Content/DezineCorpImages/banner-1.png" class="center-block banner-image">
+            <div class="carousel-caption">
+            </div>
+        </div>
+        <div class="item">
+            <img src="~/Content/DezineCorpImages/banner-2.png" class="center-block  banner-image">
+            <div class="carousel-caption">
+            </div>
+        </div>
+        <div class="item">
+            <img src="~/Content/DezineCorpImages/2016_Sublime_(1200x700).jpg" class="center-block banner-image">
+            <div class="carousel-caption">
+            </div>
+        </div>
+        <div class="item">
+            <img src="~/Content/DezineCorpImages/banner-4.png" class="center-block banner-image">
+            <div class="carousel-caption">
+            </div>
+        </div>
+        <div class="item">
+            <img src="~/Content/DezineCorpImages/banner-5.png" class="center-block banner-image">
+            <div class="carousel-caption">      </div>
+        </div>
+    </div>
+    @*<a class="left carousel-control" href="#carousel1" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#carousel1" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>*@
+</div>
+
+<div class="container">
+    <h1 align="center">Welcome To DezineCorp</h1>
+    <hr>
+    <h4 align="center">
+        With your customer in mind, we create the promotional products designed to make a big impact and leave a lasting impression. As a supplier and decorator in the promotional products industry, DezineCorp specializes in providing a diverse range of products and decoration techniques to promote your business, event, or special occasion. We offer a variety of decorative processes for logo and message branding, and we provide a range of drinkware, travel and business accessories, brand name products, and premium gifts to choose from. Our dedicated staff is there to help you customize the perfect combination of product, decoration and packaging to meet your every promotional need.
+    </h4>
+</div>
+<div class="container">
+    <div class="row mar-top" align="center">
+        <div class="col-md-3 mar-top">
+            <i class="fa fa-globe fa-5x"></i>
+            <h3>What We Do</h3>
+            <hr>
+            <p>DezineCorp is a leading full service supplier of decorated drinkware and accessories for the promotional industry.  Through our wide variety of high quality products and decorative services we can help to fulfill your every promotional need.</p>
+        </div>
+        <div class="col-md-3 mar-top">
+            <i class="fa fa-users fa-5x"></i>
+            <h3>Whom We Work With</h3>
+            <hr>
+            <p>We work with distributor companies in the promotional products industry to supply branded, promotional products for your event, occasion or giveaway.</p>
+        </div>
+        <div class="col-md-3 mar-top">
+            <i class="fa fa-usd fa-5x"></i>
+            <h3>What We Sell</h3>
+            <hr>
+            <p>From affordable options to premium selections, we offer product, decoration and branding for a wide range of promotional product types to fit our clients’ every need and budget.</p>
+        </div>
+        <div class="col-md-3 mar-top">
+            <i class="fa fa-magic fa-5x"></i>
+            <h3>How We Decorate</h3>
+            <hr>
+            <p>With an ever evolving selection of product and decoration techniques to choose from, we work with you to provide decoration options designed to best highlight your client’s logo or brand. Some of our options include: Screen Printing, Pad-Printing, Sublimation, Laser Engraving, Debossing and Embossing.</p>
+        </div>
     </div>
 </div>
+
+
+@Html.Widget("home_page_before_products")
+@Html.Action("HomepageProducts", "Product")
+@Html.Widget("home_page_before_best_sellers")
+<div class="boxes">
+    <div class="container">
+        <div class="abt-shoe-main">
+            <div class="col-md-3">
+                <div class="facebook-post-box">
+                    <a href="http://ecatalog.officebeacon.com/DEZINECORPINC/2016/FALL&HOLLIDAYCOLLECTION/EN/">
+                        <img src="~/Content/DezineCorpImages/2016_Fall_&Holiday_collection_flyer_(280x200.jpg" />
+                    </a>
+                </div>
+                <div class="pinterest-post-box">
+                    <a href="/gift-boxes-gift-sets">
+                        <img src="~/Content/DezineCorpImages/2016_Gift_set_(280x200).jpg" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 padding-lf-8">
+                <iframe width="100%" height="411px" src="https://www.youtube.com/embed/dIKetIWmzzs" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="col-md-3">
+                <div class="twitter-post-box">
+                    <a href="http://ecatalog.officebeacon.com/DEZINECORPINC/2016/EN">
+                        <img src="~/Content/DezineCorpImages/2016_Catalogue_(280x200).jpg" />
+                    </a>
+                </div>
+                <div class="google-post-box">
+                    <a href="http://ecatalog.officebeacon.com/DEZINECORPINC/2016/EN3/">
+                        <img src="~/Content/DezineCorpImages/2016_While_qtys_last_flyer_(280x200).jpg" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="well">
+                    <h2>News</h2>
+                    <div id="myCarousel" class="vertical-slider carousel vertical slide" data-ride="carousel">
+                        <br />
+                        <!-- Carousel items -->
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <div class="row">
+                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+                                    euismod tincidunt ut laoreet..
+                                </div>
+                            </div>
+                            <!--/item-->
+                            <div class="item ">
+                                <div class="row">
+                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+                                    euismod tincidunt ut laoreet..
+                                </div>
+                            </div>
+                            <!--/row-fluid-->
+                            <!--/item-->
+                            <div class="item ">
+                                <div class="row">
+                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+                                    euismod tincidunt ut laoreet..
+                                </div>
+                            </div>
+                            <!--/row-fluid-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 brw-cat">
+                <div class="row">
+                    <h3 align="center"><u>BROWSE BY CATEGORIES</u></h3>
+                    <div class="col-md-3">
+                        <ul style="list-style:none; font-size: 16px; color:#000 !important;">
+                            <li><a>Drinkware</a></li>
+                            <li><a>Ceramics</a></li>
+                            <li><a>Plastics</a></li>
+                            <li><a>Leather</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <ul style="list-style:none;    font-size: 16px;">
+                            <li><a>Drinkware</a></li>
+                            <li><a>Ceramics</a></li>
+                            <li><a>Plastics</a></li>
+                            <li><a>Leather</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <ul style="list-style:none;    font-size: 16px;">
+                            <li><a>Drinkware</a></li>
+                            <li><a>Ceramics</a></li>
+                            <li><a>Plastics</a></li>
+                            <li><a>Leather</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <ul style="list-style:none;    font-size: 16px;">
+                            <li><a>Drinkware</a></li>
+                            <li><a>Ceramics</a></li>
+                            <li><a>Plastics</a></li>
+                            <li><a>Leather</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="pink-well"> </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+<!-- Commenting -->
+@*@Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
+    @Html.Widget("home_page_before_categories")
+    @Html.Action("HomepageCategories", "Catalog")
+    @Html.Widget("home_page_before_products")
+    @Html.Action("HomepageProducts", "Product")
+    @Html.Widget("home_page_before_best_sellers")
+    @Html.Action("HomepageBestSellers", "Product")
+    @Html.Widget("home_page_before_news")
+    @Html.Action("HomePageNews", "News")
+    @Html.Widget("home_page_before_poll")
+    @Html.Action("HomePagePolls", "Poll")
+    @Html.Widget("home_page_bottom")*@

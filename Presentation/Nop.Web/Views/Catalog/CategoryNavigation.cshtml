@@ -56,11 +56,12 @@
 }
 @if (Model.Categories.Count > 0)
 {
-    <div class="block block-category-navigation">
+
         <div class="title">
-            <strong>@T("Categories")</strong>
+            <h2>@T("Categories")</h2>
+            <hr>
         </div>
-        <div class="listbox">
+        <div class="list-box" id="tabs">
             <ul class="list">
                 @foreach (var category in Model.Categories)
                 {
@@ -68,5 +69,4 @@
                 }
             </ul>
         </div>
-    </div>
 }

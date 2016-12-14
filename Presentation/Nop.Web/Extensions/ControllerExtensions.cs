@@ -100,6 +100,7 @@ namespace Nop.Web.Extensions
                     Name = product.GetLocalized(x => x.Name),
                     ShortDescription = product.GetLocalized(x => x.ShortDescription),
                     FullDescription = product.GetLocalized(x => x.FullDescription),
+                    SKU = product.Sku,
                     SeName = product.GetSeName(),
                     MarkAsNew = product.MarkAsNew &&
                         (!product.MarkAsNewStartDateTimeUtc.HasValue || product.MarkAsNewStartDateTimeUtc.Value < DateTime.UtcNow) &&
@@ -114,7 +115,12 @@ namespace Nop.Web.Extensions
                     {
                         ForceRedirectionAfterAddingToCart = forceRedirectionAfterAddingToCart
                     };
-
+                    if (product.DezineCorpDatas.Any())
+                    {
+                        var dezineCorpData = product.DezineCorpDatas.FirstOrDefault();
+                        if (dezineCorpData != null)
+                            priceModel.PriceDesc = dezineCorpData.VisualHeading;
+                    }
                     switch (product.ProductType)
                     {
                         case ProductType.GroupedProduct:
@@ -317,11 +323,22 @@ namespace Nop.Web.Extensions
                             }
                             break;
                     }
+                    
+
+                  
 
                     model.ProductPrice = priceModel;
 
                     #endregion
                 }
+
+                if(product.DezineCorpDatas != null)
+                    if(product.DezineCorpDatas.Any())
+                    {
+                        var dezineCorptData = product.DezineCorpDatas.FirstOrDefault();
+                        if (dezineCorptData != null)
+                            model.ItemIsNew = dezineCorptData.ItemIsNew;
+                    }
 
                 //picture
                 if (preparePictureModel)
@@ -337,7 +354,7 @@ namespace Nop.Web.Extensions
                         var picture = pictureService.GetPicturesByProductId(product.Id, 1).FirstOrDefault();
                         var pictureModel = new PictureModel
                         {
-                            ImageUrl = pictureService.GetPictureUrl(picture, pictureSize),
+                            ImageUrl = pictureService.GetPictureUrl(picture, 150),
                             FullSizeImageUrl = pictureService.GetPictureUrl(picture)
                         };
                         //"title" attribute

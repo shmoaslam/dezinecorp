@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Nop.Core.Domain.Catalog
 {
-   public class DezineCorpRelatedProduct : BaseEntity
+    public class DezineCorpRelatedProduct : BaseEntity
     {
         /// <summary>
         /// Gets or sets the product identifier

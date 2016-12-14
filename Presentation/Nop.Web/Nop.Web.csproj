@@ -324,6 +324,7 @@
     <Compile Include="Models\Common\AddressModel.cs" />
     <Compile Include="Models\Common\AdminHeaderLinksModel.cs" />
     <Compile Include="Models\Common\AddressAttributeModel.cs" />
+    <Compile Include="Models\Common\CareerEmailModel.cs" />
     <Compile Include="Models\Common\ContactVendorModel.cs" />
     <Compile Include="Models\Common\FooterModel.cs" />
     <Compile Include="Models\Common\FaviconModel.cs" />
@@ -398,6 +399,7 @@
     <Compile Include="Validators\Catalog\ProductEmailAFriendValidator.cs" />
     <Compile Include="Validators\Catalog\ProductReviewsValidator.cs" />
     <Compile Include="Validators\Common\AddressValidator.cs" />
+    <Compile Include="Validators\Common\CareerEmailValidator.cs" />
     <Compile Include="Validators\Common\ContactVendorValidator.cs" />
     <Compile Include="Validators\Vendors\ApplyVendorValidator.cs" />
     <Compile Include="Validators\Customer\LoginValidator.cs" />
@@ -466,6 +468,37 @@
     <Content Include="Content\BBEditor\images\underline.gif" />
     <Content Include="Content\BBEditor\images\unlink.gif" />
     <Content Include="Content\BBEditor\images\unordered.gif" />
+    <Content Include="Content\DezineCorpCSS\bootstrap.css" />
+    <Content Include="Content\DezineCorpCSS\flexslider.css" />
+    <Content Include="Content\DezineCorpCSS\jquery.social-buttons.css" />
+    <Content Include="Content\DezineCorpCSS\site.css" />
+    <Content Include="Content\DezineCorpCSS\sm-core-css.css" />
+    <Content Include="Content\DezineCorpCSS\sm-simple.css" />
+    <Content Include="Content\DezineCorpCSS\style.css" />
+    <Content Include="Content\DezineCorpCSS\styles.css" />
+    <Content Include="Content\DezineCorpImages\0005953.jpg" />
+    <Content Include="Content\DezineCorpImages\2016_Brands_Slider_Update%28740x372%29_revised2.jpg" />
+    <Content Include="Content\DezineCorpImages\2016_Catalogue_%28280x200%29.jpg" />
+    <Content Include="Content\DezineCorpImages\2016_Fall_&amp;Holiday_collection_flyer_%28280x200.jpg" />
+    <Content Include="Content\DezineCorpImages\2016_Gift_set_%28280x200%29.jpg" />
+    <Content Include="Content\DezineCorpImages\2016_Metals_Stainless_Steel%28740x372%29.jpg" />
+    <Content Include="Content\DezineCorpImages\2016_Reactive_Glaze%28740x372%29.jpg" />
+    <Content Include="Content\DezineCorpImages\2016_Stanley_Update%28740x372%29_.jpg" />
+    <Content Include="Content\DezineCorpImages\2016_Sublime_%281200x700%29.jpg" />
+    <Content Include="Content\DezineCorpImages\2016_Sublime_Update%28740x372%29_.jpg" />
+    <Content Include="Content\DezineCorpImages\2016_While_qtys_last_flyer_%28280x200%29.jpg" />
+    <Content Include="Content\DezineCorpImages\ASI_Logo%28100x50%29.png" />
+    <Content Include="Content\DezineCorpImages\banner-1.png" />
+    <Content Include="Content\DezineCorpImages\banner-2.png" />
+    <Content Include="Content\DezineCorpImages\banner-4.png" />
+    <Content Include="Content\DezineCorpImages\banner-5.png" />
+    <Content Include="Content\DezineCorpImages\DezineLogo.gif" />
+    <Content Include="Content\DezineCorpImages\flag.jpg" />
+    <Content Include="Content\DezineCorpImages\loader.gif" />
+    <Content Include="Content\DezineCorpImages\new_logo.gif" />
+    <Content Include="Content\DezineCorpImages\PPAI_Logo%28100x50%29.png" />
+    <Content Include="Content\DezineCorpImages\PPPC_Logo%28100x50%29.png" />
+    <Content Include="Content\DezineCorpImages\SAGE_Logo%28100x50%29.png" />
     <Content Include="Content\fancybox\blank.gif" />
     <Content Include="Content\fancybox\fancybox-x.png" />
     <Content Include="Content\fancybox\fancybox-y.png" />
@@ -493,6 +526,7 @@
     <Content Include="Content\farbtastic\wheel.png" />
     <Content Include="Content\files\ExportImport\Index.htm" />
     <Content Include="Content\files\Index.htm" />
+    <Content Include="Content\fonts\flexslider-icon.svg" />
     <Content Include="Content\Images\default-image.png" />
     <Content Include="Content\kendo\2014.1.318\Black\editor.png" />
     <Content Include="Content\kendo\2014.1.318\Black\imagebrowser.png" />
@@ -1080,6 +1114,15 @@
     <Content Include="Content\tinymce\skins\lightgray\skin.min.css" />
     <Content Include="Content\tinymce\themes\modern\theme.min.js" />
     <Content Include="Content\tinymce\tinymce.min.js" />
+    <Content Include="Scripts\DezineCorp\bootstrap.js" />
+    <Content Include="Scripts\DezineCorp\jquery.elevateZoom-3.0.8.min.js" />
+    <Content Include="Scripts\DezineCorp\jquery.flexslider.js" />
+    <Content Include="Scripts\DezineCorp\jquery.jscroll.min.js" />
+    <Content Include="Scripts\DezineCorp\jquery.smartmenus.min.js" />
+    <Content Include="Scripts\DezineCorp\jquery.social-buttons.js" />
+    <Content Include="Scripts\DezineCorp\move-top.js" />
+    <Content Include="Scripts\DezineCorp\responsiveCarousel.min.js" />
+    <Content Include="Scripts\DezineCorp\responsiveslides.min.js" />
     <Content Include="Scripts\fineuploader\edit.gif" />
     <Content Include="Scripts\fineuploader\fineuploader-4.2.2.css" />
     <Content Include="Scripts\fineuploader\fineuploader-4.2.2.min.css" />
@@ -1154,7 +1197,11 @@
     <Content Include="Content\Roxy_Fileman\lang\it.json" />
     <Content Include="Content\Roxy_Fileman\lang\pl.json" />
     <Content Include="Content\Roxy_Fileman\lang\pt.json" />
+    <Content Include="Content\fonts\flexslider-icon.eot" />
+    <Content Include="Content\fonts\flexslider-icon.ttf" />
+    <Content Include="Content\fonts\flexslider-icon.woff" />
     <None Include="Properties\PublishProfiles\DezineCorp.pubxml" />
+    <None Include="Properties\PublishProfiles\FTP_DEV_SERVER.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fineuploader\iframe.xss.response-4.2.2.js" />
     <Content Include="Scripts\fineuploader\jquery.fineuploader-4.2.2.js" />
@@ -1173,6 +1220,8 @@
     <Content Include="Scripts\jquery.tmpl.min.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\kendo\2014.1.318\cultures\kendo.culture.af-ZA.min.js" />
     <Content Include="Scripts\kendo\2014.1.318\cultures\kendo.culture.af.min.js" />
     <Content Include="Scripts\kendo\2014.1.318\cultures\kendo.culture.am-ET.min.js" />
@@ -1685,7 +1734,6 @@
     <Content Include="Themes\DefaultClean\Content\images\ie_warning.jpg" />
     <Content Include="Themes\DefaultClean\Content\images\last.png" />
     <Content Include="Themes\DefaultClean\Content\images\loading.gif" />
-    <Content Include="Themes\DefaultClean\Content\images\logo.png" />
     <Content Include="Themes\DefaultClean\Content\images\menu-icon.png" />
     <Content Include="Themes\DefaultClean\Content\images\move.png" />
     <Content Include="Themes\DefaultClean\Content\images\new.png" />
@@ -2040,6 +2088,9 @@
     <Content Include="Views\Catalog\_CatalogSelectors.cshtml" />
     <Content Include="Views\Vendor\ApplyVendor.cshtml" />
     <Content Include="Views\Product\_Discontinued.cshtml" />
+    <Content Include="Views\Common\CareerEmail.cshtml" />
+    <Content Include="Views\Shared\_SubmitMessage.cshtml" />
+    <Content Include="Views\Common\_SubmitMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Roxy_Fileman\tmp\" />

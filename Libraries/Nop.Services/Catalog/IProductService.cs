@@ -429,6 +429,8 @@ namespace Nop.Services.Catalog
         /// <param name="productPicture">Product picture</param>
         void UpdateProductPicture(ProductPicture productPicture);
 
+
+
         #endregion
 
         #region Product reviews
@@ -485,6 +487,8 @@ namespace Nop.Services.Catalog
         DezineCorpRelatedProduct GetDezineCorpRelatedProduct(int id);
         DezineCorpTierPrice GetDezineCorpTierPrice(int id);
         DezineCorpAdditionalPricing GetDezineCorpAdditionalPricing(int id);
+        string[] GetPricingSlab(string PriceCode);
+        IList<Product> GetProductsByFamilyCode(string familyCode);
         #endregion
     }
 }

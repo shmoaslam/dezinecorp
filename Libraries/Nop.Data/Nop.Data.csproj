@@ -70,6 +70,7 @@
     <Compile Include="Mapping\Catalog\DezineCorpProductKeywordMap.cs" />
     <Compile Include="Mapping\Catalog\DezineCorpRelatedProductMap.cs" />
     <Compile Include="Mapping\Catalog\DezineCorpTierPriceMap.cs" />
+    <Compile Include="Mapping\Catalog\DezineCorpTierPricingSlabMap.cs" />
     <Compile Include="Mapping\Catalog\PredefinedProductAttributeValueMap.cs" />
     <Compile Include="Mapping\Common\AddressAttributeMap.cs" />
     <Compile Include="Mapping\Common\AddressAttributeValueMap.cs" />

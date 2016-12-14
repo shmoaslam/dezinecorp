@@ -3,167 +3,295 @@
 @using Nop.Core.Domain.Tax
 @using Nop.Core.Infrastructure
 @using Nop.Web.Models.Common;
+
+<style>
+    .modal-header {
+        background-color: #8C2830;
+        color: white;
+    }
+</style>
+
 <div class="footer">
-    <div class="footer-upper">
-        <div class="footer-block information">
-            <div class="title">
-                <strong>@T("Footer.Information")</strong>
+    <div class="container">
+        <div class="footer-top">
+            <div class="col-md-3 footer-left">
+                <h3>COMPANY</h3>
+                <ul>
+                    <li><a data-toggle="modal" data-target="#aboutUsModel" style="cursor:pointer;">About Us</a></li>
+                    <li><a data-toggle="modal" data-target="#careersModel" style="cursor:pointer;">Careers</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
             </div>
-            <ul class="list">
-                @if (Model.SitemapEnabled)
-                {
-                    <li><a href="@Url.RouteUrl("Sitemap")">@T("Sitemap")</a></li>
-                }
-                @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn1).ToList())
-                {
-                    <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
-                }
-                <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
-            </ul>
-        </div>
-        <div class="footer-block customer-service">
-            <div class="title">
-                <strong>@T("Footer.CustomerService")</strong>
+            <div class="col-md-3 footer-left">
+                <h3>ADDITIONAL INFO</h3>
+                <ul>
+                    <li><a href="#">What’s New</a></li>
+                    <li><a href="#">Meet our Partner Brands</a></li>
+                    <li><a href="#">Subscribe to our Email Promotions</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
             </div>
-            <ul class="list">
-                <li><a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a> </li>
-                @if (Model.NewsEnabled)
-                {
-                    <li><a href="@Url.RouteUrl("NewsArchive")">@T("News")</a></li>
-                }
-                @if (Model.BlogEnabled)
-                {
-                    <li><a href="@Url.RouteUrl("Blog")">@T("Blog")</a></li>
-                }
-                @if (Model.ForumEnabled)
-                {
-                    <li><a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a></li>
-                }
-                @if (Model.RecentlyViewedProductsEnabled)
-                {
-                    <li><a href="@Url.RouteUrl("RecentlyViewedProducts")">@T("Products.RecentlyViewedProducts")</a></li>
-                }
-                @if (Model.CompareProductsEnabled)
-                {
-                    <li><a href="@Url.RouteUrl("CompareProducts")">@T("Products.Compare.List")</a></li>
-                }
-                @if (Model.NewProductsEnabled)
-                {
-                    <li><a href="@Url.RouteUrl("NewProducts")">@T("Products.NewProducts")</a></li>
-                }
-                @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn2).ToList())
-                {
-                    <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
-                }
-            </ul>
-        </div>
-        <div class="footer-block my-account">
-            <div class="title">
-                <strong>@T("Footer.MyAccount")</strong>
+            <div class="col-md-3 footer-left">
+                <h3>CUSTOMER SERVICES</h3>
+                <ul>
+                    <li><a href="#">My Account</a></li>
+                    <li><a href="#">Samples / Quotes</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Customer Service</a></li>
+                </ul>
             </div>
-            <ul class="list">
-                <li><a href="@Url.RouteUrl("CustomerInfo")">@T("Account.MyAccount")</a></li>
-                <li><a href="@Url.RouteUrl("CustomerOrders")">@T("Account.CustomerOrders")</a></li>
-                <li><a href="@Url.RouteUrl("CustomerAddresses")">@T("Account.CustomerAddresses")</a></li>
-                @if (Model.ShoppingCartEnabled)
-                {
-                    <li><a href="@Url.RouteUrl("ShoppingCart")">@T("ShoppingCart")</a></li>
-                }
-                @if (Model.WishlistEnabled)
-                {
-                    <li><a href="@Url.RouteUrl("Wishlist")">@T("Wishlist")</a></li>
-                }
-                @if (Model.AllowCustomersToApplyForVendorAccount)
-                {
-                    <li><a href="@Url.RouteUrl("ApplyVendorAccount")">@T("Vendors.ApplyAccount")</a></li>
-                }
-                @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn3).ToList())
-                {
-                    <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
-                }
-            </ul>
-        </div>
-        <div class="footer-block follow-us">
-            <div class="social">
-                <div class="title">
-                    <strong>@T("Footer.FollowUs")</strong>
+            <div class="col-md-3 footer-left">
+                <p>
+                    <img src="~/Content/DezineCorpImages/PPPC_Logo(100x50).png" />
+                    <img src="~/Content/DezineCorpImages/SAGE_Logo(100x50).png" />
+                    <img src="~/Content/DezineCorpImages/ASI_Logo(100x50).png" />
+                    <img src="~/Content/DezineCorpImages/PPAI_Logo(100x50).png" />
+                </p>
+                <div class="social">
+                    <div class="social__item pull-left"> <span class="fa fa-facebook" data-count="..." data-social="fb"></span> </div>
+                    <div class="social__item pull-left"> <span class="fa fa-pinterest" data-count="..." data-social="pt"></span> </div>
+                    <div class="social__item pull-left"> <span class="fa fa-twitter" data-count="..." data-social="tw"></span> </div>
+                    <div class="social__item pull-left"> <span class="fa fa-google-plus" data-count="..." data-social="tw"></span> </div>
                 </div>
-                <ul class="networks">
-                    @if (!string.IsNullOrEmpty(Model.FacebookLink))
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+<div class="footer-text">
+    <div class="container">
+        <div class="footer-main">
+            <p class="footer-class pull-left">Powered by nopCommerce</p>
+            <p class="footer-class pull-right"> Copyright © 2016 DezineCorp. All rights reserved. </p>
+        </div>
+    </div>
+    <a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+</div>
+<div id="aboutUsModel" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">About Us</h4>
+            </div>
+            <div class="modal-body">
+                <p>DezineCorp Inc. is a leading full service supplier of decorated drinkware and accessories for the promotional industry.  Through our wide variety of high quality products and decorative services we can help to fulfill your every promotional need.</p>
+                <p>
+                    We work with distributor companies in the promotional products industry to supply branded, promotional products for your event, occasion or giveaway.
+                </p>
+                <p>
+                    From affordable options to premium selections, we offer product, decoration and branding for a wide range of promotional product types to fit our clients’ every need and budget.
+                </p>
+                <p>
+                    With an ever evolving selection of product and decoration techniques to choose from, we work with you to provide decoration options designed to best highlight your client’s logo or brand.  Some of our options include:  Screen Printing, Pad-Printing, Sublimation, Laser Engraving, Debossing and Embossing
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="careersModel" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Careers</h4>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom:15px">
+                    At DezineCorp we strive to build a team where voices are heard and suggestions for improvement are encouraged.  Our core values of teamwork, value, connections and trust build the foundation for every position.  With tremendous respect for tried and true methods of serving our customers, we are firmly focused on innovating to improve our service and quality.
+                </p>
+                <p style="margin-bottom:15px">
+                    If you are interested in what we have to offer, please send your cover letter and resume to <span style="color:#C0504D;">jobs@dezinecorp.com.</span>  
+                </p>
+                <p style="margin-bottom:15px">
+                    Current Opportunities include:
+                </p>
+                <p style="margin-bottom:15px"><a id="account-repre-form" style="color:#C0504D;">Account Representative</a></p>
+                <p style="margin-bottom:15px"><a id="shipper-receiver-form" style="color:#C0504D;">Shipper/Receiver</a></p>
+                <div style="display:none" id="career-form" align="center">
+                    @Html.Action("CareerEmail", "Common")
+                    <br />
+                    <br />
+                </div>
+                <br />
+                <p>
+                    <i>
+                        DezineCorp is an equal opportunity employer.  <u>Please no phone calls and walk-ins will not been seen.</u>  If you require assistance submitting your cover letter/resume by a method other than email, contact our Customer Service team for support.
+                    </i>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="footer">
+        <div class="footer-upper">
+            <div class="footer-block information">
+                <div class="title">
+                    <strong>@T("Footer.Information")</strong>
+                </div>
+                <ul class="list">
+                    @if (Model.SitemapEnabled)
                     {
-                        <li class="facebook"><a href="@Model.FacebookLink" target="_blank">@T("Footer.FollowUs.Facebook")</a></li>
+                        <li><a href="@Url.RouteUrl("Sitemap")">@T("Sitemap")</a></li>
                     }
-                    @if (!string.IsNullOrEmpty(Model.TwitterLink))
+                    @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn1).ToList())
                     {
-                        <li class="twitter"><a href="@Model.TwitterLink" target="_blank">@T("Footer.FollowUs.Twitter")</a></li>
+                        <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
                     }
+                    <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
+                </ul>
+            </div>
+            <div class="footer-block customer-service">
+                <div class="title">
+                    <strong>@T("Footer.CustomerService")</strong>
+                </div>
+                <ul class="list">
+                    <li><a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a> </li>
                     @if (Model.NewsEnabled)
                     {
-                        <li class="rss"><a href="@Url.RouteUrl("NewsRSS", new {languageId = Model.WorkingLanguageId})">@T("Footer.FollowUs.RSS")</a></li>
+                        <li><a href="@Url.RouteUrl("NewsArchive")">@T("News")</a></li>
                     }
-                    @if (!string.IsNullOrEmpty(Model.YoutubeLink))
+                    @if (Model.BlogEnabled)
                     {
-                        <li class="youtube"><a href="@Model.YoutubeLink" target="_blank">@T("Footer.FollowUs.Youtube")</a></li>
+                        <li><a href="@Url.RouteUrl("Blog")">@T("Blog")</a></li>
                     }
-                    @if (!string.IsNullOrEmpty(Model.GooglePlusLink))
+                    @if (Model.ForumEnabled)
                     {
-                        <li class="google-plus"><a href="@Model.GooglePlusLink" target="_blank">@T("Footer.FollowUs.GooglePlus")</a></li>
+                        <li><a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a></li>
+                    }
+                    @if (Model.RecentlyViewedProductsEnabled)
+                    {
+                        <li><a href="@Url.RouteUrl("RecentlyViewedProducts")">@T("Products.RecentlyViewedProducts")</a></li>
+                    }
+                    @if (Model.CompareProductsEnabled)
+                    {
+                        <li><a href="@Url.RouteUrl("CompareProducts")">@T("Products.Compare.List")</a></li>
+                    }
+                    @if (Model.NewProductsEnabled)
+                    {
+                        <li><a href="@Url.RouteUrl("NewProducts")">@T("Products.NewProducts")</a></li>
+                    }
+                    @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn2).ToList())
+                    {
+                        <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
                     }
                 </ul>
             </div>
-            @Html.Action("NewsletterBox", "Newsletter")
-        </div>
-    </div>
-    <div class="footer-lower">
-        <div class="footer-info">
-            <span class="footer-disclaimer">@T("Content.CopyrightNotice", DateTime.Now.Year, Model.StoreName)</span>
-            @if (Model.DisplayTaxShippingInfoFooter)
-            {
-                var inclTax = EngineContext.Current.Resolve<IWorkContext>().TaxDisplayType == TaxDisplayType.IncludingTax;
-                <span class="footer-tax-shipping">
-                    @T(inclTax ? "Footer.TaxShipping.InclTax" : "Footer.TaxShipping.ExclTax", Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("shippinginfo")}))
-                </span>
-            }
-        </div>
-        @if (!Model.HidePoweredByNopCommerce)
-        {
-            <div class="footer-powered-by">
-                @*Would you like to remove the "Powered by nopCommerce" link in the bottom of the footer?
-                    Find more info at http://www.nopcommerce.com/copyrightremoval.aspx*@
-                Powered by <a href="http://www.nopcommerce.com/">nopCommerce</a>
+            <div class="footer-block my-account">
+                <div class="title">
+                    <strong>@T("Footer.MyAccount")</strong>
+                </div>
+                <ul class="list">
+                    <li><a href="@Url.RouteUrl("CustomerInfo")">@T("Account.MyAccount")</a></li>
+                    <li><a href="@Url.RouteUrl("CustomerOrders")">@T("Account.CustomerOrders")</a></li>
+                    <li><a href="@Url.RouteUrl("CustomerAddresses")">@T("Account.CustomerAddresses")</a></li>
+                    @if (Model.ShoppingCartEnabled)
+                    {
+                        <li><a href="@Url.RouteUrl("ShoppingCart")">@T("ShoppingCart")</a></li>
+                    }
+                    @if (Model.WishlistEnabled)
+                    {
+                        <li><a href="@Url.RouteUrl("Wishlist")">@T("Wishlist")</a></li>
+                    }
+                    @if (Model.AllowCustomersToApplyForVendorAccount)
+                    {
+                        <li><a href="@Url.RouteUrl("ApplyVendorAccount")">@T("Vendors.ApplyAccount")</a></li>
+                    }
+                    @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn3).ToList())
+                    {
+                        <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+                    }
+                </ul>
             </div>
-        }
-        @Html.Action("StoreThemeSelector", "Common")
+            <div class="footer-block follow-us">
+                <div class="social">
+                    <div class="title">
+                        <strong>@T("Footer.FollowUs")</strong>
+                    </div>
+                    <ul class="networks">
+                        @if (!string.IsNullOrEmpty(Model.FacebookLink))
+                        {
+                            <li class="facebook"><a href="@Model.FacebookLink" target="_blank">@T("Footer.FollowUs.Facebook")</a></li>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.TwitterLink))
+                        {
+                            <li class="twitter"><a href="@Model.TwitterLink" target="_blank">@T("Footer.FollowUs.Twitter")</a></li>
+                        }
+                        @if (Model.NewsEnabled)
+                        {
+                            <li class="rss"><a href="@Url.RouteUrl("NewsRSS", new {languageId = Model.WorkingLanguageId})">@T("Footer.FollowUs.RSS")</a></li>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.YoutubeLink))
+                        {
+                            <li class="youtube"><a href="@Model.YoutubeLink" target="_blank">@T("Footer.FollowUs.Youtube")</a></li>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.GooglePlusLink))
+                        {
+                            <li class="google-plus"><a href="@Model.GooglePlusLink" target="_blank">@T("Footer.FollowUs.GooglePlus")</a></li>
+                        }
+                    </ul>
+                </div>
+                @Html.Action("NewsletterBox", "Newsletter")
+            </div>
+        </div>
+        <div class="footer-lower">
+            <div class="footer-info">
+                <span class="footer-disclaimer">@T("Content.CopyrightNotice", DateTime.Now.Year, Model.StoreName)</span>
+                @if (Model.DisplayTaxShippingInfoFooter)
+                {
+                    var inclTax = EngineContext.Current.Resolve<IWorkContext>().TaxDisplayType == TaxDisplayType.IncludingTax;
+                    <span class="footer-tax-shipping">
+                        @T(inclTax ? "Footer.TaxShipping.InclTax" : "Footer.TaxShipping.ExclTax", Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("shippinginfo")}))
+                    </span>
+                }
+            </div>
+            @if (!Model.HidePoweredByNopCommerce)
+            {
+                <div class="footer-powered-by">
+                    Powered by <a href="http://www.nopcommerce.com/">nopCommerce</a>
+                </div>
+            }
+            @Html.Action("StoreThemeSelector", "Common")
+        </div>
+        @Html.Widget("footer")
     </div>
-    @Html.Widget("footer")
-</div>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.footer-block .title').click(function () {
-            var e = window, a = 'inner';
-            if (!('innerWidth' in window)) {
-                a = 'client';
-                e = document.documentElement || document.body;
-            }
-            var result = { width: e[a + 'Width'], height: e[a + 'Height'] };
-            if (result.width < 769) {
-                $(this).siblings('.list').slideToggle('slow');
-            }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.footer-block .title').click(function () {
+                var e = window, a = 'inner';
+                if (!('innerWidth' in window)) {
+                    a = 'client';
+                    e = document.documentElement || document.body;
+                }
+                var result = { width: e[a + 'Width'], height: e[a + 'Height'] };
+                if (result.width < 769) {
+                    $(this).siblings('.list').slideToggle('slow');
+                }
+            });
         });
-    });
-</script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.block .title').click(function () {
-            var e = window, a = 'inner';
-            if (!('innerWidth' in window)) {
-                a = 'client';
-                e = document.documentElement || document.body;
-            }
-            var result = { width: e[a + 'Width'], height: e[a + 'Height'] };
-            if (result.width < 1001) {
-                $(this).siblings('.listbox').slideToggle('slow');
-            }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.block .title').click(function () {
+                var e = window, a = 'inner';
+                if (!('innerWidth' in window)) {
+                    a = 'client';
+                    e = document.documentElement || document.body;
+                }
+                var result = { width: e[a + 'Width'], height: e[a + 'Height'] };
+                if (result.width < 1001) {
+                    $(this).siblings('.listbox').slideToggle('slow');
+                }
+            });
         });
-    });
-</script>
+    </script>*@

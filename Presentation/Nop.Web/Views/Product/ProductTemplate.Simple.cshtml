@@ -51,105 +51,460 @@
     @Html.Partial("_ProductBreadcrumb", Model.Breadcrumb)
 }
 @Html.Widget("productdetails_after_breadcrumb", Model.Id)
-<div class="page product-details-page">
-    <div class="page-body">
-        @Html.Widget("productdetails_top", Model.Id)
-        @using (Html.BeginRouteForm("Product", new { SeName = Model.SeName }, FormMethod.Post, new { id = "product-details-form" }))
-        {
-            <div itemscope itemtype="http://schema.org/Product" data-productid="@Model.Id">
-                <div class="product-essential">
-                    @Html.Widget("productdetails_before_pictures", Model.Id)
-                    <!--product pictures-->
-                    @Html.Partial("_ProductDetailsPictures", Model)
-                    @Html.Widget("productdetails_after_pictures", Model.Id)
-                    <div class="overview">
-                        @Html.Partial("_Discontinued", Model)
-                        <div class="product-name">
-                            <h1 itemprop="name">
-                                @Model.Name
-                            </h1>
-                        </div>
-                        @if (!String.IsNullOrEmpty(Model.ShortDescription))
-                        {
-                            <div class="short-description">
-                                @Html.Raw(Model.ShortDescription)
-                            </div>
-                        }
-                        @Html.Widget("productdetails_overview_top", Model.Id)
-                        <!--product reviews-->
-                        @Html.Partial("_ProductReviewOverview", Model.ProductReviewOverview)
-                        <!--manufacturers-->
-                        @Html.Partial("_ProductManufacturers", Model.ProductManufacturers)
-                        <!--availability-->
-                        @Html.Partial("_Availability", Model)
-                        <!--SKU, MAN, GTIN, vendor-->
-                        @Html.Partial("_SKU_Man_GTIN_Ven", Model)
-                        <!--delivery-->
-                        @Html.Partial("_DeliveryInfo", Model)
-                        <!--sample download-->
-                        @Html.Partial("_DownloadSample", Model)
-                        <!--attributes-->
-                        @{
-                            var dataDictAttributes = new ViewDataDictionary();
-                            dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", Model.Id);
-                            @Html.Partial("_ProductAttributes", Model.ProductAttributes, dataDictAttributes)
-                        }
-                        <!--gift card-->
-                        @{
-                            var dataDictGiftCard = new ViewDataDictionary();
-                            dataDictGiftCard.TemplateInfo.HtmlFieldPrefix = string.Format("giftcard_{0}", Model.Id);
-                            @Html.Partial("_GiftCardInfo", Model.GiftCard, dataDictGiftCard)
-                        }
-                        <!--rental info-->
-                        @{
-                            var dataDictRental = new ViewDataDictionary();
-                            dataDictRental.TemplateInfo.HtmlFieldPrefix = string.Format("rental_{0}", Model.Id);
-                            @Html.Partial("_RentalInfo", Model, dataDictRental)
-                        }
-                        <!--price & add to cart-->
-                        @{
-                            //Dezinecorp dont require price to be display on the detial page.
-                            @*var dataDictPrice = new ViewDataDictionary();
-                            dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
-                            @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)*@
+<style>
+    .comp {
+        background: #fff;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        -ms-border-radius: 12px;
+        border-radius: 2px;
+        padding: 20px;
+        box-shadow: 0 0 4px #f0f0f0;
+    }
 
-                            @Html.Partial("_ProductTierPrices", Model.TierPrices)
+    .carousel {
+        margin-bottom: 0;
+    }
+</style>
 
-                            var dataDictAddToCart = new ViewDataDictionary();
-                            dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
-                            @Html.Partial("_AddToCart", Model.AddToCart, dataDictAddToCart)
-                        }
-                        <!--wishlist, compare, email a friend-->
-                        <div class="overview-buttons">
-                            @Html.Widget("productdetails_inside_overview_buttons_before", Model.Id)
-                            @{
-                                var dataDictAddToWishlist = new ViewDataDictionary();
-                                dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
-                                @Html.Partial("_AddToWishlist", Model.AddToCart, dataDictAddToWishlist)
+<div class="container" id="product-desc">
+
+    <div class="col-md-6 ">
+        <div class="text-center comp">
+            @Html.Partial("_ProductDetailsPictures", Model)
+        </div>
+       
+        <div class="clearfix"></div>
+        <div class="row text-center">
+            <div class="col-md-6"> @Html.Partial("_ProductEmailAFriendButton", Model)</div>
+            <div class="col-md-6"><div class="product-detail-function-button"><span class="fa fa-print email_a_friend" onclick="printSection('product-desc')"></span></div></div>
+        </div>
+        
+    </div>
+    <div class="col-md-6 compDescription pull-right">
+        <div class="text-center"><h1>@Model.Name</h1></div>
+        <hr />
+        <h3>@Model.Sku</h3>
+        <p>@Model.ShortDescription</p>
+        <div class="card pd-top-1o5per">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#price" aria-controls="messages" role="tab" data-toggle="tab">Pricing</a></li>
+                <li role="presentation"><a href="#features" aria-controls="home" role="tab" data-toggle="tab">Features</a></li>
+                <li role="presentation"><a href="#spec" aria-controls="profile" role="tab" data-toggle="tab">Specifications</a></li>
+                @*<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Setup</a></li>*@
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="price">
+                    <br />
+                    <table class="table table-responsive">
+                        <tbody>
+
+                            @if (Model.DTierPrices != null)
+                            {
+                                foreach (var tierprice in Model.DTierPrices)
+                                {
+                                    if (tierprice.PriceName.Equals("Quantity"))
+                                    {
+                                        <tr style="color: white;background-color: #910A30;font-weight:bold;">
+                                            <th scope="col">@tierprice.PriceName</th>
+                                            <th scope="col">@tierprice.Price1</th>
+                                            <th scope="col">@tierprice.Price2</th>
+                                            <th scope="col">@tierprice.Price3</th>
+                                            <th scope="col">@tierprice.Price4</th>
+                                            <th scope="col">@tierprice.DiscountCode</th>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+
+                                        var isPriceRow = tierprice.PriceName.Equals("Price", StringComparison.OrdinalIgnoreCase);
+                                        <tr style="color:Black;background-color:#EEEEEE;@(isPriceRow ? "border-bottom: 2px solid #910A30;" : string.Empty)">
+                                            <td>@tierprice.PriceName</td>
+                                            <td>@tierprice.Price1</td>
+                                            <td>@tierprice.Price2</td>
+                                            <td>@tierprice.Price3</td>
+                                            <td>@tierprice.Price4</td>
+                                            <td>@tierprice.DiscountCode</td>
+                                        </tr>
+                                    }
+                                }
                             }
-                            @Html.Partial("_CompareProductsButton", Model)
-                            @Html.Partial("_ProductEmailAFriendButton", Model)
-                            @Html.Widget("productdetails_inside_overview_buttons_after", Model.Id)
+
+                        </tbody>
+                    </table>
+                    <p>@Model.DData.PricingFooterNote</p>
+                    <h3>Setup</h3>
+                    <table class="table table-responsive">
+                        <tbody>
+                            @if (!string.IsNullOrEmpty(Model.DData.SetupPerColour))
+                            {
+                                <tr>
+                                    <td><strong> Setup Per Colour:</strong></td>
+                                    <td>@Model.DData.SetupPerColour</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.DData.RepeatSetup))
+                            {
+                                <tr>
+                                    <td><strong> Repeat Setup Per Colour:</strong></td>
+                                    <td>@Model.DData.RepeatSetup</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.DData.DebossSetup))
+                            {
+                                <tr>
+                                    <td><strong> Deboss & Die Setup:</strong></td>
+                                    <td>@Model.DData.DebossSetup</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.DData.RepeatDeboss))
+                            {
+                                <tr>
+                                    <td><strong> Repeat Deboss:</strong></td>
+                                    <td>@Model.DData.RepeatDeboss</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.DData.DecalSetup))
+                            {
+                                <tr>
+                                    <td><strong> Decal Setup Per Colour :</strong></td>
+                                    <td>@Model.DData.DecalSetup</td>
+                                </tr>
+                            }
+
+                            @if (!string.IsNullOrEmpty(Model.DData.RepeatDecal))
+                            {
+                                <tr>
+                                    <td><strong> Repeat Decal Setup Per Colour :</strong></td>
+                                    <td>@Model.DData.RepeatDecal</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.DData.LaserSetup))
+                            {
+                                <tr>
+                                    <td><strong> Laser Engraving Setup:</strong></td>
+                                    <td>@Model.DData.LaserSetup</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.DData.RepeatLaser))
+                            {
+                                <tr>
+                                    <td><strong> Repeat Laser Engraving Setup:</strong></td>
+                                    <td>@Model.DData.RepeatLaser</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.DData.AdditionalCharge1))
+                            {
+                                <tr>
+                                    <td><strong> Additional Charge:</strong></td>
+                                    <td>@Model.DData.AdditionalCharge1</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.DData.AdditionalCharge2))
+                            {
+                                <tr>
+                                    <td><strong> Additional Charge:</strong></td>
+                                    <td>@Model.DData.AdditionalCharge2</td>
+                                </tr>
+                            }
+
+                            @if (!string.IsNullOrEmpty(Model.DData.AdditionalCharge3))
+                            {
+                                <tr>
+                                    <td><strong> Additional Charge:</strong></td>
+                                    <td>@Model.DData.AdditionalCharge3</td>
+                                </tr>
+                            }
+
+                            @if (!string.IsNullOrEmpty(Model.DData.AdditionalCharge4))
+                            {
+                                <tr>
+                                    <td><strong> Additional Charge:</strong></td>
+                                    <td>@Model.DData.AdditionalCharge4</td>
+                                </tr>
+                            }
+
+                            <tr><td><strong>Repeat Setup Per Colour:</strong></td><td>$50 (g)</td></tr>
+                        </tbody>
+                    </table>
+                    <label>Note:</label>
+                    <p>
+                        @Model.DData.RepeatTerm
+                    </p>
+                    <p>
+                        @Model.DData.FinalNote
+                    </p>
+                </div>
+                <div role="tabpanel" class="tab-pane " id="features">
+                    <br />
+                    <div style="margin-left:15px">
+                        <div>
+                            @Model.ShortDescription
                         </div>
-                        @Html.Partial("_ShareButton", Model)
-                        @Html.Widget("productdetails_overview_bottom", Model.Id)
+                        <div>
+                            @Html.Raw(Model.DData.Features.Replace("\n", "<br />"))
+                        </div>
+                        <br />
+                        <div>
+                            <table class="table table-responsive">
+                                @if (!string.IsNullOrEmpty(Model.DData.Materials))
+                                {
+                                    <tr>
+                                        <td><strong>Materials :</strong></td>
+                                        <td>@Model.DData.Materials</td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.DData.Includes))
+                                {
+                                    <tr>
+                                        <td><strong>Includes :</strong></td>
+                                        <td>@Model.DData.Includes</td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.DData.SpecailPackaging))
+                                {
+                                    <tr>
+                                        <td><strong>Special Packaging :</strong></td>
+                                        <td>@Model.DData.SpecailPackaging</td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
                     </div>
-                    @if (!String.IsNullOrEmpty(Model.FullDescription))
-                    {
-                        <div class="full-description" itemprop="description">
-                            @Html.Raw(Model.FullDescription)
-                        </div>
-                    }
                 </div>
-                @Html.Widget("productdetails_before_collateral", Model.Id)
-                <div class="product-collateral">
-                    @Html.Partial("_ProductSpecifications", Model.ProductSpecifications)
-                    @Html.Partial("_ProductTags", Model.ProductTags)
+                <div role="tabpanel" class="tab-pane" id="spec">
+                    <br />
+                    <table class="table table-responsive">
+                        <tbody>
+                            @if (!string.IsNullOrEmpty(Model.DData.Capacity))
+                            {
+                                <tr>
+                                    <td><label>Capacity:</label></td>
+                                    <td> @Model.DData.Capacity</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.DData.Size))
+                            {
+                                <tr>
+                                    <td><label> Size: </label></td>
+                                    <td> @Model.DData.Size</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.DData.ImprintAreaInOutboard))
+                            {
+                                <tr>
+                                    <td><label> Imprint area in/outboard: </label></td>
+                                    <td> @Model.DData.ImprintAreaInOutboard</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.DData.ImprintAreaWrapAround))
+                            {
+                                <tr>
+                                    <td><label>Imprint area wraparound: </label></td>
+                                    <td> @Model.DData.ImprintAreaWrapAround</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.DData.DecoratingOption))
+                            {
+                                <tr>
+                                    <td><label> Decorating options: </label></td>
+                                    <td> @Model.DData.DecoratingOption</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.DData.PeicesPerCartoon))
+                            {
+                                <tr>
+                                    <td><label> Pieces per carton</label></td>
+                                    <td> @Model.DData.PeicesPerCartoon</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.DData.WeightPerCartoon))
+                            {
+                                <tr>
+                                    <td><label>Weight per carton:</label></td>
+                                    <td> @Model.DData.WeightPerCartoon</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.DData.ProtectivePackaging))
+                            {
+                                <tr>
+                                    <td><label> Protective packaging:</label></td>
+                                    <td> @Model.DData.ProtectivePackaging</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.DData.ReferToCataloguePage))
+                            {
+                                <tr>
+                                    <td><label> Refer to catalogue page #:</label></td>
+                                    <td> @Model.DData.ReferToCataloguePage</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
-                @Html.Action("ProductsAlsoPurchased", "Product", new { productId = Model.Id })
-                @Html.Action("RelatedProducts", "Product", new { productId = Model.Id })
             </div>
-        }
-        @Html.Widget("productdetails_bottom", Model.Id)
+        </div>
     </div>
 </div>
+@if (Model.DRelatedProducts.Any())
+{
+    <hr style="width:100%" />
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                <div class="col-md-9">
+                    <h2>Related Products</h2>
+                </div>
+                <div class="col-md-3">
+                    <div class="controls pull-right hidden-xs">
+                        <a class="left fa fa-chevron-left btn btn" href="#carousel-example"
+                           data-slide="prev"></a>
+                        <a class="right fa fa-chevron-right btn" href="#carousel-example" data-slide="next"></a>
+                    </div>
+                </div>
+            </div>
+            <div id="carousel-example" class="carousel slide hidden-xs" data-ride="carousel">
+                <div class="carousel-inner">
+                    @if (Model.DRelatedProducts.Any())
+                    {
+                        var items = Model.DRelatedProducts.Take(3);
+                        var iterations = 0;
+                        while (items.Count() > 0)
+                        {
+                            var active = iterations == 0 ? "active" : "";
+                            <div class="item @active">
+                                <div class="row">
+                                    @foreach (var item in items)
+                                    {
+                                        <div class="col-sm-3 rel-cat">
+                                            <div class="col-item">
+                                                <div class="rel-products-heading">
+                                                    <div class="row">
+                                                        <div class="price col-md-12 text-center">
+                                                            <h4>@item.Name</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="rel-products-image" align="center">
+                                                    <a href="@Url.RouteUrl("Product", new { SeName = item.SEName })" title="@item.Name">
+                                                        <img src="@item.DefaultPicture.ImageUrl" class="img-responsive related-product" alt="a" />
+                                                    </a>
+                                                </div>
+                                                <div class="rel-products-footer">
+                                                    <div class="price col-md-12 text-center">
+                                                        <h5 class="price-text-color">@item.SKU</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            iterations++;
+                            items = Model.DRelatedProducts.Skip(3 * iterations).Take(3);
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+    @*<div class="page product-details-page">
+            <div class="page-body">
+                @Html.Widget("productdetails_top", Model.Id)
+                @using (Html.BeginRouteForm("Product", new { SeName = Model.SeName }, FormMethod.Post, new { id = "product-details-form" }))
+                {
+                    <div itemscope itemtype="http://schema.org/Product" data-productid="@Model.Id">
+                        <div class="product-essential">
+                            @Html.Widget("productdetails_before_pictures", Model.Id)
+                            <!--product pictures-->
+                            @Html.Partial("_ProductDetailsPictures", Model)
+                            @Html.Widget("productdetails_after_pictures", Model.Id)
+                            <div class="overview">
+                                @Html.Partial("_Discontinued", Model)
+                                <div class="product-name">
+                                    <h1 itemprop="name">
+                                        @Model.Name
+                                    </h1>
+                                </div>
+                                @if (!String.IsNullOrEmpty(Model.ShortDescription))
+                                {
+                                    <div class="short-description">
+                                        @Html.Raw(Model.ShortDescription)
+                                    </div>
+                                }
+                                @Html.Widget("productdetails_overview_top", Model.Id)
+                                <!--product reviews-->
+                                @Html.Partial("_ProductReviewOverview", Model.ProductReviewOverview)
+                                <!--manufacturers-->
+                                @Html.Partial("_ProductManufacturers", Model.ProductManufacturers)
+                                <!--availability-->
+                                @Html.Partial("_Availability", Model)
+                                <!--SKU, MAN, GTIN, vendor-->
+                                @Html.Partial("_SKU_Man_GTIN_Ven", Model)
+                                <!--delivery-->
+                                @Html.Partial("_DeliveryInfo", Model)
+                                <!--sample download-->
+                                @Html.Partial("_DownloadSample", Model)
+                                <!--attributes-->
+                                @{
+                                    var dataDictAttributes = new ViewDataDictionary();
+                                    dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", Model.Id);
+                                    @Html.Partial("_ProductAttributes", Model.ProductAttributes, dataDictAttributes)
+                                }
+                                <!--gift card-->
+                                @{
+                                    var dataDictGiftCard = new ViewDataDictionary();
+                                    dataDictGiftCard.TemplateInfo.HtmlFieldPrefix = string.Format("giftcard_{0}", Model.Id);
+                                    @Html.Partial("_GiftCardInfo", Model.GiftCard, dataDictGiftCard)
+                                }
+                                <!--rental info-->
+                                @{
+                                    var dataDictRental = new ViewDataDictionary();
+                                    dataDictRental.TemplateInfo.HtmlFieldPrefix = string.Format("rental_{0}", Model.Id);
+                                    @Html.Partial("_RentalInfo", Model, dataDictRental)
+                                }
+                                <!--price & add to cart-->
+                                @{
+                                    @Html.Partial("_ProductTierPrices", Model.TierPrices)
+
+                                    var dataDictAddToCart = new ViewDataDictionary();
+                                    dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
+                                    @Html.Partial("_AddToCart", Model.AddToCart, dataDictAddToCart)
+                                }
+                                <!--wishlist, compare, email a friend-->
+                                <div class="overview-buttons">
+                                    @Html.Widget("productdetails_inside_overview_buttons_before", Model.Id)
+                                    @{
+                                        var dataDictAddToWishlist = new ViewDataDictionary();
+                                        dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
+                                        @Html.Partial("_AddToWishlist", Model.AddToCart, dataDictAddToWishlist)
+                                    }
+                                    @Html.Partial("_CompareProductsButton", Model)
+                                    @Html.Partial("_ProductEmailAFriendButton", Model)
+                                    @Html.Widget("productdetails_inside_overview_buttons_after", Model.Id)
+                                </div>
+                                @Html.Partial("_ShareButton", Model)
+                                @Html.Widget("productdetails_overview_bottom", Model.Id)
+                            </div>
+                            @if (!String.IsNullOrEmpty(Model.FullDescription))
+                            {
+                                <div class="full-description" itemprop="description">
+                                    @Html.Raw(Model.FullDescription)
+                                </div>
+                            }
+                        </div>
+                        @Html.Widget("productdetails_before_collateral", Model.Id)
+                        <div class="product-collateral">
+                            @Html.Partial("_ProductSpecifications", Model.ProductSpecifications)
+                            @Html.Partial("_ProductTags", Model.ProductTags)
+                        </div>
+                        @Html.Action("ProductsAlsoPurchased", "Product", new { productId = Model.Id })
+                        @Html.Action("RelatedProducts", "Product", new { productId = Model.Id })
+                    </div>
+                                        }
+                @Html.Widget("productdetails_bottom", Model.Id)
+            </div>
+        </div>*@

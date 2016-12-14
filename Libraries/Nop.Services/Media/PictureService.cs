@@ -32,6 +32,7 @@ namespace Nop.Services.Media
         private static readonly object s_lock = new object();
 
         private readonly IRepository<Picture> _pictureRepository;
+        private readonly IRepository<Product> _productRepository;
         private readonly IRepository<ProductPicture> _productPictureRepository;
         private readonly ISettingService _settingService;
         private readonly IWebHelper _webHelper;
@@ -57,6 +58,7 @@ namespace Nop.Services.Media
         /// <param name="mediaSettings">Media settings</param>
         public PictureService(IRepository<Picture> pictureRepository,
             IRepository<ProductPicture> productPictureRepository,
+            IRepository<Product> productRepository,
             ISettingService settingService, 
             IWebHelper webHelper,
             ILogger logger,
@@ -66,6 +68,7 @@ namespace Nop.Services.Media
         {
             this._pictureRepository = pictureRepository;
             this._productPictureRepository = productPictureRepository;
+            this._productRepository = productRepository;
             this._settingService = settingService;
             this._webHelper = webHelper;
             this._logger = logger;
@@ -614,7 +617,24 @@ namespace Nop.Services.Media
             var pics = new PagedList<Picture>(query, pageIndex, pageSize);
             return pics;
         }
-        
+
+        public virtual IList<Picture> GetPicturesByProductSKU(string sku)
+        {
+            if (string.IsNullOrEmpty(sku))
+                return new List<Picture>();
+
+            var query = from p in _productRepository.Table
+                        where p.Sku == sku
+                        select p.Id;
+
+            if (query.Any())
+            {
+                var id = query.FirstOrDefault();
+                return GetPicturesByProductId(id);
+            }
+            else
+                return new List<Picture>();
+        }
 
         /// <summary>
         /// Gets pictures by product identifier
@@ -782,11 +802,13 @@ namespace Nop.Services.Media
                 return destStream.ToArray();
             }
         }
+
         
+
         #endregion
 
         #region Properties
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the images should be stored in data base.
         /// </summary>

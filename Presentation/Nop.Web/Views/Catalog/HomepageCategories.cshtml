@@ -3,25 +3,25 @@
 @using Nop.Web.Models.Catalog;
 @if (Model.Count > 0)
 {
-    <div class="category-grid home-page-category-grid">
-        <div class="item-grid">
-            @foreach (var item in Model)
-            {
-                <div class="item-box">
-                    <div class="category-item">
-                        <h2 class="title">
+    <div class="container mar-top" align="center">
+        <h1 align="center">Featured Category</h1>
+        <hr>
+        <div class="flexslider carousel">
+            <ul class="slides">
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <div class="crsl-item">
+                            <img alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />
+                            <hr>
                             <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
                                 @item.Name
                             </a>
-                        </h2>
-                        <div class="picture">
-                            <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
-                                <img alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />
-                            </a>
                         </div>
-                    </div>
-                </div>
-            }
+                    </li>
+                }
+            </ul>
+
         </div>
     </div>
 }

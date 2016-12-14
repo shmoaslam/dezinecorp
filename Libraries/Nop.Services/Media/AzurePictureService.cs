@@ -39,6 +39,7 @@ namespace Nop.Services.Media
 
         public AzurePictureService(IRepository<Picture> pictureRepository,
             IRepository<ProductPicture> productPictureRepository,
+            IRepository<Product> productRepository,
             ISettingService settingService,
             IWebHelper webHelper,
             ILogger logger,
@@ -48,6 +49,7 @@ namespace Nop.Services.Media
             NopConfig config)
             : base(pictureRepository,
                 productPictureRepository,
+                productRepository,
                 settingService,
                 webHelper,
                 logger,

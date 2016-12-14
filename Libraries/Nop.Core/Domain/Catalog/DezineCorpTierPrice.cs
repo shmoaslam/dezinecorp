@@ -18,6 +18,7 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public virtual Product Product { get; set; }
 
+
         /// <summary>
         /// Gets or sets the Quantity Level Code
         /// </summary>

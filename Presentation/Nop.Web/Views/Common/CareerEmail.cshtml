@@ -1,0 +1,72 @@
+﻿@model Nop.Web.Models.Common.CareerEmailModel
+
+@{
+    AjaxOptions ajaxOptions = new AjaxOptions
+    {
+        LoadingElementId = "loading-area",
+        LoadingElementDuration = 1000,
+        Url = Url.Action("CareerEmail"),
+        OnBegin = "HideForm",
+        OnFailure = "ShowFailure",
+        UpdateTargetId = "message-area",
+    };
+
+}
+
+<script>
+    function HideForm() {
+        //When the form is submitted, we hide the form
+        $("#form-area").hide();
+    }
+
+
+    function ShowFailure(e) {
+        //In the case that the AJAX call fails to communicate with the server
+        //(e.g. the user's internet connection cuts out), we should display a message to that effect
+        $('#message-area').html("<div class='alert alert-danger'><strong>Error!</strong>The server could not be contacted and your message has not been sent. Please check your internet connection and try again later.</div>");
+    }
+</script>
+<style>
+    #career-form {
+        background-color: #eee;
+        padding: 10px;
+    }
+</style>
+<div id="loading-area" class="load" style="display:none;">
+    <div class='alert alert-info'><strong>Sending...</strong></div>
+</div>
+
+<div id="message-area"></div>
+
+<div id="form-area">
+    @using (Ajax.BeginForm(ajaxOptions))
+    {
+        @Html.AntiForgeryToken()
+        if (!MvcHtmlString.IsNullOrEmpty(Html.ValidationSummary(true)))
+        {
+            <div class="message-error">@Html.ValidationSummary(true)</div>
+        }
+        <div class="box">
+            @Html.RadioButtonFor(model => model.JobType, "Account Representative", new { id = "Account_Representative" }) <span>Account Representative</span>  
+            @Html.RadioButtonFor(model => model.JobType, "Shipper/Receiver", new { id = "Shipper_Receiver" }) <span>Shipper/Receiver</span>
+            <br />
+            <br />
+            @Html.TextBoxFor(model => model.Name, new { @class = "input--form--css", placeholder = "Name" })
+            @Html.ValidationMessageFor(model => model.Name)
+            @Html.TextBoxFor(model => model.Email, new { @class = "input--form--css", placeholder = "Email" })
+            @Html.ValidationMessageFor(model => model.Email)
+            @Html.TextAreaFor(model => model.Comments, new { @class = "input--form--css", placeholder = "Comments" })
+            @Html.TextAreaFor(model => model.AreaOfInterest, new { @class = "input--form--css", placeholder = "Area of Interest" })
+            @Html.TextAreaFor(model => model.ExtraComments, new { @class = "input--form--css", placeholder = "Addtional Comments" })
+            <div class="captcha-box">
+                @Html.Raw(Html.GenerateCaptcha())
+            </div>
+            <br />
+            <div class="row" align="center">
+                <input type="submit" name="send-email" class="send--mail" value="@T("Products.EmailAFriend.Button")" />
+            </div>
+        </div>
+    }
+</div>
+
+

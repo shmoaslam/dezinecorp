@@ -41,6 +41,7 @@ using Nop.Web.Infrastructure.Cache;
 using Nop.Web.Models.Catalog;
 using Nop.Web.Models.Common;
 using Nop.Web.Models.Topics;
+using Nop.Web.Framework.Controllers;
 
 namespace Nop.Web.Controllers
 {
@@ -193,6 +194,7 @@ namespace Nop.Web.Controllers
             return View();
         }
 
+       
         //language
         [ChildActionOnly]
         public ActionResult LanguageSelector()
@@ -473,6 +475,28 @@ namespace Nop.Web.Controllers
             return PartialView(model);
         }
 
+
+
+        [ChildActionOnly]
+        [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult CareerEmail()
+        {
+            return PartialView(new CareerEmailModel());
+        }
+
+        [HttpPost, ActionName("CareerEmail")]
+        [PublicAntiForgery]
+        [FormValueRequired("send-email")]
+        [CaptchaValidator]
+        public PartialViewResult CareerEmailSend(CareerEmailModel model, bool captchaValid)
+        {
+            if (_captchaSettings.Enabled && !captchaValid)
+                ModelState.AddModelError("", _localizationService.GetResource("Common.WrongCaptcha"));
+            bool isMessageSent = false;
+            if (ModelState.IsValid)
+                isMessageSent = true;
+            return PartialView("_SubmitMessage", isMessageSent);
+        }
 
         //contact us page
         [NopHttpsRequirement(SslRequirement.Yes)]

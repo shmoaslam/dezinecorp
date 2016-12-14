@@ -37,12 +37,13 @@ using Nop.Web.Framework.Security.Captcha;
 using Nop.Web.Infrastructure.Cache;
 using Nop.Web.Models.Catalog;
 using Nop.Web.Models.Media;
+using static Nop.Web.Models.Catalog.ProductDetailsModel;
 
 namespace Nop.Web.Controllers
 {
     public partial class ProductController : BasePublicController
     {
-		#region Fields
+        #region Fields
 
         private readonly ICategoryService _categoryService;
         private readonly IManufacturerService _manufacturerService;
@@ -84,34 +85,34 @@ namespace Nop.Web.Controllers
         private readonly CaptchaSettings _captchaSettings;
         private readonly SeoSettings _seoSettings;
         private readonly ICacheManager _cacheManager;
-        
+
         #endregion
 
-		#region Constructors
+        #region Constructors
 
-        public ProductController(ICategoryService categoryService, 
+        public ProductController(ICategoryService categoryService,
             IManufacturerService manufacturerService,
-            IProductService productService, 
+            IProductService productService,
             IVendorService vendorService,
             IProductTemplateService productTemplateService,
             IProductAttributeService productAttributeService,
-            IWorkContext workContext, 
+            IWorkContext workContext,
             IStoreContext storeContext,
-            ITaxService taxService, 
+            ITaxService taxService,
             ICurrencyService currencyService,
-            IPictureService pictureService, 
+            IPictureService pictureService,
             ILocalizationService localizationService,
             IMeasureService measureService,
             IPriceCalculationService priceCalculationService,
             IPriceFormatter priceFormatter,
-            IWebHelper webHelper, 
+            IWebHelper webHelper,
             ISpecificationAttributeService specificationAttributeService,
             IDateTimeHelper dateTimeHelper,
             IRecentlyViewedProductsService recentlyViewedProductsService,
             ICompareProductsService compareProductsService,
-            IWorkflowMessageService workflowMessageService, 
+            IWorkflowMessageService workflowMessageService,
             IProductTagService productTagService,
-            IOrderReportService orderReportService, 
+            IOrderReportService orderReportService,
             IAclService aclService,
             IStoreMappingService storeMappingService,
             IPermissionService permissionService,
@@ -124,8 +125,8 @@ namespace Nop.Web.Controllers
             CatalogSettings catalogSettings,
             VendorSettings vendorSettings,
             ShoppingCartSettings shoppingCartSettings,
-            LocalizationSettings localizationSettings, 
-            CustomerSettings customerSettings, 
+            LocalizationSettings localizationSettings,
+            CustomerSettings customerSettings,
             CaptchaSettings captchaSettings,
             SeoSettings seoSettings,
             ICacheManager cacheManager)
@@ -194,7 +195,7 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
-        protected virtual ProductDetailsModel PrepareProductDetailsPageModel(Product product, 
+        protected virtual ProductDetailsModel PrepareProductDetailsPageModel(Product product,
             ShoppingCartItem updatecartitem = null, bool isAssociatedProduct = false)
         {
             if (product == null)
@@ -243,7 +244,7 @@ namespace Nop.Web.Controllers
                     model.DeliveryDate = deliveryDate.GetLocalized(dd => dd.Name);
                 }
             }
-            
+
             //email a friend
             model.EmailAFriendEnabled = _catalogSettings.EmailAFriendEnabled;
             //compare products
@@ -340,7 +341,7 @@ namespace Nop.Web.Controllers
                     return breadcrumbModel;
                 });
             }
-            
+
             #endregion
 
             #region Product tags
@@ -353,7 +354,7 @@ namespace Nop.Web.Controllers
                     product.ProductTags
                     //filter by store
                     .Where(x => _productTagService.GetProductCount(x.Id, _storeContext.CurrentStore.Id) > 0)
-                    .Select(x =>  new ProductTagModel
+                    .Select(x => new ProductTagModel
                     {
                         Id = x.Id,
                         Name = x.GetLocalized(y => y.Name),
@@ -377,7 +378,7 @@ namespace Nop.Web.Controllers
                     throw new Exception("No default template could be loaded");
                 return template.ViewPath;
             });
-            
+
             #endregion
 
             #region Pictures
@@ -408,14 +409,15 @@ namespace Nop.Web.Controllers
                 defaultPictureModel.AlternateText = (defaultPicture != null && !string.IsNullOrEmpty(defaultPicture.AltAttribute)) ?
                     defaultPicture.AltAttribute :
                     string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat.Details"), model.Name);
-                        
+
                 //all pictures
                 var pictureModels = new List<PictureModel>();
                 foreach (var picture in pictures)
                 {
                     var pictureModel = new PictureModel
                     {
-                        ImageUrl = _pictureService.GetPictureUrl(picture, _mediaSettings.ProductThumbPictureSizeOnProductDetailsPage),
+                        ImageUrl = _pictureService.GetPictureUrl(picture, defaultPictureSize, !isAssociatedProduct),
+                        ThumbImageUrl = _pictureService.GetPictureUrl(picture, _mediaSettings.ProductThumbPictureSizeOnProductDetailsPage),
                         FullSizeImageUrl = _pictureService.GetPictureUrl(picture),
                         Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat.Details"), model.Name),
                         AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat.Details"), model.Name),
@@ -428,7 +430,7 @@ namespace Nop.Web.Controllers
                     pictureModel.AlternateText = !string.IsNullOrEmpty(picture.AltAttribute) ?
                         picture.AltAttribute :
                         string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat.Details"), model.Name);
-                        
+
                     pictureModels.Add(pictureModel);
                 }
 
@@ -440,7 +442,7 @@ namespace Nop.Web.Controllers
             #endregion
 
             #region Product price
-            
+
             model.ProductPrice.ProductId = product.Id;
             if (_permissionService.Authorize(StandardPermissionProvider.DisplayPrices))
             {
@@ -475,12 +477,12 @@ namespace Nop.Web.Controllers
                             model.ProductPrice.PriceWithDiscount = _priceFormatter.FormatPrice(finalPriceWithDiscount);
 
                         model.ProductPrice.PriceValue = finalPriceWithDiscount;
-                        
+
                         //property for German market
                         //we display tax/shipping info only with "shipping enabled" for this product
                         //we also ensure this it's not free shipping
                         model.ProductPrice.DisplayTaxShippingInfo = _catalogSettings.DisplayTaxShippingInfoProductDetailsPage
-                            && product.IsShipEnabled && 
+                            && product.IsShipEnabled &&
                             !product.IsFreeShipping;
 
                         //PAngV baseprice (used in Germany)
@@ -637,7 +639,7 @@ namespace Nop.Web.Controllers
                 if (!String.IsNullOrEmpty(attribute.ValidationFileAllowedExtensions))
                 {
                     attributeModel.AllowedFileExtensions = attribute.ValidationFileAllowedExtensions
-                        .Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries)
+                        .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                         .ToList();
                 }
 
@@ -789,7 +791,7 @@ namespace Nop.Web.Controllers
                     _cacheManager,
                     product);
             }
-            
+
             #endregion
 
             #region Product review overview
@@ -804,40 +806,188 @@ namespace Nop.Web.Controllers
 
             #endregion
 
-            #region Tier prices
+            #region DezineCorpData
 
             if (product.HasTierPrices && _permissionService.Authorize(StandardPermissionProvider.DisplayPrices))
             {
-                model.TierPrices = product.TierPrices
-                    .OrderBy(x => x.Quantity)
-                    .ToList()
-                    .FilterByStore(_storeContext.CurrentStore.Id)
-                    .FilterForCustomer(_workContext.CurrentCustomer)
-                    .RemoveDuplicatedQuantities()
-                    .Select(tierPrice =>
+                //model.TierPrices = product.TierPrices
+                //    .OrderBy(x => x.Quantity)
+                //    .ToList()
+                //    .FilterByStore(_storeContext.CurrentStore.Id)
+                //    .FilterForCustomer(_workContext.CurrentCustomer)
+                //    .RemoveDuplicatedQuantities()
+                //    .Select(tierPrice =>
+                //    {
+                //        var m = new ProductDetailsModel.TierPriceModel
+                //        {
+                //            Quantity = tierPrice.Quantity,
+                //        };
+                //        decimal taxRate;
+                //        decimal priceBase = _taxService.GetProductPrice(product, _priceCalculationService.GetFinalPrice(product, _workContext.CurrentCustomer, decimal.Zero, _catalogSettings.DisplayTierPricesWithDiscounts, tierPrice.Quantity), out taxRate);
+                //        decimal price = _currencyService.ConvertFromPrimaryStoreCurrency(priceBase, _workContext.WorkingCurrency);
+                //        m.Price = _priceFormatter.FormatPrice(price, false, false);
+                //        return m;
+                //    })
+                //    .ToList();
+
+
+                #region DezineCorpCustomCode
+
+                if (product.DezineCorpTierPrices.Count > 0)
+                {
+                    var tierPrice = product.DezineCorpTierPrices.FirstOrDefault();
+
+                    if (tierPrice != null)
                     {
-                        var m = new ProductDetailsModel.TierPriceModel
+                        var pricingSlab = _productService.GetPricingSlab(tierPrice.QuantityLevel);
+                        var priceList = new List<DezineCorpTierPriceModel>();
+
+                        priceList.Add(new DezineCorpTierPriceModel
                         {
-                            Quantity = tierPrice.Quantity,
-                        };
-                        decimal taxRate;
-                        decimal priceBase = _taxService.GetProductPrice(product, _priceCalculationService.GetFinalPrice(product, _workContext.CurrentCustomer, decimal.Zero, _catalogSettings.DisplayTierPricesWithDiscounts, tierPrice.Quantity), out taxRate);
-                        decimal price = _currencyService.ConvertFromPrimaryStoreCurrency(priceBase, _workContext.WorkingCurrency);
-                        m.Price = _priceFormatter.FormatPrice(price, false, false);
-                        return m;
-                    })
-                    .ToList();
+                            PriceName = "Quantity",
+                            Price1 = pricingSlab[0].ToString(),
+                            Price2 = pricingSlab[1].ToString(),
+                            Price3 = pricingSlab[2].ToString(),
+                            Price4 = pricingSlab[3].ToString(),
+                            DiscountCode = "Code",
+                        });
+                        priceList.Add(new DezineCorpTierPriceModel
+                        {
+                            PriceName = "Price",
+                            Price1 = tierPrice.Price1 != null ? string.Format("$ {0}", tierPrice.Price1.Trim()) : string.Empty,
+                            Price2 = tierPrice.Price2 != null ? string.Format("$ {0}", tierPrice.Price2.Trim()) : string.Empty,
+                            Price3 = tierPrice.Price3 != null ? string.Format("$ {0}", tierPrice.Price3.Trim()) : string.Empty,
+                            Price4 = tierPrice.Price4 != null ? string.Format("$ {0}", tierPrice.Price4.Trim()) : string.Empty,
+                            DiscountCode = "4 ( c )",
+                        });
+                        if (product.DezineCorpAdditionalPricings.Count > 0)
+                        {
+                            var additionalPricing = product.DezineCorpAdditionalPricings.FirstOrDefault();
+                            if (additionalPricing != null)
+                            {
+                                if (!string.IsNullOrEmpty(additionalPricing.AddColourOption))
+                                {
+                                    priceList.Add(new DezineCorpTierPriceModel
+                                    {
+                                        PriceName = additionalPricing.AddColourOption,
+                                        Price1 = additionalPricing.AddCol_1,
+                                        Price2 = additionalPricing.AddCol_2,
+                                        Price3 = additionalPricing.AddCol_3,
+                                        Price4 = additionalPricing.AddCol_4,
+                                        DiscountCode = additionalPricing.AddColPriceCode,
+                                    });
+                                }
+
+                                if (!string.IsNullOrEmpty(additionalPricing.DecalOption))
+                                {
+                                    priceList.Add(new DezineCorpTierPriceModel
+                                    {
+                                        PriceName = additionalPricing.DecalOption,
+                                        Price1 = additionalPricing.Decal_1,
+                                        Price2 = additionalPricing.Decal_2,
+                                        Price3 = additionalPricing.Decal_3,
+                                        Price4 = additionalPricing.Decal_4,
+                                        DiscountCode = additionalPricing.DecalPriceCode,
+                                    });
+                                }
+
+                                if (!string.IsNullOrEmpty(additionalPricing.LaserEngravingOption))
+                                {
+                                    priceList.Add(new DezineCorpTierPriceModel
+                                    {
+                                        PriceName = additionalPricing.LaserEngravingOption,
+                                        Price1 = additionalPricing.Laser_1,
+                                        Price2 = additionalPricing.Laser_2,
+                                        Price3 = additionalPricing.Laser_3,
+                                        Price4 = additionalPricing.Laser_4,
+                                        DiscountCode = additionalPricing.LaserPriceCode,
+                                    });
+                                }
+                                model.DTierPrices = priceList;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (product.DezineCorpDatas.Any())
+            {
+                var dezinecorpData = product.DezineCorpDatas.FirstOrDefault();
+                if (dezinecorpData != null)
+                {
+                    model.DData = new ProductDetailsModel.DezineCorpData();
+                    model.DData.PricingFooterNote = dezinecorpData.PricingFooterNote;
+                    model.DData.Features = dezinecorpData.Features;
+                    model.DData.SpecailPackaging = dezinecorpData.SpecailPackaging;
+                    model.DData.Materials = dezinecorpData.Materials;
+                    model.DData.Includes = dezinecorpData.Includes;
+                    model.DData.MadeinCanada = dezinecorpData.MadeinCanada;
+                    model.DData.MadeinNorthAmerica = dezinecorpData.MadeinNorthAmerica;
+                    model.DData.Capacity = dezinecorpData.Capacity;
+                    model.DData.Size = dezinecorpData.Size;
+                    model.DData.ImprintAreaInOutboard = dezinecorpData.ImprintAreaInOutboard;
+                    model.DData.ImprintAreaWrapAround = dezinecorpData.ImprintAreaWrapAround;
+                    model.DData.DecoratingOption = dezinecorpData.DecoratingOption;
+                    model.DData.PeicesPerCartoon = dezinecorpData.PeicesPerCartoon;
+                    model.DData.WeightPerCartoon = dezinecorpData.WeightPerCartoon;
+                    model.DData.ProtectivePackaging = dezinecorpData.ProtectivePackaging;
+                    model.DData.ReferToCataloguePage = dezinecorpData.ReferToCataloguePage;
+                    model.DData.InventoryFlag = dezinecorpData.InventoryFlag;
+                    model.DData.PricingFlag = dezinecorpData.PricingFlag;
+                    model.DData.SetupPerColour = dezinecorpData.SetupPerColour;
+                    model.DData.RepeatSetup = dezinecorpData.RepeatSetup;
+                    model.DData.DebossSetup = dezinecorpData.DebossSetup;
+                    model.DData.RepeatDeboss = dezinecorpData.RepeatDeboss;
+                    model.DData.DecalSetup = dezinecorpData.DecalSetup;
+                    model.DData.RepeatDecal = dezinecorpData.RepeatDecal;
+                    model.DData.LaserSetup = dezinecorpData.LaserSetup;
+                    model.DData.RepeatLaser = dezinecorpData.RepeatLaser;
+                    model.DData.AdditionalCharge1 = dezinecorpData.AdditionalCharge1;
+                    model.DData.AdditionalCharge2 = dezinecorpData.AdditionalCharge2;
+                    model.DData.AdditionalCharge3 = dezinecorpData.AdditionalCharge3;
+                    model.DData.AdditionalCharge4 = dezinecorpData.AdditionalCharge4;
+                    model.DData.RepeatTerm = dezinecorpData.RepeatTerm;
+                    model.DData.FinalNote = dezinecorpData.FinalNote;
+                }
+            }
+
+            var familyProducts = _productService.GetProductsByFamilyCode(product.FamilyCode);
+            if (familyProducts.Any())
+            {
+                model.DFamilyProducts = new List<ProductDetailsModel.DezineCorpRelatedOrFamilyProduct>();
+                foreach (var familyProduct in familyProducts)
+                    if (familyProduct != null)
+                        BindFamilyProduct(model, familyProduct.Sku, _mediaSettings.ProductThumbPictureSizeOnProductDetailsPage);
+            }
+
+
+
+            if (product.DezineCorpRelatedProducts.Any())
+            {
+                var dezineCorpRelatedProduct = product.DezineCorpRelatedProducts.FirstOrDefault();
+                if (dezineCorpRelatedProduct != null)
+                {
+                    model.DRelatedProducts = new List<ProductDetailsModel.DezineCorpRelatedOrFamilyProduct>();
+                    BindRelatedProduct(model, dezineCorpRelatedProduct.Related_1, _mediaSettings.ProductThumbPictureSize);
+                    BindRelatedProduct(model, dezineCorpRelatedProduct.Related_2, _mediaSettings.ProductThumbPictureSize);
+                    BindRelatedProduct(model, dezineCorpRelatedProduct.Related_3, _mediaSettings.ProductThumbPictureSize);
+                    BindRelatedProduct(model, dezineCorpRelatedProduct.Related_4, _mediaSettings.ProductThumbPictureSize);
+                    BindRelatedProduct(model, dezineCorpRelatedProduct.Related_5, _mediaSettings.ProductThumbPictureSize);
+                    BindRelatedProduct(model, dezineCorpRelatedProduct.Related_6, _mediaSettings.ProductThumbPictureSize);
+                }
             }
 
             #endregion
 
+            #endregion
+
             #region Manufacturers
-            
+
             //do not prepare this model for the associated products. any it's not used
             if (!isAssociatedProduct)
             {
-                string manufacturersCacheKey = string.Format(ModelCacheEventConsumer.PRODUCT_MANUFACTURERS_MODEL_KEY, 
-                    product.Id, 
+                string manufacturersCacheKey = string.Format(ModelCacheEventConsumer.PRODUCT_MANUFACTURERS_MODEL_KEY,
+                    product.Id,
                     _workContext.WorkingLanguage.Id,
                     string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()),
                     _storeContext.CurrentStore.Id);
@@ -863,7 +1013,7 @@ namespace Nop.Web.Controllers
             }
 
             #endregion
-            
+
             #region Associated products
 
             if (product.ProductType == ProductType.GroupedProduct)
@@ -880,6 +1030,46 @@ namespace Nop.Web.Controllers
             #endregion
 
             return model;
+        }
+
+        private void BindRelatedProduct(ProductDetailsModel model, string productSku, int imageType)
+        {
+            if (string.IsNullOrEmpty(productSku))
+                return;
+            var relatedProduct = GetRelatedAndFamilyProduct(model, productSku, imageType);
+            if (relatedProduct != null)
+                model.DRelatedProducts.Add(relatedProduct);
+        }
+
+        private void BindFamilyProduct(ProductDetailsModel model, string productSku, int imageType)
+        {
+            if (string.IsNullOrEmpty(productSku))
+                return;
+            var familyProduct = GetRelatedAndFamilyProduct(model, productSku, imageType);
+            if (familyProduct != null)
+                model.DFamilyProducts.Add(familyProduct);
+        }
+
+        private ProductDetailsModel.DezineCorpRelatedOrFamilyProduct GetRelatedAndFamilyProduct(ProductDetailsModel model, string productSku, int imageType)
+        {
+            if (string.IsNullOrEmpty(productSku))
+                return null;
+                var relatedpicture = _pictureService.GetPicturesByProductSKU(productSku);
+            var defaultPicture = relatedpicture.FirstOrDefault();
+            var defaultPictureModel = new PictureModel
+            {
+                ImageUrl = _pictureService.GetPictureUrl(defaultPicture, imageType),
+                Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat.Details"), model.Name),
+                AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat.Details"), model.Name),
+            };
+            var related = _productService.GetProductBySku(productSku);
+            return new ProductDetailsModel.DezineCorpRelatedOrFamilyProduct
+            {
+                DefaultPicture = defaultPictureModel,
+                SEName = related.GetSeName(),
+                Name = related.Name,
+                SKU = productSku
+            };
         }
 
         [NonAction]
@@ -953,7 +1143,7 @@ namespace Nop.Web.Controllers
             //availability dates
             if (!product.IsAvailable())
                 return InvokeHttp404();
-            
+
             //visible individually?
             if (!product.VisibleIndividually)
             {
@@ -1003,7 +1193,7 @@ namespace Nop.Web.Controllers
         {
             //load and cache report
             var productIds = _cacheManager.Get(string.Format(ModelCacheEventConsumer.PRODUCTS_RELATED_IDS_KEY, productId, _storeContext.CurrentStore.Id),
-                () => 
+                () =>
                     _productService.GetRelatedProductsByProductId1(productId).Select(x => x.ProductId2).ToArray()
                     );
 
@@ -1013,7 +1203,7 @@ namespace Nop.Web.Controllers
             products = products.Where(p => _aclService.Authorize(p) && _storeMappingService.Authorize(p)).ToList();
             //availability dates
             products = products.Where(p => p.IsAvailable()).ToList();
-            
+
             if (products.Count == 0)
                 return Content("");
 
@@ -1072,7 +1262,7 @@ namespace Nop.Web.Controllers
             //We know that the entire shopping cart page is not refresh
             //even if "ShoppingCartSettings.DisplayCartAfterAddingProduct" setting  is enabled.
             //That's why we force page refresh (redirect) in this case
-            var model = PrepareProductOverviewModels(products,  
+            var model = PrepareProductOverviewModels(products,
                 productThumbPictureSize: productThumbPictureSize, forceRedirectionAfterAddingToCart: true)
                 .ToList();
 
@@ -1198,7 +1388,7 @@ namespace Nop.Web.Controllers
                 return Content("");
 
             //load and cache report
-            var report = _cacheManager.Get(string.Format(ModelCacheEventConsumer.HOMEPAGE_BESTSELLERS_IDS_KEY, _storeContext.CurrentStore.Id), 
+            var report = _cacheManager.Get(string.Format(ModelCacheEventConsumer.HOMEPAGE_BESTSELLERS_IDS_KEY, _storeContext.CurrentStore.Id),
                 () =>
                     _orderReportService.BestSellersReport(storeId: _storeContext.CurrentStore.Id,
                     pageSize: _catalogSettings.NumberOfBestsellersOnHomepage));
@@ -1397,7 +1587,7 @@ namespace Nop.Web.Controllers
         #endregion
 
         #region Email a friend
-        
+
         [NopHttpsRequirement(SslRequirement.No)]
         public ActionResult ProductEmailAFriend(int productId)
         {
@@ -1441,7 +1631,7 @@ namespace Nop.Web.Controllers
                 //email
                 _workflowMessageService.SendProductEmailAFriendMessage(_workContext.CurrentCustomer,
                         _workContext.WorkingLanguage.Id, product,
-                        model.YourEmailAddress, model.FriendEmail, 
+                        model.YourEmailAddress, model.FriendEmail,
                         Core.Html.HtmlHelper.FormatText(model.PersonalMessage, false, true, false, false, false, false));
 
                 model.ProductId = product.Id;
@@ -1488,7 +1678,7 @@ namespace Nop.Web.Controllers
 
             //activity log
             _customerActivityService.InsertActivity("PublicStore.AddToCompareList", _localizationService.GetResource("ActivityLog.PublicStore.AddToCompareList"), product.Name);
-            
+
             return Json(new
             {
                 success = true,

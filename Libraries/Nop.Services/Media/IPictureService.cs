@@ -94,6 +94,9 @@ namespace Nop.Services.Media
         /// <returns>Paged list of pictures</returns>
         IPagedList<Picture> GetPictures(int pageIndex = 0, int pageSize = int.MaxValue);
 
+
+        IList<Picture> GetPicturesByProductSKU(string v);
+
         /// <summary>
         /// Gets pictures by product identifier
         /// </summary>
@@ -153,5 +156,6 @@ namespace Nop.Services.Media
         /// Gets or sets a value indicating whether the images should be stored in data base.
         /// </summary>
         bool StoreInDb { get; set; }
+
     }
 }

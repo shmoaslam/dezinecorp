@@ -101,6 +101,7 @@
     <Compile Include="Domain\Catalog\DezineCorpProductKeyword.cs" />
     <Compile Include="Domain\Catalog\DezineCorpRelatedProduct.cs" />
     <Compile Include="Domain\Catalog\DezineCorpTierPrice.cs" />
+    <Compile Include="Domain\Catalog\DezineCorpTierPricingSlab.cs" />
     <Compile Include="Domain\Catalog\Events.cs" />
     <Compile Include="Domain\Catalog\PredefinedProductAttributeValue.cs" />
     <Compile Include="Domain\Catalog\RentalPricePeriod.cs" />

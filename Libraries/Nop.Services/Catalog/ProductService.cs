@@ -51,6 +51,7 @@ namespace Nop.Services.Catalog
         private readonly IRepository<DezineCorpRelatedProduct> _dezineCorpRelatedProductRepository;
         private readonly IRepository<DezineCorpTierPrice> _dezineCorpTierPriceRepository;
         private readonly IRepository<DezineCorpAdditionalPricing> _dezineCorpAdditionalPricingRepository;
+        private readonly IRepository<DezineCorpTierPricingSlab> _dezineCorpTierPricingSlabRepository;
         private readonly IRepository<CrossSellProduct> _crossSellProductRepository;
         private readonly IRepository<TierPrice> _tierPriceRepository;
         private readonly IRepository<LocalizedProperty> _localizedPropertyRepository;
@@ -118,6 +119,7 @@ namespace Nop.Services.Catalog
             IRepository<DezineCorpRelatedProduct> dezineCorpRelatedProductRepository,
             IRepository<DezineCorpTierPrice> dezineCorpTierPriceRepository,
             IRepository<DezineCorpAdditionalPricing> dezineCorpAdditionalPricingRepository,
+            IRepository<DezineCorpTierPricingSlab> dezineCorpTierPricingSlabRepository,
             IRepository<ProductPicture> productPictureRepository,
             IRepository<LocalizedProperty> localizedPropertyRepository,
             IRepository<AclRecord> aclRepository,
@@ -149,6 +151,7 @@ namespace Nop.Services.Catalog
             this._dezineCorpRelatedProductRepository = dezineCorpRelatedProductRepository;
             this._dezineCorpTierPriceRepository = dezineCorpTierPriceRepository;
             this._dezineCorpAdditionalPricingRepository = dezineCorpAdditionalPricingRepository;
+            this._dezineCorpTierPricingSlabRepository = dezineCorpTierPricingSlabRepository;
             this._tierPriceRepository = tierPriceRepository;
             this._productPictureRepository = productPictureRepository;
             this._localizedPropertyRepository = localizedPropertyRepository;
@@ -2012,7 +2015,33 @@ namespace Nop.Services.Catalog
                 return null;
 
             return _dezineCorpAdditionalPricingRepository.Table.FirstOrDefault(x => x.ProductId == productId);
-        } 
+        }
+
+        public string[] GetPricingSlab(string PriceCode)
+        {
+            if (string.IsNullOrEmpty(PriceCode))
+                return null;
+
+            var slabdetail = _dezineCorpTierPricingSlabRepository.Table.FirstOrDefault(x => x.PriceCategory == PriceCode);
+
+            string[] slab = new string[8];
+            slab[0] = slabdetail.Quantity_1 != null ? slabdetail.Quantity_1.ToString() : string.Empty ;
+            slab[1] = slabdetail.Quantity_2 != null ? slabdetail.Quantity_2.ToString() : string.Empty;
+            slab[2] = slabdetail.Quantity_3 != null ? slabdetail.Quantity_3.ToString() : string.Empty;
+            slab[3] = slabdetail.Quantity_4 != null ? slabdetail.Quantity_4.ToString() : string.Empty;
+            return slab;
+        }
+
+        public IList<Product> GetProductsByFamilyCode(string familyCode)
+        {
+            if (string.IsNullOrEmpty(familyCode))
+                return new List<Product>();
+
+            if (_productRepository.Table.Any(x => x.FamilyCode.Equals(familyCode, StringComparison.OrdinalIgnoreCase) && x.Published && !x.Deleted))
+                return _productRepository.Table.Where(x => x.FamilyCode.Equals(familyCode, StringComparison.OrdinalIgnoreCase) && x.Published && !x.Deleted).ToList();
+
+            return new List<Product>();
+        }
 
         #endregion
     }
