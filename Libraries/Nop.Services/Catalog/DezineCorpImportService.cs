@@ -498,7 +498,7 @@ namespace Nop.Services.Catalog
 
                     con.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["conString"].ToString();
                     SqlCommand cmd = new SqlCommand();
-                    cmd.CommandText = "select Id from Product where SKU COLLATE Latin1_General_CS_AS = @SKU and Published = 1 and Deleted = 0 order by UpdatedOnUtc";
+                    cmd.CommandText = "select Id from Product where SKU = @SKU and Deleted = 0 order by UpdatedOnUtc";
                     //"SELECT ProductID FROM dbo.Nop_ProductVariant AS npv WHERE SKU COLLATE Latin1_General_CS_AS ='" + sku + "'";
                     cmd.Parameters.AddWithValue("@SKU", sku);
                     cmd.Connection = con;

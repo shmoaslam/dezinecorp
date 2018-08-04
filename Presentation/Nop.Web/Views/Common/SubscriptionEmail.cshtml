@@ -1,0 +1,70 @@
+﻿@model Nop.Web.Models.Common.SubscriptionEmailModel
+
+@{
+    AjaxOptions ajaxOptions = new AjaxOptions
+    {
+        LoadingElementId = "loading-area-sub",
+        LoadingElementDuration = 1000,
+        OnBegin = "HideFormSub",
+        OnFailure = "ShowFailureSub",
+        UpdateTargetId = "message-area-sub",
+        OnSuccess = "OnSuccessSub",
+    };
+
+}
+
+<script>
+    function HideFormSub() {
+        //When the form is submitted, we hide the form
+        $("#form-area-sub").hide();
+    }
+
+    function ShowFailureSub(e) {
+        //In the case that the AJAX call fails to communicate with the server
+        //(e.g. the user's internet connection cuts out), we should display a message to that effect
+        $('#message-area-sub').html("<div class='alert alert-danger'><strong>Error!</strong>The server could not be contacted and your message has not been sent. Please check your internet connection and try again later.</div>");
+    }
+    function OnSuccessSub() {
+        document.getElementById("SubEmailForm").reset();
+    } 
+</script>
+<style>
+    #Subscribtion {
+        background-color: #eee;
+        padding: 10px;
+    }
+</style>
+
+<div id="loading-area-sub" class="load" style="display:none;">
+    <div class='alert alert-info'><strong>Sending...</strong></div>
+</div>
+
+<div id="message-area-sub"></div>
+
+<div id="form-area-sub">
+    @using (Ajax.BeginForm("SubscriptionEmail", null, ajaxOptions, new { id="SubEmailForm"}))
+    {
+        @Html.AntiForgeryToken()
+        if (!MvcHtmlString.IsNullOrEmpty(Html.ValidationSummary(true)))
+        {
+            <div class="message-error">@Html.ValidationSummary(true)</div>
+        }
+        <div class="box">
+            @Html.TextBoxFor(model => model.FirstName, new { @class = "input--form--css", placeholder = "First Name", @style= "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span>
+            @Html.TextBoxFor(model => model.LastName, new { @class = "input--form--css", placeholder = "Last Name" }) 
+            @Html.TextBoxFor(model => model.Company, new { @class = "input--form--css", placeholder = "Company" })
+            @Html.TextBoxFor(model => model.Email, new { @class = "input--form--css", placeholder = "Email", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span>
+            @Html.TextBoxFor(model => model.PostalCode, new { @class = "input--form--css", placeholder = "Postal Code", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span>
+            @Html.TextBoxFor(model => model.Province, new { @class = "input--form--css", placeholder = "Province", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span>
+        </div>
+        @*<div class="captcha-box">
+            @Html.Raw(Html.GenerateCaptcha())
+        </div>*@
+        <br />
+        <div class="row" align="center">
+            <input type="submit" name="Subscribtion" class="send--mail" value="@T("Products.EmailAFriend.Button")" />
+        </div>
+    }
+</div>
+
+

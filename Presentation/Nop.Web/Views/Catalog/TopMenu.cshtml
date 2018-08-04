@@ -8,7 +8,7 @@
             @category.Name
             @if (category.NumberOfProducts.HasValue)
             {
-                <text> </text>@T("Categories.TotalProducts", category.NumberOfProducts.Value)
+            <text> </text>@T("Categories.TotalProducts", category.NumberOfProducts.Value)
             }
         </a>
         @{
@@ -26,13 +26,13 @@
             }
             if (subCategories.Count > 0)
             {
-                <div class="sublist-toggle"></div>
-                <ul class="sublist @levelClass">
-                    @foreach (var subCategory in subCategories)
+        <div class="sublist-toggle"></div>
+        <ul class="sublist @levelClass">
+            @foreach (var subCategory in subCategories)
                     {
-                        @RenderCategoryLine(subCategory, level + 1, responsiveMobileMenu)
+                    @RenderCategoryLine(subCategory, level + 1, responsiveMobileMenu)
                     }
-                </ul>
+        </ul>
             }
         }
     </li>
@@ -45,6 +45,11 @@
 </style>
 <div class="row">
     <nav id="main-nav" role="navigation">
+        <input id="main-menu-state" type="checkbox" />
+        <label class="main-menu-btn" for="main-menu-state">
+            <span class="main-menu-btn-icon"></span> Toggle main menu visibility
+        </label>
+        <h2 class="nav-brand" id="headingmenubrand" style="display:none;"><span style="font: caption;">Dezine<span style="color:#007A8A;">Corp</span></span><a href="#"></a></h2>
         <ul id="main-menu" class="sm sm-simple">
             <li class="test"> <a href="/"><i class="fa fa-home"></i>&nbsp; &nbsp;Home</a> </li>
             <li>
@@ -64,7 +69,7 @@
             <li> <a href="/web-only">Web Only</a> </li>
             <li> <a href="/clearance">Clearance Item</a> </li>
             <li> <a href="#">E-Flyers</a> </li>
-            <li> <a href="#">Contact Us</a> </li>
+            <li><a data-toggle="modal" data-target="#contactUs" style="cursor:pointer;">Contact Us</a> </li>
         </ul>
 
     </nav>

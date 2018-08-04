@@ -1,0 +1,2 @@
+DataProvider: sqlserver
+DataConnectionString: Data Source=sql7003.site4now.net;Initial Catalog=DB_A2B4B8_dezineCorp;Persist Security Info=True;User ID=DB_A2B4B8_dezineCorp_admin;Password=S@na43aslam

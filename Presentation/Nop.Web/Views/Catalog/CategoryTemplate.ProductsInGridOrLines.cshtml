@@ -27,23 +27,23 @@
             <div class="breadcrumb">
                 <ul>
                     <li>
-                        <a href="@Url.RouteUrl("HomePage")" title="@T("Categories.Breadcrumb.Top")">@T("Categories.Breadcrumb.Top")</a>
-                        <span class="delimiter">@breadcrumbDelimiter</span>
+                        <a href="@Url.RouteUrl("HomePage")" title="@T("Categories.Breadcrumb.Top")"  style="margin:0px">@T("Categories.Breadcrumb.Top")</a>
+                        <span class="delimiter"  style="margin-left:2px;margin-right:2px;">@breadcrumbDelimiter</span>
                     </li>
                     @foreach (var cat in Model.CategoryBreadcrumb)
                     {
                         var isLastCategory = cat.Id == Model.Id;
-                        <li>
-                            @if (isLastCategory)
+                    <li>
+                        @if (isLastCategory)
                             {
-                                <strong class="current-item">@cat.Name</strong>
+                            <strong class="current-item" style="color:#337ab7;margin:0px">@cat.Name</strong>
                             }
                             else
                             {
-                                <a href="@Url.RouteUrl("Category", new { SeName = cat.SeName })" title="@cat.Name">@cat.Name</a>
-                                <span class="delimiter">@breadcrumbDelimiter</span>
+                            <a href="@Url.RouteUrl("Category", new { SeName = cat.SeName })" style="margin:0px" title="@cat.Name">@cat.Name</a>
+                            <span class="delimiter"  style="margin-left:2px;margin-right:2px;">@breadcrumbDelimiter</span>
                             }
-                        </li>
+                    </li>
                     }
                 </ul>
             </div>
@@ -97,7 +97,7 @@
     }*@
 @Html.Widget("categorydetails_before_subcategories", Model.Id)
 @*subcategories*@
-@if(Model.SubCategories.Any())
+@if (Model.SubCategories.Any())
 {
 
     var items = Model.SubCategories.Take(3);
@@ -107,13 +107,13 @@
         {
             foreach (var item in items)
             {
-                <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 sub-cat">
-                    <h4>@item.Name</h4>
-                    <hr />
-                    <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
-                        <img alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />
-                    </a>
-                </div>
+        <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 sub-cat">
+            <h4>@item.Name</h4>
+            <hr />
+            <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
+                <img alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />
+            </a>
+        </div>
 
             }
             iterations++;
@@ -163,6 +163,18 @@
             }
         </div>
         @Html.Widget("categorydetails_before_product_list", Model.Id)*@
+    <style>
+        .item-is-new {
+            background: #337ab7;
+            padding: 2px;
+            color: white;
+            height: 20px;
+        }
+
+        .no-item-heading {
+            height: 20px;
+        }
+    </style>
 
     @if (Model.Products.Any())
     {

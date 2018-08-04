@@ -1,0 +1,41 @@
+﻿@model ContactUsModel
+@using Nop.Web.Models.Common;
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    //title
+    Html.AddTitleParts("Career");
+}
+<div class="container-fluid">
+    <div class="page-title col-lg-12 col-sm-12 col-xs-12 col-md-12">
+        <img src="~/Content/DezineCorpImages/careers-banner.jpg" class="img-responsive" style="width:100%;" />
+    </div>
+</div>
+<hr />
+<div class="container">
+    <p style="margin-bottom:15px">
+        At <strong>Dezine<span style="color:#007A8A;">Corp</span></strong> we strive to build a team where voices are heard and suggestions for improvement are encouraged.  Our core values of teamwork, value, connections and trust build the foundation for every position.  With tremendous respect for tried and true methods of serving our customers, we are firmly focused on innovating to improve our service and quality.
+</p>
+    <p style="margin-bottom:15px">
+        If you are interested in what we have to offer, please send your cover letter and resume to <span style="color:#C0504D;">jobs@dezinecorp.com.</span>
+    </p>
+    <p style="margin-bottom:15px">
+        Current Opportunities include:
+    </p>
+    <p style="margin-bottom:15px"><a id="account-repre-form" style="color:#C0504D;">Account Representative</a></p>
+    <p style="margin-bottom:15px"><a id="graphic-form" style="color:#C0504D;">Graphic Artist</a></p>
+    <div style="display:none" id="career-form" align="center">
+        @Html.Action("CareerEmail", "Common")
+        <br />
+        <br />
+    </div>
+    <br />
+    <p>
+        <i>
+            DezineCorp is an equal opportunity employer.  <u>Please no phone calls and walk-ins will not been seen.</u>  If you require assistance submitting your cover letter/resume by a method other than email, contact our Customer Service team for support.
+        </i>
+    </p>
+
+</div>
+<br />
+<br />

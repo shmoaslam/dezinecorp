@@ -2,22 +2,33 @@
 @using Nop.Web.Models.Catalog;
 @*@using (Html.BeginRouteForm("ProductSearch", FormMethod.Get, new { id = "small-search-box-form" }))
 {*@
-    <input type="text" class="form-control search-box" id="small-searchterms" autocomplete="off" name="q" placeholder="@T("Search.SearchBox.Tooltip")" />
-    @*@Html.Widget("searchbox_before_search_button")*@
-    <span class="input-group-addon">
-       <i class="fa fa-search"></i>
-       
-    </span>
+
+        <input type="text" class="form-control search-box" class="search-box" id="small-searchterms" autocomplete="off" name="q" placeholder="Search" />
+        @*@Html.Widget("searchbox_before_search_button")*@
+        <span class="input-group-addon">
+            <i class="fa fa-search" id="searchbutton"></i>
+
+        </span>
+
     
     @if (Model.SearchTermMinimumLength > 0)
     {
         <script type="text/javascript">
-            $("#small-search-box-form").submit(function(event) {
+            @*$("#small-search-box-form").submit(function(event) {
                 if ($("#small-searchterms").val() == "") {
                     alert('@Html.Raw(HttpUtility.JavaScriptStringEncode(T("Search.EnterSearchTerms").Text))');
                     $("#small-searchterms").focus();
                     event.preventDefault();
                 }
+            });*@
+
+            $("#searchbutton").on("click", function myfunction() {
+                if ($("#small-searchterms").val() == "") {
+                    alert('@Html.Raw(HttpUtility.JavaScriptStringEncode(T("Search.EnterSearchTerms").Text))');
+                    $("#small-searchterms").focus();
+                    return;
+                }
+                window.location = "/search?q="+$("#small-searchterms").val();
             });
         </script>
     }

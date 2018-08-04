@@ -95,30 +95,30 @@ namespace Nop.Web.Controllers
             ILanguageService languageService,
             ICurrencyService currencyService,
             ILocalizationService localizationService,
-            IWorkContext workContext, 
+            IWorkContext workContext,
             IStoreContext storeContext,
-            IQueuedEmailService queuedEmailService, 
+            IQueuedEmailService queuedEmailService,
             IEmailAccountService emailAccountService,
             ISitemapGenerator sitemapGenerator,
             IThemeContext themeContext,
             IThemeProvider themeProvider,
             IForumService forumService,
-            IGenericAttributeService genericAttributeService, 
+            IGenericAttributeService genericAttributeService,
             IWebHelper webHelper,
             IPermissionService permissionService,
             ICacheManager cacheManager,
             ICustomerActivityService customerActivityService,
             IVendorService vendorService,
-            CustomerSettings customerSettings, 
-            TaxSettings taxSettings, 
+            CustomerSettings customerSettings,
+            TaxSettings taxSettings,
             CatalogSettings catalogSettings,
             StoreInformationSettings storeInformationSettings,
             EmailAccountSettings emailAccountSettings,
-            CommonSettings commonSettings, 
-            BlogSettings blogSettings, 
+            CommonSettings commonSettings,
+            BlogSettings blogSettings,
             NewsSettings newsSettings,
             ForumSettings forumSettings,
-            LocalizationSettings localizationSettings, 
+            LocalizationSettings localizationSettings,
             CaptchaSettings captchaSettings,
             VendorSettings vendorSettings)
         {
@@ -194,7 +194,7 @@ namespace Nop.Web.Controllers
             return View();
         }
 
-       
+
         //language
         [ChildActionOnly]
         public ActionResult LanguageSelector()
@@ -244,7 +244,7 @@ namespace Nop.Web.Controllers
             //prevent open redirection attack
             if (!Url.IsLocalUrl(returnUrl))
                 returnUrl = Url.RouteUrl("HomePage");
-            
+
             //language part in URL
             if (_localizationSettings.SeoFriendlyUrlsForLanguagesEnabled)
             {
@@ -310,7 +310,7 @@ namespace Nop.Web.Controllers
             //home page
             if (String.IsNullOrEmpty(returnUrl))
                 returnUrl = Url.RouteUrl("HomePage");
-            
+
             //prevent open redirection attack
             if (!Url.IsLocalUrl(returnUrl))
                 returnUrl = Url.RouteUrl("HomePage");
@@ -349,7 +349,7 @@ namespace Nop.Web.Controllers
 
             return Redirect(returnUrl);
         }
-        
+
         //footer
         [ChildActionOnly]
         public ActionResult JavaScriptDisabledWarning()
@@ -430,7 +430,7 @@ namespace Nop.Web.Controllers
         {
             //footer topics
             string topicCacheKey = string.Format(ModelCacheEventConsumer.TOPIC_FOOTER_MODEL_KEY,
-                _workContext.WorkingLanguage.Id, 
+                _workContext.WorkingLanguage.Id,
                 _storeContext.CurrentStore.Id,
                 string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()));
             var cachedTopicModel = _cacheManager.Get(topicCacheKey, () =>
@@ -479,6 +479,51 @@ namespace Nop.Web.Controllers
 
         [ChildActionOnly]
         [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult SubscriptionEmail()
+        {
+            return PartialView(new SubscriptionEmailModel());
+        }
+
+
+        [ChildActionOnly]
+        [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult NoSubscriptionEmail()
+        {
+            return PartialView(new NoSubscriptionEmailModel());
+        }
+
+
+        [HttpPost, ActionName("SubscriptionEmail")]
+        [PublicAntiForgery]
+        [FormValueRequired("Subscribtion")]
+        [CaptchaValidator]
+        public PartialViewResult SubscriptionEmail(SubscriptionEmailModel model, bool captchaValid)
+        {
+            //if (_captchaSettings.Enabled && !captchaValid)
+            //    ModelState.AddModelError("", _localizationService.GetResource("Common.WrongCaptcha"));
+            bool isMessageSent = false;
+            if (ModelState.IsValid)
+                isMessageSent = true;
+            return PartialView("_SubmitMessageSub", isMessageSent);
+        }
+
+
+        [HttpPost, ActionName("NoSubscribeEmail")]
+        [PublicAntiForgery]
+        [FormValueRequired("send-email-nosub")]
+        [CaptchaValidator]
+        public PartialViewResult NoSubscriptionEmail(NoSubscriptionEmailModel model, bool captchaValid)
+        {
+            //if (_captchaSettings.Enabled && !captchaValid)
+            //    ModelState.AddModelError("", _localizationService.GetResource("Common.WrongCaptcha"));
+            bool isMessageSent = false;
+            if (ModelState.IsValid)
+                isMessageSent = true;
+            return PartialView("_SubmitMessageSub", isMessageSent);
+        }
+
+        [ChildActionOnly]
+        [NopHttpsRequirement(SslRequirement.No)]
         public ActionResult CareerEmail()
         {
             return PartialView(new CareerEmailModel());
@@ -490,18 +535,48 @@ namespace Nop.Web.Controllers
         [CaptchaValidator]
         public PartialViewResult CareerEmailSend(CareerEmailModel model, bool captchaValid)
         {
-            if (_captchaSettings.Enabled && !captchaValid)
-                ModelState.AddModelError("", _localizationService.GetResource("Common.WrongCaptcha"));
+            //if (_captchaSettings.Enabled && !captchaValid)
+            //    ModelState.AddModelError("", _localizationService.GetResource("Common.WrongCaptcha"));
             bool isMessageSent = false;
             if (ModelState.IsValid)
                 isMessageSent = true;
             return PartialView("_SubmitMessage", isMessageSent);
         }
 
+        //Career page
+        [NopHttpsRequirement(SslRequirement.Yes)]
+        //available even when a store is closed
+        [StoreClosed(true)]
+        public ActionResult Career()
+        {
+            return View();
+        }
+
+        //Partners page
+        [NopHttpsRequirement(SslRequirement.Yes)]
+        //available even when a store is closed
+        [StoreClosed(true)]
+        public ActionResult Partners()
+        {
+            return View();
+        }
+
+
+        //FAQS page
+        [NopHttpsRequirement(SslRequirement.Yes)]
+        //available even when a store is closed
+        [StoreClosed(true)]
+        public ActionResult FAQS()
+        {
+            return View();
+        }
+
+
+
         //contact us page
         [NopHttpsRequirement(SslRequirement.Yes)]
         //available even when a store is closed
-        [StoreClosed(true)] 
+        [StoreClosed(true)]
         public ActionResult ContactUs()
         {
             var model = new ContactUsModel
@@ -517,7 +592,7 @@ namespace Nop.Web.Controllers
         [PublicAntiForgery]
         [CaptchaValidator]
         //available even when a store is closed
-        [StoreClosed(true)] 
+        [StoreClosed(true)]
         public ActionResult ContactUsSend(ContactUsModel model, bool captchaValid)
         {
             //validate CAPTCHA
@@ -548,8 +623,8 @@ namespace Nop.Web.Controllers
                 {
                     from = emailAccount.Email;
                     fromName = emailAccount.DisplayName;
-                    body = string.Format("<strong>From</strong>: {0} - {1}<br /><br />{2}", 
-                        Server.HtmlEncode(fullName), 
+                    body = string.Format("<strong>From</strong>: {0} - {1}<br /><br />{2}",
+                        Server.HtmlEncode(fullName),
                         Server.HtmlEncode(email), body);
                 }
                 else
@@ -571,7 +646,7 @@ namespace Nop.Web.Controllers
                     CreatedOnUtc = DateTime.UtcNow,
                     EmailAccountId = emailAccount.Id
                 });
-                
+
                 model.SuccessfullySent = true;
                 model.Result = _localizationService.GetResource("ContactUs.YourEnquiryHasBeenSent");
 
@@ -691,7 +766,7 @@ namespace Nop.Web.Controllers
             if (!_commonSettings.SitemapEnabled)
                 return RedirectToRoute("HomePage");
 
-            string cacheKey = string.Format(ModelCacheEventConsumer.SITEMAP_PAGE_MODEL_KEY, 
+            string cacheKey = string.Format(ModelCacheEventConsumer.SITEMAP_PAGE_MODEL_KEY,
                 _workContext.WorkingLanguage.Id,
                 string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()),
                 _storeContext.CurrentStore.Id);
@@ -760,7 +835,7 @@ namespace Nop.Web.Controllers
             if (!_commonSettings.SitemapEnabled)
                 return RedirectToRoute("HomePage");
 
-            string cacheKey = string.Format(ModelCacheEventConsumer.SITEMAP_SEO_MODEL_KEY, 
+            string cacheKey = string.Format(ModelCacheEventConsumer.SITEMAP_SEO_MODEL_KEY,
                 _workContext.WorkingLanguage.Id,
                 string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()),
                 _storeContext.CurrentStore.Id);
@@ -830,7 +905,7 @@ namespace Nop.Web.Controllers
             };
             return PartialView(model);
         }
-        
+
         //EU Cookie law
         [ChildActionOnly]
         public ActionResult EuCookieLaw()
@@ -1027,7 +1102,7 @@ namespace Nop.Web.Controllers
 
         //store is closed
         //available even when a store is closed
-        [StoreClosed(true)] 
+        [StoreClosed(true)]
         public ActionResult StoreClosed()
         {
             return View();

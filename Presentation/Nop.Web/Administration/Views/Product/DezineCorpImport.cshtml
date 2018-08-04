@@ -77,7 +77,9 @@
         }
     });
 
-    setInterval(function () {
+    clearInterval(updateInterval);
+
+    var updateInterval = setInterval(function () {
         $.ajax({
             url: '/admin/product/GetImportStatus',
             success: function (response) {
@@ -88,8 +90,11 @@
                     $("#spanRecordFailed").html(response.RecordFailed);
                     if (response.IsImportFinish == false)
                         $("#spanIsImportFinish").html("In Progress");
-                    else
+                    else {
                         $("#spanIsImportFinish").html("Completed");
+                        //clearInterval(updateInterval);
+                    }
+                        
                 }
             }
         });

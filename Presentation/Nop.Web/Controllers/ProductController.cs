@@ -951,7 +951,17 @@ namespace Nop.Web.Controllers
                 }
             }
 
-            var familyProducts = _productService.GetProductsByFamilyCode(product.FamilyCode);
+            var familyCode = string.Empty;
+            if (!string.IsNullOrEmpty(product.FamilyCode))
+            {
+                familyCode = product.FamilyCode;
+            }
+            else
+            {
+                familyCode = model.DData.FamilyCode;
+            }
+
+            var familyProducts = _productService.GetProductsByFamilyCode(familyCode);
             if (familyProducts.Any())
             {
                 model.DFamilyProducts = new List<ProductDetailsModel.DezineCorpRelatedOrFamilyProduct>();
@@ -1054,7 +1064,16 @@ namespace Nop.Web.Controllers
         {
             if (string.IsNullOrEmpty(productSku))
                 return null;
-                var relatedpicture = _pictureService.GetPicturesByProductSKU(productSku);
+            var related = _productService.GetProductBySku(productSku);
+
+            if (related == null)
+                return null;
+
+            if (related.Published == false || related.Deleted == true)
+                return null;
+
+
+            var relatedpicture = _pictureService.GetPicturesByProductSKU(productSku);
             var defaultPicture = relatedpicture.FirstOrDefault();
             var defaultPictureModel = new PictureModel
             {
@@ -1062,7 +1081,7 @@ namespace Nop.Web.Controllers
                 Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat.Details"), model.Name),
                 AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat.Details"), model.Name),
             };
-            var related = _productService.GetProductBySku(productSku);
+            
             return new ProductDetailsModel.DezineCorpRelatedOrFamilyProduct
             {
                 DefaultPicture = defaultPictureModel,

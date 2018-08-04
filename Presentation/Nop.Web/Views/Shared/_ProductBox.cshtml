@@ -94,17 +94,6 @@
             </div>
         </div>
     </div>*@
-<style>
-    .item-is-new {
-        background: #910a30;
-        padding: 2px;
-        color: white;
-        height: 20px;
-    }
-    .no-item-heading{
-        height: 20px;
-    }
-</style>
 <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 cat-product">
     <div class="text-right">
         @if (!string.IsNullOrEmpty(Model.ItemIsNew))
@@ -118,13 +107,39 @@
     </div>
 
     <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title">
-        <h5>@Model.SKU</h5>
-        <hr style="margin-top:0px" />
+        <h5 style="text-align:left;margin:3% 0 0 5%;">@Model.SKU</h5>
+        <h6 style="text-align:left;margin:0 0 1% 5%;color:grey;">@Model.Name</h6>
+        <hr style="margin-top:0px;width:90%;" />
         <div class="cat-product-picture">
             <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" />
         </div>
         <div class="cat-footer pull-right">
-            <p>@Model.ProductPrice.PriceDesc @Model.ProductPrice.Price</p>
+
+            <p style="text-align:right;">
+                @if (Model.ProductPrice != null)
+                {
+                    if (!string.IsNullOrEmpty(Model.ProductPrice.PriceDesc))
+                    {
+                        if (Model.ProductPrice.PriceDesc.Contains("\r\n"))
+                        {
+                            var data = Model.ProductPrice.PriceDesc.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+                            if (!string.IsNullOrEmpty(data[1]))
+                            {
+                                <text>@data[0]<br />@data[1] <span style="color:black;">@Model.ProductPrice.Price</span></text>
+                            }
+                            else
+                            {
+                                <text>@data[0]<br /><span style="color:black;">@Model.ProductPrice.Price</span></text>
+                            }
+                        }
+                        else
+                        {
+                            <text>@Model.ProductPrice.PriceDesc <span style="color:black;">@Model.ProductPrice.Price</span></text>
+                        }
+                    }
+                }
+
+            </p>
         </div>
     </a>
 </div>

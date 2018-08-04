@@ -63,7 +63,7 @@
         </div>
         <div class="list-box" id="tabs">
             <ul class="list">
-                @foreach (var category in Model.Categories)
+                @foreach (var category in Model.Categories.Where(x=>x.IncludeInTopMenu))
                 {
                     @RenderCategoryLine(category)
                 }

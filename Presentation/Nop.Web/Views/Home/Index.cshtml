@@ -10,7 +10,7 @@
         text-indent: -999px;
         cursor: pointer;
         background-color: #000;
-        border: 1px solid #8c2830;
+        border: 1px solid #F5F5F5;
         border-radius: 10px;
     }
 
@@ -18,36 +18,49 @@
         Width: 12px;
         Height: 12px;
         margin: 0;
-        background-color: #8c2830;
+        background-color: #F5F5F5;
     }
-    .banner-image{
-        width:100%;
+
+    .banner-image {
+        width: 100%;
+    }
+
+    .tooltip1 {
+        /*background-color:#5f9ea0;*/
+    }
+
+    .tooltiptext {
+        opacity: 0;
+        width: auto;
+        text-align: justify;
+        height: auto;
+        display: none;
     }
 </style>
 
 @Html.Widget("home_page_top")
 @*<div class="bnr" id="home">
-    <div id="top" class="callbacks_container">
-        <ul class="rslides" id="slider4">
-            <li>
-                <div class="banner-1"></div>
-            </li>
-            <li>
-                <div class="banner-2"></div>
-            </li>
-            <li>
-                <div class="banner-3"></div>
-            </li>
-            <li>
-                <div class="banner-4"></div>
-            </li>
-            <li>
-                <div class="banner-5"></div>
-            </li>
-        </ul>
-    </div>
-    <div class="clearfix"> </div>
-</div>*@
+        <div id="top" class="callbacks_container">
+            <ul class="rslides" id="slider4">
+                <li>
+                    <div class="banner-1"></div>
+                </li>
+                <li>
+                    <div class="banner-2"></div>
+                </li>
+                <li>
+                    <div class="banner-3"></div>
+                </li>
+                <li>
+                    <div class="banner-4"></div>
+                </li>
+                <li>
+                    <div class="banner-5"></div>
+                </li>
+            </ul>
+        </div>
+        <div class="clearfix"> </div>
+    </div>*@
 <div id="carousel1" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#carousel1" data-slide-to="0" class="active"></li>
@@ -82,158 +95,121 @@
             <div class="carousel-caption">      </div>
         </div>
     </div>
-    @*<a class="left carousel-control" href="#carousel1" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#carousel1" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>*@
 </div>
 
 <div class="container">
-    <h1 align="center">Welcome To DezineCorp</h1>
+    <h1 align="center">Welcome to <img src="~/Content/DezineCorpImages/dezinecorp.png" style="margin-bottom: 5px;" width="163" height="52" alt="" /></h1>
     <hr>
-    <h4 align="center">
-        With your customer in mind, we create the promotional products designed to make a big impact and leave a lasting impression. As a supplier and decorator in the promotional products industry, DezineCorp specializes in providing a diverse range of products and decoration techniques to promote your business, event, or special occasion. We offer a variety of decorative processes for logo and message branding, and we provide a range of drinkware, travel and business accessories, brand name products, and premium gifts to choose from. Our dedicated staff is there to help you customize the perfect combination of product, decoration and packaging to meet your every promotional need.
-    </h4>
+    @*<h4 align="center">
+            With your customer in mind, we create the promotional products designed to make a big impact and leave a lasting impression. As a supplier and decorator in the promotional products industry, DezineCorp specializes in providing a diverse range of products and decoration techniques to promote your business, event, or special occasion. We offer a variety of decorative processes for logo and message branding, and we provide a range of drinkware, travel and business accessories, brand name products, and premium gifts to choose from. Our dedicated staff is there to help you customize the perfect combination of product, decoration and packaging to meet your every promotional need.
+        </h4>*@
 </div>
 <div class="container">
     <div class="row mar-top" align="center">
-        <div class="col-md-3 mar-top">
-            <i class="fa fa-globe fa-5x"></i>
-            <h3>What We Do</h3>
+        <div class="col-md-3 mar-top tooltip1">
+            @*<i class="fa fa-globe fa-5x" style="color:rgb(192,80,77)"></i>*@
+            <h4 style="height:52.6px;line-height:52.6px;background-color:rgb(192,80,77); text-align:center;">
+                <span style="line-height:1.5; display: inline-block; vertical-align:middle;color:white;">Our Approach</span>
+            </h4>
             <hr>
-            <p>DezineCorp is a leading full service supplier of decorated drinkware and accessories for the promotional industry.  Through our wide variety of high quality products and decorative services we can help to fulfill your every promotional need.</p>
+            <div class="tooltiptext">
+                <p>We are problem solvers and product innovators leading the industry in creating memorable and impactful pieces that help to elevate your brand and make it stand out.</p>
+                <p>Our passionate team of decorators, designers, printers, and specialists have decades of combined experience to offer ideas and implement solutions.</p>
+                <p>We have the processes in place to provide in-stock product, quick and accurate production, and the shipping solutions to execute your order efficiently.</p>
+                <p>Coordinating each custom order is our dedicated Customer Service team, providing guidance along the way.</p>
+            </div>
         </div>
-        <div class="col-md-3 mar-top">
-            <i class="fa fa-users fa-5x"></i>
-            <h3>Whom We Work With</h3>
+        <div class="col-md-3 mar-top tooltip1">
+            @*<i class="fa fa-users fa-5x"  style="color:rgb(155,187,89)"></i>*@
+            <h4 style="height:52.6px;line-height:52.6px;background-color:rgb(155,187,89); text-align:center;">
+                <span style="line-height:1.5; display: inline-block; vertical-align:middle;color:white;">Collaborating with Promotional Innovators</span>
+            </h4>
             <hr>
-            <p>We work with distributor companies in the promotional products industry to supply branded, promotional products for your event, occasion or giveaway.</p>
+            <div class="tooltiptext">
+                <p>
+                    We work with promotional distributors, campus bookstores, food service promoters, gift shops and event coordinators to create promotions that make an impression.
+                </p>
+                <p>
+                    Since 2009 we have developed a strong network of vendors, suppliers and distributors that have worked tirelessly to decorate, sell, and deliver our impressive and extensive line of glassware, ceramics, plastics, leathers and metals to our customers.
+                </p>
+                <p>
+                    Innovation and collaboration – these are the qualities we strive for each day.
+                </p>
+
+
+            </div>
         </div>
-        <div class="col-md-3 mar-top">
-            <i class="fa fa-usd fa-5x"></i>
-            <h3>What We Sell</h3>
+        <div class="col-md-3 mar-top tooltip1">
+            @*<i class="fa fa-usd fa-5x"  style="color:rgb(128,100,162)"></i>*@
+            <h4 style="height:52.6px;line-height:52.6px;background-color:rgb(128,100,162); text-align:center;">
+                <span style="line-height:1.5; display: inline-block; vertical-align:middle;color:white;">Transforming Ideas into Impressions</span>
+            </h4>
             <hr>
-            <p>From affordable options to premium selections, we offer product, decoration and branding for a wide range of promotional product types to fit our clients’ every need and budget.</p>
+            <div class="tooltiptext">
+                <p>
+                    From affordable options to premium selections, we offer product, decoration and branding for a wide range of promotional product types to fit our clients’ every need and budget.
+                </p><p>
+                    Bring us your logo, colours, concepts, and ideas and we will work with your one-on-one to transform your ideas into reality on time and on budget.<br><br>
+                    @*<em>
+                            <a class="div-link">
+                                read more...<br>
+                            </a>
+                        </em>*@
+                </p>
+            </div>
+
         </div>
-        <div class="col-md-3 mar-top">
-            <i class="fa fa-magic fa-5x"></i>
-            <h3>How We Decorate</h3>
+        <div class="col-md-3 mar-top tooltip1">
+            @*<i class="fa fa-magic fa-5x"  style="color:rgb(75,172,198)"></i>*@
+            <h4 style="height:52.6px;line-height:52.6px;background-color:rgb(75,172,198); text-align:center;">
+                <span style="line-height:1.5; display: inline-block; vertical-align:middle;color:white;">
+                    Products, Decoration and more….
+                </span>
+            </h4>
             <hr>
-            <p>With an ever evolving selection of product and decoration techniques to choose from, we work with you to provide decoration options designed to best highlight your client’s logo or brand. Some of our options include: Screen Printing, Pad-Printing, Sublimation, Laser Engraving, Debossing and Embossing.</p>
+            <div class="tooltiptext">
+                <p>
+                    With a large variety of product and decoration techniques to choose from, we will help you select the decoration options that best highlight your promotion.
+                </p>
+                <p>
+                    Take a moment to view our new and featured items along the way – you may be inspired for a future project!  Keep in mind that Custom is our specialty.  If you have questions our Customer Service team will be pleased to assist you. <br><br>
+                    @*<em>
+                            <a class="div-link">
+                                read more...<br>
+                            </a>
+                        </em>*@
+                </p>
+            </div>
         </div>
     </div>
 </div>
 
 
-@Html.Widget("home_page_before_products")
+@*@Html.Widget("home_page_before_products")*@
 @Html.Action("HomepageProducts", "Product")
 @Html.Widget("home_page_before_best_sellers")
 <div class="boxes">
     <div class="container">
         <div class="abt-shoe-main">
             <div class="col-md-3">
-                <div class="facebook-post-box">
-                    <a href="http://ecatalog.officebeacon.com/DEZINECORPINC/2016/FALL&HOLLIDAYCOLLECTION/EN/">
-                        <img src="~/Content/DezineCorpImages/2016_Fall_&Holiday_collection_flyer_(280x200.jpg" />
-                    </a>
-                </div>
-                <div class="pinterest-post-box">
-                    <a href="/gift-boxes-gift-sets">
-                        <img src="~/Content/DezineCorpImages/2016_Gift_set_(280x200).jpg" />
-                    </a>
-                </div>
+                <div class="facebook-post-box"> <a href="http://ecatalog.officebeacon.com/DEZINECORPINC/2016/FALL&amp;HOLLIDAYCOLLECTION/EN/"> <img src="~/Content/DezineCorpImages/BOX1.jpg"> </a> </div>
+                <div class="pinterest-post-box"> <a href="http://localhost:15536/gift-boxes-gift-sets"> <img src="~/Content/DezineCorpImages/BOX2.jpg"> </a> </div>
             </div>
             <div class="col-md-6 padding-lf-8">
-                <iframe width="100%" height="411px" src="https://www.youtube.com/embed/dIKetIWmzzs" frameborder="0" allowfullscreen></iframe>
+                <img src="~/Content/DezineCorpImages/2016_New_Bistro_Colours(740x372)_final.jpg" class="img-responsive" />
             </div>
             <div class="col-md-3">
-                <div class="twitter-post-box">
-                    <a href="http://ecatalog.officebeacon.com/DEZINECORPINC/2016/EN">
-                        <img src="~/Content/DezineCorpImages/2016_Catalogue_(280x200).jpg" />
-                    </a>
-                </div>
-                <div class="google-post-box">
-                    <a href="http://ecatalog.officebeacon.com/DEZINECORPINC/2016/EN3/">
-                        <img src="~/Content/DezineCorpImages/2016_While_qtys_last_flyer_(280x200).jpg" />
-                    </a>
-                </div>
+                <div class="twitter-post-box"> <a href="http://ecatalog.officebeacon.com/DEZINECORPINC/2016/EN"> <img src="~/Content/DezineCorpImages/BOX3.jpg"> </a> </div>
+                <div class="google-post-box"> <a href="http://ecatalog.officebeacon.com/DEZINECORPINC/2016/EN3/"> <img src="~/Content/DezineCorpImages/box4.jpg"> </a> </div>
             </div>
             <div class="col-md-3">
-                <div class="well">
-                    <h2>News</h2>
-                    <div id="myCarousel" class="vertical-slider carousel vertical slide" data-ride="carousel">
-                        <br />
-                        <!-- Carousel items -->
-                        <div class="carousel-inner">
-                            <div class="item active">
-                                <div class="row">
-                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
-                                    euismod tincidunt ut laoreet..
-                                </div>
-                            </div>
-                            <!--/item-->
-                            <div class="item ">
-                                <div class="row">
-                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
-                                    euismod tincidunt ut laoreet..
-                                </div>
-                            </div>
-                            <!--/row-fluid-->
-                            <!--/item-->
-                            <div class="item ">
-                                <div class="row">
-                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
-                                    euismod tincidunt ut laoreet..
-                                </div>
-                            </div>
-                            <!--/row-fluid-->
-                        </div>
-                    </div>
-                </div>
+                <div class="twitter-post-box"> <a href="http://ecatalog.officebeacon.com/DEZINECORPINC/2016/EN"> <img src="~/Content/DezineCorpImages/BOX5.jpg"> </a> </div>
             </div>
-            <div class="col-md-6 brw-cat">
-                <div class="row">
-                    <h3 align="center"><u>BROWSE BY CATEGORIES</u></h3>
-                    <div class="col-md-3">
-                        <ul style="list-style:none; font-size: 16px; color:#000 !important;">
-                            <li><a>Drinkware</a></li>
-                            <li><a>Ceramics</a></li>
-                            <li><a>Plastics</a></li>
-                            <li><a>Leather</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3">
-                        <ul style="list-style:none;    font-size: 16px;">
-                            <li><a>Drinkware</a></li>
-                            <li><a>Ceramics</a></li>
-                            <li><a>Plastics</a></li>
-                            <li><a>Leather</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3">
-                        <ul style="list-style:none;    font-size: 16px;">
-                            <li><a>Drinkware</a></li>
-                            <li><a>Ceramics</a></li>
-                            <li><a>Plastics</a></li>
-                            <li><a>Leather</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3">
-                        <ul style="list-style:none;    font-size: 16px;">
-                            <li><a>Drinkware</a></li>
-                            <li><a>Ceramics</a></li>
-                            <li><a>Plastics</a></li>
-                            <li><a>Leather</a></li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="col-md-6 brw-cat"  style="background-color:white;">
+                @Html.Action("HomepageCategories", "Catalog")
             </div>
             <div class="col-md-3">
-                <div class="pink-well"> </div>
+                <div class="twitter-post-box"> <a href="http://ecatalog.officebeacon.com/DEZINECORPINC/2016/EN"> <img src="~/Content/DezineCorpImages/BOX6.jpg"> </a> </div>
             </div>
             <div class="clearfix"> </div>
         </div>
@@ -252,3 +228,23 @@
     @Html.Widget("home_page_before_poll")
     @Html.Action("HomePagePolls", "Poll")
     @Html.Widget("home_page_bottom")*@
+<script>
+    $(".tooltip1,.tooltiptext").hover(function (event) {
+        console.log("hover");
+        $(".tooltiptext").css("display", "block");
+        console.log(event.pageX);
+        console.log(event.pageY);
+        $(this).find('.tooltiptext').animate({
+            opacity: "1"
+        }, {
+            queue: false
+        });
+    }, function () {
+        $(".tooltiptext").animate({
+            opacity: "0"
+        }, {
+            queue: false
+        });
+        $(".tooltiptext").css("display", "none");
+    });
+</script>

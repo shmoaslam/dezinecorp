@@ -1,0 +1,66 @@
+﻿@model Nop.Web.Models.Common.NoSubscriptionEmailModel
+
+@{
+    AjaxOptions ajaxOptions = new AjaxOptions
+    {
+        LoadingElementId = "loading-area-nosub",
+        LoadingElementDuration = 1000,
+        OnBegin = "HideForm",
+        OnFailure = "ShowFailure",
+        UpdateTargetId = "message-area-nosub",
+        OnSuccess = "OnSuccessNoSub",
+    };
+
+}
+
+<script>
+    function HideForm() {
+        //When the form is submitted, we hide the form
+        $("#form-area-nosub").hide();
+    }
+
+    function ShowFailure(e) {
+        //In the case that the AJAX call fails to communicate with the server
+        //(e.g. the user's internet connection cuts out), we should display a message to that effect
+        $('#message-area').html("<div class='alert alert-danger'><strong>Error!</strong>The server could not be contacted and your message has not been sent. Please check your internet connection and try again later.</div>");
+    }
+    function OnSuccessNoSub() {
+        document.getElementById("NoSubEmailForm").reset();
+    }
+</script>
+<style>
+    #noSubscribtion {
+        background-color: #eee;
+        padding: 10px;
+    }
+</style>
+
+<div id="loading-area-nosub" class="load" style="display:none;">
+    <div class='alert alert-info'><strong>Sending...</strong></div>
+</div>
+
+<div id="message-area-nosub"></div>
+
+<div id="form-area-nosub">
+    @using (Ajax.BeginForm("NoSubscriptionEmail", null, ajaxOptions, new { id= "NoSubEmailForm"}))
+    {
+        @Html.AntiForgeryToken()
+        if (!MvcHtmlString.IsNullOrEmpty(Html.ValidationSummary(true)))
+        {
+            <div class="message-error">@Html.ValidationSummary(true)</div>
+        }
+        <div class="box">
+            @Html.TextBoxFor(model => model.Email, new { @class = "input--form--css", placeholder = "Email", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span>
+        </div>
+        @*<div class="captcha-box">
+            @Html.Raw(Html.GenerateCaptcha())
+        </div>*@
+        <br />
+
+        <div class="row" align="center">
+            <input type="submit" name="send-email-nosub" class="send--mail" value="@T("Products.EmailAFriend.Button")" />
+        </div>
+    }
+</div>
+
+

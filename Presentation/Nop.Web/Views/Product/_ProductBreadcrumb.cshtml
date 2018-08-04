@@ -11,30 +11,30 @@
         <ul>
             @Html.Widget("productbreadcrumb_before", Model.ProductId)
             <li>
-                <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                    <a href="@Url.RouteUrl("HomePage")" itemprop="url">
-                        <span itemprop="title">@T("Products.Breadcrumb.Top")</span>
+                <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb" style="margin:0px;">
+                    <a href="@Url.RouteUrl("HomePage")" itemprop="url"  style="margin:0px;">
+                        <span itemprop="title" style="margin:0px;" >@T("Products.Breadcrumb.Top")</span>
                     </a>
                 </span>
-                <span class="delimiter">@breadcrumbDelimiter</span>
+                <span class="delimiter" style="margin-left:2px;margin-right:2px;">@breadcrumbDelimiter</span>
             </li>
             @foreach (var category in Model.CategoryBreadcrumb)
             {
                 <li>
-                    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                        <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" itemprop="url">
-                            <span itemprop="title">@category.Name</span>
+                    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb"  style="margin:0px;">
+                        <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" itemprop="url" style="margin:0px;" >
+                            <span itemprop="title"  style="margin:0px;">@category.Name</span>
                         </a>
                     </span>
-                    <span class="delimiter">@breadcrumbDelimiter</span>
+                    <span class="delimiter"  style="margin-left:2px;margin-right:2px;">@breadcrumbDelimiter</span>
                 </li>
             }
             <li>
-                <strong class="current-item">@Model.ProductName</strong>
+                <strong class="current-item" style="color:#337ab7;margin:0px" >@Model.ProductName</strong>
                 @*<strong class="current-item"><a href="@Url.RouteUrl("Product", new { SeName = Model.ProductSeName })" itemprop="url">@Model.ProductName</a></strong>*@
                 @Html.Widget("productbreadcrumb_after", Model.ProductId)
             </li>
         </ul>
     </div>
 
-}
+}   

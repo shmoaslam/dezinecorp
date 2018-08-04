@@ -52,6 +52,7 @@
 }
 @Html.Widget("productdetails_after_breadcrumb", Model.Id)
 <style>
+    
     .comp {
         background: #fff;
         -moz-border-radius: 2px;
@@ -75,10 +76,6 @@
         </div>
        
         <div class="clearfix"></div>
-        <div class="row text-center">
-            <div class="col-md-6"> @Html.Partial("_ProductEmailAFriendButton", Model)</div>
-            <div class="col-md-6"><div class="product-detail-function-button"><span class="fa fa-print email_a_friend" onclick="printSection('product-desc')"></span></div></div>
-        </div>
         
     </div>
     <div class="col-md-6 compDescription pull-right">
@@ -88,9 +85,9 @@
         <p>@Model.ShortDescription</p>
         <div class="card pd-top-1o5per">
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#price" aria-controls="messages" role="tab" data-toggle="tab">Pricing</a></li>
-                <li role="presentation"><a href="#features" aria-controls="home" role="tab" data-toggle="tab">Features</a></li>
-                <li role="presentation"><a href="#spec" aria-controls="profile" role="tab" data-toggle="tab">Specifications</a></li>
+                <li role="presentation" class="active"><a style="color:#007A8A;" href="#price" aria-controls="messages" role="tab" data-toggle="tab">Pricing</a></li>
+                <li role="presentation"><a  style="color:#007A8A;" href="#features" aria-controls="home" role="tab" data-toggle="tab">Features</a></li>
+                <li role="presentation"><a  style="color:#007A8A;" href="#spec" aria-controls="profile" role="tab" data-toggle="tab">Specifications</a></li>
                 @*<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Setup</a></li>*@
             </ul>
             <!-- Tab panes -->
@@ -106,7 +103,7 @@
                                 {
                                     if (tierprice.PriceName.Equals("Quantity"))
                                     {
-                                        <tr style="color: white;background-color: #910A30;font-weight:bold;">
+                                        <tr style="color: white;background-color: #007A8A;font-weight:bold;">
                                             <th scope="col">@tierprice.PriceName</th>
                                             <th scope="col">@tierprice.Price1</th>
                                             <th scope="col">@tierprice.Price2</th>
@@ -119,7 +116,7 @@
                                     {
 
                                         var isPriceRow = tierprice.PriceName.Equals("Price", StringComparison.OrdinalIgnoreCase);
-                                        <tr style="color:Black;background-color:#EEEEEE;@(isPriceRow ? "border-bottom: 2px solid #910A30;" : string.Empty)">
+                                        <tr style="color:Black;background-color:white;@(isPriceRow ? "border-bottom: 2px solid #007A8A;" : string.Empty)">
                                             <td>@tierprice.PriceName</td>
                                             <td>@tierprice.Price1</td>
                                             <td>@tierprice.Price2</td>
@@ -346,6 +343,14 @@
             </div>
         </div>
     </div>
+    <div class="container">
+        <div class="col-md-6"></div>
+        <div class="col-md-3 text-center"> @Html.Partial("_ProductEmailAFriendButton", Model)</div>
+        <div class="col-md-3 text-center"><div class="product-detail-function-button"><span class="fa fa-print email_a_friend" onclick="printSection('product-desc')"></span></div></div>
+
+    </div>
+
+
 </div>
 @if (Model.DRelatedProducts.Any())
 {
@@ -354,7 +359,7 @@
         <div class="row">
             <div class="row">
                 <div class="col-md-9">
-                    <h2>Related Products</h2>
+                    <h2 style="margin-left:20px">Related Products</h2>
                 </div>
                 <div class="col-md-3">
                     <div class="controls pull-right hidden-xs">

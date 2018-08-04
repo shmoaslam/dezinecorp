@@ -332,6 +332,8 @@
     <Compile Include="Models\Common\StoreThemeModel.cs" />
     <Compile Include="Models\Common\LanguageSelectorModel.cs" />
     <Compile Include="Models\Common\SitemapModel.cs" />
+    <Compile Include="Models\Common\NoSubscriptionEmailModel.cs" />
+    <Compile Include="Models\Common\SubscriptionEmail.cs" />
     <Compile Include="Models\Vendors\ApplyVendorModel.cs" />
     <Compile Include="Models\Customer\CustomerAttributeModel.cs" />
     <Compile Include="Models\Catalog\CustomerBackInStockSubscriptionsModel.cs" />
@@ -401,6 +403,8 @@
     <Compile Include="Validators\Common\AddressValidator.cs" />
     <Compile Include="Validators\Common\CareerEmailValidator.cs" />
     <Compile Include="Validators\Common\ContactVendorValidator.cs" />
+    <Compile Include="Validators\Common\NoSubscriptionEmailValidator.cs" />
+    <Compile Include="Validators\Common\SubscriptionEmailValidator.cs" />
     <Compile Include="Validators\Vendors\ApplyVendorValidator.cs" />
     <Compile Include="Validators\Customer\LoginValidator.cs" />
     <Compile Include="Validators\Install\InstallValidator.cs" />
@@ -482,6 +486,7 @@
     <Content Include="Content\DezineCorpImages\2016_Fall_&amp;Holiday_collection_flyer_%28280x200.jpg" />
     <Content Include="Content\DezineCorpImages\2016_Gift_set_%28280x200%29.jpg" />
     <Content Include="Content\DezineCorpImages\2016_Metals_Stainless_Steel%28740x372%29.jpg" />
+    <Content Include="Content\DezineCorpImages\2016_New_Bistro_Colours%28740x372%29_final.jpg" />
     <Content Include="Content\DezineCorpImages\2016_Reactive_Glaze%28740x372%29.jpg" />
     <Content Include="Content\DezineCorpImages\2016_Stanley_Update%28740x372%29_.jpg" />
     <Content Include="Content\DezineCorpImages\2016_Sublime_%281200x700%29.jpg" />
@@ -492,10 +497,15 @@
     <Content Include="Content\DezineCorpImages\banner-2.png" />
     <Content Include="Content\DezineCorpImages\banner-4.png" />
     <Content Include="Content\DezineCorpImages\banner-5.png" />
+    <Content Include="Content\DezineCorpImages\careers-banner.jpg" />
+    <Content Include="Content\DezineCorpImages\contact_us.jpg" />
     <Content Include="Content\DezineCorpImages\DezineLogo.gif" />
+    <Content Include="Content\DezineCorpImages\faq-banner.jpeg" />
     <Content Include="Content\DezineCorpImages\flag.jpg" />
     <Content Include="Content\DezineCorpImages\loader.gif" />
+    <Content Include="Content\DezineCorpImages\logo.png" />
     <Content Include="Content\DezineCorpImages\new_logo.gif" />
+    <Content Include="Content\DezineCorpImages\PartnerBrand.JPG" />
     <Content Include="Content\DezineCorpImages\PPAI_Logo%28100x50%29.png" />
     <Content Include="Content\DezineCorpImages\PPPC_Logo%28100x50%29.png" />
     <Content Include="Content\DezineCorpImages\SAGE_Logo%28100x50%29.png" />
@@ -1200,8 +1210,11 @@
     <Content Include="Content\fonts\flexslider-icon.eot" />
     <Content Include="Content\fonts\flexslider-icon.ttf" />
     <Content Include="Content\fonts\flexslider-icon.woff" />
+    <Content Include="Content\PDF\Terms_Conditions_Decoration Charges_Website-2018.pdf" />
     <None Include="Properties\PublishProfiles\DezineCorp.pubxml" />
     <None Include="Properties\PublishProfiles\FTP_DEV_SERVER.pubxml" />
+    <None Include="Properties\PublishProfiles\NewDezineCorpWebDeploy.pubxml" />
+    <None Include="Properties\PublishProfiles\NewFTPPublish.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fineuploader\iframe.xss.response-4.2.2.js" />
     <Content Include="Scripts\fineuploader\jquery.fineuploader-4.2.2.js" />
@@ -2091,6 +2104,13 @@
     <Content Include="Views\Common\CareerEmail.cshtml" />
     <Content Include="Views\Shared\_SubmitMessage.cshtml" />
     <Content Include="Views\Common\_SubmitMessage.cshtml" />
+    <Content Include="Views\Common\Career.cshtml" />
+    <Content Include="Views\Common\Partners.cshtml" />
+    <Content Include="Views\Common\FAQS.cshtml" />
+    <Content Include="Views\Common\SubscriptionEmail.cshtml" />
+    <Content Include="Views\Common\NoSubscriptionEmail.cshtml" />
+    <Content Include="Views\Common\_SubmitMessageSub.cshtml" />
+    <Content Include="Views\Catalog\HomePageBoxMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Roxy_Fileman\tmp\" />

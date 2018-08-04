@@ -1087,7 +1087,7 @@ namespace Nop.Admin.Controllers
                     if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
                     {
                         string name = Path.GetFileNameWithoutExtension(file.FileName);
-                        string myfile = name + "_" + Guid.NewGuid() + ".xls";
+                        string myfile = name + "_" + DateTime.Now.ToString("MMddyyyyyhhmmssfff") + ".xls";
                         string fileName = file.FileName;
                         string fileContentType = file.ContentType;
                         byte[] fileBytes = new byte[file.ContentLength];

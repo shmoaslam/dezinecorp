@@ -59,6 +59,7 @@
         .pd-top-1o5per {
             padding: 1.5%;
         }
+
     </style>
     <!-- CSS End -->
 
@@ -87,16 +88,40 @@
                 pause: true,
                 interval: 4000,
             });
+
             $('#main-menu').smartmenus({
                 subMenusSubOffsetX: 1,
                 subMenusSubOffsetY: -8
             });
 
-            $('#account-repre-form,#shipper-receiver-form').click(function () {
+            // SmartMenus mobile menu toggle button
+            $(function () {
+                var $mainMenuState = $('#main-menu-state');
+                var $headingMenuBrand = $('#headingmenubrand');
+                if ($mainMenuState.length) {
+
+                    // animate mobile menu
+                    $mainMenuState.change(function (e) {
+                        var $menu = $('#main-menu');
+                        if (this.checked) {
+                            $menu.hide().slideDown(250, function () { $menu.css('display', ''); });
+                        } else {
+                            $menu.show().slideUp(250, function () { $menu.css('display', ''); });
+                        }
+                    });
+                    // hide mobile menu beforeunload
+                    $(window).bind('beforeunload unload', function () {
+                        if ($mainMenuState[0].checked) {
+                            $mainMenuState[0].click();
+                        }
+                    });
+                }
+            });
+            $('#account-repre-form,#graphic-form').click(function () {
                 if ($("#career-form").is(":visible") == false) 
                     $("#career-form").show("slow");
-                if ($(this).attr('id') == 'shipper-receiver-form')
-                    $('#Shipper_Receiver').prop('checked', true);
+                if ($(this).attr('id') == 'graphic-form')
+                    $('#Graphic_Artist').prop('checked', true);
                 else
                     $('#Account_Representative').prop('checked', true);
             });
@@ -105,7 +130,7 @@
             $('.flexslider').flexslider({
                 animation: "slide",
                 animationLoop: true,
-                itemWidth: 210,
+                itemWidth: 250,
                 itemMargin: 7,
                 pausePlay: false,
 

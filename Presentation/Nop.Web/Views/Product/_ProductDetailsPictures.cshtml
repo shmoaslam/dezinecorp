@@ -66,6 +66,9 @@
     </div>*@
 
 <div class="row" style="margin-bottom:20px">
+    <div class="col-md-9 text-center">
+        <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" data-zoom-image="@Model.DefaultPictureModel.FullSizeImageUrl" title="@Model.DefaultPictureModel.Title" itemprop="image" id="main-product-img" />
+    </div>
     <div class="col-md-3">
         @if (Model.PictureModels.Any())
         {
@@ -77,7 +80,6 @@
                             <a href="#" data-image="@Model.PictureModels[i].ImageUrl" data-zoom-image="@Model.PictureModels[i].FullSizeImageUrl">
                                 <img id="img_01" src="@Model.PictureModels[i].ThumbImageUrl" />
                             </a>
-
                         </li>
                     }
                 </ul>
@@ -85,11 +87,9 @@
             </div>
         }
     </div>
-    <div class="col-md-9 text-center">
-        <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" data-zoom-image="@Model.DefaultPictureModel.FullSizeImageUrl" title="@Model.DefaultPictureModel.Title" itemprop="image" id="main-product-img" />
-    </div>
+
 </div>
-@if (Model.DFamilyProducts.Any())
+@if (Model.DFamilyProducts != null)
 {
     <div class="row">
         <div class="col-md-12">

@@ -5,10 +5,11 @@
     {
         LoadingElementId = "loading-area",
         LoadingElementDuration = 1000,
-        Url = Url.Action("CareerEmail"),
         OnBegin = "HideForm",
         OnFailure = "ShowFailure",
         UpdateTargetId = "message-area",
+        OnSuccess = "OnSuccess",
+        
     };
 
 }
@@ -19,11 +20,13 @@
         $("#form-area").hide();
     }
 
-
     function ShowFailure(e) {
         //In the case that the AJAX call fails to communicate with the server
         //(e.g. the user's internet connection cuts out), we should display a message to that effect
         $('#message-area').html("<div class='alert alert-danger'><strong>Error!</strong>The server could not be contacted and your message has not been sent. Please check your internet connection and try again later.</div>");
+    }
+    function OnSuccess() {
+        document.getElementById("careerForm").reset();
     }
 </script>
 <style>
@@ -31,7 +34,10 @@
         background-color: #eee;
         padding: 10px;
     }
+
+    
 </style>
+
 <div id="loading-area" class="load" style="display:none;">
     <div class='alert alert-info'><strong>Sending...</strong></div>
 </div>
@@ -39,7 +45,7 @@
 <div id="message-area"></div>
 
 <div id="form-area">
-    @using (Ajax.BeginForm(ajaxOptions))
+    @using (Ajax.BeginForm("CareerEmail", null,  ajaxOptions, new { id = "careerForm"}))
     {
         @Html.AntiForgeryToken()
         if (!MvcHtmlString.IsNullOrEmpty(Html.ValidationSummary(true)))
@@ -47,20 +53,21 @@
             <div class="message-error">@Html.ValidationSummary(true)</div>
         }
         <div class="box">
-            @Html.RadioButtonFor(model => model.JobType, "Account Representative", new { id = "Account_Representative" }) <span>Account Representative</span>  
-            @Html.RadioButtonFor(model => model.JobType, "Shipper/Receiver", new { id = "Shipper_Receiver" }) <span>Shipper/Receiver</span>
+            @Html.RadioButtonFor(model => model.JobType, "Account Representative", new { id = "Account_Representative" }) <span>Account Representative</span>
+            @Html.RadioButtonFor(model => model.JobType, "Graphic Artist", new { id = "Graphic_Artist" }) <span>Graphic Artist</span>
             <br />
             <br />
-            @Html.TextBoxFor(model => model.Name, new { @class = "input--form--css", placeholder = "Name" })
-            @Html.ValidationMessageFor(model => model.Name)
-            @Html.TextBoxFor(model => model.Email, new { @class = "input--form--css", placeholder = "Email" })
-            @Html.ValidationMessageFor(model => model.Email)
+            @Html.TextBoxFor(model => model.Name, new { @class = "input--form--css", placeholder = "First Name - Last Name", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span>
+            @Html.TextBoxFor(model => model.Email, new { @class = "input--form--css", placeholder = "Email", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span>
             @Html.TextAreaFor(model => model.Comments, new { @class = "input--form--css", placeholder = "Comments" })
-            @Html.TextAreaFor(model => model.AreaOfInterest, new { @class = "input--form--css", placeholder = "Area of Interest" })
-            @Html.TextAreaFor(model => model.ExtraComments, new { @class = "input--form--css", placeholder = "Addtional Comments" })
-            <div class="captcha-box">
+            <br />
+            Please upload resume in (pdf format only)<input type="file" accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf" />
+            <br />
+            @*@Html.TextAreaFor(model => model.AreaOfInterest, new { @class = "input--form--css", placeholder = "Area of Interest" })
+                @Html.TextAreaFor(model => model.ExtraComments, new { @class = "input--form--css", placeholder = "Addtional Comments" })*@
+            @*<div class="captcha-box">
                 @Html.Raw(Html.GenerateCaptcha())
-            </div>
+            </div>*@
             <br />
             <div class="row" align="center">
                 <input type="submit" name="send-email" class="send--mail" value="@T("Products.EmailAFriend.Button")" />

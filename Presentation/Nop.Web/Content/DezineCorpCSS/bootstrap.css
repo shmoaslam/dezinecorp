@@ -1152,7 +1152,7 @@ hr {
   margin-top: 20px;
   margin-bottom: 20px;
   border: 0;
-  border-top: 1px solid #8c2830;
+  border-top: 1px solid #007A8A;
   width: 50%;
 }
 .sr-only {
@@ -3921,7 +3921,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   max-width: none;
 }
 .nav-tabs {
-  border-bottom: 1px solid #910a30;
+  border-bottom: 1px solid #007A8A;
 }
 .nav-tabs > li {
   float: left;
@@ -3939,10 +3939,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
-  color: #910a30;
+  color: #007A8A;
   cursor: default;
   background-color: #fff;
-  border: 1px solid #910a30;
+  border: 1px solid #007A8A;
   border-bottom-color: transparent;
 }
 .nav-tabs.nav-justified {
@@ -3976,11 +3976,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs.nav-justified > .active > a,
 .nav-tabs.nav-justified > .active > a:hover,
 .nav-tabs.nav-justified > .active > a:focus {
-  border: 1px solid #910a30;
+  border: 1px solid #007A8A;
 }
 @media (min-width: 768px) {
   .nav-tabs.nav-justified > li > a {
-    border-bottom: 1px solid #910a30;
+    border-bottom: 1px solid #007A8A;
     border-radius: 4px 4px 0 0;
   }
   .nav-tabs.nav-justified > .active > a,
@@ -5697,8 +5697,8 @@ a.list-group-item-danger.active:focus {
   font-size: 21px;
   font-weight: bold;
   line-height: 1;
-  color: #000;
-  text-shadow: 0 1px 0 #fff;
+  color: #fff;
+  text-shadow: 0 1px 0 #000;
   filter: alpha(opacity=20);
   opacity: .2;
 }

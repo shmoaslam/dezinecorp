@@ -1,0 +1,78 @@
+﻿@model TopMenuModel
+@using Nop.Web.Models.Catalog;
+
+@helper RenderCategoryLine(CategorySimpleModel category, int level, bool responsiveMobileMenu)
+{
+    <li>
+        <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">
+            @category.Name
+            @if (category.NumberOfProducts.HasValue)
+            {
+                <text> </text>@T("Categories.TotalProducts", category.NumberOfProducts.Value)
+            }
+        </a>
+        @{
+            //subcategories
+            var subCategories = responsiveMobileMenu ?
+                //responsive (all categories)
+                category.SubCategories :
+                //standard design (only categories with "IncludeInTopMenu")
+                category.SubCategories.Where(x => x.IncludeInTopMenu).ToList();
+
+            var levelClass = "";
+            if (level == 0)
+            {
+                levelClass = "first-level";
+            }
+            if (subCategories.Count > 0)
+            {
+                <div class="sublist-toggle"></div>
+                <ul class="sublist @levelClass">
+                    @foreach (var subCategory in subCategories)
+                    {
+                        @RenderCategoryLine(subCategory, level + 1, responsiveMobileMenu)
+                    }
+                </ul>
+            }
+        }
+    </li>
+}
+
+@{
+    var rootCategories = Model.Categories.Where(x => x.IncludeInTopMenu).Take(16).ToList();
+}
+<div class="row">
+    <h3 align="center">BROWSE CATEGORIES</h3>
+    <div class="col-md-4">
+        <ul style="list-style:none; font-size: 16px; color:#000 !important;padding-left:0px;">
+            @for (int i = 0; i < 4; i++)
+            {
+                <li><a style="color:black;" href="@Url.RouteUrl("Category", new { SeName = @rootCategories[i].SeName })">@rootCategories[i].Name</a></li>
+            }
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <ul style="list-style:none;    font-size: 16px;padding-left:0px;">
+            @for (int i = 4; i < 8; i++)
+            {
+                <li><a style="color:black;" href="@Url.RouteUrl("Category", new { SeName = @rootCategories[i].SeName })">@rootCategories[i].Name</a></li>
+            }
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <ul style="list-style:none;    font-size: 16px;padding-left:0px;">
+            @for (int i = 8; i < 12; i++)
+            {
+                <li><a style="color:black;" href="@Url.RouteUrl("Category", new { SeName = @rootCategories[i].SeName })">@rootCategories[i].Name</a></li>
+            }
+       </ul>
+    </div>
+    @*<div class="col-md-3">
+        <ul style="list-style:none;    font-size: 16px;">
+            @for (int i = 12; i < 16; i++)
+            {
+                <li><a>@rootCategories[i].Name</a></li>
+            }
+        </ul>
+    </div>*@
+</div>
