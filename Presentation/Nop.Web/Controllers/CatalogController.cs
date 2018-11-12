@@ -398,6 +398,9 @@ namespace Nop.Web.Controllers
 
         #region Categories
         
+
+
+
         [NopHttpsRequirement(SslRequirement.No)]
         public ActionResult Category(int categoryId, CatalogPagingFilteringModel command)
         {
@@ -636,7 +639,7 @@ namespace Nop.Web.Controllers
                 _workContext.WorkingLanguage.Id,
                 string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()), 
                 _storeContext.CurrentStore.Id);
-            var cachedModel = _cacheManager.Get(cacheKey, () => PrepareCategorySimpleModels(0).ToList());
+            var cachedModel = _cacheManager.Get(cacheKey, () => PrepareCategorySimpleModels(357).ToList());
 
             var model = new CategoryNavigationModel
             {
@@ -646,6 +649,7 @@ namespace Nop.Web.Controllers
 
             return PartialView(model);
         }
+        
 
         [ChildActionOnly]
         public ActionResult TopMenu()
@@ -655,8 +659,8 @@ namespace Nop.Web.Controllers
                 _workContext.WorkingLanguage.Id,
                 string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()), 
                 _storeContext.CurrentStore.Id);
-            var cachedCategoriesModel = _cacheManager.Get(categoryCacheKey, () => PrepareCategorySimpleModels(0));
-
+            var cachedCategoriesModel = _cacheManager.Get(categoryCacheKey, () => PrepareCategorySimpleModels(357));
+            
             //top menu topics
             string topicCacheKey = string.Format(ModelCacheEventConsumer.TOPIC_TOP_MENU_MODEL_KEY, 
                 _workContext.WorkingLanguage.Id,
@@ -1336,7 +1340,7 @@ namespace Nop.Web.Controllers
                     int manufacturerId = 0;
                     decimal? minPriceConverted = null;
                     decimal? maxPriceConverted = null;
-                    bool searchInDescriptions = false;
+                    bool searchInDescriptions = true;
                     if (model.adv)
                     {
                         //advanced search

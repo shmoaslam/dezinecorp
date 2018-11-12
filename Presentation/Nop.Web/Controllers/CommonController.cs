@@ -503,8 +503,50 @@ namespace Nop.Web.Controllers
             //    ModelState.AddModelError("", _localizationService.GetResource("Common.WrongCaptcha"));
             bool isMessageSent = false;
             if (ModelState.IsValid)
+            {
+                var emailAccount = _emailAccountService.GetEmailAccountById(_emailAccountSettings.DefaultEmailAccountId);
+                if (emailAccount == null)
+                    emailAccount = _emailAccountService.GetAllEmailAccounts().FirstOrDefault();
+                if (emailAccount == null)
+                    throw new Exception("No email account could be loaded");
+                string from;
+                string fromName;
+                string body = Core.Html.HtmlHelper.FormatText("Thank you subscription your request!", false, true, false, false, false, false);
+                //required for some SMTP servers
+                if (_commonSettings.UseSystemEmailForContactUsForm)
+                {
+                    from = emailAccount.Email;
+                    fromName = emailAccount.DisplayName;
+                    body = string.Format("<strong>From</strong>: {0} - {1}<br /><br />{2}",
+                        Server.HtmlEncode(model.FirstName + " " + model.LastName),
+                        Server.HtmlEncode(model.Email), body);
+                }
+                else
+                {
+                    from = model.Email;
+                    fromName = model.FirstName + " " + model.LastName;
+                }
+                _queuedEmailService.InsertQueuedEmail(new QueuedEmail
+                {
+                    From = from,
+                    FromName = fromName,
+                    To = emailAccount.Email,
+                    ToName = emailAccount.DisplayName,
+                    ReplyTo = model.Email,
+                    ReplyToName = model.FirstName + " " + model.LastName,
+                    Priority = QueuedEmailPriority.High,
+                    Subject = "DezineCorp - Subscription",
+                    Body = body,
+                    CreatedOnUtc = DateTime.UtcNow,
+                    EmailAccountId = emailAccount.Id
+                });
+
                 isMessageSent = true;
-            return PartialView("_SubmitMessageSub", isMessageSent);
+                return PartialView("_SubmitMessageSub", isMessageSent);
+
+            }
+            return PartialView("_SubmitMessageSub", false);
+            
         }
 
 
@@ -573,26 +615,28 @@ namespace Nop.Web.Controllers
 
 
 
-        //contact us page
-        [NopHttpsRequirement(SslRequirement.Yes)]
-        //available even when a store is closed
-        [StoreClosed(true)]
+        [ChildActionOnly]
+        [NopHttpsRequirement(SslRequirement.No)]
         public ActionResult ContactUs()
         {
-            var model = new ContactUsModel
-            {
-                Email = _workContext.CurrentCustomer.Email,
-                FullName = _workContext.CurrentCustomer.GetFullName(),
-                SubjectEnabled = _commonSettings.SubjectFieldOnContactUsForm,
-                DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnContactUsPage
-            };
-            return View(model);
+            //var model = new ContactUsModel
+            //{
+            //    Email = _workContext.CurrentCustomer.Email,
+            //    FullName = _workContext.CurrentCustomer.GetFullName(),
+            //    SubjectEnabled = _commonSettings.SubjectFieldOnContactUsForm,
+            //    DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnContactUsPage
+            //};
+            return PartialView(new ContactUsModel());
         }
+        //[HttpPost, ActionName("ContactUs")]
+        //[PublicAntiForgery]
+        //[CaptchaValidator]
+        ////available even when a store is closed
+        //[StoreClosed(true)]
         [HttpPost, ActionName("ContactUs")]
         [PublicAntiForgery]
+        [FormValueRequired("ContactUs")]
         [CaptchaValidator]
-        //available even when a store is closed
-        [StoreClosed(true)]
         public ActionResult ContactUsSend(ContactUsModel model, bool captchaValid)
         {
             //validate CAPTCHA
@@ -653,11 +697,11 @@ namespace Nop.Web.Controllers
                 //activity log
                 _customerActivityService.InsertActivity("PublicStore.ContactUs", _localizationService.GetResource("ActivityLog.PublicStore.ContactUs"));
 
-                return View(model);
+                return PartialView("_ContactUsMessage", model);
             }
 
             model.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnContactUsPage;
-            return View(model);
+            return View("_ContactUsMessage", model);
         }
         //contact vendor page
         [NopHttpsRequirement(SslRequirement.Yes)]

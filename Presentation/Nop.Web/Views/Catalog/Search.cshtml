@@ -104,29 +104,61 @@
                     @T("Search.NoResultsText")
                 </div>
             }
-            
+
             @if (Model.Products.Count > 0)
             {
-                <div class="@(Model.PagingFilteringContext.ViewMode == "list" ? "product-list" : "product-grid")">
-                    <div class="item-grid">
-                        @foreach (var product in Model.Products)
+                var items = Model.Products.Take(3);
+                var iterations = 0;
+                <div class="product-list">
+                    <div class="row">
+                        @while (items.Count() > 0)
                         {
-                            <div class="item-box">
+                            foreach (var product in items)
+                            {
                                 @Html.Partial("_ProductBox", product)
-                            </div>
+                            }
+                            iterations++;
+                            items = Model.Products.Skip(3 * iterations).Take(3);
                         }
                     </div>
+                    <div class="pager row" style="display :none">
+                        @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
+                    </div>
                 </div>
+
+                <script>
+                    $('.product-list').jscroll({
+                        loadingHtml: '<img src="/Content/DezineCorpImages/loader.gif"></img>',
+                        padding: 200,
+                        debug: true,
+                        autoTrigger: true,
+                        autoTriggerUntil: 10,
+                        nextSelector: 'li.next-page a',
+                        contentSelector: '.product-list',
+                        callback: function () { $('.pager').hide() }
+                    });
+                </script>
+
+                @*<div class="@(Model.PagingFilteringContext.ViewMode == "list" ? "product-list" : "product-grid")">
+                        <div class="item-grid">
+                            @foreach (var product in Model.Products)
+                            {
+                                <div class="item-box">
+                                    @Html.Partial("_ProductBox", product)
+                                </div>
+                            }
+                        </div>
+                    </div>*@
             }
-            @{
-                var pager = Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber").BooleanParameterName("adv").BooleanParameterName("isc").BooleanParameterName("sid").RenderEmptyParameters(true);
-            }
-            @if (!pager.IsEmpty())
-            {
-                <div class="pager">
-                    @pager
-                </div>
-            }
+            @*@{
+                    var pager = Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber").BooleanParameterName("adv").BooleanParameterName("isc").BooleanParameterName("sid").RenderEmptyParameters(true);
+                }*@
+            @*@if (!pager.IsEmpty())
+                {
+                    <div class="pager">
+                        @pager
+                    </div>
+                }*@
         </div>
         @Html.Widget("productsearch_page_after_results")
     </div>

@@ -80,10 +80,33 @@
     <script type="text/javascript" src="~/Scripts/DezineCorp/responsiveCarousel.min.js"></script>
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
-            $(".scroll").click(function (event) {
-                event.preventDefault();
-                $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
-            });
+            console.log('root head 1');
+            //$(".scroll").click(function (event) {
+            //    event.preventDefault();
+            //    //$('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
+            //});
+            var $mainMenuState = $('#main-menu-state');
+            var $headingMenuBrand = $('#headingmenubrand');
+            if ($mainMenuState.length) {
+
+                // animate mobile menu
+                $mainMenuState.change(function (e) {
+                    var $menu = $('#main-menu');
+                    if (this.checked) {
+                        $menu.hide().slideDown(250, function () { $menu.css('display', ''); });
+                    } else {
+                        $menu.show().slideUp(250, function () { $menu.css('display', ''); });
+                    }
+                });
+                // hide mobile menu beforeunload
+                $(window).bind('beforeunload unload', function () {
+                    if ($mainMenuState[0].checked) {
+                        $mainMenuState[0].click();
+                    }
+                });
+            }
+
+            
             $('#quote-carousel').carousel({
                 pause: true,
                 interval: 4000,
@@ -94,29 +117,9 @@
                 subMenusSubOffsetY: -8
             });
 
-            // SmartMenus mobile menu toggle button
-            $(function () {
-                var $mainMenuState = $('#main-menu-state');
-                var $headingMenuBrand = $('#headingmenubrand');
-                if ($mainMenuState.length) {
+            // for ca
+           
 
-                    // animate mobile menu
-                    $mainMenuState.change(function (e) {
-                        var $menu = $('#main-menu');
-                        if (this.checked) {
-                            $menu.hide().slideDown(250, function () { $menu.css('display', ''); });
-                        } else {
-                            $menu.show().slideUp(250, function () { $menu.css('display', ''); });
-                        }
-                    });
-                    // hide mobile menu beforeunload
-                    $(window).bind('beforeunload unload', function () {
-                        if ($mainMenuState[0].checked) {
-                            $mainMenuState[0].click();
-                        }
-                    });
-                }
-            });
             $('#account-repre-form,#graphic-form').click(function () {
                 if ($("#career-form").is(":visible") == false) 
                     $("#career-form").show("slow");
@@ -126,16 +129,17 @@
                     $('#Account_Representative').prop('checked', true);
             });
         });
-        $(window).load(function () {
-            $('.flexslider').flexslider({
-                animation: "slide",
-                animationLoop: true,
-                itemWidth: 250,
-                itemMargin: 7,
-                pausePlay: false,
 
-            });
-        });
+        //$(window).load(function () {
+        //    $('.flexslider').flexslider({
+        //        animation: "slide",
+        //        animationLoop: true,
+        //        itemWidth: 250,
+        //        itemMargin: 7,
+        //        pausePlay: false,
+
+        //    });
+        //});
     </script>
     <!-- Script End-->
 </body>

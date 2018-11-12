@@ -37,7 +37,13 @@
         display: none;
     }
 </style>
-
+<script>
+    function OpenLink(elem,url) {
+        if (elem.parentElement.className == 'active') {
+            window.location.href = url;
+        }
+    }
+</script>
 @Html.Widget("home_page_top")
 @*<div class="bnr" id="home">
         <div id="top" class="callbacks_container">
@@ -61,7 +67,20 @@
         </div>
         <div class="clearfix"> </div>
     </div>*@
-<div id="carousel1" class="carousel slide" data-ride="carousel">
+<link href="~/Content/DezineCorpCSS/thumbnail-slider.css" rel="stylesheet" />
+<script src="~/Scripts/DezineCorp/thumbnail-slider.js"></script>
+<div id="thumbnail-slider">
+    <div class="inner">
+        <ul>
+            <li> <a class="thumb" href="~/Content/DezineCorpImages/1.jpg" onclick="OpenLink(this,'/free-shipping-special');"></a> </li>
+            <li> <a class="thumb" href="~/Content/DezineCorpImages/2.jpg" onclick="OpenLink(this,'/2018-holiday-collection');"></a> </li>
+            <li> <a class="thumb" href="~/Content/DezineCorpImages/3.jpg" onclick="OpenLink(this,'/2018-hydeport');"></a> </li>
+            <li> <a class="thumb" href="~/Content/DezineCorpImages/4.jpg" onclick="OpenLink(this,'/stanley');"></a> </li>
+            <li> <a class="thumb" href="~/Content/DezineCorpImages/5.jpg" onclick="OpenLink(this,'/entertaining');"></a> </li>
+        </ul>
+    </div>
+</div>
+@*<div id="carousel1" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#carousel1" data-slide-to="0" class="active"></li>
         <li data-target="#carousel1" data-slide-to="1"></li>
@@ -71,39 +90,102 @@
     </ol>
     <div class="carousel-inner" role="listbox">
         <div class="item active">
-            <img src="~/Content/DezineCorpImages/banner-1.png" class="center-block banner-image">
+            <img src="~/Content/DezineCorpImages/1.jpg" class="center-block banner-image">
             <div class="carousel-caption">
             </div>
         </div>
         <div class="item">
-            <img src="~/Content/DezineCorpImages/banner-2.png" class="center-block  banner-image">
+            <img src="~/Content/DezineCorpImages/2.jpg" class="center-block  banner-image">
             <div class="carousel-caption">
             </div>
         </div>
         <div class="item">
-            <img src="~/Content/DezineCorpImages/2016_Sublime_(1200x700).jpg" class="center-block banner-image">
+            <img src="~/Content/DezineCorpImages/3.jpg" class="center-block banner-image">
             <div class="carousel-caption">
             </div>
         </div>
         <div class="item">
-            <img src="~/Content/DezineCorpImages/banner-4.png" class="center-block banner-image">
+            <img src="~/Content/DezineCorpImages/4.jpg" class="center-block banner-image">
             <div class="carousel-caption">
             </div>
         </div>
         <div class="item">
-            <img src="~/Content/DezineCorpImages/banner-5.png" class="center-block banner-image">
-            <div class="carousel-caption">      </div>
+            <img src="~/Content/DezineCorpImages/5.jpg" class="center-block banner-image">
+            <div class="carousel-caption"></div>
         </div>
     </div>
-</div>
+</div>*@
 
 <div class="container">
-    <h1 align="center">Welcome to <img src="~/Content/DezineCorpImages/dezinecorp.png" style="margin-bottom: 5px;" width="163" height="52" alt="" /></h1>
-    <hr>
+    @*<h1 align="center">Welcome to <img src="~/Content/DezineCorpImages/dezinecorp.png" style="margin-bottom: 5px;" width="163" height="52" alt="" /></h1>*@
+    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" >
+        <a href="@Url.RouteUrl("Category", new { SeName = "root-category" })">
+            <h2 align="center" style="color:#333;">View Products</h2>
+            <hr>
+            <img src="~/Content/DezineCorpImages/View_Products_Image_(570x300).jpg" class="img-responsive center-block" />
+        </a>
+    </div>
     @*<h4 align="center">
             With your customer in mind, we create the promotional products designed to make a big impact and leave a lasting impression. As a supplier and decorator in the promotional products industry, DezineCorp specializes in providing a diverse range of products and decoration techniques to promote your business, event, or special occasion. We offer a variety of decorative processes for logo and message branding, and we provide a range of drinkware, travel and business accessories, brand name products, and premium gifts to choose from. Our dedicated staff is there to help you customize the perfect combination of product, decoration and packaging to meet your every promotional need.
         </h4>*@
 </div>
+
+<div class="boxes">
+    <div class="container">
+        <div class="abt-shoe-main">
+            <div class="col-md-3">
+                <div class="facebook-post-box">
+                    <a href="http://dezinecorp.2018.easieflip.com/Default.htm" target="_blank">
+                        <img src="~/Content/DezineCorpImages/2018 Catalogue 280 x 200.jpg" class="img-responsive" style="display:unset;">
+                    </a>
+                </div>
+                <div class="pinterest-post-box">
+                    <a href="/spirit-collection">
+                        <img src="~/Content/DezineCorpImages/spirit collection 280 x 200.jpg" class="img-responsive" style="display:unset;">
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 padding-lf-8" style="text-align:center;margin-bottom:10px">
+                <a href="~/Content/PDF/Free_Shipping_Details_Conditions_Website.pdf" target="_blank">
+                    <img src="~/Content/DezineCorpImages/free shipping 572 x 410.jpg" class="img-responsive" style="display:unset;" />
+                </a>
+            </div>
+            <div class="col-md-3">
+                <div class="twitter-post-box">
+                    <a href="http://dezinecorpholiday.2018.easieflip.com">
+                        <img src="~/Content/DezineCorpImages/holiday collection 280 x 200 .jpg" class="img-responsive" style="display:unset;">
+                    </a>
+                </div>
+                <div class="google-post-box">
+                    <a href="/stanley">
+                        <img src="~/Content/DezineCorpImages/Stanley 280 x 200.jpg" class="img-responsive" style="display:unset;">
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="twitter-post-box">
+                    <a href="http://dezinecorpfreeshipping.2018.easieflip.com" target="_blank">
+                        <img src="~/Content/DezineCorpImages/free shipping FLIP CATALOGUE edited 280 x 200.jpg" class="img-responsive" style="display:unset;">
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6" style="background-color:white;">
+                @Html.Action("HomepageCategories", "Catalog")
+            </div>
+            <div class="col-md-3">
+                <div class="twitter-post-box">
+                    <a href="https://ecatalog.promocan.com/DEZINECORPINC/2017/EN4/">
+                        <img src="~/Content/DezineCorpImages/hydeport 2018_ver 2_280 x 200.jpg" class="img-responsive" style="display:unset;">
+                    </a>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+
+@Html.Action("HomepageProducts", "Product")
+
 <div class="container">
     <div class="row mar-top" align="center">
         <div class="col-md-3 mar-top tooltip1">
@@ -135,8 +217,6 @@
                 <p>
                     Innovation and collaboration – these are the qualities we strive for each day.
                 </p>
-
-
             </div>
         </div>
         <div class="col-md-3 mar-top tooltip1">
@@ -149,7 +229,7 @@
                 <p>
                     From affordable options to premium selections, we offer product, decoration and branding for a wide range of promotional product types to fit our clients’ every need and budget.
                 </p><p>
-                    Bring us your logo, colours, concepts, and ideas and we will work with your one-on-one to transform your ideas into reality on time and on budget.<br><br>
+                    Bring us your logo, colours, concepts, and ideas and we will work with you one-on-one to transform your ideas into reality on time and on budget.<br><br>
                     @*<em>
                             <a class="div-link">
                                 read more...<br>
@@ -186,35 +266,9 @@
 
 
 @*@Html.Widget("home_page_before_products")*@
-@Html.Action("HomepageProducts", "Product")
+
 @Html.Widget("home_page_before_best_sellers")
-<div class="boxes">
-    <div class="container">
-        <div class="abt-shoe-main">
-            <div class="col-md-3">
-                <div class="facebook-post-box"> <a href="http://ecatalog.officebeacon.com/DEZINECORPINC/2016/FALL&amp;HOLLIDAYCOLLECTION/EN/"> <img src="~/Content/DezineCorpImages/BOX1.jpg"> </a> </div>
-                <div class="pinterest-post-box"> <a href="http://localhost:15536/gift-boxes-gift-sets"> <img src="~/Content/DezineCorpImages/BOX2.jpg"> </a> </div>
-            </div>
-            <div class="col-md-6 padding-lf-8">
-                <img src="~/Content/DezineCorpImages/2016_New_Bistro_Colours(740x372)_final.jpg" class="img-responsive" />
-            </div>
-            <div class="col-md-3">
-                <div class="twitter-post-box"> <a href="http://ecatalog.officebeacon.com/DEZINECORPINC/2016/EN"> <img src="~/Content/DezineCorpImages/BOX3.jpg"> </a> </div>
-                <div class="google-post-box"> <a href="http://ecatalog.officebeacon.com/DEZINECORPINC/2016/EN3/"> <img src="~/Content/DezineCorpImages/box4.jpg"> </a> </div>
-            </div>
-            <div class="col-md-3">
-                <div class="twitter-post-box"> <a href="http://ecatalog.officebeacon.com/DEZINECORPINC/2016/EN"> <img src="~/Content/DezineCorpImages/BOX5.jpg"> </a> </div>
-            </div>
-            <div class="col-md-6 brw-cat"  style="background-color:white;">
-                @Html.Action("HomepageCategories", "Catalog")
-            </div>
-            <div class="col-md-3">
-                <div class="twitter-post-box"> <a href="http://ecatalog.officebeacon.com/DEZINECORPINC/2016/EN"> <img src="~/Content/DezineCorpImages/BOX6.jpg"> </a> </div>
-            </div>
-            <div class="clearfix"> </div>
-        </div>
-    </div>
-</div>
+
 <!-- Commenting -->
 @*@Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
     @Html.Widget("home_page_before_categories")
@@ -230,21 +284,21 @@
     @Html.Widget("home_page_bottom")*@
 <script>
     $(".tooltip1,.tooltiptext").hover(function (event) {
+        var childToolText = $(this).find('.tooltiptext');
         console.log("hover");
-        $(".tooltiptext").css("display", "block");
-        console.log(event.pageX);
-        console.log(event.pageY);
-        $(this).find('.tooltiptext').animate({
+        childToolText.css("display", "block");
+        childToolText.animate({
             opacity: "1"
         }, {
             queue: false
         });
     }, function () {
-        $(".tooltiptext").animate({
+        var childToolText = $(this).find('.tooltiptext');
+        childToolText.animate({
             opacity: "0"
         }, {
             queue: false
         });
-        $(".tooltiptext").css("display", "none");
+        childToolText.css("display", "none");
     });
 </script>

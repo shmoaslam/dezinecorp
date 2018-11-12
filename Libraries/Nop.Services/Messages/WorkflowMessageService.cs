@@ -16,6 +16,8 @@ using Nop.Services.Customers;
 using Nop.Services.Events;
 using Nop.Services.Localization;
 using Nop.Services.Stores;
+using Nop.Services.Media;
+using Nop.Core.Domain.Media;
 
 namespace Nop.Services.Messages
 {
@@ -33,6 +35,8 @@ namespace Nop.Services.Messages
         private readonly IStoreContext _storeContext;
         private readonly EmailAccountSettings _emailAccountSettings;
         private readonly IEventPublisher _eventPublisher;
+        private readonly IPictureService _pictureService;
+        private readonly MediaSettings _mediaSettings;
 
         #endregion
 
@@ -47,7 +51,9 @@ namespace Nop.Services.Messages
             IStoreService storeService,
             IStoreContext storeContext,
             EmailAccountSettings emailAccountSettings,
-            IEventPublisher eventPublisher)
+            IEventPublisher eventPublisher,
+            IPictureService pictureService,
+            MediaSettings mediaSettings)
         {
             this._messageTemplateService = messageTemplateService;
             this._queuedEmailService = queuedEmailService;
@@ -59,6 +65,8 @@ namespace Nop.Services.Messages
             this._storeContext = storeContext;
             this._emailAccountSettings = emailAccountSettings;
             this._eventPublisher = eventPublisher;
+            this._pictureService = pictureService;
+            this._mediaSettings = mediaSettings;
         }
 
         #endregion
@@ -976,6 +984,14 @@ namespace Nop.Services.Messages
             if (messageTemplate == null)
                 return 0;
 
+            //get picture 
+            var picture = _pictureService.GetPicturesByProductId(product.Id, store.Id).FirstOrDefault();
+            string pictureUrl = string.Empty;
+            if (picture != null)
+            {
+                pictureUrl = _pictureService.GetPictureUrl(picture);
+            }
+
             //email account
             var emailAccount = GetEmailAccountOfMessageTemplate(messageTemplate, languageId);
 
@@ -984,8 +1000,12 @@ namespace Nop.Services.Messages
             _messageTokenProvider.AddStoreTokens(tokens, store, emailAccount);
             _messageTokenProvider.AddCustomerTokens(tokens, customer);
             _messageTokenProvider.AddProductTokens(tokens, product, languageId);
-            tokens.Add(new Token("EmailAFriend.PersonalMessage", personalMessage, true));
             tokens.Add(new Token("EmailAFriend.Email", customerEmail));
+            tokens.Add(new Token("EmailAFriend.PersonalMessage", personalMessage, true));
+            if (!string.IsNullOrEmpty(pictureUrl))
+            {
+                tokens.Add(new Token("Product.ImageUrl", pictureUrl));
+            }
 
             //event notification
             _eventPublisher.MessageTokensAdded(messageTemplate, tokens);

@@ -1117,6 +1117,10 @@ namespace Nop.Admin.Controllers
         {
             if (id == 0) return null;
             var model = _productService.GetDezineCorpAdditionalPricing(id);
+            if (model == null)
+            {
+                return new ProductModel.DezineCorpAdditionalPricingViewModel();
+            }
             return new ProductModel.DezineCorpAdditionalPricingViewModel
             {
                 Id = model.Id,
@@ -1146,6 +1150,10 @@ namespace Nop.Admin.Controllers
         {
             if (id == 0) return null;
             var model = _productService.GetDezineCorpTierPrice(id);
+            if (model == null )
+            {
+                return new ProductModel.DezineCorpTierPriceViewModel();
+            }
             return new ProductModel.DezineCorpTierPriceViewModel
             {
                 Id = model.Id,
@@ -1167,6 +1175,10 @@ namespace Nop.Admin.Controllers
         {
             if (id == 0) return null;
             var model = _productService.GetDezineCorpRelatedProduct(id);
+            if (model == null)
+            {
+                return new ProductModel.DezineCorpRelatedProductViewModel();
+            }
             return new ProductModel.DezineCorpRelatedProductViewModel
             {
                 Id = model.Id,
@@ -1184,6 +1196,10 @@ namespace Nop.Admin.Controllers
         {
             if (id == 0) return null;
             var model = _productService.GetDezineCorpProductKeyword(id);
+            if (model == null)
+            {
+                return new ProductModel.DezineCorpProductKeywordViewModel();
+            }
             return new ProductModel.DezineCorpProductKeywordViewModel
             {
                 Id = model.Id,
@@ -1206,6 +1222,10 @@ namespace Nop.Admin.Controllers
             if (id == 0) return null;
 
             var model = _productService.GetDezinceCorpDataRefOnly(id);
+            if (model == null)
+            {
+                return new ProductModel.DezineCorpDataRefOnlyViewModel();
+            }
             return new ProductModel.DezineCorpDataRefOnlyViewModel
             {
                 Id = model.Id,
@@ -1238,6 +1258,8 @@ namespace Nop.Admin.Controllers
                 DezineCategory = model.DezineCategory,
                 INFOtracImportResultifError = model.INFOtracImportResultifError,
             };
+
+
         }
         [NonAction]
         private ProductModel.DezinceCorpDataViewModel GetDezineCorpData(int id)
@@ -1246,6 +1268,10 @@ namespace Nop.Admin.Controllers
 
             var dezineCorpDataModel = _productService.GetDezineCorpData(id);
 
+            if (dezineCorpDataModel == null)
+            {
+                return new ProductModel.DezinceCorpDataViewModel();
+            }
             return new ProductModel.DezinceCorpDataViewModel
             {
                 Id = dezineCorpDataModel.Id,
@@ -1298,8 +1324,9 @@ namespace Nop.Admin.Controllers
                 VisualHeading = dezineCorpDataModel.VisualHeading,
                 FamilyCode = dezineCorpDataModel.FamilyCode,
                 VisualPrice = dezineCorpDataModel.VisualPrice,
-
             };
+
+
         }
         #endregion
 

@@ -1,0 +1,11 @@
+﻿@model Nop.Web.Models.Common.ContactUsModel
+
+@if (Model.SuccessfullySent)
+{
+    <div class='alert alert-success'>Thank you for your Query. 
+    <br />Your query will be answered soon!.</div>
+}
+else
+{
+    <div class='alert alert-danger'><strong>Error!</strong> An error has occured and your query has not been sent. Please try again later.</div>
+}

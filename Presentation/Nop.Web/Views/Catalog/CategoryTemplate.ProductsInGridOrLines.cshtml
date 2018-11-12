@@ -27,23 +27,23 @@
             <div class="breadcrumb">
                 <ul>
                     <li>
-                        <a href="@Url.RouteUrl("HomePage")" title="@T("Categories.Breadcrumb.Top")"  style="margin:0px">@T("Categories.Breadcrumb.Top")</a>
-                        <span class="delimiter"  style="margin-left:2px;margin-right:2px;">@breadcrumbDelimiter</span>
+                        <a href="@Url.RouteUrl("HomePage")" title="@T("Categories.Breadcrumb.Top")" style="margin:0px">@T("Categories.Breadcrumb.Top")</a>
+                        <span class="delimiter" style="margin-left:2px;margin-right:2px;">@breadcrumbDelimiter</span>
                     </li>
                     @foreach (var cat in Model.CategoryBreadcrumb)
                     {
                         var isLastCategory = cat.Id == Model.Id;
-                    <li>
-                        @if (isLastCategory)
+                        <li>
+                            @if (isLastCategory)
                             {
-                            <strong class="current-item" style="color:#337ab7;margin:0px">@cat.Name</strong>
+                                <strong class="current-item" style="color:#337ab7;margin:0px">@cat.Name.Replace("Root Category", "Root")</strong>
                             }
                             else
                             {
-                            <a href="@Url.RouteUrl("Category", new { SeName = cat.SeName })" style="margin:0px" title="@cat.Name">@cat.Name</a>
-                            <span class="delimiter"  style="margin-left:2px;margin-right:2px;">@breadcrumbDelimiter</span>
+                                <a href="@Url.RouteUrl("Category", new { SeName = cat.SeName })" style="margin:0px" title="@cat.Name">@cat.Name.Replace("Root Category", "Root")</a>
+                                <span class="delimiter" style="margin-left:2px;margin-right:2px;">@breadcrumbDelimiter</span>
                             }
-                    </li>
+                        </li>
                     }
                 </ul>
             </div>
@@ -75,7 +75,7 @@
     }
 }
 
-<h2>@Model.Name</h2><hr style="width:100%;">
+<h2>@Model.Name.Replace("Root Category", "Root")</h2><hr style="width:100%;">
 
 @*<div class="col-md-3 cat-products">
         <h4>C0105WH-1BK</h4>
@@ -107,13 +107,13 @@
         {
             foreach (var item in items)
             {
-        <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 sub-cat">
-            <h4>@item.Name</h4>
-            <hr />
-            <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
-                <img alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />
-            </a>
-        </div>
+                <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 sub-cat">
+                    <h4 style="margin-bottom:0px;">@item.Name</h4>
+                    <hr style="margin-top:5px;" />
+                    <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
+                        <img alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />
+                    </a>
+                </div>
 
             }
             iterations++;
@@ -163,18 +163,6 @@
             }
         </div>
         @Html.Widget("categorydetails_before_product_list", Model.Id)*@
-    <style>
-        .item-is-new {
-            background: #337ab7;
-            padding: 2px;
-            color: white;
-            height: 20px;
-        }
-
-        .no-item-heading {
-            height: 20px;
-        }
-    </style>
 
     @if (Model.Products.Any())
     {
@@ -192,32 +180,91 @@
                     items = Model.Products.Skip(3 * iterations).Take(3);
                 }
             </div>
+            @*@{
+                    var pager = Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber");
+                }*@
+            @*@if (!pager.IsEmpty())
+                {
+                    <div class="pager">
+                        @pager
+                    </div>
+                }*@
+
+
             <div class="pager row" style="display :none">
                 @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
             </div>
         </div>
 
         <script>
-            $('.product-list').jscroll({
+            var jscroll = $('.product-list').jscroll({
                 loadingHtml: '<img src="/Content/DezineCorpImages/loader.gif"></img>',
                 padding: 200,
                 debug: true,
                 autoTrigger: true,
-                autoTriggerUntil: 10,
+                autoTriggerUntil: 30,
                 nextSelector: 'li.next-page a',
                 contentSelector: '.product-list',
-                callback: function () { $('.pager').hide() }
+                callback: function () {
+                    $('.pager').hide();
+                    // Remove handler from existing elements
+                    $(".product-box").off();
+
+                    // Re-add event handler for all matching elements
+                    $(".product-box").on("click", GetScrollPos);
+                    //if (localStorage.getItem('scrollPosTop') !== null) {
+                    //    var scrollPos = parseInt(localStorage.getItem('scrollPosTop'));
+                    //    $("html, body").animate({ scrollTop: scrollPos }, 1000);
+                    //    if (scrollPos <= window.document.body.scrollHeight) {
+                    //        localStorage.removeItem('scrollPosTop');
+                    //    }
+                    //}
+                }
             });
+            var isPostBack = false;
+            $(window).load(function () {
+                if (localStorage.getItem('scrollPosTop') !== null) {
+                    var scrollPos = parseInt(localStorage.getItem('scrollPosTop'));
+                    $('html,body').animate({ scrollTop: scrollPos }, 1000);
+                    //$(document).scrollTop(scrollPos);
+                    localStorage.removeItem('scrollPosTop');
+                    // event.preventDefault();
+                    //$("html, body").animate({ scrollTop: scrollPos }, fast);
+                }
+            });
+            //$(document).ready(function (event) {
+            //    console.log('root head 3');
+            //    if (localStorage.getItem('scrollPosTop') !== null) {
+            //        var scrollPos = parseInt(localStorage.getItem('scrollPosTop'));
+            //        $("html, body").scrollTop(scrollPos);
+            //        localStorage.removeItem('scrollPosTop');
+            //       // event.preventDefault();
+            //        //$("html, body").animate({ scrollTop: scrollPos }, fast);
+            //    }
+            //});
+            $('.product-box').live('click', GetScrollPos);
+            function GetScrollPos(event) {
+                localStorage.removeItem('scrollPosTop');
+                var pos = $(this).offset().top;
+                localStorage.setItem('scrollPosTop', pos);
+                console.log(pos);
+            }
+            //function ScrollToPos() {
+            //    console.log('scroll ' + localStorage.getItem('scrollPosTop'));
+            //    if (localStorage.getItem('scrollPosTop') !== null) {
+            //        // var bodyHeigt = window.document.body.scrollHeight;
+            //        var scrollPos = parseInt(localStorage.getItem('scrollPosTop'));
+            //        console.log(window.document.body.scrollHeight);
+            //        console.log(scrollPos)
+            //        //while (window.document.body.scrollHeight < scrollPos) {
+            //            $("html, body").animate({ scrollTop: window.document.body.scrollHeight }, 2000);
+            //        //}
+            //        $("html, body").animate({ scrollTop: scrollPos }, 1000);
+
+            //        localStorage.removeItem('scrollPosTop');
+            //    }
+            //}
         </script>
     }
-    @*@{
-            var pager = Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber");
-        }*@
-    @*@if (!pager.IsEmpty())
-        {
-            <div class="pager">
-                @pager
-            </div>
-        }*@
     @Html.Widget("categorydetails_bottom", Model.Id)
 

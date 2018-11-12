@@ -624,7 +624,7 @@ namespace Nop.Services.Media
                 return new List<Picture>();
 
             var query = from p in _productRepository.Table
-                        where p.Sku == sku
+                        where p.Sku == sku && p.Deleted == false && p.Published == true
                         select p.Id;
 
             if (query.Any())

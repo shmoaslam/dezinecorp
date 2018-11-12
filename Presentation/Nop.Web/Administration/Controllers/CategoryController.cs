@@ -49,24 +49,24 @@ namespace Nop.Admin.Controllers
         private readonly CatalogSettings _catalogSettings;
 
         #endregion
-        
+
         #region Constructors
 
         public CategoryController(ICategoryService categoryService, ICategoryTemplateService categoryTemplateService,
-            IManufacturerService manufacturerService, IProductService productService, 
+            IManufacturerService manufacturerService, IProductService productService,
             ICustomerService customerService,
-            IUrlRecordService urlRecordService, 
-            IPictureService pictureService, 
+            IUrlRecordService urlRecordService,
+            IPictureService pictureService,
             ILanguageService languageService,
-            ILocalizationService localizationService, 
+            ILocalizationService localizationService,
             ILocalizedEntityService localizedEntityService,
             IDiscountService discountService,
             IPermissionService permissionService,
-            IAclService aclService, 
+            IAclService aclService,
             IStoreService storeService,
             IStoreMappingService storeMappingService,
-            IExportManager exportManager, 
-            IVendorService vendorService, 
+            IExportManager exportManager,
+            IVendorService vendorService,
             ICustomerActivityService customerActivityService,
             CatalogSettings catalogSettings)
         {
@@ -92,7 +92,7 @@ namespace Nop.Admin.Controllers
         }
 
         #endregion
-        
+
         #region Utilities
 
         [NonAction]
@@ -280,7 +280,7 @@ namespace Nop.Admin.Controllers
         }
 
         #endregion
-        
+
         #region List / tree
 
         public ActionResult Index()
@@ -303,7 +303,7 @@ namespace Nop.Admin.Controllers
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageCategories))
                 return AccessDeniedView();
 
-            var categories = _categoryService.GetAllCategories(model.SearchCategoryName, 
+            var categories = _categoryService.GetAllCategories(model.SearchCategoryName,
                 command.Page - 1, command.PageSize, true);
             var gridModel = new DataSourceResult
             {
@@ -317,7 +317,7 @@ namespace Nop.Admin.Controllers
             };
             return Json(gridModel);
         }
-        
+
         public ActionResult Tree()
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageCategories))
@@ -331,12 +331,12 @@ namespace Nop.Admin.Controllers
         {
             var categories = _categoryService.GetAllCategoriesByParentCategoryId(id, true)
                 .Select(x => new
-                             {
-                                 id = x.Id,
-                                 Name = x.Name,
-                                 hasChildren = _categoryService.GetAllCategoriesByParentCategoryId(x.Id, true).Count > 0,
-                                 imageUrl = Url.Content("~/Administration/Content/images/ico-content.png")
-                             });
+                {
+                    id = x.Id,
+                    Name = x.Name,
+                    hasChildren = _categoryService.GetAllCategoriesByParentCategoryId(x.Id, true).Count > 0,
+                    imageUrl = Url.Content("~/Administration/Content/images/ico-content.png")
+                });
 
             return Json(categories);
         }
@@ -368,7 +368,7 @@ namespace Nop.Admin.Controllers
             model.PageSizeOptions = _catalogSettings.DefaultCategoryPageSizeOptions;
             model.Published = true;
             model.IncludeInTopMenu = true;
-            model.AllowCustomersToSelectPageSize = true;            
+            model.AllowCustomersToSelectPageSize = true;
 
             return View(model);
         }
@@ -432,7 +432,7 @@ namespace Nop.Admin.Controllers
                 return AccessDeniedView();
 
             var category = _categoryService.GetCategoryById(id);
-            if (category == null || category.Deleted) 
+            if (category == null || category.Deleted)
                 //No category found with the specified id
                 return RedirectToAction("List");
 
@@ -524,7 +524,7 @@ namespace Nop.Admin.Controllers
                     //selected tab
                     SaveSelectedTabIndex();
 
-                    return RedirectToAction("Edit", new {id = category.Id});
+                    return RedirectToAction("Edit", new { id = category.Id });
                 }
                 return RedirectToAction("List");
             }
@@ -564,7 +564,7 @@ namespace Nop.Admin.Controllers
             SuccessNotification(_localizationService.GetResource("Admin.Catalog.Categories.Deleted"));
             return RedirectToAction("List");
         }
-        
+
 
         #endregion
 
@@ -598,17 +598,22 @@ namespace Nop.Admin.Controllers
                 return AccessDeniedView();
 
             var productCategories = _categoryService.GetProductCategoriesByCategoryId(categoryId,
-                command.Page - 1, command.PageSize, true);
+                command.Page - 1, command.PageSize, false);
             var gridModel = new DataSourceResult
             {
-                Data = productCategories.Select(x => new CategoryModel.CategoryProductModel
+                Data = productCategories.Select(x =>
                 {
-                    Id = x.Id,
-                    CategoryId = x.CategoryId,
-                    ProductId = x.ProductId,
-                    ProductName = _productService.GetProductById(x.ProductId).Name,
-                    IsFeaturedProduct = x.IsFeaturedProduct,
-                    DisplayOrder = x.DisplayOrder
+                    var product = _productService.GetProductById(x.ProductId);
+                    return new CategoryModel.CategoryProductModel
+                    {
+                        Id = x.Id,
+                        CategoryId = x.CategoryId,
+                        ProductId = x.ProductId,
+                        ProductName = product.Name,
+                        SKU = product.Sku,
+                        IsFeaturedProduct = x.IsFeaturedProduct,
+                        DisplayOrder = x.DisplayOrder
+                    };
                 }),
                 Total = productCategories.TotalCount
             };
@@ -651,7 +656,7 @@ namespace Nop.Admin.Controllers
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageCategories))
                 return AccessDeniedView();
-            
+
             var model = new CategoryModel.AddCategoryProductModel();
             //categories
             model.AvailableCategories.Add(new SelectListItem { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
@@ -704,7 +709,7 @@ namespace Nop.Admin.Controllers
 
             return Json(gridModel);
         }
-        
+
         [HttpPost]
         [FormValueRequired("save")]
         public ActionResult ProductAddPopup(string btnId, string formId, CategoryModel.AddCategoryProductModel model)

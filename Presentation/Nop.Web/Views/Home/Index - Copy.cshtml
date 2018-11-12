@@ -1,0 +1,304 @@
+﻿@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+}
+<style>
+    .carousel-indicators li {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        margin: 1px;
+        text-indent: -999px;
+        cursor: pointer;
+        background-color: #000;
+        border: 1px solid #F5F5F5;
+        border-radius: 10px;
+    }
+
+    .carousel-indicators .active {
+        Width: 12px;
+        Height: 12px;
+        margin: 0;
+        background-color: #F5F5F5;
+    }
+
+    .banner-image {
+        width: 100%;
+    }
+
+    .tooltip1 {
+        /*background-color:#5f9ea0;*/
+    }
+
+    .tooltiptext {
+        opacity: 0;
+        width: auto;
+        text-align: justify;
+        height: auto;
+        display: none;
+    }
+</style>
+<script>
+    function OpenLink(elem,url) {
+        if (elem.parentElement.className == 'active') {
+            window.location.href = url;
+        }
+    }
+</script>
+@Html.Widget("home_page_top")
+@*<div class="bnr" id="home">
+        <div id="top" class="callbacks_container">
+            <ul class="rslides" id="slider4">
+                <li>
+                    <div class="banner-1"></div>
+                </li>
+                <li>
+                    <div class="banner-2"></div>
+                </li>
+                <li>
+                    <div class="banner-3"></div>
+                </li>
+                <li>
+                    <div class="banner-4"></div>
+                </li>
+                <li>
+                    <div class="banner-5"></div>
+                </li>
+            </ul>
+        </div>
+        <div class="clearfix"> </div>
+    </div>*@
+<link href="~/Content/DezineCorpCSS/thumbnail-slider.css" rel="stylesheet" />
+<script src="~/Scripts/DezineCorp/thumbnail-slider.js"></script>
+<div id="thumbnail-slider">
+    <div class="inner" style="height:405px">
+        <ul>
+            <li> <a class="thumb" href="~/Content/DezineCorpImages/1.jpg" onclick="OpenLink(this,'/free-shipping-special');"></a> </li>
+            <li> <a class="thumb" href="~/Content/DezineCorpImages/2.jpg" onclick="OpenLink(this,'/2018-holiday-collection');"></a> </li>
+            <li> <a class="thumb" href="~/Content/DezineCorpImages/3.jpg" onclick="OpenLink(this,'/2018-hydeport');"></a> </li>
+            <li> <a class="thumb" href="~/Content/DezineCorpImages/4.jpg" onclick="OpenLink(this,'/stanley');"></a> </li>
+            <li> <a class="thumb" href="~/Content/DezineCorpImages/5.jpg" onclick="OpenLink(this,'/entertaining');"></a> </li>
+        </ul>
+    </div>
+</div>
+@*<div id="carousel1" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carousel1" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel1" data-slide-to="1"></li>
+        <li data-target="#carousel1" data-slide-to="2"></li>
+        <li data-target="#carousel1" data-slide-to="3"></li>
+        <li data-target="#carousel1" data-slide-to="4"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <img src="~/Content/DezineCorpImages/1.jpg" class="center-block banner-image">
+            <div class="carousel-caption">
+            </div>
+        </div>
+        <div class="item">
+            <img src="~/Content/DezineCorpImages/2.jpg" class="center-block  banner-image">
+            <div class="carousel-caption">
+            </div>
+        </div>
+        <div class="item">
+            <img src="~/Content/DezineCorpImages/3.jpg" class="center-block banner-image">
+            <div class="carousel-caption">
+            </div>
+        </div>
+        <div class="item">
+            <img src="~/Content/DezineCorpImages/4.jpg" class="center-block banner-image">
+            <div class="carousel-caption">
+            </div>
+        </div>
+        <div class="item">
+            <img src="~/Content/DezineCorpImages/5.jpg" class="center-block banner-image">
+            <div class="carousel-caption"></div>
+        </div>
+    </div>
+</div>*@
+
+<div class="container">
+    @*<h1 align="center">Welcome to <img src="~/Content/DezineCorpImages/dezinecorp.png" style="margin-bottom: 5px;" width="163" height="52" alt="" /></h1>*@
+    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" >
+        <a href="@Url.RouteUrl("Category", new { SeName = "root-category" })">
+            <h2 align="center" style="color:#333;">View Products</h2>
+            <hr>
+            <img src="~/Content/DezineCorpImages/View_Products_Image_(570x300).jpg" class="img-responsive center-block" />
+        </a>
+    </div>
+    @*<h4 align="center">
+            With your customer in mind, we create the promotional products designed to make a big impact and leave a lasting impression. As a supplier and decorator in the promotional products industry, DezineCorp specializes in providing a diverse range of products and decoration techniques to promote your business, event, or special occasion. We offer a variety of decorative processes for logo and message branding, and we provide a range of drinkware, travel and business accessories, brand name products, and premium gifts to choose from. Our dedicated staff is there to help you customize the perfect combination of product, decoration and packaging to meet your every promotional need.
+        </h4>*@
+</div>
+
+<div class="boxes">
+    <div class="container">
+        <div class="abt-shoe-main">
+            <div class="col-md-3">
+                <div class="facebook-post-box">
+                    <a href="http://dezinecorp.2018.easieflip.com/Default.htm" target="_blank">
+                        <img src="~/Content/DezineCorpImages/2018 Catalogue 280 x 200.jpg" class="img-responsive" style="display:unset;">
+                    </a>
+                </div>
+                <div class="pinterest-post-box">
+                    <a href="/spirit-collection">
+                        <img src="~/Content/DezineCorpImages/spirit collection 280 x 200.jpg" class="img-responsive" style="display:unset;">
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 padding-lf-8" style="text-align:center;margin-bottom:10px">
+                <a href="~/Content/PDF/Free_Shipping_Details_Conditions_Website.pdf" target="_blank">
+                    <img src="~/Content/DezineCorpImages/free shipping 572 x 410.jpg" class="img-responsive" style="display:unset;" />
+                </a>
+            </div>
+            <div class="col-md-3">
+                <div class="twitter-post-box">
+                    <a href="http://dezinecorpholiday.2018.easieflip.com">
+                        <img src="~/Content/DezineCorpImages/holiday collection 280 x 200 .jpg" class="img-responsive" style="display:unset;">
+                    </a>
+                </div>
+                <div class="google-post-box">
+                    <a href="/stanley">
+                        <img src="~/Content/DezineCorpImages/Stanley 280 x 200.jpg" class="img-responsive" style="display:unset;">
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="twitter-post-box">
+                    <a href="http://dezinecorpfreeshipping.2018.easieflip.com" target="_blank">
+                        <img src="~/Content/DezineCorpImages/free shipping FLIP CATALOGUE edited 280 x 200.jpg" class="img-responsive" style="display:unset;">
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6" style="background-color:white;">
+                @Html.Action("HomepageCategories", "Catalog")
+            </div>
+            <div class="col-md-3">
+                <div class="twitter-post-box">
+                    <a href="https://ecatalog.promocan.com/DEZINECORPINC/2017/EN4/">
+                        <img src="~/Content/DezineCorpImages/hydeport 2018_ver 2_280 x 200.jpg" class="img-responsive" style="display:unset;">
+                    </a>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+
+@Html.Action("HomepageProducts", "Product")
+
+<div class="container">
+    <div class="row mar-top" align="center">
+        <div class="col-md-3 mar-top tooltip1">
+            @*<i class="fa fa-globe fa-5x" style="color:rgb(192,80,77)"></i>*@
+            <h4 style="height:52.6px;line-height:52.6px;background-color:rgb(192,80,77); text-align:center;">
+                <span style="line-height:1.5; display: inline-block; vertical-align:middle;color:white;">Our Approach</span>
+            </h4>
+            <hr>
+            <div class="tooltiptext">
+                <p>We are problem solvers and product innovators leading the industry in creating memorable and impactful pieces that help to elevate your brand and make it stand out.</p>
+                <p>Our passionate team of decorators, designers, printers, and specialists have decades of combined experience to offer ideas and implement solutions.</p>
+                <p>We have the processes in place to provide in-stock product, quick and accurate production, and the shipping solutions to execute your order efficiently.</p>
+                <p>Coordinating each custom order is our dedicated Customer Service team, providing guidance along the way.</p>
+            </div>
+        </div>
+        <div class="col-md-3 mar-top tooltip1">
+            @*<i class="fa fa-users fa-5x"  style="color:rgb(155,187,89)"></i>*@
+            <h4 style="height:52.6px;line-height:52.6px;background-color:rgb(155,187,89); text-align:center;">
+                <span style="line-height:1.5; display: inline-block; vertical-align:middle;color:white;">Collaborating with Promotional Innovators</span>
+            </h4>
+            <hr>
+            <div class="tooltiptext">
+                <p>
+                    We work with promotional distributors, campus bookstores, food service promoters, gift shops and event coordinators to create promotions that make an impression.
+                </p>
+                <p>
+                    Since 2009 we have developed a strong network of vendors, suppliers and distributors that have worked tirelessly to decorate, sell, and deliver our impressive and extensive line of glassware, ceramics, plastics, leathers and metals to our customers.
+                </p>
+                <p>
+                    Innovation and collaboration – these are the qualities we strive for each day.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-3 mar-top tooltip1">
+            @*<i class="fa fa-usd fa-5x"  style="color:rgb(128,100,162)"></i>*@
+            <h4 style="height:52.6px;line-height:52.6px;background-color:rgb(128,100,162); text-align:center;">
+                <span style="line-height:1.5; display: inline-block; vertical-align:middle;color:white;">Transforming Ideas into Impressions</span>
+            </h4>
+            <hr>
+            <div class="tooltiptext">
+                <p>
+                    From affordable options to premium selections, we offer product, decoration and branding for a wide range of promotional product types to fit our clients’ every need and budget.
+                </p><p>
+                    Bring us your logo, colours, concepts, and ideas and we will work with your one-on-one to transform your ideas into reality on time and on budget.<br><br>
+                    @*<em>
+                            <a class="div-link">
+                                read more...<br>
+                            </a>
+                        </em>*@
+                </p>
+            </div>
+
+        </div>
+        <div class="col-md-3 mar-top tooltip1">
+            @*<i class="fa fa-magic fa-5x"  style="color:rgb(75,172,198)"></i>*@
+            <h4 style="height:52.6px;line-height:52.6px;background-color:rgb(75,172,198); text-align:center;">
+                <span style="line-height:1.5; display: inline-block; vertical-align:middle;color:white;">
+                    Products, Decoration and more….
+                </span>
+            </h4>
+            <hr>
+            <div class="tooltiptext">
+                <p>
+                    With a large variety of product and decoration techniques to choose from, we will help you select the decoration options that best highlight your promotion.
+                </p>
+                <p>
+                    Take a moment to view our new and featured items along the way – you may be inspired for a future project!  Keep in mind that Custom is our specialty.  If you have questions our Customer Service team will be pleased to assist you. <br><br>
+                    @*<em>
+                            <a class="div-link">
+                                read more...<br>
+                            </a>
+                        </em>*@
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*@Html.Widget("home_page_before_products")*@
+
+@Html.Widget("home_page_before_best_sellers")
+
+<!-- Commenting -->
+@*@Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
+    @Html.Widget("home_page_before_categories")
+    @Html.Action("HomepageCategories", "Catalog")
+    @Html.Widget("home_page_before_products")
+    @Html.Action("HomepageProducts", "Product")
+    @Html.Widget("home_page_before_best_sellers")
+    @Html.Action("HomepageBestSellers", "Product")
+    @Html.Widget("home_page_before_news")
+    @Html.Action("HomePageNews", "News")
+    @Html.Widget("home_page_before_poll")
+    @Html.Action("HomePagePolls", "Poll")
+    @Html.Widget("home_page_bottom")*@
+<script>
+    $(".tooltip1,.tooltiptext").hover(function (event) {
+        var childToolText = $(this).find('.tooltiptext');
+        console.log("hover");
+        childToolText.css("display", "block");
+        childToolText.animate({
+            opacity: "1"
+        }, {
+            queue: false
+        });
+    }, function () {
+        var childToolText = $(this).find('.tooltiptext');
+        childToolText.animate({
+            opacity: "0"
+        }, {
+            queue: false
+        });
+        childToolText.css("display", "none");
+    });
+</script>

@@ -4,16 +4,17 @@
 {
     <div class="block block-blog-archive">
         <div class="title">
-            <strong>@T("Blog.Archive")</strong>
+            <h2>E-Flyers Archive</h2>
+            <hr />
         </div>
         <div class="listbox">
             <ul class="list" id="blog-month-list">
-                @foreach (var yearItem in Model)
+                @foreach (var yearItem in Model.OrderByDescending(x=>x.Year))
                 {
                     <li class="year">
                         <strong class="number">@(yearItem.Year)</strong>
                         <ul class="sublist" id="blog-year-@(yearItem.Year)">
-                            @foreach (var monthItem in yearItem.Months)
+                            @foreach (var monthItem in yearItem.Months.OrderByDescending(x=>x.Month))
                             {
                                 <li class="month">
                                     <a href="@Url.RouteUrl("BlogByMonth", new { month = yearItem.Year + "-" + monthItem.Month })">@(new DateTime(yearItem.Year, monthItem.Month, 1).ToString("MMMM"))

@@ -4,6 +4,8 @@ using Nop.Core.Domain.Catalog;
 using Nop.Services.Catalog;
 using Nop.Tests;
 using NUnit.Framework;
+using System.IO;
+using OfficeOpenXml;
 
 namespace Nop.Services.Tests.Catalog
 {
@@ -14,6 +16,15 @@ namespace Nop.Services.Tests.Catalog
         public new void SetUp()
         {
 
+        }
+
+        [Test]
+        public void test()
+        {
+            using (var wb = new ClosedXML.Excel.XLWorkbook(@"C:\Users\shmoa\Downloads\2018 CATALOGUE PRICING-FIXED.xls"))
+            {
+
+            }
         }
 
         [Test]

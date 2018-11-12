@@ -63,12 +63,12 @@
                     <img src="~/Content/DezineCorpImages/ASI_Logo(100x50).png" />
                     <img src="~/Content/DezineCorpImages/PPAI_Logo(100x50).png" />
                 </p>
-                <div class="social">
-                    <div class="social__item pull-left"> <span class="fa fa-facebook" data-count="..." data-social="fb"></span> </div>
-                    <div class="social__item pull-left"> <span class="fa fa-pinterest" data-count="..." data-social="pt"></span> </div>
-                    <div class="social__item pull-left"> <span class="fa fa-twitter" data-count="..." data-social="tw"></span> </div>
-                    <div class="social__item pull-left"> <span class="fa fa-google-plus" data-count="..." data-social="tw"></span> </div>
-                </div>
+                @*<div class="social">
+                        <div class="social__item pull-left"> <span class="fa fa-facebook" data-count="..." data-social="fb"></span> </div>
+                        <div class="social__item pull-left"> <span class="fa fa-pinterest" data-count="..." data-social="pt"></span> </div>
+                        <div class="social__item pull-left"> <span class="fa fa-twitter" data-count="..." data-social="tw"></span> </div>
+                        <div class="social__item pull-left"> <span class="fa fa-google-plus" data-count="..." data-social="tw"></span> </div>
+                    </div>*@
             </div>
             <div class="clearfix"> </div>
         </div>
@@ -78,7 +78,7 @@
     <div class="container">
         <div class="footer-main">
             <p class="footer-class pull-left">Powered by nopCommerce</p>
-            <p class="footer-class pull-right"> Copyright © 2016 DezineCorp. All rights reserved. </p>
+            <p class="footer-class pull-right"> Copyright © @DateTime.Now.Year.ToString() DezineCorp. All rights reserved. </p>
         </div>
     </div>
     <a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
@@ -151,7 +151,7 @@
                     Current Opportunities include:
                 </p>
                 <p style="margin-bottom:15px"><a id="account-repre-form" style="color:#C0504D;">Account Representative</a></p>
-                <p style="margin-bottom:15px"><a id="graphic-form" style="color:#C0504D;">Graphic Artist</a></p>
+                <p style="margin-bottom:15px"><a id="graphic-form" style="color:#C0504D;">Forklift Driver/Shipping</a></p>
                 <div style="display:none" id="career-form" align="center">
                     @Html.Action("CareerEmail", "Common")
                     <br />
@@ -187,7 +187,7 @@
                     </p>
                     <div style="margin-left:50px">
                         <h4 class="themes" style="margin:0px;">Main Office</h4>
-                        <p style="margin:0px">tel: 905.564.2011 | toll tree tel: 866.625.7820</p>
+                        <p style="margin:0px">tel: 905.564.2011 | toll free tel: 866.625.7820</p>
                         <p>fax: 905.564.3351 | toll free fax: 888.493.3767</p>
 
                         <h4 class="themes" style="margin:0px;">Maritimes / Quebec / Eastern &amp; Northern Ontario</h4>
@@ -211,27 +211,25 @@
                     <hr />
 
                     <h3 class="themes" style="margin:0px;">We invite you to send us your questions and comments:</h3><br />
-                    <form id="formcontactUs">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="name" class="form-control inputs-style" id="" placeholder="Name">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control inputs-style" id="" aria-describedby="emailHelp" placeholder="Enter email">
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Enquiry</label>
-                            <textarea class="form-control inputs-style" id="" rows="3"></textarea>
-                        </div>
-                    </form>
+                    @*<form id="formcontactUs">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="name" class="form-control inputs-style" id="" placeholder="Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control inputs-style" id="" aria-describedby="emailHelp" placeholder="Enter email">
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Enquiry</label>
+                                <textarea class="form-control inputs-style" id="" rows="3"></textarea>
+                            </div>
+                        </form>*@
+                    @Html.Action("ContactUs", "Common")
                 </div>
             </div>
             <div class="modal-footer">
-                <div class="form-group">
-                    <div class="login_box"> <span>Send</span> </div>
-                </div>
-                <div class="clearfix"></div>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -374,7 +372,7 @@
                     </div>
                     <h3>Can I pickup my order?</h3>
                     <div>
-                        <p>Pickup is available at our Production facility located at 369 Britannia Rd E, Mississauga ON L5S 2H5.</p>
+                        <p>Pickup is available at our Production facility located at 369 Britannia Rd E, Mississauga ON L4Z 2H5.</p>
                         <p> Pickup must be indicated when the order is submitted and orders will not be released without an approved Pickup Number. </p>
                     </div>
                     <h3> Can I change my shipping instructions?</h3>
@@ -523,7 +521,7 @@
                         <b>Shipping Information –</b> date required to ship / shipping method / ship to location
                     </li>
                     <li>
-                        <b>Event Date</b> 
+                        <b>Event Date</b>
                     </li>
                     <li>
                         <b>Describe your promotion –</b> we will gladly assist you with the options available

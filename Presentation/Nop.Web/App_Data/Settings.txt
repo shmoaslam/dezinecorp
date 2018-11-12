@@ -1,2 +1,2 @@
 DataProvider: sqlserver
-DataConnectionString: Data Source=ASLAM-LAPTOP;Initial Catalog=DezinecorpNOPSite;Integrated Security=True
+DataConnectionString: Data Source=ASLAM-LAPTOP;Initial Catalog=DezinecorpNop;Integrated Security=True

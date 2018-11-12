@@ -138,7 +138,7 @@
     /* The indicators */
 </style>
 <script>
-    $("#main-product-img").elevateZoom({ gallery: 'gallery', cursor: 'pointer', galleryActiveClass: 'active', imageCrossfade: true, loadingIcon: 'http://www.elevateweb.co.uk/spinner.gif' });  //pass the images to Fancybox $("#zoom_03").bind("click", function(e) { var ez = $('#zoom_03').data('elevateZoom');	$.fancybox(ez.getGalleryList()); return false; }); - See more at: http://www.elevateweb.co.uk/image-zoom/examples#sthash.OxG7EsJE.dpuf
+    $("#main-product-img").elevateZoom({ gallery: 'gallery',  galleryActiveClass: 'active',tint:true, tintOpacity:0.5 });  //pass the images to Fancybox $("#zoom_03").bind("click", function(e) { var ez = $('#zoom_03').data('elevateZoom');	$.fancybox(ez.getGalleryList()); return false; }); - See more at: http://www.elevateweb.co.uk/image-zoom/examples#sthash.OxG7EsJE.dpuf
     $(window).load(function () {
         $("#main-product-img").parent(".zoomWrapper").css("width", "");
         $("#main-product-img").parent(".zoomWrapper").css("height", "");

@@ -2037,6 +2037,9 @@ namespace Nop.Services.Catalog
             if (string.IsNullOrEmpty(familyCode))
                 return new List<Product>();
 
+            if (string.IsNullOrEmpty(familyCode.Trim()))
+                return new List<Product>();
+
             if (_productRepository.Table.Any(x => x.FamilyCode.Equals(familyCode, StringComparison.OrdinalIgnoreCase) && x.Published && !x.Deleted))
                 return _productRepository.Table.Where(x => x.FamilyCode.Equals(familyCode, StringComparison.OrdinalIgnoreCase) && x.Published && !x.Deleted).ToList();
 

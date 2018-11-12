@@ -23,7 +23,7 @@
                 <li>
                     <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb"  style="margin:0px;">
                         <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" itemprop="url" style="margin:0px;" >
-                            <span itemprop="title"  style="margin:0px;">@category.Name</span>
+                            <span itemprop="title"  style="margin:0px;">@category.Name.Replace("Root Category","Root")</span>
                         </a>
                     </span>
                     <span class="delimiter"  style="margin-left:2px;margin-right:2px;">@breadcrumbDelimiter</span>

@@ -372,6 +372,7 @@
                                                 id: "Id",
                                                 fields: {
                                                     ProductName: {editable: false, type: "string" },
+                                                    SKU: {editable: false, type: "string" },
                                                     IsFeaturedProduct: {editable: true, type: "boolean" },
                                                     DisplayOrder: {editable: true, type: "number" },
                                                     ProductId: {editable: false, type: "number" }
@@ -405,6 +406,9 @@
                                     columns: [{
                                         field: "ProductName",
                                         title: "@T("Admin.Catalog.Categories.Products.Fields.Product")"
+                                    }, {
+                                        field: "SKU",
+                                        title: "@T("Admin.Catalog.Categories.Products.Fields.SKU")"
                                     }, {
                                         field: "IsFeaturedProduct",
                                         title: "@T("Admin.Catalog.Categories.Products.Fields.IsFeaturedProduct")",

@@ -7,27 +7,48 @@
         <h3 align="center">BROWSE CATEGORIES</h3>
         <div class="col-md-4">
             <ul style="list-style:none; font-size: 16px; color:#000 !important;padding-left:0px;">
+                <li><a style="color:black;" href="/new-products">New</a></li>
+                <li><a style="color:black;" href="/ceramics">Ceramics</a></li>
+                <li><a style="color:black;" href="/leather-1">Leather</a></li>
+                <li><a style="color:black;" href="/metals">Metals</a></li>
+            </ul>
+            @*<ul style="list-style:none; font-size: 16px; color:#000 !important;padding-left:0px;">
+
                 @for (int i = 0; i <= 3; i++)
                 {
                     <li><a style="color:black;" href="@Url.RouteUrl("Category", new { SeName = Model[i].SeName })">@Model[i].Name</a></li>
                 }
-            </ul>
+            </ul>*@
         </div>
         <div class="col-md-4">
-            <ul style="list-style:none; font-size: 16px; color:#000 !important;padding-left:0px;">
+            @*<ul style="list-style:none; font-size: 16px; color:#000 !important;padding-left:0px;">
                 @for (int i = 4; i <= 7; i++)
                 {
                     <li><a style="color:black;" href="@Url.RouteUrl("Category", new { SeName = Model[i].SeName })">@Model[i].Name</a></li>
                 }
+            </ul>*@
+            <ul style="list-style:none; font-size: 16px; color:#000 !important;padding-left:0px;">
+                <li><a style="color:black;" href="/crystal">Crystal</a></li>
+                <li><a style="color:black;" href="/glass">Glass</a></li>
+                <li><a style="color:black;" href="/plastic">Plastic</a></li>
+                <li><a style="color:black;" href="/adblock-paper-cubes-1">Cubes</a></li>
             </ul>
+
         </div>
         <div class="col-md-4">
-            <ul style="list-style:none; font-size: 16px; color:#000 !important;padding-left:0px;">
+            @*<ul style="list-style:none; font-size: 16px; color:#000 !important;padding-left:0px;">
                 @for (int i = 8; i <= 11; i++)
                 {
                     <li><a style="color:black;" href="@Url.RouteUrl("Category", new { SeName = Model[i].SeName })">@Model[i].Name</a></li>
                 }
+            </ul>*@
+            <ul style="list-style:none; font-size: 16px; color:#000 !important;padding-left:0px;">
+                <li><a style="color:black;" href="/canadian-made">Canadian Made</a></li>
+                <li><a style="color:black;" href="/brands">Brands</a></li>
+                <li><a style="color:black;" href="/gift-boxes-gift-sets">Gift Sets</a></li>
+                <li><a style="color:black;" href="/campus-selections">Campus Selections</a></li>
             </ul>
+
         </div>
 
     </div>

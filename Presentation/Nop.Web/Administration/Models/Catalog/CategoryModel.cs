@@ -132,6 +132,9 @@ namespace Nop.Admin.Models.Catalog
 
             [NopResourceDisplayName("Admin.Catalog.Categories.Products.Fields.DisplayOrder")]
             public int DisplayOrder { get; set; }
+
+            [NopResourceDisplayName("Admin.Catalog.Categories.Products.Fields.SKU")]
+            public string SKU { get; set; }
         }
 
         public partial class AddCategoryProductModel : BaseNopModel

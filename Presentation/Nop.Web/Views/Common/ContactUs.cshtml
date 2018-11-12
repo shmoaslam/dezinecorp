@@ -1,122 +1,68 @@
-﻿@model ContactUsModel
-@using Nop.Web.Models.Common;
+﻿@model Nop.Web.Models.Common.ContactUsModel
+
 @{
-    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
-
-    //title
-    Html.AddTitleParts(T("PageTitle.ContactUs").Text);
+    AjaxOptions ajaxOptions = new AjaxOptions
+    {
+        LoadingElementId = "loading-area-ContactUs",
+        LoadingElementDuration = 1000,
+        OnBegin = "HideFormContactUs",
+        OnFailure = "ShowFailureContactUs",
+        UpdateTargetId = "message-area-ContactUs",
+        OnSuccess = "OnSuccessContactUs",
+    };
 }
-<div class="container-fluid">
-    <div class="page-title col-lg-12 col-sm-12 col-xs-12 col-md-12">
-        <img src="~/Content/DezineCorpImages/contact_us.jpg" class="img-responsive" style="width:100%;" />
-    </div>
+
+<script>
+    function HideFormContactUs() {
+        //When the form is ContactUsmitted, we hide the form
+        $("#form-area-ContactUs").hide();
+    }
+
+    function ShowFailureContactUs(e) {
+        //In the case that the AJAX call fails to communicate with the server
+        //(e.g. the user's internet connection cuts out), we should display a message to that effect
+        $('#message-area-ContactUs').html("<div class='alert alert-danger'><strong>Error!</strong>The server could not be contacted and your message has not been sent. Please check your internet connection and try again later.</div>");
+    }
+    function OnSuccessContactUs() {
+        document.getElementById("ContactUsEmailForm").reset();
+    }
+</script>
+<style>
+    #ContactUsscribtion {
+        background-color: #eee;
+        padding: 10px;
+    }
+</style>
+
+<div id="loading-area-ContactUs" class="load" style="display:none;">
+    <div class='alert alert-info'><strong>Sending...</strong></div>
 </div>
-<hr />
-<div class="container">
-    <div class="col-lg-7 col-xs-12 col-sm-12 col-md-7">
-        <h3 class="themes"><strong>Corporate Office</strong></h3>
-        <p>
-            <strong>Dezine<span style="color:#007A8A;">Corp</span> Inc.</strong><br>
-            369 Britannia Rd East<br>
-            Mississauga ON L4Z 2H5
-        </p>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d11550.226478351142!2d-79.6636205!3d43.6365864!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1528028603964" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
-    </div>
-    <div class="col-lg-5 col-xs-12 col-sm-12 col-md-5">
 
-        <h3 class="themes">Customer Service</h3>
-        <p>
-            <a href="mailto:support@dezinecorp.com" class="themes">support@dezinecorp.com</a>
-        </p>
-        <h3 class="themes"><strong>Main Office</strong></h3>
-        <ul>
-            <li>tel: 905.564.2011 | toll tree tel: 866.625.7820</li>
-            <li>fax: 905.564.3351 | toll free fax: 888.493.3767</li>
-        </ul>
+<div id="message-area-ContactUs"></div>
 
-        <h3 class="themes"><strong>Maritimes / Quebec / Eastern &amp; Northern Ontario</strong></h3>
-        <p>905.364.0429 | <a href="mailto:easternrep@dezinecorp.com" class="themes">easternrep@dezinecorp.com</a></p>
-
-        <h3 class="themes"><strong>Ontario – Central and Southwestern</strong></h3>
-        <p>905.364.0426  | <a href="mailto:l.racco@dezinecorp.com" class="themes">l.racco@dezinecorp.com</a></p>
-
-        <h3 class="themes"><strong>Western Canada</strong></h3>
-        <p>905.364.0427   | <a href="mailto:westernrep@dezinecorp.com" class="themes">westernrep@dezinecorp.com</a></p>
-
-        <h3 class="themes">Hours of Operation</h3><p>Monday to Friday, 8:30am to 5:00pm</p>
-
-        <h3 class="themes"><strong>Accounts</strong></h3><a href="mailto:support@dezinecorp.com" class="themes">support@dezinecorp.com</a>
-
-
-    </div>
+<div id="form-area-ContactUs">
+    @using (Ajax.BeginForm("ContactUs", null, ajaxOptions, new { id = "ContactUsEmailForm" }))
+    {
+        @Html.AntiForgeryToken()
+        if (!MvcHtmlString.IsNullOrEmpty(Html.ValidationSummary(true)))
+        {
+            <div class="message-error">@Html.ValidationSummary(true)</div>
+        }
+        <div class="form-group">
+            <label for="name">Name</label>
+            @Html.TextBoxFor(model => model.FullName, new { @class = "form-control inputs-style", placeholder = "First Name" })
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control inputs-style", placeholder = "Email" })
+        </div>
+        <div class="form-group">
+            <label for="name">Enquiry</label>
+            @Html.TextAreaFor(model => model.Enquiry, new { @class = "form-control inputs-style", placeholder = "Enquiry", rows = "3"})
+        </div>
+        <br />
+        <div class="row" align="center">
+            <input type="submit" name="ContactUs" class="send--mail" value="@T("Products.EmailAFriend.Button")" />
+        </div>
+    }
 </div>
-<br />
-<br />
-@*<div class="page contact-page">
-        <div class="page-title">
-            <h1>@T("PageTitle.ContactUs")</h1>
-        </div>
-        <div class="page-body">
-            @Html.Action("TopicBlock", "Topic", new { systemName = "ContactUs" })
-            @Html.Widget("contactus_top")
-            @if (Model.SuccessfullySent)
-            {
-                <div class="result">
-                    @Model.Result
-                </div>
-            }
-            else
-            {
-                using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
-                    var validationSummary = Html.ValidationSummary(true);
-                    if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
-                    {
-                        <div class="message-error">@validationSummary</div>
-                    }
-                    <div class="fieldset">
-                        <div class="form-fields">
-                            <div class="inputs">
-                                @Html.LabelFor(model => model.FullName)
-                                @Html.TextBoxFor(model => model.FullName, new { @class = "fullname", placeholder = T("ContactUs.FullName.Hint") })
-                                @Html.RequiredHint()
-                                @Html.ValidationMessageFor(model => model.FullName)
-                            </div>
-                            <div class="inputs">
-                                @Html.LabelFor(model => model.Email)
-                                @Html.TextBoxFor(model => model.Email, new { @class = "email", placeholder = T("ContactUs.Email.Hint") })
-                                @Html.RequiredHint()
-                                @Html.ValidationMessageFor(model => model.Email)
-                            </div>
-                            @if (Model.SubjectEnabled)
-                            {
-                                <div class="inputs">
-                                    @Html.LabelFor(model => model.Subject)
-                                    @Html.TextBoxFor(model => model.Subject, new { @class = "subject", placeholder = T("ContactUs.Subject.Hint") })
-                                    @Html.RequiredHint()
-                                    @Html.ValidationMessageFor(model => model.Subject)
-                                </div>
-                            }
-                            <div class="inputs">
-                                @Html.LabelFor(model => model.Enquiry)
-                                @Html.TextAreaFor(model => model.Enquiry, new { @class = "enquiry", placeholder = T("ContactUs.Enquiry.Hint") })
-                                @Html.RequiredHint()
-                                @Html.ValidationMessageFor(model => model.Enquiry)
-                            </div>
-                            @if (Model.DisplayCaptcha)
-                            {
-                                <div class="captcha-box">
-                                    @Html.Raw(Html.GenerateCaptcha())
-                                </div>
-                            }
-                        </div>
-                    </div>
-                    <div class="buttons">
-                        <input type="submit" name="send-email" class="button-1 contact-us-button" value="@T("ContactUs.Button")" />
-                    </div>
-                }
-            }
-            @Html.Widget("contactus_bottom")
-        </div>
-    </div>*@

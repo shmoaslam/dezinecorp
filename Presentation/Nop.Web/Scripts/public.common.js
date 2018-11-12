@@ -17,13 +17,46 @@ function setLocation(url) {
     window.location.href = url;
 }
 
-function printSection(id) {
-    var divToPrint = document.getElementById(id);
-    var newWin = window.open('', 'Print-Window');
-    newWin.document.open();
-    newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
-    newWin.document.close();
-    setTimeout(function () { newWin.close(); }, 10);
+function ajaxGet(url)
+{
+    var jqxhr = $.get(url,{id : id}, function (data) {
+        alert(data);
+    }).fail(function () {
+        alert("error");
+    });
+    //    .done(function () {
+    //    alert("second success");
+    //}).always(function () {
+    //    alert("finished");
+    //});
+
+}
+function createElementFromHTML(htmlString) {
+    var div = document.createElement('div');
+    div.innerHTML = htmlString.trim();
+
+    // Change this to div.childNodes to support multiple top-level nodes
+    return div.firstChild;
+}
+function printSection(id, url) {
+    var htmlToPrint;
+    var jqxhr = $.get(url, { id: id }, function (data) {
+        htmlToPrint = createElementFromHTML(data);
+        var divToPrint = htmlToPrint;
+        var newWin = window.open('', 'Print-Window');
+        newWin.document.open();
+        //        newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
+        newWin.document.write('<html><body>' + divToPrint.innerHTML + '</body></html>');
+
+        newWin.document.close();
+        //setTimeout(function () { newWin.close(); }, 10);
+    }).fail(function () {
+        alert("error");
+    });
+
+    //ajaxGet(url);
+
+    
 }
 
 function displayAjaxLoading(display) {
@@ -64,7 +97,7 @@ function displayPopupNotification(message, messagetype, modal) {
     container.html(htmlcode);
 
     var isModal = (modal ? true : false);
-    container.dialog({modal:isModal});
+    container.dialog({ modal: isModal });
 }
 
 
@@ -100,10 +133,9 @@ function displayBarNotification(message, messagetype, timeout) {
     $('#bar-notification').append(htmlcode)
         .addClass(cssclass)
         .fadeIn('slow')
-        .mouseenter(function ()
-            {
-                clearTimeout(barNotificationTimeout);
-            });
+        .mouseenter(function () {
+            clearTimeout(barNotificationTimeout);
+        });
 
     $('#bar-notification .close').unbind('click').click(function () {
         $('#bar-notification').fadeOut('slow');

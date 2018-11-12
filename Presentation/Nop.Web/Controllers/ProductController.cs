@@ -854,11 +854,12 @@ namespace Nop.Web.Controllers
                         priceList.Add(new DezineCorpTierPriceModel
                         {
                             PriceName = "Price",
-                            Price1 = tierPrice.Price1 != null ? string.Format("$ {0}", tierPrice.Price1.Trim()) : string.Empty,
-                            Price2 = tierPrice.Price2 != null ? string.Format("$ {0}", tierPrice.Price2.Trim()) : string.Empty,
-                            Price3 = tierPrice.Price3 != null ? string.Format("$ {0}", tierPrice.Price3.Trim()) : string.Empty,
-                            Price4 = tierPrice.Price4 != null ? string.Format("$ {0}", tierPrice.Price4.Trim()) : string.Empty,
-                            DiscountCode = "4 ( c )",
+
+                            Price1 = GetPrice(tierPrice.Price1),//
+                            Price2 = GetPrice(tierPrice.Price2),// != null ? string.Format("$ {0:0.00}", tierPrice.Price2.Trim()) : string.Empty,
+                            Price3 = GetPrice(tierPrice.Price3),// != null ? string.Format("$ {0:0.00}", tierPrice.Price3.Trim()) : string.Empty,
+                            Price4 = GetPrice(tierPrice.Price4),// != null ? string.Format("$ {0:0.00}", tierPrice.Price4.Trim()) : string.Empty,
+                            DiscountCode = tierPrice.DiscountCode,
                         });
                         if (product.DezineCorpAdditionalPricings.Count > 0)
                         {
@@ -870,10 +871,10 @@ namespace Nop.Web.Controllers
                                     priceList.Add(new DezineCorpTierPriceModel
                                     {
                                         PriceName = additionalPricing.AddColourOption,
-                                        Price1 = additionalPricing.AddCol_1,
-                                        Price2 = additionalPricing.AddCol_2,
-                                        Price3 = additionalPricing.AddCol_3,
-                                        Price4 = additionalPricing.AddCol_4,
+                                        Price1 = GetPrice(additionalPricing.AddCol_1),// ? string.Format("$ {0:0.00}", Convert.ToDecimal(additionalPricing.AddCol_1.Trim())) : string.Empty,
+                                        Price2 = GetPrice(additionalPricing.AddCol_2),// ? string.Format("$ {0:0.00}", Convert.ToDecimal(additionalPricing.AddCol_2.Trim())) : string.Empty,
+                                        Price3 = GetPrice(additionalPricing.AddCol_3),// ? string.Format("$ {0:0.00}", Convert.ToDecimal(additionalPricing.AddCol_3.Trim())) : string.Empty,
+                                        Price4 = GetPrice(additionalPricing.AddCol_4),// ? string.Format("$ {0:0.00}", Convert.ToDecimal(additionalPricing.AddCol_4.Trim())) : string.Empty,
                                         DiscountCode = additionalPricing.AddColPriceCode,
                                     });
                                 }
@@ -883,10 +884,10 @@ namespace Nop.Web.Controllers
                                     priceList.Add(new DezineCorpTierPriceModel
                                     {
                                         PriceName = additionalPricing.DecalOption,
-                                        Price1 = additionalPricing.Decal_1,
-                                        Price2 = additionalPricing.Decal_2,
-                                        Price3 = additionalPricing.Decal_3,
-                                        Price4 = additionalPricing.Decal_4,
+                                        Price1 = GetPrice(additionalPricing.Decal_1),// ? string.Format("$ {0:0.00}", Convert.ToDecimal(additionalPricing.Decal_1.Trim())) : string.Empty,
+                                        Price2 = GetPrice(additionalPricing.Decal_2),// ? string.Format("$ {0:0.00}", Convert.ToDecimal(additionalPricing.Decal_2.Trim())) : string.Empty,
+                                        Price3 = GetPrice(additionalPricing.Decal_3),// ? string.Format("$ {0:0.00}", Convert.ToDecimal(additionalPricing.Decal_3.Trim())) : string.Empty,
+                                        Price4 = GetPrice(additionalPricing.Decal_4),// ? string.Format("$ {0:0.00}", Convert.ToDecimal(additionalPricing.Decal_4.Trim())) : string.Empty,
                                         DiscountCode = additionalPricing.DecalPriceCode,
                                     });
                                 }
@@ -896,10 +897,10 @@ namespace Nop.Web.Controllers
                                     priceList.Add(new DezineCorpTierPriceModel
                                     {
                                         PriceName = additionalPricing.LaserEngravingOption,
-                                        Price1 = additionalPricing.Laser_1,
-                                        Price2 = additionalPricing.Laser_2,
-                                        Price3 = additionalPricing.Laser_3,
-                                        Price4 = additionalPricing.Laser_4,
+                                        Price1 = GetPrice(additionalPricing.Laser_1),// ? string.Format("$ {0:0.00}", Convert.ToDecimal(additionalPricing.Laser_1.Trim())) : string.Empty,
+                                        Price2 = GetPrice(additionalPricing.Laser_2),// ? string.Format("$ {0:0.00}", Convert.ToDecimal(additionalPricing.Laser_2.Trim())) : string.Empty,
+                                        Price3 = GetPrice(additionalPricing.Laser_3),//? string.Format("$ {0:0.00}", Convert.ToDecimal(additionalPricing.Laser_3.Trim())) : string.Empty,
+                                        Price4 = GetPrice(additionalPricing.Laser_4),// ? string.Format("$ {0:0.00}", Convert.ToDecimal(additionalPricing.Laser_4.Trim())) : string.Empty,
                                         DiscountCode = additionalPricing.LaserPriceCode,
                                     });
                                 }
@@ -958,7 +959,11 @@ namespace Nop.Web.Controllers
             }
             else
             {
-                familyCode = model.DData.FamilyCode;
+                if (model.DData != null)
+                {
+                    familyCode = model.DData.FamilyCode;
+
+                }
             }
 
             var familyProducts = _productService.GetProductsByFamilyCode(familyCode);
@@ -1039,12 +1044,36 @@ namespace Nop.Web.Controllers
 
             #endregion
 
+            Session["ProductModel"] = model; // use the same model printing.
+            
             return model;
+        }
+
+
+
+        private string GetPrice(string value)
+        {
+            string formatPrice = string.Empty;
+            if (string.IsNullOrEmpty(value))
+                return formatPrice;
+
+            if (value.Contains("$"))
+                value = value.Replace("$", "").Trim();
+
+            try
+            {
+                formatPrice = string.Format("$" + Convert.ToDecimal(value).ToString("F"));
+            }
+            catch 
+            {
+                return formatPrice;
+            }
+            return formatPrice;
         }
 
         private void BindRelatedProduct(ProductDetailsModel model, string productSku, int imageType)
         {
-            if (string.IsNullOrEmpty(productSku))
+            if (string.IsNullOrEmpty(productSku.Trim()))
                 return;
             var relatedProduct = GetRelatedAndFamilyProduct(model, productSku, imageType);
             if (relatedProduct != null)
@@ -1205,6 +1234,52 @@ namespace Nop.Web.Controllers
             _customerActivityService.InsertActivity("PublicStore.ViewProduct", _localizationService.GetResource("ActivityLog.PublicStore.ViewProduct"), product.Name);
 
             return View(model.ProductTemplateViewPath, model);
+        }
+
+        [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult PrintProductDetails(int id)
+        {
+            var product = _productService.GetProductById(id);
+            if (product == null || product.Deleted)
+                return InvokeHttp404();
+
+            //published?
+            if (!_catalogSettings.AllowViewUnpublishedProductPage)
+            {
+                //Check whether the current user has a "Manage catalog" permission
+                //It allows him to preview a product before publishing
+                if (!product.Published && !_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                    return InvokeHttp404();
+            }
+
+            //ACL (access control list)
+            if (!_aclService.Authorize(product))
+                return InvokeHttp404();
+
+            //Store mapping
+            if (!_storeMappingService.Authorize(product))
+                return InvokeHttp404();
+
+            //availability dates
+            if (!product.IsAvailable())
+                return InvokeHttp404();
+
+            //visible individually?
+            if (!product.VisibleIndividually)
+            {
+                //is this one an associated products?
+                var parentGroupedProduct = _productService.GetProductById(product.ParentGroupedProductId);
+                if (parentGroupedProduct == null)
+                    return RedirectToRoute("HomePage");
+
+                return RedirectToRoute("Product", new { SeName = parentGroupedProduct.GetSeName() });
+            }
+
+            //prepare the model
+            var model = PrepareProductDetailsPageModel(product);
+
+            
+            return PartialView(model);
         }
 
         [ChildActionOnly]
