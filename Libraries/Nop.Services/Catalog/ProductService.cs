@@ -2024,11 +2024,19 @@ namespace Nop.Services.Catalog
 
             var slabdetail = _dezineCorpTierPricingSlabRepository.Table.FirstOrDefault(x => x.PriceCategory == PriceCode);
 
+
+
             string[] slab = new string[8];
-            slab[0] = slabdetail.Quantity_1 != null ? slabdetail.Quantity_1.ToString() : string.Empty ;
+
+            if (slabdetail == null)
+            {
+                return null;
+            }
+            slab[0] = slabdetail.Quantity_1 != null ? slabdetail.Quantity_1.ToString() : string.Empty;
             slab[1] = slabdetail.Quantity_2 != null ? slabdetail.Quantity_2.ToString() : string.Empty;
             slab[2] = slabdetail.Quantity_3 != null ? slabdetail.Quantity_3.ToString() : string.Empty;
             slab[3] = slabdetail.Quantity_4 != null ? slabdetail.Quantity_4.ToString() : string.Empty;
+
             return slab;
         }
 

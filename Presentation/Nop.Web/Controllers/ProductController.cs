@@ -842,15 +842,19 @@ namespace Nop.Web.Controllers
                         var pricingSlab = _productService.GetPricingSlab(tierPrice.QuantityLevel);
                         var priceList = new List<DezineCorpTierPriceModel>();
 
-                        priceList.Add(new DezineCorpTierPriceModel
+                        if (pricingSlab != null)
                         {
-                            PriceName = "Quantity",
-                            Price1 = pricingSlab[0].ToString(),
-                            Price2 = pricingSlab[1].ToString(),
-                            Price3 = pricingSlab[2].ToString(),
-                            Price4 = pricingSlab[3].ToString(),
-                            DiscountCode = "Code",
-                        });
+                            priceList.Add(new DezineCorpTierPriceModel
+                            {
+                                PriceName = "Quantity",
+                                Price1 = pricingSlab[0].ToString(),
+                                Price2 = pricingSlab[1].ToString(),
+                                Price3 = pricingSlab[2].ToString(),
+                                Price4 = pricingSlab[3].ToString(),
+                                DiscountCode = "Code",
+                            });
+                        }
+
                         priceList.Add(new DezineCorpTierPriceModel
                         {
                             PriceName = "Price",
