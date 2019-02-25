@@ -43,6 +43,8 @@ namespace Nop.Web.Controllers
 {
     public partial class ProductController : BasePublicController
     {
+
+        // Testing api branch
         #region Fields
 
         private readonly ICategoryService _categoryService;

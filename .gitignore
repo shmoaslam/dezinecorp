@@ -238,3 +238,5 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+/Presentation/Nop.Web/Plugins/DiscountRules.CustomerRoles/*.dll
+/Presentation/Nop.Web/Plugins/*.dll
