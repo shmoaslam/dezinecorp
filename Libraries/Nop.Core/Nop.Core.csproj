@@ -100,6 +100,7 @@
     <Compile Include="Domain\Catalog\DezineCorpDataRefOnly.cs" />
     <Compile Include="Domain\Catalog\DezineCorpProductKeyword.cs" />
     <Compile Include="Domain\Catalog\DezineCorpRelatedProduct.cs" />
+    <Compile Include="Domain\Catalog\DezineCorpSageandBranding.cs" />
     <Compile Include="Domain\Catalog\DezineCorpTierPrice.cs" />
     <Compile Include="Domain\Catalog\DezineCorpTierPricingSlab.cs" />
     <Compile Include="Domain\Catalog\Events.cs" />

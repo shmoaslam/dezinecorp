@@ -130,6 +130,15 @@
                         @Html.ValidationMessageFor(model => model.DezinceCorpDataRefOnly.CountryofOrigin)
                     </td>
                 </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpDataRefOnly.SpecialCommisionAdder)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpDataRefOnly.SpecialCommisionAdder)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpDataRefOnly.SpecialCommisionAdder)
+                    </td>
+                </tr>
             </table>
         </td>
         <td>
@@ -252,6 +261,16 @@
                         @Html.ValidationMessageFor(model => model.DezinceCorpDataRefOnly.INFOtracImportResultifError)
                     </td>
                 </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.DezinceCorpDataRefOnly.IsShopifyEnable)
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.DezinceCorpDataRefOnly.IsShopifyEnable)
+                        @Html.ValidationMessageFor(model => model.DezinceCorpDataRefOnly.IsShopifyEnable)
+                    </td>
+                </tr>
+                
             </table>
         </td>
     </tr>

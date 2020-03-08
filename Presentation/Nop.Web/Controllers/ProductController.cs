@@ -390,6 +390,8 @@ namespace Nop.Web.Controllers
                 _mediaSettings.ProductDetailsPictureSize;
             //prepare picture models
             var productPicturesCacheKey = string.Format(ModelCacheEventConsumer.PRODUCT_DETAILS_PICTURES_MODEL_KEY, product.Id, defaultPictureSize, isAssociatedProduct, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), _storeContext.CurrentStore.Id);
+
+
             var cachedPictures = _cacheManager.Get(productPicturesCacheKey, () =>
             {
                 var pictures = _pictureService.GetPicturesByProductId(product.Id);

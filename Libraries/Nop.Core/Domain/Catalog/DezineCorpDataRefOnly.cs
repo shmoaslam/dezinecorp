@@ -153,5 +153,16 @@ namespace Nop.Core.Domain.Catalog
         /// </summary>
         public string INFOtracImportResultifError { get; set; }
 
+        /// <summary>
+        /// Gets or sets the Return "Y" if shopify import available
+        /// </summary>
+        public string SpecialCommisionAdder { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets the Return "Y" if shopify import available
+        /// </summary>
+        public string IsShopifyEnabled { get; set; }
+
     }
 }

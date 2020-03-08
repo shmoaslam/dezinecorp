@@ -973,6 +973,13 @@ namespace Nop.Admin.Models.Catalog
             [AllowHtml]
             [DisplayName("INFOtrac Import Result if Error")]
             public string INFOtracImportResultifError { get; set; }
+
+            [DisplayName("Is Shopify Export")]
+            public string IsShopifyEnable { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Special Commission Adder")]
+            public string SpecialCommisionAdder { get; set; }
         }
         public class DezineCorpTierPriceViewModel : BaseNopEntityModel
         {

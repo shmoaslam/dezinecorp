@@ -173,7 +173,7 @@
                         <tbody>
                             @if (Model.DData != null)
                             {
-                                if (!string.IsNullOrEmpty(Model.DData.RepeatSetup))
+                                if (!string.IsNullOrEmpty(Model.DData.SetupPerColour))
                                 {
                                     <tr>
                                         <td style="width:40%;"><strong> Setup Per Colour:</strong></td>
@@ -361,7 +361,7 @@
                                 if (!string.IsNullOrEmpty(Model.DData.PeicesPerCartoon))
                                 {
                                     <tr>
-                                        <td style="width:40%;"><label> Pieces per carton</label></td>
+                                        <td style="width:40%;"><label> Pieces per carton: </label></td>
                                         <td> @Model.DData.PeicesPerCartoon</td>
                                     </tr>
                                 }

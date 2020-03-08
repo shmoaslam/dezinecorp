@@ -69,6 +69,7 @@
     <Compile Include="Mapping\Catalog\DezineCorpDataRefOnlyMap.cs" />
     <Compile Include="Mapping\Catalog\DezineCorpProductKeywordMap.cs" />
     <Compile Include="Mapping\Catalog\DezineCorpRelatedProductMap.cs" />
+    <Compile Include="Mapping\Catalog\DezineCorpSageandBrandingMap.cs" />
     <Compile Include="Mapping\Catalog\DezineCorpTierPriceMap.cs" />
     <Compile Include="Mapping\Catalog\DezineCorpTierPricingSlabMap.cs" />
     <Compile Include="Mapping\Catalog\PredefinedProductAttributeValueMap.cs" />

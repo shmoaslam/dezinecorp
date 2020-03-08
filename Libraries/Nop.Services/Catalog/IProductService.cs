@@ -487,6 +487,8 @@ namespace Nop.Services.Catalog
         DezineCorpRelatedProduct GetDezineCorpRelatedProduct(int id);
         DezineCorpTierPrice GetDezineCorpTierPrice(int id);
         DezineCorpAdditionalPricing GetDezineCorpAdditionalPricing(int id);
+        DezineCorpSageandBranding GetDezineCorpSageandBranding(int id);
+
         string[] GetPricingSlab(string PriceCode);
         IList<Product> GetProductsByFamilyCode(string familyCode);
         #endregion

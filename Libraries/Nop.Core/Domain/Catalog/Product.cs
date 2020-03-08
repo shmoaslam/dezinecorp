@@ -31,6 +31,7 @@ namespace Nop.Core.Domain.Catalog
         private ICollection<DezineCorpAdditionalPricing> _dezineCorpAdditionalPricing;
         private ICollection<DezineCorpRelatedProduct> _dezineCorpRelatedProduct;
         private ICollection<DezineCorpProductKeyword> _dezineCorpProductKeyword;
+        private ICollection<DezineCorpSageandBranding> _dezineCorpSageandBranding;
 
         /// <summary>
         /// Gets or sets the product type identifier
@@ -756,6 +757,16 @@ namespace Nop.Core.Domain.Catalog
             get { return _dezineCorpAdditionalPricing ?? (_dezineCorpAdditionalPricing = new List<DezineCorpAdditionalPricing>()); }
             protected set { _dezineCorpAdditionalPricing = value; }
         }
+
+        /// <summary>
+        /// Gets or sets the DezineCorpSageandBranding
+        /// </summary>
+        public virtual ICollection<DezineCorpSageandBranding> DezineCorpSageandBrandings
+        {
+            get { return _dezineCorpSageandBranding ?? (_dezineCorpSageandBranding = new List<DezineCorpSageandBranding>()); }
+            protected set { _dezineCorpSageandBranding = value; }
+        }
+
         /// <summary>
         /// Gets or sets the collection of applied discounts
         /// </summary>

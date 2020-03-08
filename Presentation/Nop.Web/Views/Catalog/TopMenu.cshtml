@@ -8,7 +8,7 @@
             @category.Name
             @if (category.NumberOfProducts.HasValue)
             {
-            <text> </text>@T("Categories.TotalProducts", category.NumberOfProducts.Value)
+                <text> </text>@T("Categories.TotalProducts", category.NumberOfProducts.Value)
             }
         </a>
         @{
@@ -26,13 +26,13 @@
             }
             if (subCategories.Count > 0)
             {
-        <div class="sublist-toggle"></div>
-        <ul class="sublist @levelClass">
-            @foreach (var subCategory in subCategories)
+                <div class="sublist-toggle"></div>
+                <ul class="sublist @levelClass">
+                    @foreach (var subCategory in subCategories)
                     {
-                    @RenderCategoryLine(subCategory, level + 1, responsiveMobileMenu)
+                        @RenderCategoryLine(subCategory, level + 1, responsiveMobileMenu)
                     }
-        </ul>
+                </ul>
             }
         }
     </li>
@@ -68,7 +68,15 @@
             <li> <a href="/new-products">New</a> </li>
             <li> <a href="/web-only">Web Only</a> </li>
             <li> <a href="/clearance">Clearance Item</a> </li>
-            <li> <a href="/blog">E-Flyers</a> </li>
+            <li>
+                <a href="#"><i class="fa fa-gift"></i>&nbsp; &nbsp;Sales Tools</a>
+                <ul>
+                    <li><a href="/blog">E-Flyers</a></li>
+                    <li><a href="https://www.viewmycatalogs.com/dezine#list/all">Catalogs</a></li>
+                    <li><a href="https://dezinecorp.zoomcustom.com/catalogs">Customize catalogs</a></li>
+                    <li><a href="https://dezinecorp.zoomcustom.com/flyers">Customize flyers</a></li>
+                </ul>
+            </li>
             <li><a data-toggle="modal" data-target="#contactUs" style="cursor:pointer;">Contact Us</a> </li>
         </ul>
 

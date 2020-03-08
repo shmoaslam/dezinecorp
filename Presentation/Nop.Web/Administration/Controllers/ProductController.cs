@@ -1103,6 +1103,14 @@ namespace Nop.Admin.Controllers
             }
             return View();
         }
+
+        [HttpGet]
+        public ActionResult CreateSagePostData()
+        {
+
+            return Json(new object());
+        }
+
         public static string sharedData = "test";
 
         public JsonResult GetImportStatus()
@@ -1257,6 +1265,8 @@ namespace Nop.Admin.Controllers
                 PPPCNotes = model.PPPCNotes,
                 DezineCategory = model.DezineCategory,
                 INFOtracImportResultifError = model.INFOtracImportResultifError,
+                IsShopifyEnable = model.IsShopifyEnabled,
+                SpecialCommisionAdder = model.SpecialCommisionAdder
             };
 
 
