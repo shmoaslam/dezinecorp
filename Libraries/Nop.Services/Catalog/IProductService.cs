@@ -491,6 +491,8 @@ namespace Nop.Services.Catalog
 
         string[] GetPricingSlab(string PriceCode);
         IList<Product> GetProductsByFamilyCode(string familyCode);
+
+        IList<Product> GetProductsByBrandingCode(string brandingCode);
         #endregion
     }
 }

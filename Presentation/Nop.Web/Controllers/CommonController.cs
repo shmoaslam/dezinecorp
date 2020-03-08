@@ -194,6 +194,12 @@ namespace Nop.Web.Controllers
             return View();
         }
 
+        [Route("TermsConditions")]
+        public ActionResult TermCondition()
+        {
+
+            return View();
+        }
 
         //language
         [ChildActionOnly]

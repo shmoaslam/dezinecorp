@@ -1,0 +1,32 @@
+﻿
+@{
+    Layout = "";
+
+    //title
+    Html.AddTitleParts("Terms & Conditions");
+}
+<html>
+<head>
+    <title>
+        Terms & Conditions
+    </title>
+ 
+</head>
+<body oncontextmenu="return false;" style="padding:0px;margin:0px">
+    <!-- insert just before the closing body tag </body> -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.1.1/pdfobject.min.js'></script>
+    <script>
+        var options = {
+            pdfOpenParams: { view: 'Fit', scrollbar: '0', toolbar: '0', statusbar: '0', messages: '0', navpanes: '0' }
+        };
+
+        PDFObject.embed("http://dezinecorp.com/Content/PDF/Terms_Conditions_1_March_2020.pdf", false, options);
+    </script>
+
+</body>
+
+</html>
+   
+   
+   
+   

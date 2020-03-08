@@ -968,6 +968,7 @@
     <Content Include="Views\Product\_CreateOrUpdate.DezineCorpProductKeyword.cshtml" />
     <Content Include="Views\Product\DezineCorpImport.cshtml" />
     <Content Include="Views\Product\CreateSagePostData.cshtml" />
+    <Content Include="Views\Product\_CreateOrUpdate.DezineCorpBranding.cshtml" />
     <None Include="Views\Product\_ProductAttributes.cshtml" />
     <Content Include="Views\Setting\_ReturnRequestReasons.cshtml" />
     <Content Include="Views\Setting\ReturnRequestReasonEdit.cshtml" />

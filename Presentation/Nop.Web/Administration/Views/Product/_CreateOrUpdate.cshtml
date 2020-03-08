@@ -38,8 +38,8 @@
             @T("Admin.Catalog.Products.ProductAttributes")
         </li>
         @*<li @Html.RenderSelectedTabIndex(7, GetSelectedTabIndex())>
-            @T("Admin.Catalog.Products.TierPrices")
-        </li>*@
+                @T("Admin.Catalog.Products.TierPrices")
+            </li>*@
         <li @Html.RenderSelectedTabIndex(7, GetSelectedTabIndex())>
             @T("Admin.Catalog.Products.Discounts")
         </li>
@@ -82,6 +82,9 @@
         <li @Html.RenderSelectedTabIndex(19, GetSelectedTabIndex())>
             @T("Admin.Catalog.Products.DezineCorpProductKeyword")
         </li>
+        <li @Html.RenderSelectedTabIndex(20, GetSelectedTabIndex())>
+            DezineCorp Branding
+        </li>
     </ul>
     <div>
         @TabInfo()
@@ -105,8 +108,8 @@
         @TabProductAttributes()
     </div>
     @*<div>
-        @TabTierPrices()
-    </div>*@
+            @TabTierPrices()
+        </div>*@
     <div>
         @TabDiscounts()
     </div>
@@ -149,6 +152,9 @@
     <div>
         @TabDezineCorpProductKeyword()
     </div>
+    <div>
+        @TabDezineCorpBranding()
+    </div>
 </div>
 
 @{
@@ -165,7 +171,7 @@
 <input type="hidden" id="selected-tab-index" name="selected-tab-index" value="@(GetSelectedTabIndex())">
 
 @helper TabInfo()
-{ 
+{
     @Html.Partial("_CreateOrUpdate.Info", Model)
 }
 @helper TabDetails()
@@ -202,9 +208,9 @@
 }
 
 @*@helper TabTierPrices()
-{
-    @Html.Partial("_CreateOrUpdate.TierPrices", Model)
-}*@
+    {
+        @Html.Partial("_CreateOrUpdate.TierPrices", Model)
+    }*@
 @helper TabProductAttributes()
 {
     @Html.Partial("_CreateOrUpdate.ProductAttributes", Model)
@@ -253,7 +259,10 @@
 {
     @Html.Partial("_CreateOrUpdate.DezineCorpProductKeyword", Model)
 }
-
+@helper TabDezineCorpBranding()
+{
+    @Html.Partial("_CreateOrUpdate.DezineCorpBranding", Model)
+}
 
 
 

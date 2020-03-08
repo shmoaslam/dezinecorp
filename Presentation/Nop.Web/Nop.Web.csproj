@@ -28,6 +28,7 @@
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>f94c814a</NuGetPackageImportStamp>
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -1246,6 +1247,7 @@
     <Content Include="Content\fonts\flexslider-icon.woff" />
     <Content Include="Content\PDF\Terms_Conditions_Decoration Charges_Website-2018.pdf" />
     <None Include="Properties\PublishProfiles\DezineCorp.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FTP_DEV_SERVER.pubxml" />
     <None Include="Properties\PublishProfiles\NewDezineCorpWebDeploy.pubxml" />
     <None Include="Properties\PublishProfiles\NewFTPPublish.pubxml" />
@@ -2148,6 +2150,7 @@
     <Content Include="Views\Catalog\HomePageBoxMenu.cshtml" />
     <Content Include="Views\Common\_ContactUsMessage.cshtml" />
     <Content Include="Views\Product\PrintProductDetails.cshtml" />
+    <Content Include="Views\Common\TermCondition.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Roxy_Fileman\tmp\" />

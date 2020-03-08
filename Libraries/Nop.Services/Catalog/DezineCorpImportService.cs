@@ -243,7 +243,7 @@ namespace Nop.Services.Catalog
                 //int rows = objSHT.UsedRange.Rows.Count;
                 //int cols = objSHT.UsedRange.Columns.Count;
 
-
+                List<string> skusFromSheet = new List<string>();
 
                 for (int r = startFromRowNumber; r <= rows; r++)
                 {
@@ -258,6 +258,8 @@ namespace Nop.Services.Catalog
 
                         sku = GetCellValue(row.GetCell(ExcelColumnNameToNumber("A") - 1));
                         var product = GetProductBySKU(sku);
+
+                        skusFromSheet.Add(sku);
 
                         if (product == null)
                             continue;
@@ -281,7 +283,7 @@ namespace Nop.Services.Catalog
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["ShortDescription"].ToString();
-                                if (ShortDescription != e)
+                            if (ShortDescription != e)
                                 isChangesMade = true;
                         }
 
@@ -1284,7 +1286,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingA = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingA = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DW") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingA"].ToString();
@@ -1292,7 +1294,15 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingALocation1 = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingAProductNumber = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DX") - 1));
+                        if (isChangesMade == false)
+                        {
+                            string e = product.Rows[0]["BrandingAProductNumber"].ToString();
+                            if (BrandingAProductNumber != e)
+                                isChangesMade = true;
+                        }
+
+                        string BrandingALocation1 = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DY") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingALocation1"].ToString();
@@ -1300,7 +1310,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingALocation1MeasurementType = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingALocation1MeasurementType = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DZ") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingALocation1MeasurementType"].ToString();
@@ -1308,7 +1318,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingALocation1Heigth = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingALocation1Heigth = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EA") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingALocation1Heigth"].ToString();
@@ -1316,7 +1326,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingALocation1Width = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingALocation1Width = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EB") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingALocation1Width"].ToString();
@@ -1324,7 +1334,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingALocation2 = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingALocation2 = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EC") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingALocation2"].ToString();
@@ -1332,7 +1342,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingALocation2MeasurementType = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingALocation2MeasurementType = GetCellValue(row.GetCell(ExcelColumnNameToNumber("ED") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingALocation2MeasurementType"].ToString();
@@ -1340,7 +1350,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingALocation2Heigth = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingALocation2Heigth = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EE") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingALocation2Heigth"].ToString();
@@ -1348,7 +1358,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingALocation2Width = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingALocation2Width = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EF") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingALocation2Width"].ToString();
@@ -1356,7 +1366,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingB = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingB = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EG") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingB"].ToString();
@@ -1364,7 +1374,15 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingBLocation1 = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingBProductNumber = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EH") - 1));
+                        if (isChangesMade == false)
+                        {
+                            string e = product.Rows[0]["BrandingBProductNumber"].ToString();
+                            if (BrandingBProductNumber != e)
+                                isChangesMade = true;
+                        }
+
+                        string BrandingBLocation1 = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EI") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingBLocation1"].ToString();
@@ -1372,7 +1390,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingBLocation1MeasurementType = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingBLocation1MeasurementType = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EJ") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingBLocation1MeasurementType"].ToString();
@@ -1380,7 +1398,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingBLocation1Heigth = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingBLocation1Heigth = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EK") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingBLocation1Heigth"].ToString();
@@ -1388,7 +1406,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingBLocation1Width = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingBLocation1Width = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EL") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingBLocation1Width"].ToString();
@@ -1396,7 +1414,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingBLocation2 = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingBLocation2 = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EM") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingBLocation2"].ToString();
@@ -1404,7 +1422,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingBLocation2MeasurementType = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingBLocation2MeasurementType = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EN") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingBLocation2MeasurementType"].ToString();
@@ -1412,7 +1430,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingBLocation2Heigth = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingBLocation2Heigth = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EO") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingBLocation2Heigth"].ToString();
@@ -1420,7 +1438,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingBLocation2Width = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingBLocation2Width = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EP") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingBLocation2Width"].ToString();
@@ -1428,7 +1446,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingC = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingC = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EQ") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingC"].ToString();
@@ -1436,7 +1454,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingCProductNumber = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingCProductNumber = GetCellValue(row.GetCell(ExcelColumnNameToNumber("ER") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingCProductNumber"].ToString();
@@ -1444,7 +1462,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingD = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingD = GetCellValue(row.GetCell(ExcelColumnNameToNumber("ES") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingD"].ToString();
@@ -1452,7 +1470,7 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string BrandingDProductNumber = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingDProductNumber = GetCellValue(row.GetCell(ExcelColumnNameToNumber("ET") - 1));
                         if (isChangesMade == false)
                         {
                             string e = product.Rows[0]["BrandingDProductNumber"].ToString();
@@ -1460,13 +1478,48 @@ namespace Nop.Services.Catalog
                                 isChangesMade = true;
                         }
 
-                        string MappedItemNumber = GetCellValue(row.GetCell(ExcelColumnNameToNumber("DV") - 1));
+                        string BrandingE = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EU") - 1));
                         if (isChangesMade == false)
                         {
-                            string e = product.Rows[0]["MappedItemNumber"].ToString();
-                            if (MappedItemNumber != e)
+                            string e = product.Rows[0]["BrandingE"].ToString();
+                            if (BrandingE != e)
                                 isChangesMade = true;
                         }
+
+                        string BrandingEProductNumber = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EV") - 1));
+                        if (isChangesMade == false)
+                        {
+                            string e = product.Rows[0]["BrandingEProductNumber"].ToString();
+                            if (BrandingEProductNumber != e)
+                                isChangesMade = true;
+                        }
+
+                        string BrandingF = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EW") - 1));
+                        if (isChangesMade == false)
+                        {
+                            string e = product.Rows[0]["BrandingF"].ToString();
+                            if (BrandingF != e)
+                                isChangesMade = true;
+                        }
+
+                        string BrandingFProductNumber = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EX") - 1));
+                        if (isChangesMade == false)
+                        {
+                            string e = product.Rows[0]["BrandingFProductNumber"].ToString();
+                            if (BrandingFProductNumber != e)
+                                isChangesMade = true;
+                        }
+
+                        string BrandingFamily = GetCellValue(row.GetCell(ExcelColumnNameToNumber("EY") - 1));
+                        if (isChangesMade == false)
+                        {
+                            string e = product.Rows[0]["BrandingFamily"].ToString();
+                            if (BrandingFamily != e)
+                                isChangesMade = true;
+                        }
+
+                        string MappedItemNumber = string.Empty;
+
                         if (isChangesMade == true)
                         {
 
@@ -1748,14 +1801,14 @@ namespace Nop.Services.Catalog
 
 
                                 #region DezineCorpSageandBrandingData
-                                string DezineCorpSageandBrandingQuery = string.Empty;
+                                string DezineCorpSageAndBrandingQuery = string.Empty;
                                 var isDezineCorpSageandBranding = CheckisDezineCorpSageandBrandingExist(productid);
-                                if (!isDezineCorpAdditionalPricing)
-                                    DezineCorpAdditionalPricingQuery = "insert into DezinecorpSageandBrandingData values(@ProductId, @UseAlternateImprintType, @SageProductSize, @SageDescription, @BrandingA, @BrandingALocation1, @BrandingALocation1MeasurementType, @BrandingALocation1Heigth, @BrandingALocation1Width, @BrandingALocation2, @BrandingALocation2MeasurementType, @BrandingALocation2Heigth, @BrandingALocation2Width, @BrandingB, @BrandingBLocation1, @BrandingBLocation1MeasurementType, @BrandingBLocation1Heigth, @BrandingBLocation1Width, @BrandingBLocation2, @BrandingBLocation2MeasurementType, @BrandingBLocation2Heigth, @BrandingBLocation2Width, @BrandingC, @BrandingCProductNumber, @BrandingD, @BrandingDProductNumber, @MappedItemNumber)";
+                                if (!isDezineCorpSageandBranding)
+                                    DezineCorpSageAndBrandingQuery = "insert into DezinecorpSageandBrandingData (ProductId, UseAlternateImprintType, SageProductSize, SageDescription, BrandingA, BrandingALocation1, BrandingALocation1MeasurementType, BrandingALocation1Heigth, BrandingALocation1Width , BrandingALocation2, BrandingALocation2MeasurementType, BrandingALocation2Heigth, BrandingALocation2Width, BrandingB , BrandingBLocation1, BrandingBLocation1MeasurementType, BrandingBLocation1Heigth, BrandingBLocation1Width , BrandingBLocation2, BrandingBLocation2MeasurementType, BrandingBLocation2Heigth, BrandingBLocation2Width, BrandingC, BrandingCProductNumber, BrandingD, BrandingDProductNumber, MappedItemNumber, BrandingAProductNumber, BrandingBProductNumber, BrandingE, BrandingEProductNumber, BrandingF, BrandingFProductNumber, BrandingFamily )  values(@ProductId, @UseAlternateImprintType, @SageProductSize, @SageDescription, @BrandingA, @BrandingALocation1, @BrandingALocation1MeasurementType, @BrandingALocation1Heigth, @BrandingALocation1Width, @BrandingALocation2, @BrandingALocation2MeasurementType, @BrandingALocation2Heigth, @BrandingALocation2Width, @BrandingB, @BrandingBLocation1, @BrandingBLocation1MeasurementType, @BrandingBLocation1Heigth, @BrandingBLocation1Width, @BrandingBLocation2, @BrandingBLocation2MeasurementType, @BrandingBLocation2Heigth, @BrandingBLocation2Width, @BrandingC, @BrandingCProductNumber, @BrandingD, @BrandingDProductNumber, @MappedItemNumber, @BrandingAProductNumber, @BrandingBProductNumber, @BrandingE, @BrandingEProductNumber, @BrandingF, @BrandingFProductNumber, @BrandingFamily)";
                                 else
-                                    DezineCorpAdditionalPricingQuery = "update DezinecorpSageandBrandingData Set UseAlternateImprintType =  @UseAlternateImprintType, SageProductSize =  @SageProductSize, SageDescription =  @SageDescription, BrandingA =  @BrandingA, BrandingALocation1 =  @BrandingALocation1, BrandingALocation1MeasurementType =  @BrandingALocation1MeasurementType, BrandingALocation1Heigth =  @BrandingALocation1Heigth, BrandingALocation1Width =  @BrandingALocation1Width, BrandingALocation2 =  @BrandingALocation2, BrandingALocation2MeasurementType =  @BrandingALocation2MeasurementType, BrandingALocation2Heigth =  @BrandingALocation2Heigth, BrandingALocation2Width =  @BrandingALocation2Width, BrandingB =  @BrandingB, BrandingBLocation1 =  @BrandingBLocation1, BrandingBLocation1MeasurementType =  @BrandingBLocation1MeasurementType, BrandingBLocation1Heigth =  @BrandingBLocation1Heigth, BrandingBLocation1Width =  @BrandingBLocation1Width, BrandingBLocation2 =  @BrandingBLocation2, BrandingBLocation2MeasurementType =  @BrandingBLocation2MeasurementType, BrandingBLocation2Heigth =  @BrandingBLocation2Heigth, BrandingBLocation2Width =  @BrandingBLocation2Width, BrandingC =  @BrandingC, BrandingCProductNumber =  @BrandingCProductNumber, BrandingD =  @BrandingD, BrandingDProductNumber =  @BrandingDProductNumber, MappedItemNumber =  @MappedItemNumber where ProductId =  @ProductId";
+                                    DezineCorpSageAndBrandingQuery = "update DezinecorpSageandBrandingData Set UseAlternateImprintType =  @UseAlternateImprintType, SageProductSize =  @SageProductSize, SageDescription =  @SageDescription, BrandingA =  @BrandingA, BrandingALocation1 =  @BrandingALocation1, BrandingALocation1MeasurementType =  @BrandingALocation1MeasurementType, BrandingALocation1Heigth =  @BrandingALocation1Heigth, BrandingALocation1Width =  @BrandingALocation1Width, BrandingALocation2 =  @BrandingALocation2, BrandingALocation2MeasurementType =  @BrandingALocation2MeasurementType, BrandingALocation2Heigth =  @BrandingALocation2Heigth, BrandingALocation2Width =  @BrandingALocation2Width, BrandingB =  @BrandingB, BrandingBLocation1 =  @BrandingBLocation1, BrandingBLocation1MeasurementType =  @BrandingBLocation1MeasurementType, BrandingBLocation1Heigth =  @BrandingBLocation1Heigth, BrandingBLocation1Width =  @BrandingBLocation1Width, BrandingBLocation2 =  @BrandingBLocation2, BrandingBLocation2MeasurementType =  @BrandingBLocation2MeasurementType, BrandingBLocation2Heigth =  @BrandingBLocation2Heigth, BrandingBLocation2Width =  @BrandingBLocation2Width, BrandingC =  @BrandingC, BrandingCProductNumber =  @BrandingCProductNumber, BrandingD =  @BrandingD, BrandingDProductNumber =  @BrandingDProductNumber, MappedItemNumber =  @MappedItemNumber, BrandingAProductNumber = @BrandingAProductNumber, BrandingBProductNumber = @BrandingBProductNumber, BrandingE = @BrandingE, BrandingEProductNumber = @BrandingEProductNumber, BrandingF = @BrandingF, BrandingFProductNumber = @BrandingFProductNumber, BrandingFamily = @BrandingFamily where ProductId =  @ProductId";
 
-                                SqlCommand cmdsage = new SqlCommand(DezineCorpAdditionalPricingQuery);
+                                SqlCommand cmdsage = new SqlCommand(DezineCorpSageAndBrandingQuery);
 
                                 cmdsage.Parameters.AddWithValue("@ProductId", productid);
                                 cmdsage.Parameters.AddWithValue("@UseAlternateImprintType", UseAlternateImprint);
@@ -1784,8 +1837,15 @@ namespace Nop.Services.Catalog
                                 cmdsage.Parameters.AddWithValue("@BrandingD", BrandingD);
                                 cmdsage.Parameters.AddWithValue("@BrandingDProductNumber", BrandingDProductNumber);
                                 cmdsage.Parameters.AddWithValue("@MappedItemNumber", MappedItemNumber);
+                                cmdsage.Parameters.AddWithValue("@BrandingAProductNumber", BrandingAProductNumber);
+                                cmdsage.Parameters.AddWithValue("@BrandingBProductNumber", BrandingBProductNumber);
+                                cmdsage.Parameters.AddWithValue("@BrandingE", BrandingE);
+                                cmdsage.Parameters.AddWithValue("@BrandingEProductNumber", BrandingEProductNumber);
+                                cmdsage.Parameters.AddWithValue("@BrandingF", BrandingF);
+                                cmdsage.Parameters.AddWithValue("@BrandingFProductNumber", BrandingFProductNumber);
+                                cmdsage.Parameters.AddWithValue("@BrandingFamily", BrandingFamily);
 
-                                rowCount = ExecuteQuery(cmdadpr);
+                                rowCount = ExecuteQuery(cmdsage);
 
                                 if (rowCount <= 0)
                                 {
@@ -1820,6 +1880,12 @@ namespace Nop.Services.Catalog
                 //ds.Tables.Add(dt);
                 //ws.Dispose();
 
+                var skusFromNopCommerce = GetSkuFromNopCommerce();
+
+                var skutosetdelete = skusFromNopCommerce.Except(skusFromSheet);
+
+                SetProductToDelete(skutosetdelete);
+
                 status.IsImportFinish = true;
                 UpdateStatus(status);
                 //Closing workbook
@@ -1837,6 +1903,63 @@ namespace Nop.Services.Catalog
                 //objXL.Quit();
                 //Response.Write("Illegal permission");
                 var STRING = ex.Message;
+            }
+        }
+
+        private void SetProductToDelete(IEnumerable<string> skutosetdelete)
+        {
+            using (SqlConnection con = new SqlConnection())
+            {
+                try
+                {
+                    con.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["conString"].ToString();
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.Connection = con;
+                    con.Open();
+
+                    foreach (var sku in skutosetdelete)
+                    {
+                        cmd.CommandText = "update Product set Deleted = 1 where SKU = '@SKU'";
+                        cmd.Parameters.AddWithValue("@SKU", sku);
+                        var res = cmd.ExecuteNonQuery();
+                    }
+                    con.Close();
+                    con.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    con.Close();
+                    con.Dispose();
+                }
+            }
+        }
+
+        private List<string> GetSkuFromNopCommerce()
+        {
+            using (SqlConnection con = new SqlConnection())
+            {
+                List<string> result = new List<string>();
+
+                try
+                {
+                    con.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["conString"].ToString();
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.CommandText = "select sku from product";
+                    cmd.Connection = con;
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                        while (reader.Read())
+                            result.Add(Convert.ToString(reader["sku"]));
+                    con.Close();
+                    con.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    con.Close();
+                    con.Dispose();
+                }
+                return result;
+
             }
         }
 
@@ -1858,6 +1981,7 @@ namespace Nop.Services.Catalog
                         "left outer join DezineCorpProductKeyword dk on p.Id = dk.ProductId " +
                         "left outer join DezineCorpRelatedProduct dr on p.Id = dr.ProductId " +
                         "left outer join DezineCorpTierPrice dtp on p.Id = dtp.ProductId " +
+                        "left outer join DezinecorpSageandBrandingData dsb on p.Id = dsb.ProductId " +
                         "where p.SKU = @SKU  and Deleted = 0 order by CreatedOnUtc desc";
                     cmd.Parameters.AddWithValue("@SKU", sku);
                     cmd.Connection = con;

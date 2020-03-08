@@ -24,26 +24,32 @@ namespace Nop.Core.Domain.Catalog
         public string BrandingA { get; set; }
         public string BrandingALocation1 { get; set; }
         public string BrandingALocation1MeasurementType { get; set; }
-        public float BrandingALocation1Heigth { get; set; }
-        public float BrandingALocation1Width { get; set; }
+        public double? BrandingALocation1Heigth { get; set; }
+        public double? BrandingALocation1Width { get; set; }
         public string BrandingALocation2 { get; set; }
         public string BrandingALocation2MeasurementType { get; set; }
-        public string BrandingALocation2Heigth { get; set; }
-        public string BrandingALocation2Width { get; set; }
+        public double? BrandingALocation2Heigth { get; set; }
+        public double? BrandingALocation2Width { get; set; }
         public string BrandingB { get; set; }
         public string BrandingBLocation1 { get; set; }
         public string BrandingBLocation1MeasurementType { get; set; }
-        public float BrandingBLocation1Heigth { get; set; }
-        public float BrandingBLocation1Width { get; set; }
+        public double? BrandingBLocation1Heigth { get; set; }
+        public double? BrandingBLocation1Width { get; set; }
         public string BrandingBLocation2 { get; set; }
         public string BrandingBLocation2MeasurementType { get; set; }
-        public float BrandingBLocation2Heigth { get; set; }
-        public float BrandingBLocation2Width { get; set; }
+        public double? BrandingBLocation2Heigth { get; set; }
+        public double? BrandingBLocation2Width { get; set; }
         public string BrandingC { get; set; }
         public string BrandingCProductNumber { get; set; }
         public string BrandingD { get; set; }
         public string BrandingDProductNumber { get; set; }
         public string MappedItemNumber { get; set; }
-
+        public string BrandingAProductNumber { get; set; }
+        public string BrandingBProductNumber { get; set; }
+        public string BrandingE { get; set; }
+        public string BrandingEProductNumber { get; set; }
+        public string BrandingF { get; set; }
+        public string BrandingFProductNumber { get; set; }
+        public string BrandingFamily { get; set; }
     }
 }

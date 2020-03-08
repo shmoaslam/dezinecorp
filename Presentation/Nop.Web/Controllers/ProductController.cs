@@ -812,27 +812,6 @@ namespace Nop.Web.Controllers
 
             if (product.HasTierPrices && _permissionService.Authorize(StandardPermissionProvider.DisplayPrices))
             {
-                //model.TierPrices = product.TierPrices
-                //    .OrderBy(x => x.Quantity)
-                //    .ToList()
-                //    .FilterByStore(_storeContext.CurrentStore.Id)
-                //    .FilterForCustomer(_workContext.CurrentCustomer)
-                //    .RemoveDuplicatedQuantities()
-                //    .Select(tierPrice =>
-                //    {
-                //        var m = new ProductDetailsModel.TierPriceModel
-                //        {
-                //            Quantity = tierPrice.Quantity,
-                //        };
-                //        decimal taxRate;
-                //        decimal priceBase = _taxService.GetProductPrice(product, _priceCalculationService.GetFinalPrice(product, _workContext.CurrentCustomer, decimal.Zero, _catalogSettings.DisplayTierPricesWithDiscounts, tierPrice.Quantity), out taxRate);
-                //        decimal price = _currencyService.ConvertFromPrimaryStoreCurrency(priceBase, _workContext.WorkingCurrency);
-                //        m.Price = _priceFormatter.FormatPrice(price, false, false);
-                //        return m;
-                //    })
-                //    .ToList();
-
-
                 #region DezineCorpCustomCode
 
                 if (product.DezineCorpTierPrices.Count > 0)
@@ -916,9 +895,50 @@ namespace Nop.Web.Controllers
                     }
                 }
             }
+            if (product.DezineCorpSageandBrandings.Count > 0)
+            {
+                var dezineCorpSageandBranding = product.DezineCorpSageandBrandings.FirstOrDefault();
+                if (dezineCorpSageandBranding != null)
+                {
+                    model.DBrandingProducts = new List<ProductDetailsModel.DezineCorpRelatedOrFamilyProduct>();
 
+                    if (product.DezineCorpDatas != null)
+                    {
+                        if (product.DezineCorpDatas.Any())
+                        {
+                            BindBrandingProduct(model, product.Sku, _mediaSettings.CartThumbPictureSize, product.DezineCorpDatas.First().DecoratingOption);
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(dezineCorpSageandBranding.BrandingA) && !string.IsNullOrEmpty(dezineCorpSageandBranding.BrandingAProductNumber))
+                        BindBrandingProduct(model, dezineCorpSageandBranding.BrandingAProductNumber, _mediaSettings.CartThumbPictureSize, dezineCorpSageandBranding.BrandingA);
+
+                    if (!string.IsNullOrEmpty(dezineCorpSageandBranding.BrandingB) && !string.IsNullOrEmpty(dezineCorpSageandBranding.BrandingBProductNumber))
+                        BindBrandingProduct(model, dezineCorpSageandBranding.BrandingBProductNumber, _mediaSettings.CartThumbPictureSize, dezineCorpSageandBranding.BrandingB);
+
+                    if (!string.IsNullOrEmpty(dezineCorpSageandBranding.BrandingC) && !string.IsNullOrEmpty(dezineCorpSageandBranding.BrandingCProductNumber))
+                        BindBrandingProduct(model, dezineCorpSageandBranding.BrandingCProductNumber, _mediaSettings.CartThumbPictureSize, dezineCorpSageandBranding.BrandingC);
+
+                    if (!string.IsNullOrEmpty(dezineCorpSageandBranding.BrandingD) && !string.IsNullOrEmpty(dezineCorpSageandBranding.BrandingDProductNumber))
+                        BindBrandingProduct(model, dezineCorpSageandBranding.BrandingDProductNumber, _mediaSettings.CartThumbPictureSize, dezineCorpSageandBranding.BrandingD);
+
+                    if (!string.IsNullOrEmpty(dezineCorpSageandBranding.BrandingE) && !string.IsNullOrEmpty(dezineCorpSageandBranding.BrandingEProductNumber))
+                        BindBrandingProduct(model, dezineCorpSageandBranding.BrandingEProductNumber, _mediaSettings.CartThumbPictureSize, dezineCorpSageandBranding.BrandingE);
+
+                    if (!string.IsNullOrEmpty(dezineCorpSageandBranding.BrandingF) && !string.IsNullOrEmpty(dezineCorpSageandBranding.BrandingFProductNumber))
+                        BindBrandingProduct(model, dezineCorpSageandBranding.BrandingFProductNumber, _mediaSettings.CartThumbPictureSize, dezineCorpSageandBranding.BrandingF);
+
+                    //if (!string.IsNullOrEmpty(dezineCorpSageandBranding.BrandingAProductNumber))
+                    //    if (dezineCorpSageandBranding.BrandingFamily != product.Sku)
+                    //        BindBrandingProduct(model, dezineCorpSageandBranding.BrandingFamily, _mediaSettings.CartThumbPictureSize, "Default");
+
+                }
+
+            }
             if (product.DezineCorpDatas.Any())
             {
+
+
                 var dezinecorpData = product.DezineCorpDatas.FirstOrDefault();
                 if (dezinecorpData != null)
                 {
@@ -960,17 +980,10 @@ namespace Nop.Web.Controllers
 
             var familyCode = string.Empty;
             if (!string.IsNullOrEmpty(product.FamilyCode))
-            {
                 familyCode = product.FamilyCode;
-            }
             else
-            {
                 if (model.DData != null)
-                {
-                    familyCode = model.DData.FamilyCode;
-
-                }
-            }
+                familyCode = model.DData.FamilyCode;
 
             var familyProducts = _productService.GetProductsByFamilyCode(familyCode);
             if (familyProducts.Any())
@@ -1051,11 +1064,19 @@ namespace Nop.Web.Controllers
             #endregion
 
             Session["ProductModel"] = model; // use the same model printing.
-            
+
             return model;
         }
 
-
+        //private void GetBrandingProducts(string brandingType, string brandingNumber, List<Product> brandingProducts)
+        //{
+        //    if (!string.IsNullOrEmpty(brandingType) && !string.IsNullOrEmpty(brandingNumber))
+        //    {
+        //        var p = _productService.GetProductBySku(brandingNumber);
+        //        if (p != null)
+        //            brandingProducts.Add(p);
+        //    }
+        //}
 
         private string GetPrice(string value)
         {
@@ -1070,7 +1091,7 @@ namespace Nop.Web.Controllers
             {
                 formatPrice = string.Format("$" + Convert.ToDecimal(value).ToString("F"));
             }
-            catch 
+            catch
             {
                 return formatPrice;
             }
@@ -1084,6 +1105,19 @@ namespace Nop.Web.Controllers
             var relatedProduct = GetRelatedAndFamilyProduct(model, productSku, imageType);
             if (relatedProduct != null)
                 model.DRelatedProducts.Add(relatedProduct);
+        }
+
+        private void BindBrandingProduct(ProductDetailsModel model, string productSku, int imageType, string brandingType)
+        {
+            if (string.IsNullOrEmpty(productSku.Trim()))
+                return;
+            var brandingProduct = GetRelatedAndFamilyProduct(model, productSku, imageType);
+            if (brandingProduct != null)
+            {
+                brandingProduct.BrandingType = brandingType;
+                model.DBrandingProducts.Add(brandingProduct);
+
+            }
         }
 
         private void BindFamilyProduct(ProductDetailsModel model, string productSku, int imageType)
@@ -1116,7 +1150,7 @@ namespace Nop.Web.Controllers
                 Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat.Details"), model.Name),
                 AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat.Details"), model.Name),
             };
-            
+
             return new ProductDetailsModel.DezineCorpRelatedOrFamilyProduct
             {
                 DefaultPicture = defaultPictureModel,
@@ -1284,7 +1318,7 @@ namespace Nop.Web.Controllers
             //prepare the model
             var model = PrepareProductDetailsPageModel(product);
 
-            
+
             return PartialView(model);
         }
 

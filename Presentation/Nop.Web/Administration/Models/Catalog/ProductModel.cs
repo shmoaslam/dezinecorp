@@ -41,6 +41,7 @@ namespace Nop.Admin.Models.Catalog
             DezineCorpRelatedProduct = new DezineCorpRelatedProductViewModel();
             DezineCorpAdditionalPricing = new DezineCorpAdditionalPricingViewModel();
             DezineCorpTierPrice = new DezineCorpTierPriceViewModel();
+            DezineCorpBranding = new DezineCorpBrandingViewModel();
         }
 
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.ID")]
@@ -420,6 +421,7 @@ namespace Nop.Admin.Models.Catalog
         public DezineCorpRelatedProductViewModel DezineCorpRelatedProduct { get; set; }
         public DezineCorpAdditionalPricingViewModel DezineCorpAdditionalPricing { get; set; }
         public DezineCorpTierPriceViewModel DezineCorpTierPrice { get; set; }
+        public DezineCorpBrandingViewModel DezineCorpBranding { get; set; }
         //pictures
         public ProductPictureModel AddPictureModel { get; set; }
         public IList<ProductPictureModel> ProductPictureModels { get; set; }
@@ -796,6 +798,108 @@ namespace Nop.Admin.Models.Catalog
             [AllowHtml]
             [DisplayName("Laser Price Code")]
             public string LaserPriceCode { get; set; }
+
+        }
+
+        public partial class DezineCorpBrandingViewModel : BaseNopEntityModel
+        {
+            /// <summary>
+            /// Gets or sets the product identifier
+            /// </summary>
+            public int ProductId { get; set; }
+
+            [AllowHtml]
+            [DisplayName("Use Alternate Imprint Type for API")]
+            public string UseAlternateImprintType { get; set; }
+            [AllowHtml]
+            [DisplayName("Sage Product Sizing")]
+            public string SageProductSize { get; set; }
+            [AllowHtml]
+            [DisplayName("Sage Description")]
+            public string SageDescription { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding Type A")]
+            public string BrandingA { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding A Location 1")]
+            public string BrandingALocation1 { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding A Location 1 Measurement Type")]
+            public string BrandingALocation1MeasurementType { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding A Location 1 Height")]
+            public double? BrandingALocation1Heigth { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding A Location 1 Width")]
+            public double? BrandingALocation1Width { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding A Location 2")]
+            public string BrandingALocation2 { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding A Location 2 Measurement Type")]
+            public string BrandingALocation2MeasurementType { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding A Location 2 Height")]
+            public double? BrandingALocation2Heigth { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding A Location 2 Width")]
+            public double? BrandingALocation2Width { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding Type B")]
+            public string BrandingB { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding B Location 1")]
+            public string BrandingBLocation1 { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding B Location 1 Measurement Type")]
+            public string BrandingBLocation1MeasurementType { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding B Location 1 Height")]
+            public double? BrandingBLocation1Heigth { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding B Location 1 Width")]
+            public double? BrandingBLocation1Width { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding B Location 2")]
+            public string BrandingBLocation2 { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding B Location 2 Measurement Type")]
+            public string BrandingBLocation2MeasurementType { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding B Location 2 Height")]
+            public double? BrandingBLocation2Heigth { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding B Location 2 Width")]
+            public double? BrandingBLocation2Width { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding Type C")]
+            public string BrandingC { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding C Product Number")]
+            public string BrandingCProductNumber { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Branding Type D")]
+            public string BrandingD { get; set; }
+            [AllowHtml]
+            [DisplayName("Optional Brand D Product Number")]
+            public string BrandingDProductNumber { get; set; }
+            [AllowHtml]
+            [DisplayName("Product Mapped With Branding")]
+            public string MappedItemNumber { get; set; }
+            [DisplayName("Optional Branding A Product Number")]
+            public string BrandingAProductNumber { get; set; }
+            [DisplayName("Optional Branding B Product Number")]
+            public string BrandingBProductNumber { get; set; }
+            [DisplayName("Optional Branding E")]
+            public string BrandingE { get; set; }
+            [DisplayName("Optional Branding E Product Number")]
+            public string BrandingEProductNumber { get; set; }
+            [DisplayName("Optional Branding F")]
+            public string BrandingF { get; set; }
+            [DisplayName("Optional Branding F Product Number")]
+            public string BrandingFProductNumber { get; set; }
+            [DisplayName("Branding Family")]
+            public string BrandingFamily { get; set; }
 
         }
 

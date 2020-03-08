@@ -1046,6 +1046,8 @@ namespace Nop.Admin.Controllers
             model.DezineCorpRelatedProduct = GetDezineCorpRelatedProduct(id);
             model.DezineCorpTierPrice = GetDezineCorpTierPrice(id);
             model.DezineCorpAdditionalPricing = GetDezineCorpAdditionalPricing(id);
+            model.DezineCorpBranding = GetDezineCorpDezineCorpBranding(id);
+            
             #endregion
 
             AddLocales(_languageService, model.Locales, (locale, languageId) =>
@@ -1151,6 +1153,65 @@ namespace Nop.Admin.Controllers
                 Laser_3 = model.Laser_3,
                 Laser_4 = model.Laser_4,
                 LaserPriceCode = model.LaserPriceCode
+            };
+        }
+        [NonAction]
+        private ProductModel.DezineCorpBrandingViewModel GetDezineCorpDezineCorpBranding(int id)
+        {
+            if (id == 0) return null;
+            var model = _productService.GetDezineCorpSageandBranding(id);
+            if (model == null)
+            {
+                var p = new ProductModel.DezineCorpBrandingViewModel();
+                p.BrandingALocation1Heigth = 0;
+                p.BrandingALocation1Width = 0;
+                p.BrandingALocation2Heigth = 0;
+                p.BrandingALocation2Width = 0;
+                p.BrandingBLocation1Heigth = 0;
+                p.BrandingBLocation1Width = 0;
+                p.BrandingBLocation2Heigth = 0;
+                p.BrandingBLocation2Width = 0;
+                return p;
+            }
+            return new ProductModel.DezineCorpBrandingViewModel
+            {
+                Id = model.Id,
+                ProductId = model.ProductId,
+                UseAlternateImprintType = model.UseAlternateImprintType,
+                SageDescription = model.SageDescription,
+                SageProductSize = model.SageProductSize,
+                BrandingA = model.BrandingA,
+                
+                BrandingALocation1 = model.BrandingALocation1,
+                BrandingALocation1Heigth = model.BrandingALocation1Heigth,
+                BrandingALocation1MeasurementType = model.BrandingALocation1MeasurementType,
+                BrandingALocation1Width = model.BrandingALocation1Width,
+                BrandingALocation2 = model.BrandingALocation2,
+                BrandingALocation2Heigth = model.BrandingALocation2Heigth,
+                BrandingALocation2MeasurementType = model.BrandingALocation2MeasurementType,
+                BrandingALocation2Width = model.BrandingALocation2Width,
+                BrandingB = model.BrandingB,
+                BrandingBLocation1 = model.BrandingBLocation1,
+                BrandingBLocation1Heigth = model.BrandingBLocation1Heigth,
+                BrandingBLocation1MeasurementType = model.BrandingBLocation1MeasurementType,
+                BrandingBLocation1Width = model.BrandingBLocation1Width,
+                BrandingBLocation2 = model.BrandingBLocation2,
+                BrandingBLocation2Heigth = model.BrandingBLocation2Heigth,
+                BrandingBLocation2MeasurementType = model.BrandingBLocation2MeasurementType,
+                BrandingCProductNumber = model.BrandingCProductNumber,
+                BrandingDProductNumber = model.BrandingDProductNumber,
+                BrandingBLocation2Width = model.BrandingBLocation2Width,
+                BrandingC = model.BrandingC,
+                BrandingD = model.BrandingD,
+                MappedItemNumber = model.MappedItemNumber,
+                BrandingAProductNumber = model.BrandingAProductNumber,
+                BrandingBProductNumber = model.BrandingBProductNumber,
+                BrandingE = model.BrandingE,
+                BrandingEProductNumber = model.BrandingEProductNumber,
+                BrandingF = model.BrandingF,
+                BrandingFProductNumber = model.BrandingFProductNumber,
+                BrandingFamily = model.BrandingFamily
+                
             };
         }
         [NonAction]

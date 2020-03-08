@@ -1159,8 +1159,14 @@ namespace Nop.Services.Catalog
                         where !p.Deleted &&
                         p.Sku == sku
                         select p;
-            var product = query.FirstOrDefault();
-            return product;
+
+
+            if (query.Count() > 1)
+                return query.FirstOrDefault(x => x.Published);
+          
+            //var product = query.FirstOrDefault(x=>x.Published);
+
+            return query.FirstOrDefault();
         }
 
         /// <summary>
@@ -2065,6 +2071,27 @@ namespace Nop.Services.Catalog
             return new List<Product>();
         }
 
+
+        public IList<Product> GetProductsByBrandingCode(string brandingCode)
+        {
+            return new List<Product>();
+            //if (string.IsNullOrEmpty(brandingCode))
+            //    return new List<Product>();
+
+            //if (string.IsNullOrEmpty(brandingCode.Trim()))
+            //    return new List<Product>();
+
+            //if (_dezineCorpSageandBrandingRepository.Table.Any(x => x.BrandingFamily.Equals(brandingCode, StringComparison.OrdinalIgnoreCase)))
+            //{
+            //    var products = _dezineCorpSageandBrandingRepository.Table.Any(x => x.BrandingFamily.Equals(brandingCode, StringComparison.OrdinalIgnoreCase))
+            //}
+            //    return _productRepository.Table.Where(x => x.FamilyCode.Equals(familyCode, StringComparison.OrdinalIgnoreCase) && x.Published && !x.Deleted).ToList();
+
+            //if (_productRepository.Table.Any(x => x.FamilyCode.Equals(familyCode, StringComparison.OrdinalIgnoreCase) && x.Published && !x.Deleted))
+            //    return _productRepository.Table.Where(x => x.FamilyCode.Equals(familyCode, StringComparison.OrdinalIgnoreCase) && x.Published && !x.Deleted).ToList();
+
+            //return new List<Product>();
+        }
         #endregion
     }
 }
