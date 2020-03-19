@@ -38,14 +38,13 @@
     }
 </style>
 <script>
-    function OpenLink(elem,url) {
+    function OpenLink(elem, url) {
         if (elem.parentElement.className == 'active') {
             window.location.href = url;
         }
     }
 </script>
 @Html.Widget("home_page_top")
-
 @*<div class="bnr" id="home">
         <div id="top" class="callbacks_container">
             <ul class="rslides" id="slider4">
@@ -72,54 +71,54 @@
 <script src="~/Scripts/DezineCorp/thumbnail-slider.js"></script>
 <div id="thumbnail-slider">
     <div class="inner">
-        <ul>
-            <li> <a class="thumb" href="~/Content/DezineCorpImages/1.jpg" onclick="OpenLink(this,'/free-shipping-special');"></a> </li>
-            <li> <a class="thumb" href="~/Content/DezineCorpImages/2.jpg" onclick="OpenLink(this,'/2018-holiday-collection');"></a> </li>
-            <li> <a class="thumb" href="~/Content/DezineCorpImages/3.jpg" onclick="OpenLink(this,'/2018-hydeport');"></a> </li>
-            <li> <a class="thumb" href="~/Content/DezineCorpImages/4.jpg" onclick="OpenLink(this,'/stanley');"></a> </li>
-            <li> <a class="thumb" href="~/Content/DezineCorpImages/5.jpg" onclick="OpenLink(this,'/entertaining');"></a> </li>
+        <ul style="height:380px !important">
+            <li> <a class="thumb" href="~/Content/DezineCorpImages/1.jpg" onclick="OpenLink(this,'/glass');"></a> </li>
+            <li> <a class="thumb" href="~/Content/DezineCorpImages/2.jpg" onclick="OpenLink(this,'/search?q=P7193');"></a> </li>
+            <li> <a class="thumb" href="~/Content/DezineCorpImages/3.jpg" onclick="OpenLink(this,'/stainless-steel-double-wall');"></a> </li>
+            <li> <a class="thumb" href="~/Content/DezineCorpImages/4.jpg" onclick="OpenLink(this,'/stanley-1-1-1');"></a> </li>
+            <li> <a class="thumb" href="~/Content/DezineCorpImages/5.jpg" onclick="OpenLink(this,'/search?q=g1530');"></a> </li>
         </ul>
     </div>
 </div>
 @*<div id="carousel1" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators">
-        <li data-target="#carousel1" data-slide-to="0" class="active"></li>
-        <li data-target="#carousel1" data-slide-to="1"></li>
-        <li data-target="#carousel1" data-slide-to="2"></li>
-        <li data-target="#carousel1" data-slide-to="3"></li>
-        <li data-target="#carousel1" data-slide-to="4"></li>
-    </ol>
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <img src="~/Content/DezineCorpImages/1.jpg" class="center-block banner-image">
-            <div class="carousel-caption">
+        <ol class="carousel-indicators">
+            <li data-target="#carousel1" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel1" data-slide-to="1"></li>
+            <li data-target="#carousel1" data-slide-to="2"></li>
+            <li data-target="#carousel1" data-slide-to="3"></li>
+            <li data-target="#carousel1" data-slide-to="4"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="~/Content/DezineCorpImages/1.jpg" class="center-block banner-image">
+                <div class="carousel-caption">
+                </div>
+            </div>
+            <div class="item">
+                <img src="~/Content/DezineCorpImages/2.jpg" class="center-block  banner-image">
+                <div class="carousel-caption">
+                </div>
+            </div>
+            <div class="item">
+                <img src="~/Content/DezineCorpImages/3.jpg" class="center-block banner-image">
+                <div class="carousel-caption">
+                </div>
+            </div>
+            <div class="item">
+                <img src="~/Content/DezineCorpImages/4.jpg" class="center-block banner-image">
+                <div class="carousel-caption">
+                </div>
+            </div>
+            <div class="item">
+                <img src="~/Content/DezineCorpImages/5.jpg" class="center-block banner-image">
+                <div class="carousel-caption"></div>
             </div>
         </div>
-        <div class="item">
-            <img src="~/Content/DezineCorpImages/2.jpg" class="center-block  banner-image">
-            <div class="carousel-caption">
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/Content/DezineCorpImages/3.jpg" class="center-block banner-image">
-            <div class="carousel-caption">
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/Content/DezineCorpImages/4.jpg" class="center-block banner-image">
-            <div class="carousel-caption">
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/Content/DezineCorpImages/5.jpg" class="center-block banner-image">
-            <div class="carousel-caption"></div>
-        </div>
-    </div>
-</div>*@
+    </div>*@
 
 <div class="container">
     @*<h1 align="center">Welcome to <img src="~/Content/DezineCorpImages/dezinecorp.png" style="margin-bottom: 5px;" width="163" height="52" alt="" /></h1>*@
-    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" >
+    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
         <a href="@Url.RouteUrl("Category", new { SeName = "root-category" })">
             <h2 align="center" style="color:#333;">View Products</h2>
             <hr>
@@ -136,37 +135,37 @@
         <div class="abt-shoe-main">
             <div class="col-md-3">
                 <div class="facebook-post-box">
-                    <a href="http://dezinecorp.2018.easieflip.com/Default.htm" target="_blank">
-                        <img src="~/Content/DezineCorpImages/2018 Catalogue 280 x 200.jpg" class="img-responsive" style="display:unset;">
+                    <a href="~/Content/PDF/Digital Glass Single.pdf" target="_blank">
+                        <img src="~/Content/DezineCorpImages/Small-Digital-Glassl_2020_280x200.jpg" class="img-responsive" style="display:unset;">
                     </a>
                 </div>
                 <div class="pinterest-post-box">
-                    <a href="/spirit-collection">
-                        <img src="~/Content/DezineCorpImages/spirit collection 280 x 200.jpg" class="img-responsive" style="display:unset;">
+                    <a href="/2018-hydeport">
+                        <img src="~/Content/DezineCorpImages/Small-Hydport_2020_280x200.jpg" class="img-responsive" style="display:unset;">
                     </a>
                 </div>
             </div>
             <div class="col-md-6 padding-lf-8" style="text-align:center;margin-bottom:10px">
-                <a href="~/Content/PDF/Free_Shipping_Details_Conditions_Website.pdf" target="_blank">
-                    <img src="~/Content/DezineCorpImages/free shipping 572 x 410.jpg" class="img-responsive" style="display:unset;" />
+                <a href="/digital-print-2">
+                    <img src="~/Content/DezineCorpImages/Center-Box_2020_Digital-Print_572x410.jpg" class="img-responsive" style="display:unset;" />
                 </a>
             </div>
             <div class="col-md-3">
                 <div class="twitter-post-box">
-                    <a href="http://dezinecorpholiday.2018.easieflip.com">
-                        <img src="~/Content/DezineCorpImages/holiday collection 280 x 200 .jpg" class="img-responsive" style="display:unset;">
+                    <a href="~/Content/PDF/Digital Metal SIngle.pdf" target="_blank">
+                        <img src="~/Content/DezineCorpImages/Small-Digital-Metal_2020_280x200.jpg" class="img-responsive" style="display:unset;">
                     </a>
                 </div>
                 <div class="google-post-box">
-                    <a href="/stanley">
-                        <img src="~/Content/DezineCorpImages/Stanley 280 x 200.jpg" class="img-responsive" style="display:unset;">
+                    <a href="/new-products">
+                        <img src="~/Content/DezineCorpImages/Small-New_2020_280x200.jpg" class="img-responsive" style="display:unset;">
                     </a>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="twitter-post-box">
-                    <a href="http://dezinecorpfreeshipping.2018.easieflip.com" target="_blank">
-                        <img src="~/Content/DezineCorpImages/free shipping FLIP CATALOGUE edited 280 x 200.jpg" class="img-responsive" style="display:unset;">
+                    <a href="/canadian-made" target="_blank">
+                        <img src="~/Content/DezineCorpImages/Small-Made-in-canada_2020_280x200.jpg" class="img-responsive" style="display:unset;">
                     </a>
                 </div>
             </div>
@@ -175,8 +174,8 @@
             </div>
             <div class="col-md-3">
                 <div class="twitter-post-box">
-                    <a href="https://ecatalog.promocan.com/DEZINECORPINC/2017/EN4/">
-                        <img src="~/Content/DezineCorpImages/hydeport 2018_ver 2_280 x 200.jpg" class="img-responsive" style="display:unset;">
+                    <a href="/clearance" target="_blank">
+                        <img src="~/Content/DezineCorpImages/Small-Clearancet_2020_280x200.jpg" class="img-responsive" style="display:unset;">
                     </a>
                 </div>
             </div>
