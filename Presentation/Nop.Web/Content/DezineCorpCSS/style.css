@@ -1901,28 +1901,24 @@ background-color:#EA9191;
 	border-radius: 0px;
 }
 .twitter-post-box {
-	height: 200px;
 	/*background-color: #56B0E4;*/
 	color: white;
 	text-align: center;
 	margin-bottom: 10px;
 }
 .google-post-box {
-	height: 200px;
 	/*background-color: #cdcdcd;*/
 	color: white;
 	text-align: center;
 	margin-bottom: 10px;
 }
 .facebook-post-box {
-	height: 200px;
 	/*background-color: #405D9B;*/
 	color: white;
 	text-align: center;
 	margin-bottom: 10px;
 }
 .pinterest-post-box {
-	height: 200px;
 	/*background-color: #BD2126;*/
 	color: white;
 	text-align: center;
