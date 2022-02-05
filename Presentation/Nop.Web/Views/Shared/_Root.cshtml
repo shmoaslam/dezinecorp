@@ -6,18 +6,17 @@
 @Html.Action("JavaScriptDisabledWarning", "Common")
 @Html.Partial("OldInternetExplorerWarning")
 
-<div class="container-fluid">
+<div class="container">
     @Html.Action("AdminHeaderLinks", "Common")
 </div>
 
-@Html.Action("AdminHeaderLinks", "Common")
-<div class="container-fluid">
+<div class="container">
     @Html.Partial("Header")
 </div>
 <script type="text/javascript">
     AjaxCart.init(false, '.header-links .cart-qty', '.header-links .wishlist-qty', '#flyout-cart');
 </script>
-<div class="container-fluid">
+<div class="container">
     @Html.Action("TopMenu", "Catalog")
 </div>
     @if (IsSectionDefined("Breadcrumb"))

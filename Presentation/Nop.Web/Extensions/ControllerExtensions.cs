@@ -337,7 +337,7 @@ namespace Nop.Web.Extensions
                     {
                         var dezineCorptData = product.DezineCorpDatas.FirstOrDefault();
                         if (dezineCorptData != null)
-                            model.ItemIsNew = dezineCorptData.ItemIsNew;
+                        { model.ItemIsNew = dezineCorptData.ItemIsNew; model.Material = dezineCorptData.Materials; }
                     }
 
                 //picture
@@ -354,7 +354,7 @@ namespace Nop.Web.Extensions
                         var picture = pictureService.GetPicturesByProductId(product.Id, 1).FirstOrDefault();
                         var pictureModel = new PictureModel
                         {
-                            ImageUrl = pictureService.GetPictureUrl(picture, 150),
+                            ImageUrl = pictureService.GetPictureUrl(picture, pictureSize),
                             FullSizeImageUrl = pictureService.GetPictureUrl(picture)
                         };
                         //"title" attribute

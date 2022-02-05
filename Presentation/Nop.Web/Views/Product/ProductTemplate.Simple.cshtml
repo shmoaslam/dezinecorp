@@ -45,503 +45,501 @@
         Html.AddHeadCustomParts("<meta property=\"twitter:url\" content=\"" + Request.Url.AbsoluteUri + "\" />");
     }
 }
-<!--product breadcrumb-->
-@section Breadcrumb
-{
-    @Html.Partial("_ProductBreadcrumb", Model.Breadcrumb)
-}
-@Html.Widget("productdetails_after_breadcrumb", Model.Id)
+
+
 <style>
 
-    .comp {
-        background: #fff;
-        -moz-border-radius: 2px;
-        -webkit-border-radius: 2px;
-        -ms-border-radius: 12px;
-        border-radius: 2px;
-        padding: 20px;
-        box-shadow: 0 0 4px #f0f0f0;
+
+    .cross {
+        position: relative;
+        display: inline-block;
     }
 
-    .carousel {
-        margin-bottom: 0;
-    }
-
-    .table-nobordered {
-        border: 0px;
-        width: 60%;
-        margin-bottom: 0px;
-        margin-left: 21px;
-    }
-
-        .table-nobordered img {
-            /*width: 50%;*/
+        .cross::before, .cross::after {
+            content: '';
+            width: 100%;
+            position: absolute;
+            right: 0;
+            top: 50%;
         }
 
-    .sm-product {
-        border: 2px solid #007A8A !important;
-        padding: 4px;
-    }
+        .cross::before {
+            border-bottom: 2px solid red;
+            -webkit-transform: skewY(-20deg);
+            transform: skewY(-20deg);
+        }
 </style>
 
-<div class="container" id="product-desc">
+<div class="container">
+    @Html.Partial("_ProductBreadcrumb", Model.Breadcrumb)
+    @Html.Widget("productdetails_after_breadcrumb", Model.Id)
+    <div class="card-product">
+        <div class="wrapper row">
+            <div class="preview col-md-4">
+                @Html.Partial("_ProductDetailsPictures", Model)
 
-    <div class="col-md-6 ">
-        <div class="text-center comp">
-            @Html.Partial("_ProductDetailsPictures", Model)
-        </div>
+                @if (Model.DFamilyProducts != null)
+                {
 
-        <div class="clearfix"></div>
-
-    </div>
-    <div class="col-md-6 compDescription pull-right">
-        <div class="text-center"><h1>@Model.Name</h1></div>
-        <hr />
-        <h3>@Model.Sku</h3>
-        <p>@Model.ShortDescription</p>
-        @if (Model.DBrandingProducts != null)
-        {
-            if (Model.DBrandingProducts.Any())
-            {
-
-                <div class="row">
-                    @foreach (var item in Model.DBrandingProducts)
-                    {
-                        <div class="col-md-2">
-                            <table class="table table-nobordered">
-                                <tr>
-
-
-
-                                    <td style="border:@(Model.Sku == item.SKU ? "2px solid #007A8A !important" : "none");height: 100px;vertical-align: middle;padding: 0px;"><a href="@Url.RouteUrl("Product", new { SeName = item.SEName })" title="@item.Name"><img class="card-img-top" src="@item.DefaultPicture.ImageUrl" alt="@item.Name" title="@item.Name" /></a></td>
-
-
-
-
-                                </tr>
-                                <tr>
-
-                                    <td style="border:none;"><p style="color:#007A8A;">@item.BrandingType</p></td>
-
-                                </tr>
-                            </table>
+                    <div class="row">
+                        <div class="main-header" style="margin-top: 40px;">
+                            <p>Related Product</p>
                         </div>
+                    </div>
+                    if (Model.DFamilyProducts.Count > 1)
+                    {
+                        var items = Model.DFamilyProducts.Take(4);
+                        var iterations = 0;
+                        while (items.Count() > 0)
+                        {
+                            var active = iterations == 0 ? "active" : "";
 
-                    }
-                </div>
-            }
-        }
-
-        @*@if (Model.BrandingData != null)
-            {
-                <div class="productBranding">
-                    @if (!string.IsNullOrEmpty(Model.BrandingData.BrandingA))
-                    {
-                        <span>@Model.BrandingData.BrandingA</span>
-                    }
-                    @if (!string.IsNullOrEmpty(Model.BrandingData.BrandingB))
-                    {
-                        <span>@Model.BrandingData.BrandingB</span>
-                    }
-                    @if (!string.IsNullOrEmpty(Model.BrandingData.BrandingC))
-                    {
-                        <span>@Model.BrandingData.BrandingC</span>
-                    }
-                    @if (!string.IsNullOrEmpty(Model.BrandingData.BrandingD))
-                    {
-                        <span>@Model.BrandingData.BrandingD</span>
-                    }
-                    @if (!string.IsNullOrEmpty(Model.BrandingData.BrandingE))
-                    {
-                        <span>@Model.BrandingData.BrandingE</span>
-                    }
-                    @if (!string.IsNullOrEmpty(Model.BrandingData.BrandingF))
-                    {
-                        <span>@Model.BrandingData.BrandingF</span>
-                    }
-                </div>
-            }*@
-        <div class="card pd-top-1o5per">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a style="color:#007A8A;" href="#price" aria-controls="messages" role="tab" data-toggle="tab">Pricing</a></li>
-                <li role="presentation"><a style="color:#007A8A;" href="#features" aria-controls="home" role="tab" data-toggle="tab">Features</a></li>
-                <li role="presentation"><a style="color:#007A8A;" href="#spec" aria-controls="profile" role="tab" data-toggle="tab">Specifications</a></li>
-                @*<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Setup</a></li>*@
-            </ul>
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="price">
-                    <br />
-                    <table class="table table-responsive">
-                        <tbody>
-                            @{var priceLevel = 0;}
-                            @if (Model.DTierPrices != null)
-                            {
-                                foreach (var tierprice in Model.DTierPrices)
+                            <div class="row" style="margin-bottom:5px">
+                                @foreach (var item in items)
                                 {
-                                    if (tierprice.PriceName.Equals("Quantity"))
-                                    {
-                                        <tr style="color: white;background-color: #007A8A;font-weight:bold;">
-                                            <th scope="col">@tierprice.PriceName</th>
-                                            @if (!string.IsNullOrEmpty(tierprice.Price1))
-                                            {
-                                                <th scope="col">@tierprice.Price1</th>
-                                                priceLevel++;
-                                            }
-                                            @if (!string.IsNullOrEmpty(tierprice.Price2))
-                                            {
-                                                <th scope="col">@tierprice.Price2</th>
-                                                priceLevel++;
-                                            }
-                                            @if (!string.IsNullOrEmpty(tierprice.Price3))
-                                            {
-                                                <th scope="col">@tierprice.Price3</th>
-                                                priceLevel++;
-                                            }
-                                            @if (!string.IsNullOrEmpty(tierprice.Price4))
-                                            {
-                                                <th scope="col">@tierprice.Price4</th>
-                                                priceLevel++;
-                                            }
-                                            <th scope="col">@tierprice.DiscountCode</th>
-                                        </tr>
-                                    }
-                                    else
-                                    {
+                                    <div class="col-md-3 col-xs-3 border-r">
 
-                                        var isPriceRow = tierprice.PriceName.Equals("Price", StringComparison.OrdinalIgnoreCase);
-                                        <tr style="color:Black;background-color:white;@(isPriceRow ? "border-bottom: 2px solid #007A8A;" : string.Empty)">
-                                            <td>@tierprice.PriceName</td>
-                                            @if (priceLevel == 1)
-                                            {
-                                                <td>@tierprice.Price1.Replace(" ", "")</td>
-                                            }
-                                            else if (priceLevel == 2)
-                                            {
-                                                <td>@tierprice.Price1.Replace(" ", "")</td>
-                                                <td>@tierprice.Price2.Replace(" ", "")</td>
-                                            }
-                                            else if (priceLevel == 3)
-                                            {
-                                                <td>@tierprice.Price1.Replace(" ", "")</td>
-                                                <td>@tierprice.Price2.Replace(" ", "")</td>
-                                                <td>@tierprice.Price3.Replace(" ", "")</td>
-                                            }
-                                            else if (priceLevel == 4)
-                                            {
-                                                <td>@tierprice.Price1.Replace(" ", "")</td>
-                                                <td>@tierprice.Price2.Replace(" ", "")</td>
-                                                <td>@tierprice.Price3.Replace(" ", "")</td>
-                                                <td>@tierprice.Price4.Replace(" ", "")</td>
-                                            }
-                                            <td>@(isPriceRow ? priceLevel.ToString() : "")@tierprice.DiscountCode.Replace(" ", "").ToLower()</td>
-                                        </tr>
-                                    }
+                                        <div style="height:70px;">
+                                            <a href="@Url.RouteUrl("Product", new { SeName = item.SEName })" title="@item.Name">
+                                                <div style="width:100%;height:100%;background:url(@item.DefaultPicture.ImageUrl) center center no-repeat;"></div>
+                                            </a>
+                                        </div>
+
+
+                                    </div>
+
                                 }
-                            }
+                            </div>
 
-                        </tbody>
-                    </table>
-                    @if (Model.DData != null)
-                    {
-                        <p>@Model.DData.PricingFooterNote</p>
+                            iterations++;
+                            items = Model.DFamilyProducts.Skip(4 * iterations).Take(4);
+                        }
                     }
-                    <h3>Setup</h3>
-                    <table class="table table-responsive">
-                        <tbody>
+
+                }
+
+
+            </div>
+            <div class="details col-md-8">
+                <h3 class="product-title">@Model.Name</h3>
+                <hr style="width: 100%;margin-top: 0px;margin-bottom: 10px;border: 1px solid #ccc;">
+                <h5 style="font-size:16px;"><strong>@Model.Sku</strong></h5>
+                <p>@Model.ShortDescription</p>
+                <br />
+
+                @if (Model.DBrandingProducts != null)
+                {
+                    if (Model.DBrandingProducts.Any())
+                    {
+
+                        <div class="row">
+                            <ul class="product-li">
+                                @foreach (var item in Model.DBrandingProducts)
+                                {
+                                    <li>
+                                        <a href="@Url.RouteUrl("Product", new { SeName = item.SEName })" title="@item.Name">
+                                            <img class="dp-img" src="@item.DefaultPicture.ImageUrl" alt="@item.Name" title="@item.Name" />
+                                            <p><small>@item.BrandingType</small></p>
+                                        </a>
+                                    </li>
+
+
+                                }
+                            </ul>
+                        </div>
+                    }
+                }
+                <br />
+                <div class="card">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a style="color:#777777;" href="#price" aria-controls="messages" role="tab" data-toggle="tab">Pricing</a></li>
+                        <li role="presentation"><a style="color:#777777;" href="#features" aria-controls="home" role="tab" data-toggle="tab">Features</a></li>
+                        <li role="presentation"><a style="color:#777777;" href="#spec" aria-controls="profile" role="tab" data-toggle="tab">Specifications</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                   
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="price">
+                            <table class="table table-responsive">
+                                <tbody>
+                                    @if (Model.DTierPrices != null)
+                                    {
+                                        var priceLevel = 0;
+                                        foreach (var tierprice in Model.DTierPrices)
+                                        {
+                                            if (tierprice.PriceName.Equals("Quantity"))
+                                            {
+                                                <tr style="color: black;background-color: #dcdcdc;font-weight:bold;">
+
+                                                    <th scope="col">@tierprice.PriceName</th>
+                                                    @if (!string.IsNullOrEmpty(tierprice.Price1))
+                                                    {
+                                                        <th scope="col">@tierprice.Price1</th>
+                                                        priceLevel++;
+                                                    }
+                                                    @if (!string.IsNullOrEmpty(tierprice.Price2))
+                                                    {
+                                                        <th scope="col">@tierprice.Price2</th>
+                                                        priceLevel++;
+                                                    }
+                                                    @if (!string.IsNullOrEmpty(tierprice.Price3))
+                                                    {
+                                                        <th scope="col">@tierprice.Price3</th>
+                                                        priceLevel++;
+                                                    }
+                                                    @if (!string.IsNullOrEmpty(tierprice.Price4))
+                                                    {
+                                                        <th scope="col">@tierprice.Price4</th>
+                                                        priceLevel++;
+                                                    }
+                                                    <th scope="col">@tierprice.DiscountCode</th>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+
+                                                var isPriceRow = tierprice.PriceName.Equals("Price", StringComparison.OrdinalIgnoreCase) || tierprice.PriceName.Equals("Sale Price", StringComparison.OrdinalIgnoreCase);
+
+                                                <tr style="color:Black;background-color:white;@(isPriceRow || tierprice.IsManufacturePrice ? "border-bottom: 2px solid #007A8A;" : string.Empty)">
+
+                                                    <td  @(tierprice.PriceName.Equals("Sale Price", StringComparison.OrdinalIgnoreCase) ? "style=color:red;" : "")>@tierprice.PriceName</td>
+                                                    @if (priceLevel == 1)
+                                                    {
+                                                        <td>
+                                                            <span class="@(tierprice.IsPrice1StrikeOut ? "cross" : "")">@tierprice.Price1.Replace(" ", "")</span>
+                                                        </td>
+                                                    }
+                                                    else if (priceLevel == 2)
+                                                    {
+                                                        <td>
+                                                            <span class="@(tierprice.IsPrice1StrikeOut ? "cross" : "")">@tierprice.Price1.Replace(" ", "")</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="@(tierprice.IsPrice2StrikeOut ? "cross" : "")">@tierprice.Price2.Replace(" ", "")</span>
+                                                        </td>
+                                                    }
+                                                    else if (priceLevel == 3)
+                                                    {
+                                                        <td>
+                                                            <span class="@(tierprice.IsPrice1StrikeOut ? "cross" : "")">@tierprice.Price1.Replace(" ", "")</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="@(tierprice.IsPrice2StrikeOut ? "cross" : "")">@tierprice.Price2.Replace(" ", "")</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="@(tierprice.IsPrice3StrikeOut ? "cross" : "")"> @tierprice.Price3.Replace(" ", "")</span>
+                                                        </td>
+                                                    }
+                                                    else if (priceLevel == 4)
+                                                    {
+                                                        <td>
+                                                            <span class="@(tierprice.IsPrice1StrikeOut ? "cross" : "")">@tierprice.Price1.Replace(" ", "")</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="@(tierprice.IsPrice2StrikeOut ? "cross" : "")">@tierprice.Price2.Replace(" ", "")</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="@(tierprice.IsPrice3StrikeOut ? "cross" : "")"> @tierprice.Price3.Replace(" ", "")</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="@(tierprice.IsPrice4StrikeOut ? "cross" : "")">@tierprice.Price4.Replace(" ", "")</span>
+                                                        </td>
+                                                    }
+                                                    <td>@(isPriceRow || tierprice.IsManufacturePrice ? priceLevel.ToString() : "")@tierprice.DiscountCode.Replace(" ", "").ToLower()</td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                            <br>
                             @if (Model.DData != null)
                             {
-                                if (!string.IsNullOrEmpty(Model.DData.SetupPerColour))
-                                {
-                                    <tr>
-                                        <td style="width:40%;"><strong> Setup Per Colour:</strong></td>
-                                        <td>@Model.DData.SetupPerColour</td>
-                                    </tr>
-                                }
-                                if (!string.IsNullOrEmpty(Model.DData.RepeatSetup))
-                                {
-                                    <tr>
-                                        <td style="width:40%;"><strong> Repeat Setup Per Colour:</strong></td>
-                                        <td>@Model.DData.RepeatSetup</td>
-                                    </tr>
-                                }
-                                if (!string.IsNullOrEmpty(Model.DData.DebossSetup))
-                                {
-                                    <tr>
-                                        <td style="width:40%;"><strong> Deboss & Die Setup:</strong></td>
-                                        <td>@Model.DData.DebossSetup</td>
-                                    </tr>
-                                }
-                                if (!string.IsNullOrEmpty(Model.DData.RepeatDeboss))
-                                {
-                                    <tr>
-                                        <td style="width:40%;"><strong> Repeat Deboss:</strong></td>
-                                        <td>@Model.DData.RepeatDeboss</td>
-                                    </tr>
-                                }
-                                if (!string.IsNullOrEmpty(Model.DData.DecalSetup))
-                                {
-                                    <tr>
-                                        <td style="width:40%;"><strong> Full Colour Setup :</strong></td>
-                                        <td>@Model.DData.DecalSetup</td>
-                                    </tr>
-                                }
-                                if (!string.IsNullOrEmpty(Model.DData.RepeatDecal))
-                                {
-                                    <tr>
-                                        <td style="width:40%;"><strong> Repeat Full Colour Setup :</strong></td>
-                                        <td>@Model.DData.RepeatDecal</td>
-                                    </tr>
-                                }
-                                if (!string.IsNullOrEmpty(Model.DData.LaserSetup))
-                                {
-                                    <tr>
-                                        <td style="width:40%;"><strong> Laser Engraving Setup:</strong></td>
-                                        <td>@Model.DData.LaserSetup</td>
-                                    </tr>
-                                }
-                                if (!string.IsNullOrEmpty(Model.DData.RepeatLaser))
-                                {
-                                    <tr>
-                                        <td style="width:40%;"><strong> Repeat Laser Engraving Setup:</strong></td>
-                                        <td>@Model.DData.RepeatLaser</td>
-                                    </tr>
-                                }
-                                if (!string.IsNullOrEmpty(Model.DData.AdditionalCharge1))
-                                {
-                                    <tr>
-                                        <td style="width:40%;"><strong> Additional Charge:</strong></td>
-                                        <td>@Model.DData.AdditionalCharge1</td>
-                                    </tr>
-                                }
-                                if (!string.IsNullOrEmpty(Model.DData.AdditionalCharge2))
-                                {
-                                    <tr>
-                                        <td style="width:40%;"><strong> Additional Charge:</strong></td>
-                                        <td>@Model.DData.AdditionalCharge2</td>
-                                    </tr>
-                                }
-
-                                if (!string.IsNullOrEmpty(Model.DData.AdditionalCharge3))
-                                {
-                                    <tr>
-                                        <td style="width:40%;"><strong> Additional Charge:</strong></td>
-                                        <td>@Model.DData.AdditionalCharge3</td>
-                                    </tr>
-                                }
-
-                                if (!string.IsNullOrEmpty(Model.DData.AdditionalCharge4))
-                                {
-                                    <tr style="width:40%;">
-                                        <td><strong> Additional Charge:</strong></td>
-                                        <td>@Model.DData.AdditionalCharge4</td>
-                                    </tr>
-                                }
+                                <p class="small-font">@Model.DData.PricingFooterNote</p>
                             }
 
-                        </tbody>
-                    </table>
-                    @if (Model.DData != null)
-                    {
-                        <label>Note:</label>
-                        <p>
-                            @Model.DData.RepeatTerm
-                        </p>
-                        <p>
-                            @Model.DData.FinalNote
-                        </p>
-                    }
-                </div>
-                <div role="tabpanel" class="tab-pane " id="features">
-                    <br />
-                    <div style="margin-left:15px">
-                        <div>
-                            @Model.ShortDescription
-                        </div>
-                        @if (@Model.DData != null)
-                        {
-                            <div>
-                                @Html.Raw(Model.DData.Features.Replace("\n", "<br />"))
-                            </div>
-                        }
-                        <br />
-                        <div>
                             <table class="table table-responsive">
-                                @if (Model.DData != null)
+                                <tbody>
+                                    @if (Model.DData != null)
+                                    {
+                                        if (!string.IsNullOrEmpty(Model.DData.SetupPerColour))
+                                        {
+
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><strong> Setup Per Colour:</strong></td>
+                                                <td>@Model.DData.SetupPerColour</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.RepeatSetup))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><strong> Repeat Setup Per Colour:</strong></td>
+                                                <td>@Model.DData.RepeatSetup</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.DebossSetup))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><strong> Deboss & Die Setup:</strong></td>
+                                                <td>@Model.DData.DebossSetup</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.RepeatDeboss))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><strong> Repeat Deboss:</strong></td>
+                                                <td>@Model.DData.RepeatDeboss</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.DecalSetup))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><strong> Full Colour Setup :</strong></td>
+                                                <td>@Model.DData.DecalSetup</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.RepeatDecal))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><strong> Repeat Full Colour Setup :</strong></td>
+                                                <td>@Model.DData.RepeatDecal</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.LaserSetup))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><strong> Laser Engraving Setup:</strong></td>
+                                                <td>@Model.DData.LaserSetup</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.RepeatLaser))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><strong> Repeat Laser Engraving Setup:</strong></td>
+                                                <td>@Model.DData.RepeatLaser</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.AdditionalCharge1))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><strong> Additional Charge:</strong></td>
+                                                <td>@Model.DData.AdditionalCharge1</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.AdditionalCharge2))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><strong> Additional Charge:</strong></td>
+                                                <td>@Model.DData.AdditionalCharge2</td>
+                                            </tr>
+                                        }
+
+                                        if (!string.IsNullOrEmpty(Model.DData.AdditionalCharge3))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><strong> Additional Charge:</strong></td>
+                                                <td>@Model.DData.AdditionalCharge3</td>
+                                            </tr>
+                                        }
+
+                                        if (!string.IsNullOrEmpty(Model.DData.AdditionalCharge4))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><strong> Additional Charge:</strong></td>
+                                                <td>@Model.DData.AdditionalCharge4</td>
+                                            </tr>
+                                        }
+                                    }
+
+                                </tbody>
+                            </table> <br>
+                            @if (Model.DData != null)
+                            {
+                                <label>Note:</label>
+                                <p class="small-font">
+                                    @Model.DData.RepeatTerm
+                                </p>
+                                <p class="small-font">
+                                    @Model.DData.FinalNote
+                                </p>
+                            }
+
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="features">
+                            <br>
+                            <div style="margin-left:15px">
+                                <p>@Model.ShortDescription</p>
+                                @if (@Model.DData != null)
                                 {
-                                    if (!string.IsNullOrEmpty(Model.DData.Materials))
-                                    {
-                                        <tr>
-                                            <td style="width:40%;"><strong>Materials :</strong></td>
-                                            <td>@Model.DData.Materials</td>
-                                        </tr>
-                                    }
-                                    if (!string.IsNullOrEmpty(Model.DData.Includes))
-                                    {
-                                        <tr>
-                                            <td style="width:40%;"><strong>Includes :</strong></td>
-                                            <td>@Model.DData.Includes</td>
-                                        </tr>
-                                    }
-                                    if (!string.IsNullOrEmpty(Model.DData.SpecailPackaging))
-                                    {
-                                        <tr>
-                                            <td style="width:40%;"><strong>Special Packaging :</strong></td>
-                                            <td>@Model.DData.SpecailPackaging</td>
-                                        </tr>
-                                    }
+                                    <p>
+                                        <small>
+                                            @Html.Raw(Model.DData.Features.Replace("\n", "<br />"))
+                                        </small>
+                                    </p>
                                 }
+
+                                <br>
+                                <table class="table table-responsive">
+                                    @if (Model.DData != null)
+                                    {
+                                        if (!string.IsNullOrEmpty(Model.DData.Materials))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><strong>Materials :</strong></td>
+                                                <td>@Model.DData.Materials</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.Includes))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><strong>Includes :</strong></td>
+                                                <td>@Model.DData.Includes</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.SpecailPackaging))
+                                        {
+                                            <tr>
+                                                <td style="width:40%;"><strong>Special Packaging :</strong></td>
+                                                <td>@Model.DData.SpecailPackaging</td>
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+
+
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="spec">
+
+                            <table class="table table-responsive">
+                                <tbody>
+                                    @if (Model.DData != null)
+                                    {
+                                        if (!string.IsNullOrEmpty(Model.DData.Capacity))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><label>Capacity:</label></td>
+                                                <td> @Model.DData.Capacity</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.Size))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><label> Size: </label></td>
+                                                <td> @Model.DData.Size</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.ImprintAreaInOutboard))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><label> Imprint area in/outboard: </label></td>
+                                                <td> @Model.DData.ImprintAreaInOutboard</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.ImprintAreaWrapAround))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><label>Imprint area wraparound: </label></td>
+                                                <td> @Model.DData.ImprintAreaWrapAround</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.DecoratingOption))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><label> Decorating options: </label></td>
+                                                <td> @Model.DData.DecoratingOption</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.PeicesPerCartoon))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><label> Pieces per carton: </label></td>
+                                                <td> @Model.DData.PeicesPerCartoon</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.WeightPerCartoon))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><label>Weight per carton:</label></td>
+                                                <td> @Model.DData.WeightPerCartoon</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.ProtectivePackaging))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width: 40%; "><label> Protective packaging:</label></td>
+                                                <td> @Model.DData.ProtectivePackaging</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.ReferToCataloguePage))
+                                        {
+                                            <tr style="border-bottom: 1px solid #ccc;">
+                                                <td style="width:40%;"><label> Refer to catalogue page #:</label></td>
+                                                <td> @Model.DData.ReferToCataloguePage</td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
                             </table>
+
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="spec">
-                    <br />
-                    <table class="table table-responsive">
-                        <tbody>
-                            @if (Model.DData != null)
-                            {
-                                if (!string.IsNullOrEmpty(Model.DData.Capacity))
-                                {
-                                    <tr>
-                                        <td style="width:40%;"><label>Capacity:</label></td>
-                                        <td> @Model.DData.Capacity</td>
-                                    </tr>
-                                }
-                                if (!string.IsNullOrEmpty(Model.DData.Size))
-                                {
-                                    <tr>
-                                        <td style="width:40%;"><label> Size: </label></td>
-                                        <td> @Model.DData.Size</td>
-                                    </tr>
-                                }
-                                if (!string.IsNullOrEmpty(Model.DData.ImprintAreaInOutboard))
-                                {
-                                    <tr>
-                                        <td style="width:40%;"><label> Imprint area in/outboard: </label></td>
-                                        <td> @Model.DData.ImprintAreaInOutboard</td>
-                                    </tr>
-                                }
-                                if (!string.IsNullOrEmpty(Model.DData.ImprintAreaWrapAround))
-                                {
-                                    <tr>
-                                        <td style="width:40%;"><label>Imprint area wraparound: </label></td>
-                                        <td> @Model.DData.ImprintAreaWrapAround</td>
-                                    </tr>
-                                }
-                                if (!string.IsNullOrEmpty(Model.DData.DecoratingOption))
-                                {
-                                    <tr>
-                                        <td style="width:40%;"><label> Decorating options: </label></td>
-                                        <td> @Model.DData.DecoratingOption</td>
-                                    </tr>
-                                }
-                                if (!string.IsNullOrEmpty(Model.DData.PeicesPerCartoon))
-                                {
-                                    <tr>
-                                        <td style="width:40%;"><label> Pieces per carton: </label></td>
-                                        <td> @Model.DData.PeicesPerCartoon</td>
-                                    </tr>
-                                }
-                                if (!string.IsNullOrEmpty(Model.DData.WeightPerCartoon))
-                                {
-                                    <tr>
-                                        <td style="width:40%;"><label>Weight per carton:</label></td>
-                                        <td> @Model.DData.WeightPerCartoon</td>
-                                    </tr>
-                                }
-                                if (!string.IsNullOrEmpty(Model.DData.ProtectivePackaging))
-                                {
-                                    <tr>
-                                        <td style="width: 40%; "><label> Protective packaging:</label></td>
-                                        <td> @Model.DData.ProtectivePackaging</td>
-                                    </tr>
-                                }
-                                if (!string.IsNullOrEmpty(Model.DData.ReferToCataloguePage))
-                                {
-                                    <tr>
-                                        <td style="width:40%;"><label> Refer to catalogue page #:</label></td>
-                                        <td> @Model.DData.ReferToCataloguePage</td>
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
+                <br />
+                <div class="row">
+                    @Html.Partial("_ProductEmailAFriendButton", Model)
+
+                    <div class="col-md-6 text-center">
+                        <i class="fa fa-print fa-2x" onclick="window.open('@Url.Action("PrintProductDetails", new { id = Model.Id})','_blank')"></i>
+                    </div>
                 </div>
             </div>
+
         </div>
-    </div>
-    <div class="container">
-        <div class="col-md-6"></div>
-        <div class="col-md-3 text-center"> @Html.Partial("_ProductEmailAFriendButton", Model)</div>
-        <div class="col-md-3 text-center"><div class="product-detail-function-button"><span class="fa fa-print email_a_friend" onclick="window.open('@Url.Action("PrintProductDetails", new { id = Model.Id})','_blank')"></span></div></div>
     </div>
 </div>
 @if (Model.DRelatedProducts != null)
 {
     if (Model.DRelatedProducts.Any())
     {
-        <hr style="        width: 100%
-" />
-        <div class="container">
+        <div class="container rel-pro">
             <div class="row">
-                <div class="row">
-                    <div class="col-md-9">
-                        <h2 style="margin-left: 20px ">Related Products</h2>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="controls pull-right hidden-xs">
-                            <a class="left fa fa-chevron-left btn btn" href="#carousel-example"
-                               data-slide="prev"></a>
-                            <a class="right fa fa-chevron-right btn" href="#carousel-example" data-slide="next"></a>
-                        </div>
-                    </div>
-                </div>
-                <div id="carousel-example" class="carousel slide hidden-xs" data-ride="carousel">
-                    <div class="carousel-inner">
-                        @if (Model.DRelatedProducts.Any())
-                        {
-                            var items = Model.DRelatedProducts.Take(3);
-                            var iterations = 0;
-                            while (items.Count() > 0)
-                            {
-                                var active = iterations == 0 ? "active" : "";
-                                <div class="item @active">
-                                    <div class="row">
-                                        @foreach (var item in items)
-                                        {
-                                            <div class="col-sm-3 rel-cat">
-                                                <div class="col-item">
-                                                    <div class="rel-products-heading">
-                                                        <div class="row">
-                                                            <div class="price col-md-12 text-center">
-                                                                <h4>@item.Name</h4>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="rel-products-image" align="center">
-                                                        <a href="@Url.RouteUrl("Product", new { SeName = item.SEName })" title="@item.Name">
-                                                            <img src="@item.DefaultPicture.ImageUrl" class="img-responsive related-product" alt="a" />
-                                                        </a>
-                                                    </div>
-                                                    <div class="rel-products-footer">
-                                                        <div class="price col-md-12 text-center">
-                                                            <h5 class="price-text-color">@item.SKU</h5>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
-                                iterations++;
-                                items = Model.DRelatedProducts.Skip(3 * iterations).Take(3);
-                            }
-                        }
-                    </div>
+                <div class="main-header">
+                    <p>You Might Also Like</p>
                 </div>
             </div>
+            <div class="row">
+                <ul class="rel-products">
+                    @if (Model.DRelatedProducts.Any())
+                    {
+                        var items = Model.DRelatedProducts.Take(3);
+                        var iterations = 0;
+                        while (items.Count() > 0)
+                        {
+                            foreach (var item in items)
+                            {
+                                <li class="border-r rel-pro-li">
+                                    <div style="height:150px">
+                                        <a href="@Url.RouteUrl("Product", new { SeName = item.SEName })" title="@item.Name">
+                                            <div style="width:100%;height:100%;background:url(@item.DefaultPicture.ImageUrl) center center no-repeat;"></div>
+                                        </a>
+                                    </div>
+                                    <p class="btb">@item.SKU</p>
+
+                                </li>
+                            }
+                            iterations++;
+                            items = Model.DRelatedProducts.Skip(3 * iterations).Take(3);
+                        }
+                    }
+                </ul>
+            </div>
         </div>
+
+
+
     }
 
 }

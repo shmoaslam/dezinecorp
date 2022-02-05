@@ -1,86 +1,126 @@
 ﻿@model TopMenuModel
 @using Nop.Web.Models.Catalog;
 
-@helper RenderCategoryLine(CategorySimpleModel category, int level, bool responsiveMobileMenu)
+@helper RenderCategoryLine(CategorySimpleModel category)
 {
-    <li>
+
+    var subCategories = category.SubCategories;
+    var isSubCategoryExist = false;
+    if (subCategories.Any())
+    {
+        isSubCategoryExist = true;
+    }
+    <li class="nav-br">
         <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">
             @category.Name
             @if (category.NumberOfProducts.HasValue)
             {
                 <text> </text>@T("Categories.TotalProducts", category.NumberOfProducts.Value)
             }
+            @if (isSubCategoryExist)
+            {
+                <span class="caret"></span>
+            }
         </a>
         @{
-            //subcategories
-            var subCategories = responsiveMobileMenu ?
-                //responsive (all categories)
-                category.SubCategories :
-                //standard design (only categories with "IncludeInTopMenu")
-                category.SubCategories.Where(x => x.IncludeInTopMenu).ToList();
 
-            var levelClass = "";
-            if (level == 0)
-            {
-                levelClass = "first-level";
-            }
             if (subCategories.Count > 0)
             {
-                <div class="sublist-toggle"></div>
-                <ul class="sublist @levelClass">
+                <ul class="dropdown-menu">
                     @foreach (var subCategory in subCategories)
                     {
-                        @RenderCategoryLine(subCategory, level + 1, responsiveMobileMenu)
+                        @RenderCategoryLine(subCategory)
                     }
                 </ul>
             }
         }
     </li>
 }
-<style>
-    #main-nav {
-        position: relative;
-        z-index: 9;
-    }
-</style>
 <div class="row">
-    <nav id="main-nav" role="navigation">
-        <input id="main-menu-state" type="checkbox" />
-        <label class="main-menu-btn" for="main-menu-state">
-            <span class="main-menu-btn-icon"></span> Toggle main menu visibility
-        </label>
-        <h2 class="nav-brand" id="headingmenubrand" style="display:none;"><span style="font: caption;">Dezine<span style="color:#007A8A;">Corp</span></span><a href="#"></a></h2>
-        <ul id="main-menu" class="sm sm-simple">
-            <li class="test"> <a href="/"><i class="fa fa-home"></i>&nbsp; &nbsp;Home</a> </li>
-            <li>
-                <a href="#"><i class="fa fa-tags"></i>&nbsp; &nbsp;Products</a>
-                <ul>
-                    @{
-                        var rootCategories = Model.Categories.Where(x => x.IncludeInTopMenu).ToList();
-                    }
-                    @foreach (var category in rootCategories)
-                    {
-                        @RenderCategoryLine(category, 0, false)
-                    }
-                </ul>
-            </li>
+    @*<nav id="main-nav" role="navigation">
+            <input id="main-menu-state" type="checkbox" />
+            <label class="main-menu-btn" for="main-menu-state">
+                <span class="main-menu-btn-icon"></span> Toggle main menu visibility
+            </label>
+            <h2 class="nav-brand" id="headingmenubrand" style="display:none;"><span style="font: caption;">Dezine<span style="color:#007A8A;">Corp</span></span><a href="#"></a></h2>
+            <ul id="main-menu" class="sm sm-simple">
+                <li class="test"> <a href="/"><i class="fa fa-home"></i>&nbsp; &nbsp;Home</a> </li>
+                <li>
+                    <a href="#"><i class="fa fa-tags"></i>&nbsp; &nbsp;Products</a>
+                    <ul>
+                        @{
+                            var rootCategories = Model.Categories.Where(x => x.IncludeInTopMenu).ToList();
+                        }
+                        @foreach (var category in rootCategories)
+                        {
+                            @RenderCategoryLine(category, 0, false)
+                        }
+                    </ul>
+                </li>
 
-            <li> <a href="/new-products">New</a> </li>
-            <li> <a href="/web-only">Web Only</a> </li>
-            <li> <a href="/clearance">Clearance Item</a> </li>
-            <li>
-                <a href="#"><i class="fa fa-gift"></i>&nbsp; &nbsp;Sales Tools</a>
-                <ul>
-                    <li><a href="/blog">E-Flyers</a></li>
-                    <li><a href="https://www.viewmycatalogs.com/dezine#list/all">Catalogs</a></li>
-                    <li><a href="https://dezinecorp.zoomcustom.com/catalogs">Customize catalogs</a></li>
-                    <li><a href="https://dezinecorp.zoomcustom.com/flyers">Customize flyers</a></li>
-                </ul>
-            </li>
-            <li><a data-toggle="modal" data-target="#contactUs" style="cursor:pointer;">Contact Us</a> </li>
-        </ul>
+                <li> <a href="/new-products">New</a> </li>
+                <li> <a href="/web-only">Web Only</a> </li>
+                <li> <a href="/clearance">Clearance Item</a> </li>
+                <li>
+                    <a href="#"><i class="fa fa-gift"></i>&nbsp; &nbsp;Sales Tools</a>
+                    <ul>
+                        <li><a href="/blog">E-Flyers</a></li>
+                        <li><a href="https://www.viewmycatalogs.com/dezine#list/all">Catalogs</a></li>
+                        <li><a href="https://dezinecorp.zoomcustom.com/catalogs">Customize catalogs</a></li>
+                        <li><a href="https://dezinecorp.zoomcustom.com/flyers">Customize flyers</a></li>
+                    </ul>
+                </li>
+                <li><a data-toggle="modal" data-target="#contactUs" style="cursor:pointer;">Contact Us</a> </li>
+            </ul>
 
-    </nav>
+        </nav>*@
+
+    <div id="header-area" class="header_area">
+        <div class="header_bottom">
+            <nav role="navigation" class="navbar navbar-default mainmenu">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <!-- Collection of nav links and other content for toggling -->
+                <div id="navbarCollapse" class="collapse navbar-collapse in">
+                    <ul id="fresponsive" class="nav navbar-nav dropdown">
+                        <li class="nav-br"><a href="/">Home</a></li>
+                        <li class="dropdown nav-br">
+                            <a data-toggle="dropdown" class="dropdown-toggle">Products <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                @{
+                                    var rootCategories = Model.Categories.Where(x => x.IncludeInTopMenu).ToList();
+                                }
+                                @foreach (var category in rootCategories)
+                                {
+                                    @RenderCategoryLine(category)
+                                }
+                            </ul>
+                        </li>
+                        <li class="nav-br"><a href="/brands">Brands</a></li>
+                        <li class="nav-br only-active"><a href="/new-products">What's New!</a></li>
+                        <li class="nav-br">
+                            <a data-toggle="dropdown" class="dropdown-toggle">Sales Tools <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-br"><a href="https://www.viewmycatalogs.com/dezine#list/all">Catalogs</a></li>
+                                <li class="nav-br"><a href="https://dezinecorp.zoomcustom.com/catalogs">Customize catalogs</a></li>
+                                <li class="nav-br"><a href="https://dezinecorp.zoomcustom.com/flyers">Customize flyers</a></li>
+                                <li class="nav-br"><a href="/blog">E-Flyers</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-br"><a href="/clearance">Clearance Item</a> </li>
+                        <li><a href="@Url.Action("AboutUs", "Common")">About Us</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
 </div>
 
 

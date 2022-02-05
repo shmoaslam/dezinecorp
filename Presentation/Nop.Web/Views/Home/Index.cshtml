@@ -1,83 +1,32 @@
 ﻿@{
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 }
-<style>
-    .carousel-indicators li {
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        margin: 1px;
-        text-indent: -999px;
-        cursor: pointer;
-        background-color: #000;
-        border: 1px solid #F5F5F5;
-        border-radius: 10px;
-    }
 
-    .carousel-indicators .active {
-        Width: 12px;
-        Height: 12px;
-        margin: 0;
-        background-color: #F5F5F5;
-    }
-
-    .banner-image {
-        width: 100%;
-    }
-
-    .tooltip1 {
-        /*background-color:#5f9ea0;*/
-    }
-
-    .tooltiptext {
-        opacity: 0;
-        width: auto;
-        text-align: justify;
-        height: auto;
-        display: none;
-    }
-</style>
-<script>
-    function OpenLink(elem, url) {
-        if (elem.parentElement.className == 'active') {
-            window.location.href = url;
-        }
-    }
-</script>
 @Html.Widget("home_page_top")
-@*<div class="bnr" id="home">
-        <div id="top" class="callbacks_container">
-            <ul class="rslides" id="slider4">
-                <li>
-                    <div class="banner-1"></div>
-                </li>
-                <li>
-                    <div class="banner-2"></div>
-                </li>
-                <li>
-                    <div class="banner-3"></div>
-                </li>
-                <li>
-                    <div class="banner-4"></div>
-                </li>
-                <li>
-                    <div class="banner-5"></div>
-                </li>
-            </ul>
+
+
+<div class="container">
+    <!--Main Carousel-->
+    <div class="row">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active"> <a href="/stanley-1-1-1"> <img src="~/Content/DezineCorpImages/main-slider/1200X400-banner-Stanley.jpg" alt="" class="img-responsive"></a></div>
+                <div class="item"> <a href="/digital-print-2"> <img src="~/Content/DezineCorpImages/main-slider/1200X400-banner-Digital.jpg" alt="..." class="img-responsive"></a> </div>
+                <div class="item"> <a href="/2018-hydeport"> <img src="~/Content/DezineCorpImages/main-slider/1200X400-banner-Hyde.jpg" alt="..." class="img-responsive"> </a></div>
+                <div class="item"> <a href="/health-wellness"> <img src="~/Content/DezineCorpImages/main-slider/PPE Banner_2020_(1200 x 400).jpg" alt="..." class="img-responsive"></a> </div>
+                <div class="item"> <a href="/glass"> <img src="~/Content/DezineCorpImages/main-slider/1200X400-banner-Glass.jpg" alt="..." class="img-responsive"></a> </div>
+            </div>
         </div>
-        <div class="clearfix"> </div>
-    </div>*@
-<link href="~/Content/DezineCorpCSS/thumbnail-slider.css" rel="stylesheet" />
-<script src="~/Scripts/DezineCorp/thumbnail-slider.js"></script>
-<div id="thumbnail-slider">
-    <div class="inner">
-        <ul style="height:380px !important">
-            <li> <a class="thumb" href="~/Content/DezineCorpImages/1.jpg" onclick="OpenLink(this,'/glass');"></a> </li>
-            <li> <a class="thumb" href="~/Content/DezineCorpImages/2.jpg" onclick="OpenLink(this,'/search?q=P7193');"></a> </li>
-            <li> <a class="thumb" href="~/Content/DezineCorpImages/3.jpg" onclick="OpenLink(this,'/stainless-steel-double-wall');"></a> </li>
-            <li> <a class="thumb" href="~/Content/DezineCorpImages/4.jpg" onclick="OpenLink(this,'/stanley-1-1-1');"></a> </li>
-            <li> <a class="thumb" href="~/Content/DezineCorpImages/5.jpg" onclick="OpenLink(this,'/search?q=g1530');"></a> </li>
-        </ul>
     </div>
 </div>
 @*<div id="carousel1" class="carousel slide" data-ride="carousel">
@@ -117,152 +66,184 @@
     </div>*@
 
 <div class="container">
-    @*<h1 align="center">Welcome to <img src="~/Content/DezineCorpImages/dezinecorp.png" style="margin-bottom: 5px;" width="163" height="52" alt="" /></h1>*@
-    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-        <a href="@Url.RouteUrl("Category", new { SeName = "root-category" })">
-            <h2 align="center" style="color:#333;">View Products</h2>
-            <hr>
-            <img src="~/Content/DezineCorpImages/View_Products_Image_(570x300).jpg" class="img-responsive center-block" />
-        </a>
-    </div>
-    @*<h4 align="center">
-            With your customer in mind, we create the promotional products designed to make a big impact and leave a lasting impression. As a supplier and decorator in the promotional products industry, DezineCorp specializes in providing a diverse range of products and decoration techniques to promote your business, event, or special occasion. We offer a variety of decorative processes for logo and message branding, and we provide a range of drinkware, travel and business accessories, brand name products, and premium gifts to choose from. Our dedicated staff is there to help you customize the perfect combination of product, decoration and packaging to meet your every promotional need.
-        </h4>*@
-</div>
-
-<div class="boxes">
-    <div class="container">
-        <div class="abt-shoe-main">
-            <div class="col-md-3">
-                <div class="facebook-post-box">
-                    <a href="~/Content/PDF/Digital Glass Single.pdf" target="_blank">
-                        <img src="~/Content/DezineCorpImages/Small-Digital-Glassl_2020_280x200.jpg" class="img-responsive" style="display:unset;">
-                    </a>
-                </div>
-                <div class="pinterest-post-box">
-                    <a href="/2018-hydeport">
-                        <img src="~/Content/DezineCorpImages/Small-Hydport_2020_280x200.jpg" class="img-responsive" style="display:unset;">
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 padding-lf-8" style="text-align:center;margin-bottom:10px">
-                <a href="/digital-print-2">
-                    <img src="~/Content/DezineCorpImages/Center-Box_2020_Digital-Print_572x410.jpg" class="img-responsive" style="display:unset;" />
-                </a>
-            </div>
-            <div class="col-md-3">
-                <div class="twitter-post-box">
-                    <a href="~/Content/PDF/Digital Metal SIngle.pdf" target="_blank">
-                        <img src="~/Content/DezineCorpImages/Small-Digital-Metal_2020_280x200.jpg" class="img-responsive" style="display:unset;">
-                    </a>
-                </div>
-                <div class="google-post-box">
-                    <a href="/new-products">
-                        <img src="~/Content/DezineCorpImages/Small-New_2020_280x200.jpg" class="img-responsive" style="display:unset;">
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="twitter-post-box">
-                    <a href="/canadian-made" target="_blank">
-                        <img src="~/Content/DezineCorpImages/Small-Made-in-canada_2020_280x200.jpg" class="img-responsive" style="display:unset;">
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6" style="background-color:white;">
-                @Html.Action("HomepageCategories", "Catalog")
-            </div>
-            <div class="col-md-3">
-                <div class="twitter-post-box">
-                    <a href="/clearance" target="_blank">
-                        <img src="~/Content/DezineCorpImages/Small-Clearancet_2020_280x200.jpg" class="img-responsive" style="display:unset;">
-                    </a>
-                </div>
-            </div>
-            <div class="clearfix"> </div>
+    <div class="row">
+        <div class="main-header">
+            <a href="http://dezinecorp.com/root-category" target="_blank">
+                <p>View All Products</p>
+            </a>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12 no-pd text-center">
+            <img src="~/Content/DezineCorpImages/all-products/ViewAll-Image-1.jpg" alt="..." class="img-fluid img-responsive" usemap="#all-product-map-1">
+            <map name="all-product-map-1" id="all-product-map-1">
+                <area shape="rect" coords="4, 0, 91, 171" target="_blank" alt="ceramic" title="ceramic" href="http://www.dezinecorp.com/new-products" />
+                <area shape="rect" coords="98, 0, 187, 169" target="_blank" alt="all-glass" title="all-glass" href="http://www.dezinecorp.com/all-glass" />
+                <area shape="rect" coords="194, -1, 281, 171" target="_blank" alt="new-products" title="new-products" href="http://www.dezinecorp.com/all-ceramics-1" />
+            </map>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12 no-pd text-center">
+            <img src="~/Content/DezineCorpImages/all-products/ViewAll-Image-2.jpg" alt="..." class="img-fluid img-responsive" usemap="#all-product-map-2">
+            <map name="all-product-map-2" id="all-product-map-2">
+                <area shape="rect" coords="3, 0, 89, 171" target="_blank" alt="all-premium" title="all-premium" href="http://www.dezinecorp.com/all-crystal-crystalline" />
+                <area shape="rect" coords="99, 0, 186, 169" target="_blank" alt="metals" title="metals" href="http://www.dezinecorp.com/metals" />
+                <area shape="rect" coords="193, -1, 280, 166" target="_blank" alt="all-crystal" title="all-crystal" href="http://www.dezinecorp.com/all-premium-incentives" />
+            </map>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12 no-pd text-center">
+            <img src="~/Content/DezineCorpImages/all-products/ViewAll-Image-3.jpg" alt="..." class="img-fluid img-responsive" usemap="#all-product-map-3">
+            <map name="all-product-map-3" id="all-product-map-3">
+                <area shape="rect" coords="3, 0, 92, 170" target="_blank" alt="plastic" title="plastic" href="http://www.dezinecorp.com/plastic" />
+                <area shape="rect" coords="98, 1, 186, 172" target="_blank" alt="adblock" title="adblock" href="http://www.dezinecorp.com/adblock-paper-cubes-1" />
+                <area shape="rect" coords="193, 0, 280, 171" target="_blank" alt="hydeport" title="hydeport" href="http://www.dezinecorp.com/2018-hydeport" />
+            </map>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12 no-pd text-center">
+            <img src="~/Content/DezineCorpImages/all-products/ViewAll-Image-4.jpg" alt="..." class="img-fluid img-responsive" usemap="#all-product-map-4">
+            <map name="all-product-map-4" id="all-product-map-4">
+                <area shape="rect" coords="3, 0, 90, 168" target="_blank" alt="canadian-made" title="canadian-made" href="http://www.dezinecorp.com/canadian-made" />
+                <area shape="rect" coords="99, 0, 187, 171" target="_blank" alt="comingsoon" title="comingsoon" href="/brands" />
+                <area shape="rect" coords="194, 1, 280, 170" target="_blank" alt="gift-set" title="gift-set" href="http://www.dezinecorp.com/gift-boxes-gift-sets" />
+            </map>
         </div>
     </div>
 </div>
 
-@Html.Action("HomepageProducts", "Product")
+@*<div class="boxes">
+        <div class="container">
+            <div class="abt-shoe-main">
+                <div class="col-md-3">
+                    <div class="facebook-post-box">
+                        <a href="~/Content/PDF/Digital Glass Single.pdf" target="_blank">
+                            <img src="~/Content/DezineCorpImages/Small-Digital-Glassl_2020_280x200.jpg" class="img-responsive" style="display:unset;">
+                        </a>
+                    </div>
+                    <div class="pinterest-post-box">
+                        <a href="/2018-hydeport">
+                            <img src="~/Content/DezineCorpImages/Small-Hydport_2020_280x200.jpg" class="img-responsive" style="display:unset;">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 padding-lf-8" style="text-align:center;margin-bottom:10px">
+                    <a href="/digital-print-2">
+                        <img src="~/Content/DezineCorpImages/Center-Box_2020_Digital-Print_572x410.jpg" class="img-responsive" style="display:unset;" />
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <div class="twitter-post-box">
+                        <a href="~/Content/PDF/Digital Metal SIngle.pdf" target="_blank">
+                            <img src="~/Content/DezineCorpImages/Small-Digital-Metal_2020_280x200.jpg" class="img-responsive" style="display:unset;">
+                        </a>
+                    </div>
+                    <div class="google-post-box">
+                        <a href="/new-products">
+                            <img src="~/Content/DezineCorpImages/Small-New_2020_280x200.jpg" class="img-responsive" style="display:unset;">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="twitter-post-box">
+                        <a href="/canadian-made" target="_blank">
+                            <img src="~/Content/DezineCorpImages/Small-Made-in-canada_2020_280x200.jpg" class="img-responsive" style="display:unset;">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6" style="background-color:white;">
+                    @Html.Action("HomepageCategories", "Catalog")
+                </div>
+                <div class="col-md-3">
+                    <div class="twitter-post-box">
+                        <a href="/clearance" target="_blank">
+                            <img src="~/Content/DezineCorpImages/Small-Clearancet_2020_280x200.jpg" class="img-responsive" style="display:unset;">
+                        </a>
+                    </div>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    </div>*@
 
-<div class="container">
-    <div class="row mar-top" align="center">
-        <div class="col-md-3 mar-top tooltip1">
-            @*<i class="fa fa-globe fa-5x" style="color:rgb(192,80,77)"></i>*@
-            <h4 style="height:52.6px;line-height:52.6px;background-color:rgb(192,80,77); text-align:center;">
-                <span style="line-height:1.5; display: inline-block; vertical-align:middle;color:white;">Our Approach</span>
-            </h4>
-            <hr>
-            <div class="tooltiptext">
-                <p>We are problem solvers and product innovators leading the industry in creating memorable and impactful pieces that help to elevate your brand and make it stand out.</p>
-                <p>Our passionate team of decorators, designers, printers, and specialists have decades of combined experience to offer ideas and implement solutions.</p>
-                <p>We have the processes in place to provide in-stock product, quick and accurate production, and the shipping solutions to execute your order efficiently.</p>
-                <p>Coordinating each custom order is our dedicated Customer Service team, providing guidance along the way.</p>
-            </div>
-        </div>
-        <div class="col-md-3 mar-top tooltip1">
-            @*<i class="fa fa-users fa-5x"  style="color:rgb(155,187,89)"></i>*@
-            <h4 style="height:52.6px;line-height:52.6px;background-color:rgb(155,187,89); text-align:center;">
-                <span style="line-height:1.5; display: inline-block; vertical-align:middle;color:white;">Collaborating with Promotional Innovators</span>
-            </h4>
-            <hr>
-            <div class="tooltiptext">
-                <p>
-                    We work with promotional distributors, campus bookstores, food service promoters, gift shops and event coordinators to create promotions that make an impression.
-                </p>
-                <p>
-                    Since 2009 we have developed a strong network of vendors, suppliers and distributors that have worked tirelessly to decorate, sell, and deliver our impressive and extensive line of glassware, ceramics, plastics, leathers and metals to our customers.
-                </p>
-                <p>
-                    Innovation and collaboration – these are the qualities we strive for each day.
-                </p>
-            </div>
-        </div>
-        <div class="col-md-3 mar-top tooltip1">
-            @*<i class="fa fa-usd fa-5x"  style="color:rgb(128,100,162)"></i>*@
-            <h4 style="height:52.6px;line-height:52.6px;background-color:rgb(128,100,162); text-align:center;">
-                <span style="line-height:1.5; display: inline-block; vertical-align:middle;color:white;">Transforming Ideas into Impressions</span>
-            </h4>
-            <hr>
-            <div class="tooltiptext">
-                <p>
-                    From affordable options to premium selections, we offer product, decoration and branding for a wide range of promotional product types to fit our clients’ every need and budget.
-                </p><p>
-                    Bring us your logo, colours, concepts, and ideas and we will work with you one-on-one to transform your ideas into reality on time and on budget.<br><br>
-                    @*<em>
-                            <a class="div-link">
-                                read more...<br>
-                            </a>
-                        </em>*@
-                </p>
-            </div>
+@Html.Action("HomepageProducts", "Product", new { productThumbPictureSize = 150})
 
-        </div>
-        <div class="col-md-3 mar-top tooltip1">
-            @*<i class="fa fa-magic fa-5x"  style="color:rgb(75,172,198)"></i>*@
-            <h4 style="height:52.6px;line-height:52.6px;background-color:rgb(75,172,198); text-align:center;">
-                <span style="line-height:1.5; display: inline-block; vertical-align:middle;color:white;">
-                    Products, Decoration and more….
-                </span>
-            </h4>
-            <hr>
-            <div class="tooltiptext">
-                <p>
-                    With a large variety of product and decoration techniques to choose from, we will help you select the decoration options that best highlight your promotion.
-                </p>
-                <p>
-                    Take a moment to view our new and featured items along the way – you may be inspired for a future project!  Keep in mind that Custom is our specialty.  If you have questions our Customer Service team will be pleased to assist you. <br><br>
-                    @*<em>
-                            <a class="div-link">
-                                read more...<br>
-                            </a>
-                        </em>*@
-                </p>
-            </div>
-        </div>
+<div class="container lower-section">
+    <div class="row">
+        <hr>
+        <div class="col-md-4 mtb lower-img" style="padding-right:10px"><a href="~/Content/PDF/Digital Glass Single.pdf"><img src="~/Content/DezineCorpImages/boxes/Main-Page-Box-Digital-Glass.jpg" alt="" class="img-fluid img-responsive"></a></div>
+        <div class="col-md-4 mtb lower-img" style="padding:0 5px"><a href="~/Content/PDF/Digital Metal SIngle.pdf"><img src="~/Content/DezineCorpImages/boxes/Main-Page-Box-Digital-SS.jpg" alt="" class="img-fluid img-responsive"></a></div>
+        <div class="col-md-4 mtb lower-img" style="padding-left:10px"><a href="/new-products"><img src="~/Content/DezineCorpImages/boxes/Main-Page-Box-Whats-new.jpg" alt="" class="img-fluid img-responsive"></a></div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 mtb lower-img" style="padding-right:10px"><a href="/coolers"><img src="~/Content/DezineCorpImages/boxes/Main-Page-Box-Coolers.jpg" alt="" class="img-fluid img-responsive"></a></div>
+        <div class="col-md-4 mtb lower-img" style="padding:0 5px"><a href="/canadian-made"><img src="~/Content/DezineCorpImages/boxes/Main-Page-Box-Canada.jpg" alt="" class="img-fluid img-responsive"></a></div>
+        <div class="col-md-4 mtb lower-img" style="padding-left:10px"><a href="/clearance"><img src="~/Content/DezineCorpImages/boxes/Main-Page-Box-Clearacnce.jpg" alt="" class="img-fluid img-responsive"></a></div>
     </div>
 </div>
+
+@*<div class="container">
+        <div class="row mar-top" align="center">
+            <div class="col-md-3 mar-top tooltip1">
+
+                <h4 style="height:52.6px;line-height:52.6px;background-color:rgb(192,80,77); text-align:center;">
+                    <span style="line-height:1.5; display: inline-block; vertical-align:middle;color:white;">Our Approach</span>
+                </h4>
+                <hr>
+                <div class="tooltiptext">
+                    <p>We are problem solvers and product innovators leading the industry in creating memorable and impactful pieces that help to elevate your brand and make it stand out.</p>
+                    <p>Our passionate team of decorators, designers, printers, and specialists have decades of combined experience to offer ideas and implement solutions.</p>
+                    <p>We have the processes in place to provide in-stock product, quick and accurate production, and the shipping solutions to execute your order efficiently.</p>
+                    <p>Coordinating each custom order is our dedicated Customer Service team, providing guidance along the way.</p>
+                </div>
+            </div>
+            <div class="col-md-3 mar-top tooltip1">
+                <h4 style="height:52.6px;line-height:52.6px;background-color:rgb(155,187,89); text-align:center;">
+                    <span style="line-height:1.5; display: inline-block; vertical-align:middle;color:white;">Collaborating with Promotional Innovators</span>
+                </h4>
+                <hr>
+                <div class="tooltiptext">
+                    <p>
+                        We work with promotional distributors, campus bookstores, food service promoters, gift shops and event coordinators to create promotions that make an impression.
+                    </p>
+                    <p>
+                        Since 2009 we have developed a strong network of vendors, suppliers and distributors that have worked tirelessly to decorate, sell, and deliver our impressive and extensive line of glassware, ceramics, plastics, leathers and metals to our customers.
+                    </p>
+                    <p>
+                        Innovation and collaboration – these are the qualities we strive for each day.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3 mar-top tooltip1">
+                <h4 style="height:52.6px;line-height:52.6px;background-color:rgb(128,100,162); text-align:center;">
+                    <span style="line-height:1.5; display: inline-block; vertical-align:middle;color:white;">Transforming Ideas into Impressions</span>
+                </h4>
+                <hr>
+                <div class="tooltiptext">
+                    <p>
+                        From affordable options to premium selections, we offer product, decoration and branding for a wide range of promotional product types to fit our clients’ every need and budget.
+                    </p><p>
+                        Bring us your logo, colours, concepts, and ideas and we will work with you one-on-one to transform your ideas into reality on time and on budget.<br><br>
+
+                    </p>
+                </div>
+
+            </div>
+            <div class="col-md-3 mar-top tooltip1">
+
+                <h4 style="height:52.6px;line-height:52.6px;background-color:rgb(75,172,198); text-align:center;">
+                    <span style="line-height:1.5; display: inline-block; vertical-align:middle;color:white;">
+                        Products, Decoration and more….
+                    </span>
+                </h4>
+                <hr>
+                <div class="tooltiptext">
+                    <p>
+                        With a large variety of product and decoration techniques to choose from, we will help you select the decoration options that best highlight your promotion.
+                    </p>
+                    <p>
+                        Take a moment to view our new and featured items along the way – you may be inspired for a future project!  Keep in mind that Custom is our specialty.  If you have questions our Customer Service team will be pleased to assist you. <br><br>
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>*@
 
 
 @*@Html.Widget("home_page_before_products")*@
@@ -282,23 +263,3 @@
     @Html.Widget("home_page_before_poll")
     @Html.Action("HomePagePolls", "Poll")
     @Html.Widget("home_page_bottom")*@
-<script>
-    $(".tooltip1,.tooltiptext").hover(function (event) {
-        var childToolText = $(this).find('.tooltiptext');
-        console.log("hover");
-        childToolText.css("display", "block");
-        childToolText.animate({
-            opacity: "1"
-        }, {
-            queue: false
-        });
-    }, function () {
-        var childToolText = $(this).find('.tooltiptext');
-        childToolText.animate({
-            opacity: "0"
-        }, {
-            queue: false
-        });
-        childToolText.css("display", "none");
-    });
-</script>

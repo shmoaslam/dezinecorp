@@ -20,141 +20,75 @@
 
     var addtowishlistlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, quantity = quantity });
     var addtocomparelink = Url.RouteUrl("AddProductToCompare", new { productId = Model.Id });
+    var material = string.Empty;
+    if (Model != null)
+    {
+        if (!string.IsNullOrEmpty(Model.Material))
+        {
+            material = (Model.Material.Length > 35 ? Model.Material.Substring(0, 35) + "..." : Model.Material);
+
+        }
+    }
+
 }
 
-<style>
-    .item-is-new {
-        background: #007A8A;
-        padding: 2px;
-        color: white;
-        height: 20px;
-    }
 
-    .no-item-heading {
-        height: 20px;
-    }
-</style>
+<div class="col-md-3">
+    <div style="width:280px;border:1px solid #ccc;margin-bottom:2em;" class="product-box">
 
-
-@*<div class="product-item" data-productid="@Model.Id">
-        <div class="picture">
-            <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title">
-                <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" />
-            </a>
-        </div>
-        <div class="details">
-            <h2 class="product-title">
-                <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })">@Model.Name</a>
-            </h2>
-            @if (Model.ReviewOverviewModel.AllowCustomerReviews)
-            {
-                int ratingPercent = 0;
-                if (Model.ReviewOverviewModel.TotalReviews != 0)
-                {
-                    ratingPercent = ((Model.ReviewOverviewModel.RatingSum * 100) / Model.ReviewOverviewModel.TotalReviews) / 5;
-                }
-                <div class="product-rating-box" title="@string.Format(T("Reviews.TotalReviews").Text, Model.ReviewOverviewModel.TotalReviews)">
-                    <div class="rating">
-                        <div style="width: @(ratingPercent)%">
-                        </div>
-                    </div>
-                </div>
-            }
-            <div class="description">
-                @Html.Raw(Model.ShortDescription)
-            </div>
-            <div class="add-info">
-                @Html.Widget("productbox_addinfo_before", Model.Id)
-                <div class="prices">
-                    @if (!String.IsNullOrEmpty(Model.ProductPrice.OldPrice))
-                    {
-                        <span class="price old-price">@Model.ProductPrice.OldPrice</span>
-                    }
-                    <span class="price actual-price">@Model.ProductPrice.Price</span>
-                    @if (Model.ProductPrice.DisplayTaxShippingInfo)
-                    {
-                        var inclTax = EngineContext.Current.Resolve<IWorkContext>().TaxDisplayType == TaxDisplayType.IncludingTax;
-                        //tax info is already included in the price (incl/excl tax). that's why we display only shipping info here
-                        //of course, you can modify appropriate locales to include VAT info there
-                        <span class="tax-shipping-info">
-                            @T(inclTax ? "Products.Price.TaxShipping.InclTax" : "Products.Price.TaxShipping.ExclTax", Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("shippinginfo") }))
-                        </span>
-                        }
-                </div>
-                @Html.Widget("productbox_addinfo_middle", Model.Id)
-                <div class="buttons">
-                    @if (!Model.ProductPrice.DisableBuyButton)
-                    {
-                        var addToCartText = T("ShoppingCart.AddToCart").Text;
-                        if (Model.ProductPrice.IsRental)
-                        {
-                            addToCartText = T("ShoppingCart.Rent").Text;
-                        }
-                        if (Model.ProductPrice.AvailableForPreOrder)
-                        {
-                            addToCartText = T("ShoppingCart.PreOrder").Text;
-                        }
-                        <input type="button" value="@(addToCartText)" class="button-2 product-box-add-to-cart-button" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink');return false;" />
-                    }
-                    @if (!Model.ProductPrice.DisableAddToCompareListButton)
-                    {
-                        <input type="button" value="@T("ShoppingCart.AddToCompareList")" title="@T("ShoppingCart.AddToCompareList")" class="button-2 add-to-compare-list-button" onclick="AjaxCart.addproducttocomparelist('@addtocomparelink');return false;" />
-                    }
-                    @if (!Model.ProductPrice.DisableWishlistButton)
-                    {
-                        <input type="button" value="@T("ShoppingCart.AddToWishlist")" title="@T("ShoppingCart.AddToWishlist")" class="button-2 add-to-wishlist-button" onclick="AjaxCart.addproducttocart_catalog('@addtowishlistlink');return false;" />
-                    }
-                </div>
-                @Html.Widget("productbox_addinfo_after", Model.Id)
-            </div>
-        </div>
-    </div>*@
-<div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 cat-product">
-    <div class="text-right">
         @if (!string.IsNullOrEmpty(Model.ItemIsNew))
         {
-            <span class="item-is-new">@Model.ItemIsNew</span>
+            <p class="text-center" style="background-color:#5abaaf;color:white;height:30px;font-weight:bolder;padding-top:5px;font-size:1.2em;">@Model.ItemIsNew</p>
         }
         else
         {
-            <span class="no-item-heading">&nbsp;</span>
+            <p class="text-center" style="background-color:#fff;color:white;height:30px;font-weight:500;padding-top:5px;"></p>
         }
-    </div>
 
-    <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title" class="product-box">
-        <h5 style="text-align:left;margin:3% 0 0 5%;">@Model.SKU</h5>
-        <h6 style="text-align:left;margin:0 0 1% 5%;color:grey;">@Model.Name</h6>
-        <hr style="margin-top:0px;width:90%;" />
-        <div class="cat-product-picture">
-            <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" />
-        </div>
-        <div class="cat-footer pull-right">
-
-            <p style="text-align:right;">
-                @if (Model.ProductPrice != null)
+        <ul style="list-style:none;text-align:center;padding-left: 0px;">
+            <li style="font-weight:bold;" title="@Model.Name">@(Model.Name.Length > 35 ? Model.Name.Substring(0,35) + "..." : Model.Name)</li>
+            <li style="color:#999;" title="@Model.Material">
+                @if (string.IsNullOrEmpty(material))
                 {
-                    if (!string.IsNullOrEmpty(Model.ProductPrice.PriceDesc))
+                    <text>&nbsp;</text>
+                }
+                else
+                {
+                    <text>@material</text>
+                }
+            </li>
+            <li><small>@Model.SKU</small></li>
+        </ul>
+        <div style="width:280px;height:280px;">
+            <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title">
+                <div style="width:100%;height:100%;background:url(@Model.DefaultPictureModel.ImageUrl) center center no-repeat;">
+
+                </div>
+            </a>
+        </div>
+        <p class="text-center">
+            @if (Model.ProductPrice != null)
+            {
+                if (!string.IsNullOrEmpty(Model.ProductPrice.PriceDesc))
+                {
+                    if (Model.ProductPrice.PriceDesc.Contains("\r\n"))
                     {
-                        if (Model.ProductPrice.PriceDesc.Contains("\r\n"))
+                        var data = Model.ProductPrice.PriceDesc.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+                        if (!string.IsNullOrEmpty(data[1]))
                         {
-                            var data = Model.ProductPrice.PriceDesc.Split(new string[] { "\r\n" }, StringSplitOptions.None);
-                            if (!string.IsNullOrEmpty(data[1]))
-                            {
-                                <text>@data[0]<br />@data[1] <span style="color:black;">@Model.ProductPrice.Price</span></text>
-                            }
-                            else
-                            {
-                                <text>@data[0]<br /><span style="color:black;">@Model.ProductPrice.Price</span></text>
-                            }
+                            <text>@data[0]<br />@data[1] <span style="color:red;">@Model.ProductPrice.Price</span></text>
                         }
                         else
                         {
-                            <text>@Model.ProductPrice.PriceDesc <span style="color:black;">@Model.ProductPrice.Price</span></text>
+                            <text>@data[0]<br /><span style="color:red;">@Model.ProductPrice.Price</span></text>
                         }
                     }
+                    else
+                    {
+                        <text>@Model.ProductPrice.PriceDesc <span style="color:red;">@Model.ProductPrice.Price</span></text>
+                    }
                 }
-
-            </p>
-        </div>
-    </a>
+            }
+        </p>
+    </div>
 </div>

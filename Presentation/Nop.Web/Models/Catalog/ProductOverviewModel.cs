@@ -21,7 +21,7 @@ namespace Nop.Web.Models.Catalog
         public string SeName { get; set; }
         public string SKU { get; set; }
         public bool MarkAsNew { get; set; }
-
+        public string Material { get; set; }
 
         public string ItemIsNew { get; set; }
 

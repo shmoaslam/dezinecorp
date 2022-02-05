@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.ServiceModel.Syndication;
 using System.Web.Mvc;
+using Newtonsoft.Json.Linq;
 using Nop.Core;
 using Nop.Core.Caching;
 using Nop.Core.Domain.Catalog;
@@ -810,6 +813,8 @@ namespace Nop.Web.Controllers
 
             #region DezineCorpData
 
+
+
             if (product.HasTierPrices && _permissionService.Authorize(StandardPermissionProvider.DisplayPrices))
             {
                 #region DezineCorpCustomCode
@@ -835,10 +840,25 @@ namespace Nop.Web.Controllers
                                 DiscountCode = "Code",
                             });
                         }
+                        string specialPriceEnd = string.Empty;
+                        var regularPrice = new DezineCorpTierPriceModel();
+                        if (product.DezineCorpDatas.Any())
+                        {
+                            var data = product.DezineCorpDatas.FirstOrDefault();
+                            if (data != null)
+                            {
+                                specialPriceEnd = data.SpecialPriceEnds;
+                                regularPrice.PriceName = data.RegularPrice;
+                                regularPrice.Price1 = data.RegularPrice1;
+                                regularPrice.Price2 = data.RegularPrice2;
+                                regularPrice.Price3 = data.RegularPrice3;
+                                regularPrice.Price4 = data.RegularPrice4;
 
+                            }
+                        }
                         priceList.Add(new DezineCorpTierPriceModel
                         {
-                            PriceName = "Price",
+                            PriceName = string.IsNullOrEmpty(specialPriceEnd) ? "Price" : "Sale Price",
 
                             Price1 = GetPrice(tierPrice.Price1),//
                             Price2 = GetPrice(tierPrice.Price2),// != null ? string.Format("$ {0:0.00}", tierPrice.Price2.Trim()) : string.Empty,
@@ -846,6 +866,31 @@ namespace Nop.Web.Controllers
                             Price4 = GetPrice(tierPrice.Price4),// != null ? string.Format("$ {0:0.00}", tierPrice.Price4.Trim()) : string.Empty,
                             DiscountCode = tierPrice.DiscountCode,
                         });
+
+                        
+
+                        if (!string.IsNullOrEmpty(regularPrice.PriceName))
+                        {
+                            priceList.Add(new DezineCorpTierPriceModel
+                            {
+                                PriceName = regularPrice.PriceName,
+
+                                Price1 = GetPrice(regularPrice.Price1),//
+                                IsPrice1StrikeOut = regularPrice.Price1 != tierPrice.Price1,
+                                Price2 = GetPrice(regularPrice.Price2),// != null ? string.Format("$ {0:0.00}", tierPrice.Price2.Trim()) : string.Empty,
+                                IsPrice2StrikeOut = regularPrice.Price2 != tierPrice.Price2,
+                                Price3 = GetPrice(regularPrice.Price3),// != null ? string.Format("$ {0:0.00}", tierPrice.Price3.Trim()) : string.Empty,
+                                IsPrice3StrikeOut = regularPrice.Price3 != tierPrice.Price3,
+                                Price4 = GetPrice(regularPrice.Price4),// != null ? string.Format("$ {0:0.00}", tierPrice.Price4.Trim()) : string.Empty,
+                                IsPrice4StrikeOut = regularPrice.Price4 != tierPrice.Price4,
+                                DiscountCode = tierPrice.DiscountCode,
+                                IsManufacturePrice = true,
+                            }); 
+                        }
+
+
+
+
                         if (product.DezineCorpAdditionalPricings.Count > 0)
                         {
                             var additionalPricing = product.DezineCorpAdditionalPricings.FirstOrDefault();
@@ -975,6 +1020,12 @@ namespace Nop.Web.Controllers
                     model.DData.AdditionalCharge4 = dezinecorpData.AdditionalCharge4;
                     model.DData.RepeatTerm = dezinecorpData.RepeatTerm;
                     model.DData.FinalNote = dezinecorpData.FinalNote;
+                    model.DData.RegularPrice1 = dezinecorpData.RegularPrice1;
+                    model.DData.RegularPrice2 = dezinecorpData.RegularPrice2;
+                    model.DData.RegularPrice3 = dezinecorpData.RegularPrice3;
+                    model.DData.RegularPrice4 = dezinecorpData.RegularPrice4;
+                    model.DData.RegularPrice = dezinecorpData.RegularPrice;
+                    model.DData.SpecialPriceEnds = dezinecorpData.SpecialPriceEnds;
                 }
             }
 
@@ -1002,12 +1053,12 @@ namespace Nop.Web.Controllers
                 if (dezineCorpRelatedProduct != null)
                 {
                     model.DRelatedProducts = new List<ProductDetailsModel.DezineCorpRelatedOrFamilyProduct>();
-                    BindRelatedProduct(model, dezineCorpRelatedProduct.Related_1, _mediaSettings.ProductThumbPictureSize);
-                    BindRelatedProduct(model, dezineCorpRelatedProduct.Related_2, _mediaSettings.ProductThumbPictureSize);
-                    BindRelatedProduct(model, dezineCorpRelatedProduct.Related_3, _mediaSettings.ProductThumbPictureSize);
-                    BindRelatedProduct(model, dezineCorpRelatedProduct.Related_4, _mediaSettings.ProductThumbPictureSize);
-                    BindRelatedProduct(model, dezineCorpRelatedProduct.Related_5, _mediaSettings.ProductThumbPictureSize);
-                    BindRelatedProduct(model, dezineCorpRelatedProduct.Related_6, _mediaSettings.ProductThumbPictureSize);
+                    BindRelatedProduct(model, dezineCorpRelatedProduct.Related_1, 150);
+                    BindRelatedProduct(model, dezineCorpRelatedProduct.Related_2, 150);
+                    BindRelatedProduct(model, dezineCorpRelatedProduct.Related_3, 150);
+                    BindRelatedProduct(model, dezineCorpRelatedProduct.Related_4, 150);
+                    BindRelatedProduct(model, dezineCorpRelatedProduct.Related_5, 150);
+                    BindRelatedProduct(model, dezineCorpRelatedProduct.Related_6, 150);
                 }
             }
 
@@ -1733,10 +1784,42 @@ namespace Nop.Web.Controllers
             model.ProductId = product.Id;
             model.ProductName = product.GetLocalized(x => x.Name);
             model.ProductSeName = product.GetSeName();
+            //model.CaptchaClientKey = System.Configuration.ConfigurationManager.AppSettings["captchaclientkey"];
             model.YourEmailAddress = _workContext.CurrentCustomer.Email;
             model.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnEmailProductToFriendPage;
             return View(model);
         }
+
+        public bool IsReCaptchValid()
+        {
+            try
+            {
+                var result = false;
+                var captchaResponse = Request.Form["g-recaptcha-response"];
+                var secretKey = System.Configuration.ConfigurationManager.AppSettings["captchacserverkey"];
+                var apiUrl = "https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}";
+                var requestUri = string.Format(apiUrl, secretKey, captchaResponse);
+                var request = (HttpWebRequest)WebRequest.Create(requestUri);
+
+                using (WebResponse response = request.GetResponse())
+                {
+                    using (StreamReader stream = new StreamReader(response.GetResponseStream()))
+                    {
+                        JObject jResponse = JObject.Parse(stream.ReadToEnd());
+                        var isSuccess = jResponse.Value<bool>("success");
+                        result = (isSuccess) ? true : false;
+                    }
+                }
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+
 
         [HttpPost, ActionName("ProductEmailAFriend")]
         [PublicAntiForgery]
@@ -1748,11 +1831,20 @@ namespace Nop.Web.Controllers
             if (product == null || product.Deleted || !product.Published || !_catalogSettings.EmailAFriendEnabled)
                 return RedirectToRoute("HomePage");
 
+            ////validate CAPTCHA
+            //if (_captchaSettings.Enabled && _captchaSettings.ShowOnEmailProductToFriendPage && !captchaValid)
+            //{
+            //    ModelState.AddModelError("", _localizationService.GetResource("Common.WrongCaptcha"));
+            //}
+
             //validate CAPTCHA
-            if (_captchaSettings.Enabled && _captchaSettings.ShowOnEmailProductToFriendPage && !captchaValid)
+            if (!IsReCaptchValid())
             {
-                ModelState.AddModelError("", _localizationService.GetResource("Common.WrongCaptcha"));
+                ModelState.AddModelError("", "Captcha Validation failure!");
             }
+
+
+
 
             //check whether the current customer is guest and ia allowed to email a friend
             if (_workContext.CurrentCustomer.IsGuest() && !_catalogSettings.AllowAnonymousUsersToEmailAFriend)

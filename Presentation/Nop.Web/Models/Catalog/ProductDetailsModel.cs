@@ -239,25 +239,29 @@ namespace Nop.Web.Models.Catalog
             /// </summary>
             public string Price1 { get; set; }
 
+            public bool IsPrice1StrikeOut { get; set; }
+
             /// <summary>
             /// Gets or sets the Price 2
             /// </summary>
             public string Price2 { get; set; }
-
+            public bool IsPrice2StrikeOut { get; set; }
             /// <summary>
             /// Gets or sets the Price 3
             /// </summary>
             public string Price3 { get; set; }
-
+            public bool IsPrice3StrikeOut { get; set; }
             /// <summary>
             /// Gets or sets the Price 4
             /// </summary>
             public string Price4 { get; set; }
-
+            public bool IsPrice4StrikeOut { get; set; }
             /// <summary>
             /// Gets or sets the Discount Code
             /// </summary>
             public string DiscountCode { get; set; }
+
+            public bool IsManufacturePrice { get; set; }
         }
 
         public partial class DezineCorpData

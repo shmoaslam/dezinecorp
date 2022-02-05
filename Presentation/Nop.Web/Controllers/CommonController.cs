@@ -201,6 +201,13 @@ namespace Nop.Web.Controllers
             return View();
         }
 
+        [Route("AboutUs")]
+        public ActionResult AboutUs()
+        {
+
+            return View();
+        }
+
         //language
         [ChildActionOnly]
         public ActionResult LanguageSelector()

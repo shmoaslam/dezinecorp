@@ -3,12 +3,12 @@
 @*@using (Html.BeginRouteForm("ProductSearch", FormMethod.Get, new { id = "small-search-box-form" }))
 {*@
 
-        <input type="text" class="form-control search-box" class="search-box" id="small-searchterms" autocomplete="off" name="q" placeholder="Search" />
-        @*@Html.Widget("searchbox_before_search_button")*@
-        <span class="input-group-addon">
-            <i class="fa fa-search" id="searchbutton"></i>
+       
 
-        </span>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search"  id="small-searchterms" name="q" >
+            <button type="submit" class="btn bt-g"> <i class="fa fa-search" aria-hidden="true" id="searchbutton"></i> </button>
+        </div>
 
     
     @if (Model.SearchTermMinimumLength > 0)

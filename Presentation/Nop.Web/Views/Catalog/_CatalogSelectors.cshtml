@@ -1,8 +1,8 @@
 ﻿@model CatalogPagingFilteringModel
 @using Nop.Web.Models.Catalog;
 
-    @*view mode*@
-    @*@if (Model.AllowProductViewModeChanging)
+@*view mode*@
+@*@if (Model.AllowProductViewModeChanging)
     {
         <div class="product-viewmode">
             <span>@T("Catalog.ViewMode")</span>
@@ -16,16 +16,17 @@
             }
         </div>
     }*@
-    @*sorting*@
-    @if (Model.AllowProductSorting)
-    {
-        <div class="product-sorting">
-            <span>@T("Catalog.OrderBy")</span>
-            @Html.DropDownList("products-orderby", Model.AvailableSortOptions, new { onchange = "setLocation(this.value);" })
-        </div>
-    }
-    @*page size*@
-    @*@if (Model.AllowCustomersToSelectPageSize)
+@*sorting*@
+@if (Model.AllowProductSorting)
+{
+
+    <div class="col-md-6"> <span class="pull-right" style="margin-top:1.5em;font-weight: bold;">@T("Catalog.OrderBy")</span></div>
+    <div class="col-md-6">
+        @Html.DropDownList("products-orderby", Model.AvailableSortOptions, new { onchange = "setLocation(this.value);" ,style = "margin-top:1.5em;font-weight: bold;width:100%;" })
+    </div>
+}
+@*page size*@
+@*@if (Model.AllowCustomersToSelectPageSize)
     {
         <div class="product-page-size">
             <span>@T("Catalog.PageSize")</span>

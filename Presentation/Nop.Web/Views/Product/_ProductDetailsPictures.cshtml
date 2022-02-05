@@ -5,140 +5,38 @@
     Html.AddCssFileParts("~/Content/magnific-popup/magnific-popup.css");
 }
 <script src="~/Scripts/DezineCorp/jquery.elevateZoom-3.0.8.min.js"></script>
-@*<div class="gallery">
-        <div class="picture">
-            @if (Model.DefaultPictureZoomEnabled)
-            {
-            <a href="@Model.DefaultPictureModel.FullSizeImageUrl" title="@Model.DefaultPictureModel.Title" id="main-product-img-lightbox-anchor-@Model.Id">
-                <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" itemprop="image" id="main-product-img-@Model.Id" />
-            </a>
-            <script type="text/javascript">
-                    $(document).ready(function () {
-                        $('#main-product-img-lightbox-anchor-@Model.Id').magnificPopup(
-                        {
-                            type: 'image',
-                            removalDelay: 300,
-                            gallery: {
-                                enabled: true,
-                                tPrev: '@T("Media.MagnificPopup.Previous")',
-                                tNext: '@T("Media.MagnificPopup.Next")',
-                                tCounter: '@T("Media.MagnificPopup.Counter")'
-                            },
-                            tClose: '@T("Media.MagnificPopup.Close")',
-                            tLoading: '@T("Media.MagnificPopup.Loading")'
-                        });
-                    });
-            </script>
-            }
-            else
-            {
-            <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" itemprop="image" id="main-product-img-@Model.Id" />
-            }
-        </div>
-        @if (Model.PictureModels.Count > 1)
-        {
-            <div class="picture-thumbs">
-                @foreach (var picture in Model.PictureModels)
-                {
-                    <a class="thumb-popup-link" href="@picture.FullSizeImageUrl" title="@picture.Title">
-                        <img src="@picture.ImageUrl" alt="@picture.AlternateText" title="@picture.Title" />
-                    </a>
-                }
-            </div>
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    $('.thumb-popup-link').magnificPopup(
-                    {
-                        type: 'image',
-                        removalDelay: 300,
-                        gallery: {
-                            enabled: true,
-                            tPrev: '@T("Media.MagnificPopup.Previous")',
-                            tNext: '@T("Media.MagnificPopup.Next")',
-                            tCounter: '@T("Media.MagnificPopup.Counter")'
-                        },
-                        tClose: '@T("Media.MagnificPopup.Close")',
-                        tLoading: '@T("Media.MagnificPopup.Loading")'
-                    });
-                });
-            </script>
-        }
-    </div>*@
 
-<div class="row" style="margin-bottom:20px">
-    <div class="col-md-9 text-center">
+<div class="preview-pic" style="text-align: center;">
+    <div class="tab-pane active" id="pic-1">
         <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" data-zoom-image="@Model.DefaultPictureModel.FullSizeImageUrl" title="@Model.DefaultPictureModel.Title" itemprop="image" id="main-product-img" />
     </div>
-    <div class="col-md-3">
-        @if (Model.PictureModels.Any())
-        {
-            <div id="gallery" style="margin-top:50px">
-                <ul style="list-style:none">
-                    @for (int i = 0; i < Model.PictureModels.Count; i++)
-                    {
-                        <li>
-                            <a href="#" data-image="@Model.PictureModels[i].ImageUrl" data-zoom-image="@Model.PictureModels[i].FullSizeImageUrl">
-                                <img id="img_01" src="@Model.PictureModels[i].ThumbImageUrl" />
-                            </a>
-                        </li>
-                    }
-                </ul>
-
-            </div>
-        }
-    </div>
-
 </div>
-@if (Model.DFamilyProducts != null)
-{
-    <div class="row">
-        <div class="col-md-12">
-            <div class="carousel slide" data-ride="carousel" id="quote-carousel" style="margin-top:20px">
-                <div class="carousel-inner">
-                    @if (Model.DFamilyProducts.Count > 1)
+<div class="col-md-12 preview-pic">
+    <div class="carousel slide" data-ride="carousel" id="quote-carousel" style="margin: 10px 0px; width: 100%; overflow: hidden;">
+        <div class="carousel-inner">
+            <div class="item active">
+                <div class="row">
+                    @if (Model.PictureModels.Any())
                     {
-                        var items = Model.DFamilyProducts.Take(4);
-                        var iterations = 0;
-                        while (items.Count() > 0)
+                        for (int i = 0; i < Model.PictureModels.Count; i++)
                         {
-                            var active = iterations == 0 ? "active" : "";
-                            <div class="item @active">
-                                <div class="row">
-                                    @foreach (var item in items)
-                                    {
-                                        <div class="col-md-3">
-                                            <a href="@Url.RouteUrl("Product", new { SeName = item.SEName })" title="@item.Name">
-                                                <img src="@item.DefaultPicture.ImageUrl" alt="@item.Name" title="@item.Name" />
-                                            </a>
-                                        </div>
-                                    }
-                                </div>
+                            <div class="col-md-3 col-xs-3 border-r" id="gallery" style="text-align:center;">
+                                <a href="#" class="thumbnailImage" data-image="@Model.PictureModels[i].ImageUrl" data-zoom-image="@Model.PictureModels[i].FullSizeImageUrl">
+                                    <img alt="@Model.PictureModels[i].AlternateText" src="@Model.PictureModels[i].ThumbImageUrl" data-zoom-image="@Model.PictureModels[i].FullSizeImageUrl" title="@Model.PictureModels[i].Title" />
+                                </a>
                             </div>
-                            iterations++;
-                            items = Model.DFamilyProducts.Skip(4 * iterations).Take(4);
                         }
-                        <a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i class="fa fa-chevron-left"></i></a>
-                        <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i class="fa fa-chevron-right"></i></a>
                     }
                 </div>
             </div>
         </div>
     </div>
-}
+</div>
+<br>
 
-<style>
-    /* The controlsy */
-    .carousel-control {
-        left: -30px;
-    }
 
-        .carousel-control.right {
-            right: -30px;
-        }
-    /* The indicators */
-</style>
 <script>
-    $("#main-product-img").elevateZoom({ gallery: 'gallery',  galleryActiveClass: 'active',tint:true, tintOpacity:0.5 });  //pass the images to Fancybox $("#zoom_03").bind("click", function(e) { var ez = $('#zoom_03').data('elevateZoom');	$.fancybox(ez.getGalleryList()); return false; }); - See more at: http://www.elevateweb.co.uk/image-zoom/examples#sthash.OxG7EsJE.dpuf
+    $("#main-product-img").elevateZoom({ gallery: 'gallery', galleryActiveClass: 'active', tint: true, tintOpacity: 0.5 });  //pass the images to Fancybox $("#zoom_03").bind("click", function(e) { var ez = $('#zoom_03').data('elevateZoom');	$.fancybox(ez.getGalleryList()); return false; }); - See more at: http://www.elevateweb.co.uk/image-zoom/examples#sthash.OxG7EsJE.dpuf
     $(window).load(function () {
         $("#main-product-img").parent(".zoomWrapper").css("width", "");
         $("#main-product-img").parent(".zoomWrapper").css("height", "");

@@ -1160,6 +1160,8 @@
     <Content Include="Content\tinymce\themes\modern\theme.min.js" />
     <Content Include="Content\tinymce\tinymce.min.js" />
     <Content Include="Scripts\DezineCorp\bootstrap.js" />
+    <Content Include="Scripts\DezineCorp\common.js" />
+    <Content Include="Scripts\DezineCorp\imageMapResizer.min.js" />
     <Content Include="Scripts\DezineCorp\jquery.elevateZoom-3.0.8.min.js" />
     <Content Include="Scripts\DezineCorp\jquery.flexslider.js" />
     <Content Include="Scripts\DezineCorp\jquery.jscroll.min.js" />
@@ -2151,6 +2153,9 @@
     <Content Include="Views\Common\_ContactUsMessage.cshtml" />
     <Content Include="Views\Product\PrintProductDetails.cshtml" />
     <Content Include="Views\Common\TermCondition.cshtml" />
+    <Content Include="Views\Common\Footer_Backup.cshtml" />
+    <Content Include="Views\Catalog\CategoryTemplate.ProductsInGridOrLines - Copy.cshtml" />
+    <Content Include="Views\Common\AboutUs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Roxy_Fileman\tmp\" />

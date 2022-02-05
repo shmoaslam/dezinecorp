@@ -40,19 +40,35 @@
     </div>*@
 <!--Commenting Default header of nopCommerce  End -->
 <!-- Adding Dezinecorp Header Start -->
-<div class="pd-top-1o5per">
-    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><a href="/"><img src="~/Content/DezineCorpImages/logo.png" alt="DezineCorp Logo" width="270px" /></a> </div>
-    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 pd-top-1o5per ">
-        <div class="input-group">
+@*<div class="pd-top-1o5per">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><a href="/"><img src="~/Content/DezineCorpImages/logo.png" alt="DezineCorp Logo" width="270px" /></a> </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 pd-top-1o5per ">
+            <div class="input-group">
+                @Html.Action("SearchBox", "Catalog")
+
+            </div>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-3  col-xs-6 pd-top-1o5per"><img src="~/Content/DezineCorpImages/flag.jpg" width="21" height="14" alt="" /></div>
+        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 pd-top-1o5per">
+            <a data-toggle="modal" data-target="#accountModel" style="cursor:pointer;"> <div class="login_box"> <span><i class="fa fa-sign-in"></i>&nbsp;&nbsp;Login</span> </div></a>
+        </div>
+        <div class="clearfix"></div>
+    </div>*@
+
+<div class="row top__nav">
+    <div class="col-md-6"><a class="main-logo" href="/"> <img alt="dezinecorp" src="~/Content/DezineCorpImages/logo.jpg"> </a></div>
+    <div class="col-md-6">
+        <div class="navbar-form navbar-right">
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-md-12">
+                    <button type="submit" class="btn bt-login pull-right">Login</button>
+                    <img alt="dezinecorp" class="pull-right flag" src="~/Content/DezineCorpImages/canada.jpg">
+                </div>
+            </div>
             @Html.Action("SearchBox", "Catalog")
 
         </div>
     </div>
-    <div class="col-lg-1 col-md-1 col-sm-3  col-xs-6 pd-top-1o5per"><img src="~/Content/DezineCorpImages/flag.jpg" width="21" height="14" alt="" /></div>
-    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 pd-top-1o5per">
-        <a data-toggle="modal" data-target="#accountModel" style="cursor:pointer;"> <div class="login_box"> <span><i class="fa fa-sign-in"></i>&nbsp;&nbsp;Login</span> </div></a>
-    </div>
-    <div class="clearfix"></div>
 </div>
 
 <!-- Adding Dezinecorp Header End -->

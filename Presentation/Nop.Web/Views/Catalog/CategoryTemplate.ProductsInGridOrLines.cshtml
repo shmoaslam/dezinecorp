@@ -1,6 +1,6 @@
 ﻿@model CategoryModel
 @{
-    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
     Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
     Html.AddMetaDescriptionParts(Model.MetaDescription);
     Html.AddMetaKeywordParts(Model.MetaKeywords);
@@ -19,252 +19,155 @@
 @using Nop.Core.Infrastructure;
 @using Nop.Web.Models.Catalog;
 @*category breadcrumb*@
-@section Breadcrumb
-{
-    @if (Model.DisplayCategoryBreadcrumb)
-    {
-        <section>
-            <div class="breadcrumb">
-                <ul>
-                    <li>
-                        <a href="@Url.RouteUrl("HomePage")" title="@T("Categories.Breadcrumb.Top")" style="margin:0px">@T("Categories.Breadcrumb.Top")</a>
-                        <span class="delimiter" style="margin-left:2px;margin-right:2px;">@breadcrumbDelimiter</span>
-                    </li>
-                    @foreach (var cat in Model.CategoryBreadcrumb)
-                    {
-                        var isLastCategory = cat.Id == Model.Id;
-                        <li>
-                            @if (isLastCategory)
+
+
+
+    <div class="container">
+        <h2 class="cat-header-txt">@Model.Name.Replace("Root Category", "Root") </h2>
+
+        <div class="row">
+            <div class="col-md-6">
+                @if (Model.DisplayCategoryBreadcrumb)
+                {
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb top-bottom">
+                            @foreach (var cat in Model.CategoryBreadcrumb)
                             {
-                                <strong class="current-item" style="color:#337ab7;margin:0px">@cat.Name.Replace("Root Category", "Root")</strong>
+                                var isLastCategory = cat.Id == Model.Id;
+                                if (isLastCategory)
+                                {
+                                    <li class="breadcrumb-item active" aria-current="page">@cat.Name.Replace("Root Category", "Root")</li>
+
+                                }
+                                else
+                                {
+                                    <li class="breadcrumb-item"><a href="@Url.RouteUrl("Category", new { SeName = cat.SeName })">@cat.Name.Replace("Root Category", "Root")</a></li>
+                                }
                             }
-                            else
-                            {
-                                <a href="@Url.RouteUrl("Category", new { SeName = cat.SeName })" style="margin:0px" title="@cat.Name">@cat.Name.Replace("Root Category", "Root")</a>
-                                <span class="delimiter" style="margin-left:2px;margin-right:2px;">@breadcrumbDelimiter</span>
-                            }
-                        </li>
-                    }
-                </ul>
+
+                        </ol>
+                    </nav>
+
+                    @Html.Widget("categorydetails_after_breadcrumb", Model.Id)
+                }
+
             </div>
-        </section>
-        @*<div class="breadcrumb">
-                <ul>
-                    <li>
-                        <a href="@Url.RouteUrl("HomePage")" title="@T("Categories.Breadcrumb.Top")">@T("Categories.Breadcrumb.Top")</a>
-                        <span class="delimiter">@breadcrumbDelimiter</span>
-                    </li>
-                    @foreach (var cat in Model.CategoryBreadcrumb)
+            <div class="col-md-6">
+
+                <div class="row">
+                    @if (Model.Products.Count > 0)
                     {
-                        var isLastCategory = cat.Id == Model.Id;
-                        <li>
-                            @if (isLastCategory)
-                            {
-                                <strong class="current-item">@cat.Name</strong>
-                            }
-                            else
-                            {
-                                <a href="@Url.RouteUrl("Category", new { SeName = cat.SeName })" title="@cat.Name">@cat.Name</a>
-                                <span class="delimiter">@breadcrumbDelimiter</span>
-                            }
-                        </li>
-                    }
-                </ul>
-            </div>*@
-        @Html.Widget("categorydetails_after_breadcrumb", Model.Id)
-    }
-}
-
-<h2>@Model.Name.Replace("Root Category", "Root")</h2><hr style="width:100%;">
-
-@*<div class="col-md-3 cat-products">
-        <h4>C0105WH-1BK</h4>
-        <hr />
-        <img src="img/thumb05.jpg" width="195px" alt="web design magazines">
-        <div class="cat-footer">
-            <p class="pull-left">As low as $6.98</p>
-            <button class="details pull-right">Details</button>
-        </div>
-    </div>*@
-
-@Html.Widget("categorydetails_top", Model.Id)
-@*description*@
-@*@if (!String.IsNullOrWhiteSpace(Model.Description))
-    {
-        <div class="category-description">
-            @Html.Raw(Model.Description)
-        </div>
-    }*@
-@Html.Widget("categorydetails_before_subcategories", Model.Id)
-@*subcategories*@
-@if (Model.SubCategories.Any())
-{
-
-    var items = Model.SubCategories.Take(3);
-    var iterations = 0;
-    <div class="row">
-        @while (items.Count() > 0)
-        {
-            foreach (var item in items)
-            {
-                <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 sub-cat">
-                    <h4 style="margin-bottom:0px;">@item.Name</h4>
-                    <hr style="margin-top:5px;" />
-                    <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
-                        <img alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />
-                    </a>
-                </div>
-
-            }
-            iterations++;
-            items = Model.SubCategories.Skip(3 * iterations).Take(3);
-        }
-    </div>
-}
-
-
-    @*featured products*@
-    @*@Html.Widget("categorydetails_before_featured_products", Model.Id)
-
-        @if (Model.FeaturedProducts.Count > 0)
-        {
-            <div class="product-grid featured-product-grid">
-                <div class="title">
-                    <strong>@T("Products.FeaturedProducts")</strong>
-                </div>
-                <div class="item-grid">
-                    @foreach (var item in Model.FeaturedProducts)
-                    {
-                        <div class="item-box">
-                            @Html.Partial("_ProductBox", item)
+                        <div class="row">
+                            @Html.Partial("_CatalogSelectors", Model.PagingFilteringContext, new ViewDataDictionary())
                         </div>
                     }
+
                 </div>
             </div>
-        }
-        @Html.Widget("categorydetails_after_featured_products", Model.Id)*@
-    @if (Model.Products.Count > 0)
-    {
-        <div class="row">
-            @Html.Partial("_CatalogSelectors", Model.PagingFilteringContext, new ViewDataDictionary())
         </div>
-    }
-    @*@Html.Widget("categorydetails_before_filters", Model.Id)
-        <div class="product-filters">
 
-            @if (Model.PagingFilteringContext.PriceRangeFilter.Enabled)
-            {
-                @Html.Partial("_FilterPriceBox", Model.PagingFilteringContext.PriceRangeFilter, new ViewDataDictionary())
-            }
+        @Html.Widget("categorydetails_top", Model.Id)
 
-            @if (Model.PagingFilteringContext.SpecificationFilter.Enabled)
-            {
-                @Html.Partial("_FilterSpecsBox", Model.PagingFilteringContext.SpecificationFilter, new ViewDataDictionary())
-            }
-        </div>
-        @Html.Widget("categorydetails_before_product_list", Model.Id)*@
 
-    @if (Model.Products.Any())
-    {
-        var items = Model.Products.Take(3);
-        var iterations = 0;
-        <div class="product-list">
-            <div class="row">
+        @Html.Widget("categorydetails_before_subcategories", Model.Id)
+
+        @if (Model.SubCategories.Any())
+        {
+
+            var items = Model.SubCategories.Take(4);
+            var iterations = 0;
+            <div class="row cat-row">
                 @while (items.Count() > 0)
                 {
-                    foreach (var product in items)
+                    foreach (var item in items)
                     {
-                        @Html.Partial("_ProductBox", product)
+                        <div class="col-md-3">
+                            <div style="width:280px;height:280px;border:1px solid #ccc;">
+                                <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
+                                    <div style="width:100%;height:100%;background:url(@item.PictureModel.ImageUrl) center center no-repeat;">
+                                    </div>
+                                </a>
+                            </div>
+                            <p class="cat-txt"><span>@item.Name</span></p>
+                        </div>
+
                     }
                     iterations++;
-                    items = Model.Products.Skip(3 * iterations).Take(3);
+                    items = Model.SubCategories.Skip(4 * iterations).Take(4);
                 }
             </div>
-            @*@{
-                    var pager = Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber");
-                }*@
-            @*@if (!pager.IsEmpty())
-                {
-                    <div class="pager">
-                        @pager
-                    </div>
-                }*@
+
+            <br />
+            <br />
+        }
+
+
+        @if (Model.Products.Any())
+        {
+            var items = Model.Products.Take(4);
+            var iterations = 0;
+            <div class="product-list">
+                <div class="row">
+                    @while (items.Count() > 0)
+                    {
+                        foreach (var product in items)
+                        {
+                            @Html.Partial("_ProductBox", product)
+                        }
+                        iterations++;
+                        items = Model.Products.Skip(4 * iterations).Take(4);
+                    }
+                </div>
+            </div>
 
 
             <div class="pager row" style="display :none">
                 @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
             </div>
-        </div>
 
-        <script>
-            var jscroll = $('.product-list').jscroll({
-                loadingHtml: '<img src="/Content/DezineCorpImages/loader.gif"></img>',
-                padding: 200,
-                debug: true,
-                autoTrigger: true,
-                autoTriggerUntil: 30,
-                nextSelector: 'li.next-page a',
-                contentSelector: '.product-list',
-                callback: function () {
-                    $('.pager').hide();
-                    // Remove handler from existing elements
-                    $(".product-box").off();
+            <script>
+                var jscroll = $('.product-list').jscroll({
+                    loadingHtml: '<img src="/Content/DezineCorpImages/loader.gif"></img>',
+                    padding: 200,
+                    debug: true,
+                    autoTrigger: true,
+                    autoTriggerUntil: 30,
+                    nextSelector: 'li.next-page a',
+                    contentSelector: '.product-list',
+                    callback: function () {
+                        $('.pager').hide();
+                        // Remove handler from existing elements
+                        $(".product-box").off();
 
-                    // Re-add event handler for all matching elements
-                    $(".product-box").on("click", GetScrollPos);
-                    //if (localStorage.getItem('scrollPosTop') !== null) {
-                    //    var scrollPos = parseInt(localStorage.getItem('scrollPosTop'));
-                    //    $("html, body").animate({ scrollTop: scrollPos }, 1000);
-                    //    if (scrollPos <= window.document.body.scrollHeight) {
-                    //        localStorage.removeItem('scrollPosTop');
-                    //    }
-                    //}
-                }
-            });
-            var isPostBack = false;
-            $(window).load(function () {
-                if (localStorage.getItem('scrollPosTop') !== null) {
-                    var scrollPos = parseInt(localStorage.getItem('scrollPosTop'));
-                    $('html,body').animate({ scrollTop: scrollPos }, 1000);
-                    //$(document).scrollTop(scrollPos);
+                        // Re-add event handler for all matching elements
+                        $(".product-box").on("click", GetScrollPos);
+
+                    }
+                });
+                var isPostBack = false;
+                $(window).load(function () {
+                    if (localStorage.getItem('scrollPosTop') !== null) {
+                        var scrollPos = parseInt(localStorage.getItem('scrollPosTop'));
+                        $('html,body').animate({ scrollTop: scrollPos }, 1000);
+                        localStorage.removeItem('scrollPosTop');
+
+                    }
+                });
+
+                $('.product-box').live('click', GetScrollPos);
+                function GetScrollPos(event) {
                     localStorage.removeItem('scrollPosTop');
-                    // event.preventDefault();
-                    //$("html, body").animate({ scrollTop: scrollPos }, fast);
+                    var pos = $(this).offset().top;
+                    localStorage.setItem('scrollPosTop', pos);
+                    console.log(pos);
                 }
-            });
-            //$(document).ready(function (event) {
-            //    console.log('root head 3');
-            //    if (localStorage.getItem('scrollPosTop') !== null) {
-            //        var scrollPos = parseInt(localStorage.getItem('scrollPosTop'));
-            //        $("html, body").scrollTop(scrollPos);
-            //        localStorage.removeItem('scrollPosTop');
-            //       // event.preventDefault();
-            //        //$("html, body").animate({ scrollTop: scrollPos }, fast);
-            //    }
-            //});
-            $('.product-box').live('click', GetScrollPos);
-            function GetScrollPos(event) {
-                localStorage.removeItem('scrollPosTop');
-                var pos = $(this).offset().top;
-                localStorage.setItem('scrollPosTop', pos);
-                console.log(pos);
-            }
-            //function ScrollToPos() {
-            //    console.log('scroll ' + localStorage.getItem('scrollPosTop'));
-            //    if (localStorage.getItem('scrollPosTop') !== null) {
-            //        // var bodyHeigt = window.document.body.scrollHeight;
-            //        var scrollPos = parseInt(localStorage.getItem('scrollPosTop'));
-            //        console.log(window.document.body.scrollHeight);
-            //        console.log(scrollPos)
-            //        //while (window.document.body.scrollHeight < scrollPos) {
-            //            $("html, body").animate({ scrollTop: window.document.body.scrollHeight }, 2000);
-            //        //}
-            //        $("html, body").animate({ scrollTop: scrollPos }, 1000);
 
-            //        localStorage.removeItem('scrollPosTop');
-            //    }
-            //}
-        </script>
-    }
-    @Html.Widget("categorydetails_bottom", Model.Id)
+            </script>
+        }
+
+        @Html.Widget("categorydetails_bottom", Model.Id)
+
+
+    </div>
+
 

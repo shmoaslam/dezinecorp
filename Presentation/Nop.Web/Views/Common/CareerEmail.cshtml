@@ -35,7 +35,18 @@
         padding: 10px;
     }
 
-    
+        #career-form .input--form--css {
+            padding: 10px;
+            border: none;
+            margin-bottom: 10px;
+            width: 50%;
+        }
+    .send--mail {
+        padding: 5px 10px;
+        background-color: #007A8A;
+        border: 0px;
+        color: #fff;
+    }
 </style>
 
 <div id="loading-area" class="load" style="display:none;">
@@ -52,27 +63,29 @@
         {
             <div class="message-error">@Html.ValidationSummary(true)</div>
         }
-        <div class="box">
-            @Html.RadioButtonFor(model => model.JobType, "Account Representative", new { id = "Account_Representative" }) <span>Account Representative</span>
-            @Html.RadioButtonFor(model => model.JobType, "Forklift Driver/Shipping", new { id = "Graphic_Artist" }) <span>Forklift Driver/Shipping</span>
-            <br />
-            <br />
-            @Html.TextBoxFor(model => model.Name, new { @class = "input--form--css", placeholder = "First Name - Last Name", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span>
-            @Html.TextBoxFor(model => model.Email, new { @class = "input--form--css", placeholder = "Email", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span>
-            @Html.TextAreaFor(model => model.Comments, new { @class = "input--form--css", placeholder = "Comments" })
-            <br />
-            Please upload resume in (pdf format only)<input type="file" accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf" />
-            <br />
-            @*@Html.TextAreaFor(model => model.AreaOfInterest, new { @class = "input--form--css", placeholder = "Area of Interest" })
-                @Html.TextAreaFor(model => model.ExtraComments, new { @class = "input--form--css", placeholder = "Addtional Comments" })*@
-            @*<div class="captcha-box">
-                @Html.Raw(Html.GenerateCaptcha())
-            </div>*@
-            <br />
-            <div class="row" align="center">
-                <input type="submit" name="send-email" class="send--mail" value="@T("Products.EmailAFriend.Button")" />
-            </div>
-        </div>
+<div class="box">
+    @Html.RadioButtonFor(model => model.JobType, "Account Representative", new { id = "Account_Representative" }) <span>Account Representative</span>
+    @Html.RadioButtonFor(model => model.JobType, "Forklift Driver/Shipping", new { id = "Graphic_Artist" }) <span>Forklift Driver/Shipping</span>
+    <br />
+    <br />
+    @Html.TextBoxFor(model => model.Name, new { @class = "input--form--css", placeholder = "First Name - Last Name", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span>
+    <br />
+    @Html.TextBoxFor(model => model.Email, new { @class = "input--form--css", placeholder = "Email", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span>
+    <br />
+    @Html.TextAreaFor(model => model.Comments, new { @class = "input--form--css", placeholder = "Comments" })
+    <br />
+    Please upload resume in (pdf format only)<input type="file" accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf" />
+    <br />
+    @*@Html.TextAreaFor(model => model.AreaOfInterest, new { @class = "input--form--css", placeholder = "Area of Interest" })
+        @Html.TextAreaFor(model => model.ExtraComments, new { @class = "input--form--css", placeholder = "Addtional Comments" })*@
+    @*<div class="captcha-box">
+            @Html.Raw(Html.GenerateCaptcha())
+        </div>*@
+    <br />
+    <div class="row" align="center">
+        <input type="submit" name="send-email" class="send--mail" value="@T("Products.EmailAFriend.Button")" />
+    </div>
+</div>
     }
 </div>
 

@@ -33,6 +33,12 @@
         background-color: #eee;
         padding: 10px;
     }
+        .input--form--css {
+            padding: 10px;
+            border: none;
+            margin-bottom: 10px;
+            width: 50%;
+        }
 </style>
 
 <div id="loading-area-sub" class="load" style="display:none;">
@@ -49,14 +55,15 @@
         {
             <div class="message-error">@Html.ValidationSummary(true)</div>
         }
-        <div class="box">
-            @Html.TextBoxFor(model => model.FirstName, new { @class = "input--form--css", placeholder = "First Name", @style= "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span>
-            @Html.TextBoxFor(model => model.LastName, new { @class = "input--form--css", placeholder = "Last Name" }) 
-            @Html.TextBoxFor(model => model.Company, new { @class = "input--form--css", placeholder = "Company" })
-            @Html.TextBoxFor(model => model.Email, new { @class = "input--form--css", placeholder = "Email", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span>
-            @Html.TextBoxFor(model => model.PostalCode, new { @class = "input--form--css", placeholder = "Postal Code", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span>
-            @Html.TextBoxFor(model => model.Province, new { @class = "input--form--css", placeholder = "Province", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span>
-        </div>
+<div class="box">
+    @Html.TextBoxFor(model => model.FirstName, new { @class = "input--form--css", placeholder = "First Name", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span>
+    <br />
+    @Html.TextBoxFor(model => model.LastName, new { @class = "input--form--css", placeholder = "Last Name" }) <br />
+    @Html.TextBoxFor(model => model.Company, new { @class = "input--form--css", placeholder = "Company" }) <br />
+    @Html.TextBoxFor(model => model.Email, new { @class = "input--form--css", placeholder = "Email", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span> <br />
+    @Html.TextBoxFor(model => model.PostalCode, new { @class = "input--form--css", placeholder = "Postal Code", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span> <br />
+    @Html.TextBoxFor(model => model.Province, new { @class = "input--form--css", placeholder = "Province", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span>
+</div>
         @*<div class="captcha-box">
             @Html.Raw(Html.GenerateCaptcha())
         </div>*@

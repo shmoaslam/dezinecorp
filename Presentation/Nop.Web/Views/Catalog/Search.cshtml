@@ -1,6 +1,6 @@
 ﻿@model SearchModel
 @{
-    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 
     //title
     Html.AddTitleParts(T("PageTitle.Search").Text);
@@ -24,7 +24,7 @@
         }
     }
 </script>
-<div class="page search-page">
+<div class="container">
     <div class="page-title">
         <h1>@T("Search")</h1>
     </div>
@@ -86,10 +86,21 @@
                 </div>
             }
         </div>
-        @if (Model.Products.Count > 0)
-        {
-            @Html.Partial("_CatalogSelectors", Model.PagingFilteringContext, new ViewDataDictionary())
-        }
+        <div class="container" style="margin-bottom:10px">
+            <div class="row">
+                <div class="col-md-6">
+                    &nbsp;
+                </div>
+                <div class="col-md-6">
+                    @if (Model.Products.Count > 0)
+                    {
+                        @Html.Partial("_CatalogSelectors", Model.PagingFilteringContext, new ViewDataDictionary())
+                    }
+                </div>
+            </div>
+           
+        </div>
+       
         @Html.Widget("productsearch_page_before_results")
         <div class="search-results">
             @if (!String.IsNullOrEmpty(Model.Warning))

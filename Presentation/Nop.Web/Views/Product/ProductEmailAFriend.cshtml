@@ -38,11 +38,16 @@
                         @Html.TextBoxFor(model => model.FriendEmail, new { @class = "input--form--css", placeholder = T("Products.EmailAFriend.FriendEmail.Hint") })
                         @Html.RequiredHint()
                         @Html.ValidationMessageFor(model => model.FriendEmail)
+                        <br />
+                        <br />
                         @Html.TextBoxFor(model => model.YourEmailAddress, new { @class = "input--form--css", placeholder = T("Products.EmailAFriend.YourEmailAddress.Hint") })
                         @Html.RequiredHint()
                         @Html.ValidationMessageFor(model => model.YourEmailAddress)
+                        <br /><br />
                         @Html.TextAreaFor(model => model.PersonalMessage, new { @class = "input--form--css", placeholder = T("Products.EmailAFriend.PersonalMessage.Hint") })
                         @Html.ValidationMessageFor(model => model.PersonalMessage)
+                        <div class="g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["captchaclientkey"]"></div>
+                        <script src='https://www.google.com/recaptcha/api.js'></script>
                     </div>
                     <div class="row" align="center">
                         <input type="submit" name="send-email" class="send--mail" value="@T("Products.EmailAFriend.Button")" />
@@ -50,67 +55,67 @@
                 }
 
             }
-            
+
         </div>
     </section>
 </div>
 
 
 @*<div class="page email-a-friend-page">
-    <div class="page-title">
-        <h1>@T("Products.EmailAFriend.Title")</h1>
-    </div>
-    <div class="page-body">
-        <div class="title">
-            <h2><a href="@Url.RouteUrl("Product", new { SeName = Model.ProductSeName })" class="product">@Model.ProductName</a></h2>
+        <div class="page-title">
+            <h1>@T("Products.EmailAFriend.Title")</h1>
         </div>
-        @if (Model.SuccessfullySent)
-        {
-            <div class="result">
-                @Model.Result
+        <div class="page-body">
+            <div class="title">
+                <h2><a href="@Url.RouteUrl("Product", new { SeName = Model.ProductSeName })" class="product">@Model.ProductName</a></h2>
             </div>
-        }
-        else
-        {
-            using (Html.BeginForm())
+            @if (Model.SuccessfullySent)
             {
-                @Html.AntiForgeryToken()
-                var validationSummary = Html.ValidationSummary(true);
-                if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
-                {
-                    <div class="message-error">@validationSummary</div>
-                }
-                <div class="fieldset">
-                    <div class="form-fields">
-                        <div class="inputs">
-                            @Html.LabelFor(model => model.FriendEmail)
-                            @Html.TextBoxFor(model => model.FriendEmail, new { @class = "friend-email", placeholder = T("Products.EmailAFriend.FriendEmail.Hint") })
-                            @Html.RequiredHint()
-                            @Html.ValidationMessageFor(model => model.FriendEmail)
-                        </div>
-                        <div class="inputs">
-                            @Html.LabelFor(model => model.YourEmailAddress)
-                            @Html.TextBoxFor(model => model.YourEmailAddress, new { @class = "your-email", placeholder = T("Products.EmailAFriend.YourEmailAddress.Hint") })
-                            @Html.RequiredHint()
-                            @Html.ValidationMessageFor(model => model.YourEmailAddress)
-                        </div>
-                        <div class="inputs">
-                            @Html.LabelFor(model => model.PersonalMessage)
-                            @Html.TextAreaFor(model => model.PersonalMessage, new { @class = "personal-message", placeholder = T("Products.EmailAFriend.PersonalMessage.Hint") })
-                            @Html.ValidationMessageFor(model => model.PersonalMessage)
-                        </div>
-                        @if (Model.DisplayCaptcha)
-                        {
-                            <div class="captcha-box">
-                                @Html.Raw(Html.GenerateCaptcha())
-                            </div>
-                        }
-                    </div>
-                </div>
-                <div class="buttons">
-                    <input type="submit" name="send-email" class="button-1 send-email-a-friend-button" value="@T("Products.EmailAFriend.Button")" />
+                <div class="result">
+                    @Model.Result
                 </div>
             }
-        }
-    </div>
-</div>*@
+            else
+            {
+                using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    var validationSummary = Html.ValidationSummary(true);
+                    if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
+                    {
+                        <div class="message-error">@validationSummary</div>
+                    }
+                    <div class="fieldset">
+                        <div class="form-fields">
+                            <div class="inputs">
+                                @Html.LabelFor(model => model.FriendEmail)
+                                @Html.TextBoxFor(model => model.FriendEmail, new { @class = "friend-email", placeholder = T("Products.EmailAFriend.FriendEmail.Hint") })
+                                @Html.RequiredHint()
+                                @Html.ValidationMessageFor(model => model.FriendEmail)
+                            </div>
+                            <div class="inputs">
+                                @Html.LabelFor(model => model.YourEmailAddress)
+                                @Html.TextBoxFor(model => model.YourEmailAddress, new { @class = "your-email", placeholder = T("Products.EmailAFriend.YourEmailAddress.Hint") })
+                                @Html.RequiredHint()
+                                @Html.ValidationMessageFor(model => model.YourEmailAddress)
+                            </div>
+                            <div class="inputs">
+                                @Html.LabelFor(model => model.PersonalMessage)
+                                @Html.TextAreaFor(model => model.PersonalMessage, new { @class = "personal-message", placeholder = T("Products.EmailAFriend.PersonalMessage.Hint") })
+                                @Html.ValidationMessageFor(model => model.PersonalMessage)
+                            </div>
+                            @if (Model.DisplayCaptcha)
+                            {
+                                <div class="captcha-box">
+                                    @Html.Raw(Html.GenerateCaptcha())
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <input type="submit" name="send-email" class="button-1 send-email-a-friend-button" value="@T("Products.EmailAFriend.Button")" />
+                    </div>
+                }
+            }
+        </div>
+    </div>*@

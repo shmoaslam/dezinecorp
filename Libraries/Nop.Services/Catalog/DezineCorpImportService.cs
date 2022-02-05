@@ -11,6 +11,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using MaxMind.GeoIP2.Model;
+using DocumentFormat.OpenXml.Drawing.Diagrams;
 
 namespace Nop.Services.Catalog
 {
@@ -103,6 +106,13 @@ namespace Nop.Services.Catalog
                     resultHtml += "<tr>";
                     resultHtml += "<td>" + content[0] + "</td><td>" + content[1] + "</td>";
                     resultHtml += "</tr>";
+                }
+                else
+                {
+                    resultHtml += "<tr>";
+                    resultHtml += "<td> </td><td>" + content[0] + "</td>";
+                    resultHtml += "</tr>";
+
                 }
             }
             resultHtml += "</table>";
@@ -220,7 +230,7 @@ namespace Nop.Services.Catalog
 
             try
             {
-                FileStream stream = new FileStream(_path, FileMode.Open, FileAccess.Read);
+                FileStream stream = new FileStream(_path, FileMode.Open, FileAccess.ReadWrite);
                 HSSFWorkbook wb = new HSSFWorkbook(stream);
                 ISheet ws = wb.GetSheet("MASTER");
                 int startFromRowNumber = 3; // starting from 0, ignore first 3 rows
@@ -229,8 +239,7 @@ namespace Nop.Services.Catalog
                 status.IsImportFinish = false;
                 string skus = string.Empty;
                 int skucount = 0;
-
-
+                //File.AppendAllText(Path.Combine(Path.GetDirectoryName(_path), "ImportErrorLog.txt"), status.TotalRecord.ToString());
 
                 //Instancing Excel using COM services
                 //objXL = new Microsoft.Office.Interop.Excel.Application();
@@ -245,8 +254,18 @@ namespace Nop.Services.Catalog
 
                 List<string> skusFromSheet = new List<string>();
 
+
+
+                //throw new Exception("Custom Message");
+
+
+                var colors = GetColorValueFromColorCodes();
+                //File.AppendAllText(Path.Combine(Path.GetDirectoryName(_path), "ImportErrorLog.txt"), "color extracted");
+
                 for (int r = startFromRowNumber; r <= rows; r++)
                 {
+                    //File.AppendAllText(Path.Combine(Path.GetDirectoryName(_path), "ImportErrorLog.txt"), "inside product iteration 1" + Environment.NewLine);
+
                     var sku = string.Empty;
                     try
                     {
@@ -255,11 +274,19 @@ namespace Nop.Services.Catalog
                         {
                             continue;
                         }
+                        //File.AppendAllText(Path.Combine(Path.GetDirectoryName(_path), "ImportErrorLog.txt"), "inside product iteration 2" + Environment.NewLine);
 
                         sku = GetCellValue(row.GetCell(ExcelColumnNameToNumber("A") - 1));
                         var product = GetProductBySKU(sku);
-
                         skusFromSheet.Add(sku);
+
+                        //File.AppendAllText(Path.Combine(Path.GetDirectoryName(_path), "ImportErrorLog.txt"), "inside product iteration 3" + Environment.NewLine);
+
+                        //File.AppendAllText(Path.Combine(Path.GetDirectoryName(_path), "ImportErrorLog.txt"), sku);
+
+                        //File.AppendAllText(Path.Combine(Path.GetDirectoryName(_path), "ImportErrorLog.txt"), (product == null).ToString());
+
+                        //File.AppendAllText(Path.Combine(Path.GetDirectoryName(_path), "ImportErrorLog.txt"), (product.Rows.Count).ToString());
 
                         if (product == null)
                             continue;
@@ -267,10 +294,95 @@ namespace Nop.Services.Catalog
                         if (product.Rows.Count <= 0)
                             continue;
 
+                        //File.AppendAllText(Path.Combine(Path.GetDirectoryName(_path), "ImportErrorLog.txt"), "inside product iteration 4" + Environment.NewLine);
+
+
                         int productid = Convert.ToInt32(product.Rows[0]["Id"].ToString());
 
                         if (productid == 0)
                             continue;
+
+                        //File.AppendAllText(Path.Combine(Path.GetDirectoryName(_path), "ImportErrorLog.txt"), "processing " + productid.ToString() + " sku " +  sku);
+
+
+
+                        // code to set color and image in the master sheet
+                        try
+                        {
+
+                            var colorCodes = GetColorCodeFromSku(sku);
+
+                            var color_1 = string.Empty;
+                            var color_2 = string.Empty;
+                            if (colorCodes.Any())
+                            {
+                                if (colorCodes.Count() >= 2)
+                                {
+                                    color_1 = colors.FirstOrDefault(x => x.Key == colorCodes[0]).Value;
+                                    color_2 = colors.FirstOrDefault(x => x.Key == colorCodes[1]).Value;
+
+                                }
+                                if (colorCodes.Count() >= 1)
+                                {
+                                    color_1 = colors.FirstOrDefault(x => x.Key == colorCodes[0]).Value;
+                                }
+                            }
+
+
+                            if (!string.IsNullOrEmpty(color_1))
+                            {
+                                var column_index = ExcelColumnNameToNumber("EZ") - 1;
+                                var color1_cell = row.GetCell(column_index);
+                                if (color1_cell == null)
+                                {
+                                    var cell = row.CreateCell(column_index);
+                                    cell.SetCellValue(color_1);
+                                }
+                                else
+                                {
+                                    color1_cell.SetCellValue(color_1);
+                                }
+                            }
+                            if (!string.IsNullOrEmpty(color_2))
+                            {
+                                var column_index = ExcelColumnNameToNumber("FA") - 1;
+                                var color2_cell = row.GetCell(column_index);
+                                if (color2_cell == null)
+                                {
+                                    var cell = row.CreateCell(column_index);
+                                    cell.SetCellValue(color_2);
+                                }
+                                else
+                                {
+                                    color2_cell.SetCellValue(color_2);
+                                }
+                            }
+
+                            var pictureUrl = GetPictures(productid);
+                            if (!string.IsNullOrEmpty(pictureUrl))
+                            {
+                                var column_index = ExcelColumnNameToNumber("FB") - 1;
+                                var imageUrl_Cell = row.GetCell(column_index);
+                                if (imageUrl_Cell == null)
+                                {
+                                    var cell = row.CreateCell(column_index);
+                                    cell.SetCellValue(pictureUrl);
+                                }
+                                else
+                                {
+                                    imageUrl_Cell.SetCellValue(pictureUrl);
+                                }
+                            }
+                        }
+                        catch
+                        {
+
+                        }
+
+
+
+                       
+                        #region fetch excel row cell
 
                         bool isChangesMade = false;
 
@@ -278,6 +390,7 @@ namespace Nop.Services.Catalog
                         string eNewPage = product.Rows[0]["NewPage"].ToString();
                         if (NewPage != eNewPage)
                             isChangesMade = true;
+
 
                         string ShortDescription = GetCellValue(row.GetCell(ExcelColumnNameToNumber("D") - 1));
                         if (isChangesMade == false)
@@ -1517,8 +1630,13 @@ namespace Nop.Services.Catalog
                             if (BrandingFamily != e)
                                 isChangesMade = true;
                         }
+                        #endregion
+
+
 
                         string MappedItemNumber = string.Empty;
+
+                        #region update database
 
                         if (isChangesMade == true)
                         {
@@ -1866,7 +1984,7 @@ namespace Nop.Services.Catalog
 
                         }
 
-
+                        #endregion
                     }
                     catch (Exception ex)
                     {
@@ -1879,6 +1997,7 @@ namespace Nop.Services.Catalog
                 }
                 //ds.Tables.Add(dt);
                 //ws.Dispose();
+                //File.AppendAllText(Path.Combine(Path.GetDirectoryName(_path), "ImportErrorLog.txt"), "product iteration completed");
 
                 var skusFromNopCommerce = GetSkuFromNopCommerce();
 
@@ -1892,6 +2011,9 @@ namespace Nop.Services.Catalog
                 //objWB.Close();
                 //Closing excel application
                 //objXL.Quit();
+                var newFile = Path.Combine(Path.GetDirectoryName(_path), "DezineCorpCatalogueWithColorAndImage.xls");
+                using (FileStream s = new FileStream(newFile, FileMode.Create, FileAccess.Write))
+                    wb.Write(s);
 
             }
             catch (Exception ex)
@@ -1902,8 +2024,71 @@ namespace Nop.Services.Catalog
                 //Closing excel application
                 //objXL.Quit();
                 //Response.Write("Illegal permission");
-                var STRING = ex.Message;
+                var STRING = ex.Message + (ex.InnerException != null ? Environment.NewLine + ex.InnerException.Message : string.Empty);
+
+               // File.AppendAllText(Path.Combine(Path.GetDirectoryName(_path), "ImportErrorLog.txt"), STRING);
+
+               // UpdateStatus(new ImportStatus { IsImportFinish = true, RecordFailed = ex.Message });
             }
+        }
+
+        private Dictionary<string, string> GetColorValueFromColorCodes()
+        {
+            var colorCodeMapping = new Dictionary<string, string>();
+            try
+
+            {
+                var colorCodeFile = Path.Combine(Path.GetDirectoryName(_path), "Dezinecorp_Extracted_Colours.csv");
+                var importDirectory = File.ReadAllLines(colorCodeFile).Skip(1);
+
+                foreach (var item in importDirectory)
+                {
+                    var data = item.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                    if (data.Length <= 2)
+                    {
+                        colorCodeMapping.Add(data[0].Trim(), data[1].Trim());
+                    }
+                }
+
+            }
+            catch
+            {
+
+            }
+            return colorCodeMapping;
+        }
+
+        private List<string> GetColorCodeFromSku(string sku)
+        {
+            var result = new List<string>();
+            try
+            {
+                if (string.IsNullOrEmpty(sku))
+                    return result;
+
+                if (sku.Contains("-"))
+                    sku = sku.Split(new string[] { "-" }, StringSplitOptions.RemoveEmptyEntries)[0];
+
+
+                var sku_color = sku.ToArray().SkipWhile(x => !char.IsDigit(x)).SkipWhile(x => char.IsDigit(x)).ToList();
+                if (sku_color.Any())
+                {
+                    var totalColorCode = new string(sku_color.ToArray());
+                    if (totalColorCode.Length >= 2)
+                        result.Add(new string(totalColorCode.Take(2).ToArray()));
+                    if (totalColorCode.Length < 4 && totalColorCode.Length > 2)
+                        result.Add(new string(totalColorCode.Skip(2).Take(1).ToArray()));
+                    if (totalColorCode.Length >= 4)
+                        result.Add(new string(totalColorCode.Skip(2).Take(2).ToArray()));
+
+                }
+            }
+            catch
+            {
+
+            }
+
+            return result;
         }
 
         private void SetProductToDelete(IEnumerable<string> skutosetdelete)
@@ -1974,15 +2159,8 @@ namespace Nop.Services.Catalog
                     SqlCommand cmd = new SqlCommand();
                     //cmd.CommandText = "select * from Product where SKU = @SKU and Deleted = 0 order by CreatedOnUtc desc";
                     //"SELECT ProductID FROM dbo.Nop_ProductVariant AS npv WHERE SKU COLLATE Latin1_General_CS_AS ='" + sku + "'";
-                    cmd.CommandText = "select * from Product p " +
-                        "left outer join DezineCorpAdditionalPricing dap on p.Id = dap.ProductId " +
-                        "left outer join DezineCorpData dd on p.Id = dd.ProductId " +
-                        "left outer join DezineCorpDataRefOnly ddro on p.Id = ddro.ProductId " +
-                        "left outer join DezineCorpProductKeyword dk on p.Id = dk.ProductId " +
-                        "left outer join DezineCorpRelatedProduct dr on p.Id = dr.ProductId " +
-                        "left outer join DezineCorpTierPrice dtp on p.Id = dtp.ProductId " +
-                        "left outer join DezinecorpSageandBrandingData dsb on p.Id = dsb.ProductId " +
-                        "where p.SKU = @SKU  and Deleted = 0 order by CreatedOnUtc desc";
+                    cmd.CommandText = "exec [dbo].[getProductForDezineCorpImport] @SKU";
+                    //cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@SKU", sku);
                     cmd.Connection = con;
                     con.Open();
@@ -2008,6 +2186,87 @@ namespace Nop.Services.Catalog
                 }
             }
             return null;
+        }
+
+        private string GetPictures(int id)
+        {
+
+            var picUrl = string.Empty;
+            using (SqlConnection con = new SqlConnection())
+            {
+                try
+                {
+                    con.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["conString"].ToString();
+                    SqlCommand cmd = new SqlCommand();
+                    //cmd.CommandText = "select * from Product where SKU = @SKU and Deleted = 0 order by CreatedOnUtc desc";
+                    //"SELECT ProductID FROM dbo.Nop_ProductVariant AS npv WHERE SKU COLLATE Latin1_General_CS_AS ='" + sku + "'";
+                    cmd.CommandText = "select * from Product_Picture_Mapping ppm join Picture p on ppm.PictureId = p.Id where ppm.ProductId =  @productId";
+                    //cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@productId", id);
+                    cmd.Connection = con;
+                    con.Open();
+                    DataTable dataTable = new DataTable();
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    // this will query your database and return the result to your datatable
+                    da.Fill(dataTable);
+
+                    if (dataTable != null)
+                    {
+                        if (dataTable.Rows.Count > 0)
+                        {
+                            var seoFileName = dataTable.Rows[0]["SeoFilename"] ?? string.Empty;
+                            var mimeType = dataTable.Rows[0]["MimeType"] ?? string.Empty;
+                            var pictureId = Convert.ToInt32(dataTable.Rows[0]["PictureId"]);
+                            string lastPart = GetFileExtensionFromMimeType(mimeType.ToString());
+                             picUrl = !string.IsNullOrEmpty(seoFileName.ToString()) ?
+                                           string.Format("http://dezinecorp.com/content/images/thumbs/{0}_{1}.{2}", pictureId.ToString("0000000"), seoFileName, lastPart) :
+                                           string.Format("http://dezinecorp.com/content/images/thumbs/{0}.{1}", pictureId.ToString("0000000"), lastPart);
+                        }
+                    }
+
+                    con.Close();
+                    da.Dispose();
+
+                    return picUrl;
+                    //i = Convert.ToInt32(cmd.ExecuteScalar());
+                    //con.Close();
+                    //con.Dispose();
+                }
+
+                catch (SqlException Ex)
+                {
+
+                    con.Close();
+                    con.Dispose();
+                    System.Diagnostics.Trace.WriteLine("CommonDBClass Has Exception " + Ex.Message);
+                }
+            }
+            return null;
+
+        }
+
+        protected static string GetFileExtensionFromMimeType(string mimeType)
+        {
+            if (mimeType == null)
+                return null;
+
+            //also see System.Web.MimeMapping for more mime types
+
+            string[] parts = mimeType.Split('/');
+            string lastPart = parts[parts.Length - 1];
+            switch (lastPart)
+            {
+                case "pjpeg":
+                    lastPart = "jpg";
+                    break;
+                case "x-png":
+                    lastPart = "png";
+                    break;
+                case "x-icon":
+                    lastPart = "ico";
+                    break;
+            }
+            return lastPart;
         }
 
         private int ExecuteQuery(SqlCommand cmd)
