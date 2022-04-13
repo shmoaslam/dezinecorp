@@ -201,12 +201,25 @@ namespace Nop.Web.Controllers
             return View();
         }
 
+
+
         [Route("AboutUs")]
         public ActionResult AboutUs()
         {
 
             return View();
         }
+
+
+
+        [Route("FAQ")]
+        public ActionResult FAQ()
+        {
+
+            return View();
+        }
+
+
 
         //language
         [ChildActionOnly]
@@ -496,6 +509,12 @@ namespace Nop.Web.Controllers
         {
             return PartialView(new SubscriptionEmailModel());
         }
+        [NopHttpsRequirement(SslRequirement.No)]
+        [HttpPost]
+        public ActionResult SubscriptionEmail(string Email)
+        {
+            return  PartialView("_SubmitMessageSub", false);
+        }
 
 
         [ChildActionOnly]
@@ -506,61 +525,61 @@ namespace Nop.Web.Controllers
         }
 
 
-        [HttpPost, ActionName("SubscriptionEmail")]
-        [PublicAntiForgery]
-        [FormValueRequired("Subscribtion")]
-        [CaptchaValidator]
-        public PartialViewResult SubscriptionEmail(SubscriptionEmailModel model, bool captchaValid)
-        {
-            //if (_captchaSettings.Enabled && !captchaValid)
-            //    ModelState.AddModelError("", _localizationService.GetResource("Common.WrongCaptcha"));
-            bool isMessageSent = false;
-            if (ModelState.IsValid)
-            {
-                var emailAccount = _emailAccountService.GetEmailAccountById(_emailAccountSettings.DefaultEmailAccountId);
-                if (emailAccount == null)
-                    emailAccount = _emailAccountService.GetAllEmailAccounts().FirstOrDefault();
-                if (emailAccount == null)
-                    throw new Exception("No email account could be loaded");
-                string from;
-                string fromName;
-                string body = Core.Html.HtmlHelper.FormatText("Thank you subscription your request!", false, true, false, false, false, false);
-                //required for some SMTP servers
-                if (_commonSettings.UseSystemEmailForContactUsForm)
-                {
-                    from = emailAccount.Email;
-                    fromName = emailAccount.DisplayName;
-                    body = string.Format("<strong>From</strong>: {0} - {1}<br /><br />{2}",
-                        Server.HtmlEncode(model.FirstName + " " + model.LastName),
-                        Server.HtmlEncode(model.Email), body);
-                }
-                else
-                {
-                    from = model.Email;
-                    fromName = model.FirstName + " " + model.LastName;
-                }
-                _queuedEmailService.InsertQueuedEmail(new QueuedEmail
-                {
-                    From = from,
-                    FromName = fromName,
-                    To = emailAccount.Email,
-                    ToName = emailAccount.DisplayName,
-                    ReplyTo = model.Email,
-                    ReplyToName = model.FirstName + " " + model.LastName,
-                    Priority = QueuedEmailPriority.High,
-                    Subject = "DezineCorp - Subscription",
-                    Body = body,
-                    CreatedOnUtc = DateTime.UtcNow,
-                    EmailAccountId = emailAccount.Id
-                });
+        //[HttpPost, ActionName("SubscriptionEmail")]
+        //[PublicAntiForgery]
+        //[FormValueRequired("Subscribtion")]
+        ////[ChildActionOnly]
+        //public ActionResult SubscriptionEmail(SubscriptionEmailModel model, bool captchaValid)
+        //{
+        //    //if (_captchaSettings.Enabled && !captchaValid)
+        //    //    ModelState.AddModelError("", _localizationService.GetResource("Common.WrongCaptcha"));
+        //    bool isMessageSent = false;
+        //    if (ModelState.IsValid)
+        //    {
+        //        var emailAccount = _emailAccountService.GetEmailAccountById(_emailAccountSettings.DefaultEmailAccountId);
+        //        if (emailAccount == null)
+        //            emailAccount = _emailAccountService.GetAllEmailAccounts().FirstOrDefault();
+        //        if (emailAccount == null)
+        //            throw new Exception("No email account could be loaded");
+        //        string from;
+        //        string fromName;
+        //        string body = Core.Html.HtmlHelper.FormatText("Thank you subscription your request!", false, true, false, false, false, false);
+        //        //required for some SMTP servers
+        //        if (_commonSettings.UseSystemEmailForContactUsForm)
+        //        {
+        //            from = emailAccount.Email;
+        //            fromName = emailAccount.DisplayName;
+        //            body = string.Format("<strong>From</strong>: {0} - {1}<br /><br />{2}",
+        //                Server.HtmlEncode(model.FirstName + " " + model.LastName),
+        //                Server.HtmlEncode(model.Email), body);
+        //        }
+        //        else
+        //        {
+        //            from = model.Email;
+        //            fromName = model.FirstName + " " + model.LastName;
+        //        }
+        //        _queuedEmailService.InsertQueuedEmail(new QueuedEmail
+        //        {
+        //            From = from,
+        //            FromName = fromName,
+        //            To = emailAccount.Email,
+        //            ToName = emailAccount.DisplayName,
+        //            ReplyTo = model.Email,
+        //            ReplyToName = model.FirstName + " " + model.LastName,
+        //            Priority = QueuedEmailPriority.High,
+        //            Subject = "DezineCorp - Subscription",
+        //            Body = body,
+        //            CreatedOnUtc = DateTime.UtcNow,
+        //            EmailAccountId = emailAccount.Id
+        //        });
 
-                isMessageSent = true;
-                return PartialView("_SubmitMessageSub", isMessageSent);
+        //        isMessageSent = true;
+        //        return PartialView("_SubmitMessageSub", isMessageSent);
 
-            }
-            return PartialView("_SubmitMessageSub", false);
+        //    }
+        //    return PartialView("_SubmitMessageSub", false);
             
-        }
+        //}
 
 
         [HttpPost, ActionName("NoSubscribeEmail")]
@@ -627,37 +646,37 @@ namespace Nop.Web.Controllers
         }
 
 
-
-        [ChildActionOnly]
         [NopHttpsRequirement(SslRequirement.No)]
-        public ActionResult ContactUs()
+        public ActionResult Contact()
         {
-            //var model = new ContactUsModel
-            //{
-            //    Email = _workContext.CurrentCustomer.Email,
-            //    FullName = _workContext.CurrentCustomer.GetFullName(),
-            //    SubjectEnabled = _commonSettings.SubjectFieldOnContactUsForm,
-            //    DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnContactUsPage
-            //};
-            return PartialView(new ContactUsModel());
-        }
-        //[HttpPost, ActionName("ContactUs")]
-        //[PublicAntiForgery]
-        //[CaptchaValidator]
-        ////available even when a store is closed
-        //[StoreClosed(true)]
-        [HttpPost, ActionName("ContactUs")]
-        [PublicAntiForgery]
-        [FormValueRequired("ContactUs")]
-        [CaptchaValidator]
-        public ActionResult ContactUsSend(ContactUsModel model, bool captchaValid)
-        {
-            //validate CAPTCHA
-            if (_captchaSettings.Enabled && _captchaSettings.ShowOnContactUsPage && !captchaValid)
+
+            ContactUsModel contactUsModel = new ContactUsModel();
+            if (Request.QueryString.Count > 0)
             {
-                ModelState.AddModelError("", _localizationService.GetResource("Common.WrongCaptcha"));
+                contactUsModel.FullName = Request.QueryString["name"]?.ToString();
+                contactUsModel.Email = Request.QueryString["email"]?.ToString();
+                contactUsModel.Enquiry = Request.QueryString["desc"]?.ToString();
             }
 
+
+            return View(contactUsModel);
+        }
+
+
+        [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult Subscribe()
+        {
+
+           
+
+
+            return View();
+        }
+
+        [HttpPost]
+        [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult Contact(ContactUsModel model)
+        {
             if (ModelState.IsValid)
             {
                 string email = model.Email.Trim();
@@ -674,6 +693,10 @@ namespace Nop.Web.Controllers
 
                 string from;
                 string fromName;
+                if (model.Query == "quote")
+                {
+                    model.Enquiry = Environment.NewLine + "Product Number : " + model.ProductNumber + Environment.NewLine + "Quantity : " + model.Quantity + Environment.NewLine + model.Enquiry;
+                }
                 string body = Core.Html.HtmlHelper.FormatText(model.Enquiry, false, true, false, false, false, false);
                 //required for some SMTP servers
                 if (_commonSettings.UseSystemEmailForContactUsForm)
@@ -710,11 +733,114 @@ namespace Nop.Web.Controllers
                 //activity log
                 _customerActivityService.InsertActivity("PublicStore.ContactUs", _localizationService.GetResource("ActivityLog.PublicStore.ContactUs"));
 
-                return PartialView("_ContactUsMessage", model);
+                return View("Contact", model);
             }
 
             model.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnContactUsPage;
-            return View("_ContactUsMessage", model);
+            return View("Contact", model);
+           
+        }
+
+        [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult ContactUs(int? productId)
+        {
+
+            ContactUsModel contactUsModel = new ContactUsModel();
+            if (Request.QueryString.Count>0)
+            {
+                contactUsModel.FullName = Request.QueryString["name"]?.ToString();
+                contactUsModel.Email = Request.QueryString["email"]?.ToString();
+                contactUsModel.Enquiry = Request.QueryString["desc"]?.ToString();
+            }
+
+            Product product = null;
+            if (productId.HasValue)
+            {
+                product = _productService.GetProductById(productId.Value);
+                if (product == null || product.Deleted || !product.Published || !_catalogSettings.EmailAFriendEnabled)
+                    return RedirectToRoute("HomePage");
+            }
+
+            //var model = new ContactUsModel
+            //{
+            //    Email = _workContext.CurrentCustomer.Email,
+            //    FullName = _workContext.CurrentCustomer.GetFullName(),
+            //    SubjectEnabled = _commonSettings.SubjectFieldOnContactUsForm,
+            //    DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnContactUsPage
+            //};
+            if (product != null)
+            {
+                contactUsModel.ProductNumber = product.Sku;
+                contactUsModel.Query = "quote";
+            }
+            return View(contactUsModel);
+        }
+      
+        [HttpPost, ActionName("ContactUs")]
+        public ActionResult ContactUsSend(ContactUsModel model)//, bool captchaValid)
+        {
+           
+            if (ModelState.IsValid)
+            {
+                string email = model.Email.Trim();
+                string fullName = model.FullName;
+                string subject = _commonSettings.SubjectFieldOnContactUsForm ?
+                    model.Subject :
+                    string.Format(_localizationService.GetResource("ContactUs.EmailSubject"), _storeContext.CurrentStore.GetLocalized(x => x.Name));
+
+                var emailAccount = _emailAccountService.GetEmailAccountById(_emailAccountSettings.DefaultEmailAccountId);
+                if (emailAccount == null)
+                    emailAccount = _emailAccountService.GetAllEmailAccounts().FirstOrDefault();
+                if (emailAccount == null)
+                    throw new Exception("No email account could be loaded");
+
+                string from;
+                string fromName;
+                if (model.Query == "quote")
+                {
+                    model.Enquiry = Environment.NewLine + "Product Number : " + model.ProductNumber + Environment.NewLine + "Quantity : " + model.Quantity + Environment.NewLine + model.Enquiry;
+                }
+                string body = Core.Html.HtmlHelper.FormatText(model.Enquiry , false, true, false, false, false, false);
+                //required for some SMTP servers
+                if (_commonSettings.UseSystemEmailForContactUsForm)
+                {
+                    from = emailAccount.Email;
+                    fromName = emailAccount.DisplayName;
+                    body = string.Format("<strong>From</strong>: {0} - {1}<br /><br />{2}",
+                        Server.HtmlEncode(fullName),
+                        Server.HtmlEncode(email), body);
+                }
+                else
+                {
+                    from = email;
+                    fromName = fullName;
+                }
+                _queuedEmailService.InsertQueuedEmail(new QueuedEmail
+                {
+                    From = from,
+                    FromName = fromName,
+                    To = emailAccount.Email,
+                    ToName = emailAccount.DisplayName,
+                    ReplyTo = email,
+                    ReplyToName = fullName,
+                    Priority = QueuedEmailPriority.High,
+                    Subject = subject,
+                    Body = body,
+                    CreatedOnUtc = DateTime.UtcNow,
+                    EmailAccountId = emailAccount.Id
+                });
+
+                model.SuccessfullySent = true;
+                model.Result = _localizationService.GetResource("ContactUs.YourEnquiryHasBeenSent");
+
+                //activity log
+                _customerActivityService.InsertActivity("PublicStore.ContactUs", _localizationService.GetResource("ActivityLog.PublicStore.ContactUs"));
+
+                return PartialView("ContactUs", model);
+            }
+
+            model.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnContactUsPage;
+            return View("ContactUs", model);
         }
         //contact vendor page
         [NopHttpsRequirement(SslRequirement.Yes)]

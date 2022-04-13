@@ -20,10 +20,9 @@
 @if (Model.AllowProductSorting)
 {
 
-    <div class="col-md-6"> <span class="pull-right" style="margin-top:1.5em;font-weight: bold;">@T("Catalog.OrderBy")</span></div>
-    <div class="col-md-6">
-        @Html.DropDownList("products-orderby", Model.AvailableSortOptions, new { onchange = "setLocation(this.value);" ,style = "margin-top:1.5em;font-weight: bold;width:100%;" })
-    </div>
+
+        @Html.DropDownList("products-orderby", Model.AvailableSortOptions, new { onchange = "setLocation(this.value);" , @class = "inline-text-input corner-radius" })
+
 }
 @*page size*@
 @*@if (Model.AllowCustomersToSelectPageSize)

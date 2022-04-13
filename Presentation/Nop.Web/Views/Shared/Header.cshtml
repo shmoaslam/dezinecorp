@@ -4,71 +4,108 @@
 @using Nop.Web.Framework.Themes
 @{
     //logo path
-    var currentThemeName = EngineContext.Current.Resolve<IThemeContext>().WorkingThemeName;
-    var logoPath = "~/Themes/" + currentThemeName + "/Content/images/logo.gif";
+    //var currentThemeName = EngineContext.Current.Resolve<IThemeContext>().WorkingThemeName;
+    //var logoPath = "~/Themes/" + currentThemeName + "/Content/images/logo.gif";
 
     //store name
-    var storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
+    //var storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
 }
-@Html.Widget("header")
-<!--Commenting Default header of nopCommerce Start -->
-@*<div class="header-upper">
-        <div class="header-selectors-wrapper">
-
-            @Html.Action("TaxTypeSelector", "Common")
-
-            @Html.Action("CurrencySelector", "Common")
-
-            @Html.Action("LanguageSelector", "Common")
-
-            @Html.Widget("header_selectors")
-        </div>
-        <div class="header-links-wrapper">
-            @Html.Action("HeaderLinks", "Common")
-            @Html.Action("FlyoutShoppingCart", "ShoppingCart")
-        </div>
-    </div>*@
-@*<div class="header-lower">
-        <div class="header-logo">
-            <a href="@Url.RouteUrl("HomePage")">
-                <img title="" alt="@storeName" src="@Url.Content(logoPath)">
-            </a>
-        </div>
-        <div class="search-box store-search-box">
-            @Html.Action("SearchBox", "Catalog")
-        </div>
-    </div>*@
-<!--Commenting Default header of nopCommerce  End -->
-<!-- Adding Dezinecorp Header Start -->
-@*<div class="pd-top-1o5per">
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><a href="/"><img src="~/Content/DezineCorpImages/logo.png" alt="DezineCorp Logo" width="270px" /></a> </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 pd-top-1o5per ">
-            <div class="input-group">
-                @Html.Action("SearchBox", "Catalog")
-
+@*@Html.Widget("header")*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#small-searchterms').keypress(function (e) {
+            var key = e.which;
+            if (key == 13)  // the enter key code
+            {
+                $("#searchbutton").click();
+            }
+        });
+        $("#searchbutton").on("click", function myfunction() {
+            if ($("#small-searchterms").val() == "") {
+                alert('Please enter some search keyword');
+                $("#small-searchterms").focus();
+                return;
+            }
+            window.location = "/search?q=" + $("#small-searchterms").val();
+        });
+    });
+   
+</script>
+<div class="header-wrap section section-full-width">
+    <div class="content-inner-width header-inner-wrap">
+        <div class="header-inner">
+            <div class="header-left">
+                <div id="logo" class="logo-wrap">
+                    <a href="/">
+                        <img class="header-logo-img" src="~/Content/DezineCorpImages/dezinecorp_logo.svg" alt="Dezine Corp Logo" />
+                    </a>
+                </div>
+                <!-- /.logo-wrap -->
+                <p class="logo-tagline"><i class="fab fa-canadian-maple-leaf"></i> 100% Canadian family owned and operated</p>
             </div>
-        </div>
-        <div class="col-lg-1 col-md-1 col-sm-3  col-xs-6 pd-top-1o5per"><img src="~/Content/DezineCorpImages/flag.jpg" width="21" height="14" alt="" /></div>
-        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 pd-top-1o5per">
-            <a data-toggle="modal" data-target="#accountModel" style="cursor:pointer;"> <div class="login_box"> <span><i class="fa fa-sign-in"></i>&nbsp;&nbsp;Login</span> </div></a>
-        </div>
-        <div class="clearfix"></div>
-    </div>*@
+            <!-- /header-left -->
+            <div class="header-right">
 
-<div class="row top__nav">
-    <div class="col-md-6"><a class="main-logo" href="/"> <img alt="dezinecorp" src="~/Content/DezineCorpImages/logo.jpg"> </a></div>
-    <div class="col-md-6">
-        <div class="navbar-form navbar-right">
-            <div class="row" style="margin-bottom: 10px;">
-                <div class="col-md-12">
-                    <button type="submit" class="btn bt-login pull-right">Login</button>
-                    <img alt="dezinecorp" class="pull-right flag" src="~/Content/DezineCorpImages/canada.jpg">
+                <!-- *************************************** -->
+                <!--                                         -->
+                <!-- DESKTOP NAV                             -->
+                <!--                                         -->
+                <!-- *************************************** -->
+
+               
+
+                <div class="nav-upper">
+                    <ul class="nav-upper-list">
+                        <li class="nav-main-item"><img class="currency-flag" src="~/Content/DezineCorpImages/ca_flag.svg"><span class="fake-menu"> | $CAD</span></li>
+                        <li class="nav-main-item nav-login"><a href="/login">Login <i class="fas fa-key" aria-hidden="true"></i></a></li>
+                        <li class="nav-main-item nav-search-wrapper">
+                            <input type="text" class="clear-default-input inline-text-input corner-radius nav-search-input" placeholder="Search" id="small-searchterms" name="q" autocomplete="off">
+                            <a class="bt-g nav-search-button" id="searchbutton" >
+                                <i class="fas fa-search" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="nav-lower nav-wrap desktop-nav">
+                    <ul class="nav-main nav-main-desktop">
+                        @Html.Action("TopMenu", "Catalog")
+                    </ul>
+                    <!-- /.nav-main -->
+
+                    <div class="mobile-nav-icon-wrap">
+                        <div id="mobile-menu-toggle" class="icon-wrapper">
+                            <!-- .scary-menu -->
+                            <svg id="icon-hamburger-expand" style="enable-background:new 0 0 32 32; fill: #000;" version="1.1" viewBox="0 0 32 32" height="32px" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path class="mobile-menu-icon" d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z" /></svg>
+                            <svg id="icon-hamburger-collapse" height="32px" width="32px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 viewBox="0 0 32 32" style="enable-background:new 0 0 32 32; fill: #000;" xml:space="preserve">
+                            <path d="M28,14H4c-1.1,0-2,0.9-2,2s0.9,2,2,2h24c1.1,0,2-0.9,2-2S29.1,14,28,14z" />
+											</svg>
+                        </div>
+                    </div>	<!-- /.mobile-nav-icon-wrap -->
                 </div>
             </div>
-            @Html.Action("SearchBox", "Catalog")
-
+            <!-- /header-right-->
         </div>
     </div>
 </div>
 
-<!-- Adding Dezinecorp Header End -->
+<!-- *************************************** -->
+<!--                                         -->
+<!-- MOBILE NAV                              -->
+<!--                                         -->
+<!-- *************************************** -->
+<div class="nav-wrap mobile-nav">
+
+    <div id="mobile-nav-roll" class="mobile-nav-container">
+        <!-- *************************************** -->
+        <!-- MOBILE NAV ITEMS                        -->
+        <!-- *************************************** -->
+        <ul class="nav-main nav-main-mobile">
+            @Html.Action("TopMenu", "Catalog")
+            <!-- /contact -->
+        </ul>
+        <!-- *************************************** -->
+        <!-- /END MOBILE NAVE ITEMS                  -->
+        <!-- *************************************** -->
+    </div><!-- /.mobile-nav-container -->
+</div>

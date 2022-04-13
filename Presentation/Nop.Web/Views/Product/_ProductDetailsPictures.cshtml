@@ -5,34 +5,60 @@
     Html.AddCssFileParts("~/Content/magnific-popup/magnific-popup.css");
 }
 <script src="~/Scripts/DezineCorp/jquery.elevateZoom-3.0.8.min.js"></script>
-
-<div class="preview-pic" style="text-align: center;">
-    <div class="tab-pane active" id="pic-1">
-        <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" data-zoom-image="@Model.DefaultPictureModel.FullSizeImageUrl" title="@Model.DefaultPictureModel.Title" itemprop="image" id="main-product-img" />
+<!-********************************************->
+		<!-  Slick slider                              ->
+		<!-********************************************->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<div class="product-images-wrapper ">
+    <div class="product-main-image-wrapper">
+        <img id="main-product-img" class="product-main-image" src="@Model.DefaultPictureModel.ImageUrl" data-zoom-image="@Model.DefaultPictureModel.FullSizeImageUrl" alt="@Model.DefaultPictureModel.AlternateText" itemprop="image" title="@Model.DefaultPictureModel.Title" />
     </div>
 </div>
-<div class="col-md-12 preview-pic">
-    <div class="carousel slide" data-ride="carousel" id="quote-carousel" style="margin: 10px 0px; width: 100%; overflow: hidden;">
-        <div class="carousel-inner">
-            <div class="item active">
-                <div class="row">
-                    @if (Model.PictureModels.Any())
-                    {
-                        for (int i = 0; i < Model.PictureModels.Count; i++)
+<!-- .product-images-wrapper -->
+<div class="product-thumbnails-wrapper product-thumbnails-carousel">
+    @if (Model.PictureModels.Any())
+    {
+        for (int i = 0; i < Model.PictureModels.Count; i++)
+        {
+            <div class="product-thumbnail-wrapper" id="gallery">
+                <a href="#" class="thumbnailImage" data-image="@Model.PictureModels[i].ImageUrl" data-zoom-image="@Model.PictureModels[i].FullSizeImageUrl">
+                    <img class="product-thumbnail" alt="@Model.PictureModels[i].AlternateText" src="@Model.PictureModels[i].ThumbImageUrl" data-zoom-image="@Model.PictureModels[i].FullSizeImageUrl" title="@Model.PictureModels[i].Title" />
+                </a>
+            </div>
+        }
+
+    }
+
+</div>
+
+@*<div class="preview-pic" style="text-align: center;">
+        <div class="tab-pane active" id="pic-1">
+            <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" data-zoom-image="@Model.DefaultPictureModel.FullSizeImageUrl" title="@Model.DefaultPictureModel.Title" itemprop="image" id="main-product-img" />
+        </div>
+    </div>
+    <div class="col-md-12 preview-pic">
+        <div class="carousel slide" data-ride="carousel" id="quote-carousel" style="margin: 10px 0px; width: 100%; overflow: hidden;">
+            <div class="carousel-inner">
+                <div class="item active">
+                    <div class="row">
+                        @if (Model.PictureModels.Any())
                         {
-                            <div class="col-md-3 col-xs-3 border-r" id="gallery" style="text-align:center;">
-                                <a href="#" class="thumbnailImage" data-image="@Model.PictureModels[i].ImageUrl" data-zoom-image="@Model.PictureModels[i].FullSizeImageUrl">
-                                    <img alt="@Model.PictureModels[i].AlternateText" src="@Model.PictureModels[i].ThumbImageUrl" data-zoom-image="@Model.PictureModels[i].FullSizeImageUrl" title="@Model.PictureModels[i].Title" />
-                                </a>
-                            </div>
+                            for (int i = 0; i < Model.PictureModels.Count; i++)
+                            {
+                                <div class="col-md-3 col-xs-3 border-r" id="gallery" style="text-align:center;">
+                                    <a href="#" class="thumbnailImage" data-image="@Model.PictureModels[i].ImageUrl" data-zoom-image="@Model.PictureModels[i].FullSizeImageUrl">
+                                        <img alt="@Model.PictureModels[i].AlternateText" src="@Model.PictureModels[i].ThumbImageUrl" data-zoom-image="@Model.PictureModels[i].FullSizeImageUrl" title="@Model.PictureModels[i].Title" />
+                                    </a>
+                                </div>
+                            }
                         }
-                    }
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<br>
+    <br>*@
 
 
 <script>

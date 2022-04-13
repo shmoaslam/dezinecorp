@@ -14,10 +14,10 @@ namespace Nop.Web.Validators.Common
     {
         public SubscriptionEmailValidator()
         {
-            RuleFor(x => x.FirstName).NotEmpty().WithMessage("Please provide your first name!");
+            //RuleFor(x => x.FirstName).NotEmpty().WithMessage("Please provide your first name!");
             RuleFor(x => x.Email).NotEmpty().EmailAddress().WithMessage("Please provide your email!");
-            RuleFor(x => x.PostalCode).NotEmpty().WithMessage("Please provide your Postal Code!");
-            RuleFor(x => x.Province).NotEmpty().WithMessage("Please provide your Province!");
+            //RuleFor(x => x.PostalCode).NotEmpty().WithMessage("Please provide your Postal Code!");
+            //RuleFor(x => x.Province).NotEmpty().WithMessage("Please provide your Province!");
         }
     }
 }

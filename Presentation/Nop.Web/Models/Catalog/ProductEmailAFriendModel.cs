@@ -13,6 +13,8 @@ namespace Nop.Web.Models.Catalog
 
         public string ProductName { get; set; }
 
+        public string ProductDescription { get; set; }
+
         public string ProductSeName { get; set; }
 
         [AllowHtml]
@@ -32,5 +34,19 @@ namespace Nop.Web.Models.Catalog
 
         public string CaptchaClientKey { get; set; }
         public bool DisplayCaptcha { get; set; }
+
+        //public bool IsEmailForm { get; set; }
+
+
+        //public string Name { get; set; }
+
+        //public string Email { get; set; }
+        
+        //public string PhoneNumber { get; set; }
+
+        //public string Company { get; set; }
+        //public string Query { get; set; }
+        //public string ProductNumber { get; set; }
+        //public int Quantity { get; set; }
     }
 }

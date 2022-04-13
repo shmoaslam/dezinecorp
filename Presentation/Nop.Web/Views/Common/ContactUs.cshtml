@@ -1,68 +1,108 @@
 ﻿@model Nop.Web.Models.Common.ContactUsModel
 
 @{
-    AjaxOptions ajaxOptions = new AjaxOptions
-    {
-        LoadingElementId = "loading-area-ContactUs",
-        LoadingElementDuration = 1000,
-        OnBegin = "HideFormContactUs",
-        OnFailure = "ShowFailureContactUs",
-        UpdateTargetId = "message-area-ContactUs",
-        OnSuccess = "OnSuccessContactUs",
-    };
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
 }
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-<script>
-    function HideFormContactUs() {
-        //When the form is ContactUsmitted, we hide the form
-        $("#form-area-ContactUs").hide();
-    }
+<!-********************************************->
+		<!-                                            ->
+		<!-  SECTION: TOP MISSION                      ->
+		<!-                                            ->
+		<!-********************************************->
+<section id="section-mission" class="section section-full-width teal-bg">
+    <div class="home-mission content-inner-width">
+        <h1 class="mission-header">
+            <p class="category-header">Contact Us</p>
+           
+        </h1>
+    </div>
+    <!-- /.home-mission -->
+</section>
+		<!-********************************************->
+		<!- /TOP MISSION                               ->
+		<!-********************************************->
 
-    function ShowFailureContactUs(e) {
-        //In the case that the AJAX call fails to communicate with the server
-        //(e.g. the user's internet connection cuts out), we should display a message to that effect
-        $('#message-area-ContactUs').html("<div class='alert alert-danger'><strong>Error!</strong>The server could not be contacted and your message has not been sent. Please check your internet connection and try again later.</div>");
-    }
-    function OnSuccessContactUs() {
-        document.getElementById("ContactUsEmailForm").reset();
-    }
-</script>
-<style>
-    #ContactUsscribtion {
-        background-color: #eee;
-        padding: 10px;
-    }
-</style>
 
-<div id="loading-area-ContactUs" class="load" style="display:none;">
-    <div class='alert alert-info'><strong>Sending...</strong></div>
-</div>
-
-<div id="message-area-ContactUs"></div>
-
-<div id="form-area-ContactUs">
-    @using (Ajax.BeginForm("ContactUs", null, ajaxOptions, new { id = "ContactUsEmailForm" }))
+		<!-********************************************->
+		<!-                                            ->
+		<!-  SECTION: FORM                             ->
+		<!-  https://bootstrapformbuilder.com          ->
+		<!-********************************************->
+<section id="section-product-categories" class="section section-full-width">
+    <!--
+        <div class="content-inner-width">
+            <h2 class="section-header">Title</h2>
+        </div>
+    -->
+    @if (Model.SuccessfullySent)
     {
-        @Html.AntiForgeryToken()
-        if (!MvcHtmlString.IsNullOrEmpty(Html.ValidationSummary(true)))
-        {
-            <div class="message-error">@Html.ValidationSummary(true)</div>
-        }
-        <div class="form-group">
-            <label for="name">Name</label>
-            @Html.TextBoxFor(model => model.FullName, new { @class = "form-control inputs-style", placeholder = "First Name" })
-        </div>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            @Html.TextBoxFor(model => model.Email, new { @class = "form-control inputs-style", placeholder = "Email" })
-        </div>
-        <div class="form-group">
-            <label for="name">Enquiry</label>
-            @Html.TextAreaFor(model => model.Enquiry, new { @class = "form-control inputs-style", placeholder = "Enquiry", rows = "3"})
-        </div>
-        <br />
-        <div class="row" align="center">
-            <input type="submit" name="ContactUs" class="send--mail" value="@T("Products.EmailAFriend.Button")" />
+        <div class='alert alert-success'>
+            Thank you for your Query.
+            <br />Your query will be answered soon!.
         </div>
     }
-</div>
+    else
+    {<div class="product-category-wrapper product-category-products content-inner-width">
+            <div class="contact-form-wrapper">
+                @using (Html.BeginForm("ContactUs", "Common", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <label for="FullName" class="control-label">Name</label>
+                        <input id="FullName" name="FullName" placeholder="Name" type="text" class="form-control" value="@Model.FullName">
+                    </div>
+                    <div class="form-group">
+                        <label for="Email" class="control-label">Email</label>
+                        <input id="Email" name="Email" placeholder="Email" type="text" required="required" class="form-control"  value="@Model.Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="PhoneNumber" class="control-label">Phone number</label>
+                        <input id="PhoneNumber" name="PhoneNumber" placeholder="Phone number" type="text" required="required" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="Company" class="control-label">Company</label>
+                        <input id="Company" name="Company" placeholder="Company" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="Query" class="control-label">How can we help?</label>
+                        <select id="Query" name="Query" required="required" class="select form-control">
+                            <option value="contact" selected="@(Model.Query == "contact")">Contact</option>
+                            <option value="quote" selected="@(Model.Query == "quote")">Quote</option>
+                            <option value="support" selected="@(Model.Query == "support")">Customer support</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ProductNumber" class="control-label">Product (if applicable)</label>
+                        <input id="ProductNumber" value="@Model.ProductNumber" name="ProductNumber" placeholder="Product (or product ID)" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="Quantity" class="control-label">Quantity (if applicable)</label>
+                        <input id="Quantity" name="Quantity" placeholder="Quantity" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="Enquiry" class="control-label">Message</label>
+                        <textarea id="Enquiry" name="Enquiry" cols="40" rows="5" aria-describedby="contact-messageHelpBlock" class="form-control">@Model.Enquiry</textarea>
+                        <span id="contact-messageHelpBlock" class="help-block">Add any additional information here</span>
+                    </div>
+                    <div class="form-group">
+                        <button id="contact-submit" name="submit" type="submit" class="btn btn-primary">Send</button>
+                    </div>
+                }
+
+
+            </div><!-- /contact-from-wrapper -->
+        </div>
+
+    }
+
+    <!-- /.product-category-wrapper -->
+</section>
+
+
+@Html.Action("TopicBlock", "Topic", new { systemName = "MostSearchOptions" })
+
+@Html.Action("TopicBlock", "Topic", new { systemName = "DezinecorpDifference" })
+
+@Html.Action("SubscriptionEmail", "Common")

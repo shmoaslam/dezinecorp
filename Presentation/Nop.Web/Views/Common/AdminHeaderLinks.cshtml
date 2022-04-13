@@ -12,7 +12,18 @@
         }
         @if (Model.DisplayAdminLink)
         {
-            <a href="@Url.Content("~/admin")" class="administration">@T("Account.Administration")</a>
+            <div id="notice-bar" class="notice-bar section-full-width">
+                <div class="notice-bar-content content-inner-width">
+                    <p><a href="@Url.Content("~/admin")" class="administration">@T("Account.Administration")</a></p>
+                </div>
+            </div>
         }
     </div>
 }
+@*<div id="notice-bar" class="notice-bar section-full-width">
+        <div class="notice-bar-content content-inner-width">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit <a href="#">Click</a></p>
+        </div>
+
+    </div>*@
+@*<a href="@Url.Content("~/admin")" class="administration">@T("Account.Administration")</a>*@

@@ -26,7 +26,17 @@ namespace Nop.Web.Models.Common
         [NopResourceDisplayName("ContactUs.FullName")]
         public string FullName { get; set; }
 
+
+
+
+        public string PhoneNumber { get; set; }
+
+        public string Company { get; set; }
+        public string Query { get; set; }
+        public string ProductNumber { get; set; }
+        public int Quantity { get; set; }
         public bool SuccessfullySent { get; set; }
+
         public string Result { get; set; }
 
         public bool DisplayCaptcha { get; set; }

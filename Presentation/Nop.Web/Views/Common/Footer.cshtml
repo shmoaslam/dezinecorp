@@ -4,654 +4,94 @@
 @using Nop.Core.Infrastructure
 @using Nop.Web.Models.Common;
 
-<!--Modal Style-->
-<style>
-
-    .modal-header .close {
-        margin-top: -20px;
-    }
-
-    .modal-header {
-        padding: 15px;
-        border-bottom: 0px;
-        background-color: #ddd;
-    }
-
-    .modal-footer {
-        padding: 10px;
-        text-align: right;
-        border-top: 1px solid #e5e5e5;
-    }
-
-        .modal-footer .btn-primary {
-            color: #fff;
-            background-color: #5abaaf;
-            border-color: #5abaaf;
-            border-radius: 0px;
-        }
-
-
-    input.input-validation-error,
-    textarea.input-validation-error,
-    select.input-validation-error {
-        background: #FEF1EC;
-        border: 1px solid #CD0A0A;
-    }
-
-    .themes {
-        color: #007A8A;
-    }
-    #Careers p a {
-        color: #C0504D !important;
-        text-decoration: none;
-        font-weight:200;
-    }
-    #Contact p a {
-        color: #007A8A !important;
-        text-decoration: none;
-        font-weight: 200;
-    }
-    #Contact h3 {
-        font-size: 20px;
-    }
-    #Contact .form-control {
-        display: block;
-        width: 100%;
-        height: 34px;
-        padding: 6px 12px;
-        font-size: 14px;
-        line-height: 1.42857143;
-        color: #555;
-        background-color: #fff;
-        background-image: none;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-    input::placeholder {
-        color: #999 !important;
-    }
-    textarea::placeholder {
-        color: #999 !important;
-    }
-</style>
-
-<div class="container main-footer">
-    <div class="row footer" id="footer">
-        <div class="col-md-9">
-            <div class="row">
-                <div class="col-md-3 widget">
-                    <div class="row" style=" border-right: 5px solid #fff;">
-                        <div class="footer-header" style="text-align: left;">
-                            <p>COMPANY</p>
-                        </div>
-                    </div>
-                    <ul class="thumbnail-widget">
-                        <li>
-                            <div class="thumb-content"><a href="@Url.Action("AboutUs", "Common")" >About Us</a></div>
-                        </li>
-                        <li>
-                            <div class="thumb-content">
-                                <a href="javascript:void(0);" onclick="$('#Careers').modal('show');" data-toggle="model" data-target="#Careers">Careers</a>
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="Careers" tabindex="-1" role="dialog" aria-labelledby="CareersLabels" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Careers</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p style="margin-bottom:15px">
-                                                    At <strong>Dezine<span style="color:#007A8A;">Corp</span></strong> we strive to build a team where voices are heard and suggestions for improvement are encouraged.  Our core strengths of teamwork, value, connections and trust build the foundation for every position.  With tremendous respect for tried and true methods of serving our customers, we are firmly focused on innovating to improve our service and quality.
-                                                </p>
-                                                <p style="margin-bottom:15px">
-                                                    If you are interested in what we have to offer, please send your cover letter and resume to <span style="color:#C0504D;">jobs@dezinecorp.com.</span>
-                                                </p>
-                                                <p style="margin-bottom:15px">
-                                                    Current Opportunities include:
-                                                </p>
-                                                <p style="margin-bottom:15px"><a id="account-repre-form" style="color:#C0504D;">Account Representative</a></p>
-                                                <p style="margin-bottom:15px"><a id="graphic-form" style="color:#C0504D;">Forklift Driver/Shipping</a></p>
-                                                <div style="display:none" id="career-form" align="center">
-                                                    @Html.Action("CareerEmail", "Common")
-                                                    <br />
-                                                    <br />
-                                                </div>
-                                                <br />
-                                                <p>
-                                                    <i>
-                                                        DezineCorp is an equal opportunity employer.  <u>Please no phone calls.  Walk-ins will not be seen.</u>  If you require assistance submitting your cover letter/resume by a method other than email, contact our Customer Service team for support. No agencies please.
-                                                    </i>
-                                                </p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="thumb-content">
-                                <a href="javascript:void(0);" onclick="$('#Contact').modal('show');" data-toggle="model" data-target="#Contact">Contact Us</a>
-                                <div class="modal fade" id="Contact" tabindex="-1" role="dialog" aria-labelledby="ContactModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Contact Us</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div style="float:right;" id="print" onclick="printDiv();"><i class="fa fa-print" aria-hidden="true"></i></div>
-                                                <div class="contactuspopup" id="contactuscontent">
-                                                    <h2 class="themes" style="margin:0px;"><strong>Customer Service</strong></h2>
-                                                    <p>
-                                                        <a href="mailto:support@dezinecorp.com" class="themes">support@dezinecorp.com</a>
-                                                    </p>
-                                                    <div style="margin-left:50px">
-                                                        <h4 class="themes" style="margin:0px;">Main Office</h4>
-                                                        <p style="margin:0px">tel: 905.564.2011 | toll free tel: 866.625.7820</p>
-                                                        <p>fax: 905.564.3351 | toll free fax: 888.493.3767</p>
-
-                                                        <h4 class="themes" style="margin:0px;">Maritimes / Quebec / Eastern &amp; Northern Ontario</h4>
-                                                        <p>905.364.0429 | <a href="mailto:easternrep@dezinecorp.com" class="themes">easternrep@dezinecorp.com</a></p>
-
-                                                        <h4 class="themes" style="margin:0px;">Ontario – Central and Southwestern</h4>
-                                                        <p>905.364.0426  | <a href="mailto:l.racco@dezinecorp.com" class="themes">l.racco@dezinecorp.com</a></p>
-
-                                                        <h4 class="themes" style="margin:0px;">Western Canada</h4>
-                                                        <p>905.364.0427   | <a href="mailto:westernrep@dezinecorp.com" class="themes">westernrep@dezinecorp.com</a></p>
-                                                    </div>
-                                                    <h3 class="themes" style="margin:0px;"><strong>Hours of Operation</strong> </h3><p>Monday to Friday, 8:30am to 5:00pm</p>
-                                                    <h3 class="themes" style="margin:0px;"><strong>Accounts</strong></h3><p><a href="mailto:support@dezinecorp.com" class="themes">support@dezinecorp.com</a></p>
-                                                    <h3 class="themes" style="margin:0px;"><strong>Corporate Office</strong></h3>
-                                                    <p>
-                                                        <strong>Dezine<span style="color:#007A8A;">Corp</span> Inc.</strong><br>
-                                                        369 Britannia Rd East<br>
-                                                        Mississauga ON L4Z 2H5
-                                                    </p>
-                                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2887.6903615491615!2d-79.67163398460413!3d43.63380317912196!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b3f5c3145c0db%3A0x8f2d0d29f3605c00!2sDezineCorp+Inc!5e0!3m2!1sen!2sin!4v1532657571109" width="560" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>
-                                                    <hr />
-
-                                                    <h3 class="themes" style="margin:0px;">We invite you to send us your questions and comments:</h3><br />
-                                                    @Html.Action("ContactUs", "Common")
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-5 widget">
-                    <div class="row" style="border-right:5px solid #fff;">
-                        <div class="footer-header" style="text-align: left;">
-                            <p>ADDITIONAL INFO</p>
-                        </div>
-                    </div>
-                    <ul class="thumbnail-widget">
-                        <li>
-                            <div class="thumb-content"><a href="/new-products">What's New</a></div>
-                        </li>
-                        <li>
-                            <div class="thumb-content">
-                                <a href="javascript:void(0);" onclick="$('#meetBrands').modal('show');" data-toggle="model" data-target="#meetBrands">Meet our Partner Brands</a>
-                                <div class="modal fade" id="meetBrands" tabindex="-1" role="dialog" aria-labelledby="meetBrandsModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Our Partner Brands</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <img src="~/Content/DezineCorpImages/PartnerBrand.JPG" class="img-responsive" />
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="thumb-content">
-                                <a href="javascript:void(0);" onclick="$('#sub-email').modal('show');" data-toggle="model" data-target="#sub-email">Subscribe to our Email Promotions</a>
-                                <div class="modal fade" id="sub-email" tabindex="-1" role="dialog" aria-labelledby="sub-emailModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Subscribe to our Email Promotions</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-group checkbox">
-                                                    <label for="styled-checkbox-1 " data-toggle="collapse" data-target="#Subscribtion" id="subemaillabel">
-                                                        <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" value="value1">
-                                                        Yes
-                                                    </label>
-                                                </div>
-                                                I would like to receive electronic marketing materials from DezineCorp Inc.
-                                                <br />
-                                                <div id="Subscribtion" class="panel-collapse collapse in" align="center">
-                                                    @Html.Action("SubscriptionEmail", "Common")
-                                                </div>
-                                                <br>
-
-                                                <div class="form-group checkbox">
-                                                    <label for="styled-checkbox-2" data-toggle="collapse" data-target="#noSubscribtion">
-                                                        <input class="styled-checkbox" id="styled-checkbox-2" type="checkbox" value="value1">
-                                                        No
-                                                    </label>
-                                                </div>
-                                                I do not want to receive marketing materials by email from DezineCorp Inc.
-                                                <br />
-
-                                                <div id="noSubscribtion" class="panel-collapse collapse in" align="center">
-                                                    @Html.Action("NoSubscriptionEmail", "Common")
-                                                </div>
-                                                <br />
-                                                <div class="clearfix"></div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="thumb-content">
-                                <a href="javascript:void(0);" onclick="$('#FAQ').modal('show');" data-toggle="model" data-target="#FAQ">FAQ</a>
-                                <div class="modal fade" id="FAQ" tabindex="-1" role="dialog" aria-labelledby="FAQModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">FAQ</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <h1>Ordering</h1>
-                                                <div id="orderingAccordion">
-                                                    <h3>Who does DezineCorp sell to?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>
-                                                            DezineCorp sells to distributors and resellers in the promotional industry.
-                                                        </p>
-                                                        <p>
-                                                            We would be pleased to help you locate a distributor in your
-                                                            area. Contact us at <a href="mailto:sales@dezinecorp.com" target="_blank">sales@dezinecorp.com</a> for further
-                                                            information.
-                                                        </p>
-                                                    </div>
-                                                    <h3>How do I set up an Account?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>DezineCorp sells to distributors and resellers in the promotional industry.</p>
-                                                        <p>Please forward your request to <a href="mailto:support@dezinecorp.com" target="_blank">support@dezinecorp.com</a> and include full name, address, and telephone number.  Our Accounting staff will reach out to you.</p>
-                                                    </div>
-                                                    <h3>Where do I send my order?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>Send your Purchase Order and vector artwork to <a href="mailto:orders@dezinecorp.com" target="_blank">orders@dezinecorp.com.</a> </p>
-                                                        <p>Indicate the location for the decoration, and provide a colour request or PMS reference for any imprint. </p>
-                                                        <p>Once our team has entered and reviewed your order, you will receive an order confirmation and be contacted if there is any further information required.</p>
-                                                        <p>Note all orders/artwork are subject to review prior to acceptance by DezineCorp.</p>
-                                                    </div>
-                                                    <h3>What type of artwork is acceptable?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>Vector based files allowing colour separation is required.  Vector files convert type to lines and curves.</p>
-                                                        <p> Adobe Illustrator CS 3/5/6 or CC or EPS files are preferred.  Bitmap or raster (Photoshop) files will not be accepted.</p>
-                                                        <p> Artwork Re-Creation of non-vector artwork is available.  Charges will be quoted upon review of the existing art files.  Contact Customer Service for assistance. </p>
-                                                    </div>
-                                                    <h3>How long will my order take to produce?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>Standard production is 7-10 business days.  This applies to orders for single colours/decoration, website quantities, production-ready artwork and for customers with credit approval.   Each order is custom. </p>
-                                                        <p> Service days are Monday to Friday, excluding holidays. </p>
-                                                    </div>
-                                                    <h3>Do you accept RUSH orders? </h3>
-                                                    <div class="modal-txt">
-                                                        <p>Let us know your event date and we will do our best to accommodate your request. </p>
-                                                        <p> Rush service may be subject to additional charges, and is available on a case by case basis only. </p>
-                                                    </div>
-                                                    <h3>What is the minimum order size? </h3>
-                                                    <div class="modal-txt">
-                                                        <p>Our website indicates minimum order quantities for each product. </p>
-                                                        <p> Absolute minimum is half the website minimum order quantity shown. </p>
-                                                        <p> A charge of $75(g) applies for less than minimum orders. </p>
-                                                    </div>
-                                                    <h3>Do you sell undecorated product?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>Available on certain products (ceramic and many glassware products are excluded, refer to individual product descriptions for additional details). Orders must be in case lots where listed.  Blank Non-Decorated Product is final sale only and is non-returnable.  Minimum Order Charge $250(g) applies. </p>
-                                                    </div>
-
-                                                </div>
-                                                <h1>Catalogues</h1>
-                                                <div id="cataloguesAccordion">
-                                                    <h3>How can I get a Catalogue? A Flyer?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>To access our current catalogues/flyers please click on the web link on the home page.</p>
-                                                        <p> For the most up-to-date pricing and information, refer to the website product page. </p>
-                                                        <p> Contact our Customer Service team at <a href="mailto:support@dezinecorp.com" target="_blank">support@dezinecorp.com</a> to order a print copy. </p>
-                                                    </div>
-                                                </div>
-                                                <h1>Decoration</h1>
-                                                <div id="decorationAccordion">
-                                                    <h3>What decoration methods are offered?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>Refer to product details on the web site for specific decoration methods available for each product.  Our Customer Service team will be pleased to help you with the variety of options available. </p>
-                                                        <p>Our decorations include</p>
-                                                        <ul>
-                                                            <li>Screenprint</li>
-                                                            <li>Pad printing</li>
-                                                            <li>Sublimation</li>
-                                                            <li>Laser engraving – flat & curved</li>
-                                                            <li>Deep Etch</li>
-                                                            <li>Deboss/Emboss</li>
-                                                            <li>Foil Stamping</li>
-                                                            <li>Decals</li>
-                                                            <li>I-Dezine Stickers</li>
-                                                            <li>Paper Inserts for plastic drinkware</li>
-                                                            <li>Box imprinting</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <h1>Samples</h1>
-                                                <div id="samplesAccordion">
-                                                    <h3>Are samples available?  How do I order samples?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>Samples are available exclusively for Distributor use in reasonable quantities.</p>
-                                                        <p> Send your request to <a href="mailto:orders@dezinecorp.com" target="_blank">orders@dezinecorp.com</a> including “Sample Request” in the subject line and the following freight information in the request:  freight carrier name, account number and account holder’s name.  If this information is not provided, a minimum charge of $25(g) will apply for shipping. </p>
-                                                        <p> Samples are final sale only and non-returnable.</p>
-                                                        <p> Distributors are responsible for all shipping expenses.</p>
-                                                        <p> Non-Billable Samples:  Some Random Imprinted samples may be provided at no charge for a single piece. </p>
-                                                        <p> Billable Samples (Random Imprinted) - samples are priced at EQP-25% in quantities of 1 -3 pieces, if available. </p>
-                                                        <p> Billable Samples (Non-Decorated) Samples – available at EQP in quantities of 1 -3 pieces (unless excluded in the product description on the website). </p>
-                                                    </div>
-                                                    <h3>Are Pre-Production Samples available?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>Pre-Production samples are available for screen printed items at $75(g) per colour, per imprint plus product cost.  Quoted separately for all other items. </p>
-                                                        <p>Pre-Production samples will be at no charge for confirmed orders over $2,500 before freight and taxes.</p>
-                                                    </div>
-                                                </div>
-                                                <h1>Packaging</h1>
-                                                <div id="packagingAccordion">
-                                                    <h3>What is PPK?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>PPK refers to Protective Packaging.  PPK assists to limit breakage of product during transit.  PPK may take several forms including custom packaging; additional protection to master cartons such as air pillows, and carton-in-carton shipment. </p>
-                                                        <p>Many products are offered with complimentary protective packaging.   For other products it is offered as an additional charge.  Refer to product details for further information. </p>
-                                                    </div>
-                                                    <h3>Are gift boxes available?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>Many of our products include complimentary gift boxes.</p>
-                                                        <p>The majority of our drinkware selections may be ordered with one of our exclusive gift boxes.  Our website includes many of these selections in the Gift Boxes & Sets section.  Also custom boxes may be ordered.</p>
-                                                        <p>Our Customer Service team will be pleased to assist you find a solution for your gift presentation needs.</p>
-                                                    </div>
-                                                </div>
-                                                <h1>Shipping</h1>
-                                                <div id="shippingAccordion">
-                                                    <h3>When will my order ship?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>
-                                                            When you receive your order confirmation a shipping date will be indicated.  Every effort is made to ship each order as per the Shipping Date on the Order Acknowledgement.  If we can ship earlier, we will.
-                                                            Unless otherwise requested order will be shipped via Bestway – the most economical method using our Preferred Carriers based on your delivery requirements - and FOB Mississagua.
-                                                        </p>
-                                                    </div>
-                                                    <h3>Do you ship outside of Canada?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>A limited number of products are available for sale or shipment to the United States.  Please contact Customer Service for further details. </p>
-                                                    </div>
-                                                    <h3>Can I pickup my order?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>Pickup is available at our Production facility located at 369 Britannia Rd E, Mississauga ON L4Z 2H5.</p>
-                                                        <p> Pickup must be indicated when the order is submitted and orders will not be released without an approved Pickup Number. </p>
-                                                    </div>
-                                                    <h3> Can I change my shipping instructions?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>Yes, however, 24 hours are required for processing shipping instruction changes and a charge of $75(g) will apply after an order has been staged for shipment. </p>
-                                                    </div>
-                                                </div>
-                                                <h1>
-                                                    Returns & Cancellations
-                                                </h1>
-                                                <div id="returnAccordion">
-                                                    <h3>Can I cancel my order?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>Once DezineCorp issues an Order Acknowledgment/Confirmation, the order may not be cancelled without approval.  Requests must be received in writing at <a href="mailto:orders@dezinecorp.com" target="_blank">orders@dezinecorp.com</a>. Distributors will be invoiced $250(g) plus a restocking fee of up to 50% of the order.</p>
-                                                    </div>
-
-                                                </div>
-                                                <h1>Payment / Terms</h1>
-                                                <div id="paymentAccordion">
-                                                    <h3>Can I return my order?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>Contact Customer Service.  Any issues must be brought to the attention of your Account Representative within 7 days of delivery. </p>
-                                                        <p> Returns are subject to pre-approval.  Returns will not be accepted without a return authorization number (RA#).</p>
-                                                        <p> Note that any credit issued will be recorded to the Distributors’ account and may be applied to future orders only. </p>
-                                                    </div>
-                                                    <h3>What payment methods are available?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>Payment terms are determined on a per order basis at the discretion of our Credit Department. </p>
-                                                        <p> Wire transfers and electronic fund transfers are accepted and preferred.  Visa and MasterCard payments are accepted to a maximum of $2,500 per order prior to shipping only.  Cheques are accepted five days prior to due date.  NSF cheque payments are subject to a $50 penalty charge. </p>
-                                                        <p> For further information, contact our Credit Department at <a href="mailto:support@dezinecorp.com" target="_blank">support@dezinecorp.com</a>. </p>
-                                                    </div>
-                                                    <h3>Are terms available?</h3>
-                                                    <div class="modal-txt">
-                                                        <p>Payment terms are determined on a per order basis at the discretion of our Credit Department.  Contact our Credit Department at <a href="mailto:support@dezinecorp.com" target="_blank">support@dezinecorp.com</a>. </p>
-                                                        <p> Terms are Net 30 days from the shipping date on pre-approved orders.</p>
-                                                        <p> Deposits of 50% required on all custom product orders.  Deposits will be required where an approved credit limit has not been established, or where the approved credit limit is exceeded.</p>
-                                                        <p> Orders for all new accounts must be prepaid by credit card, direct deposit or wire transfer prior to production. </p>
-                                                        <p> Orders less than $200 (excluding freight/taxes) must be prepaid by credit card. </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-4 widget">
-                    <div class="row" style="border-right:5px solid #fff;">
-                        <div class="footer-header" style="text-align: left;">
-                            <p>CUSTOMER SERVICES</p>
-                        </div>
-                    </div>
-                    <ul class="thumbnail-widget">
-                        <li>
-                            <div class="thumb-content">
-                                <a href="javascript:void(0);" onclick="$('#myAccount').modal('show');" data-toggle="model" data-target="#myAccount">My Account</a>
-                                <div class="modal fade" id="myAccount" tabindex="-1" role="dialog" aria-labelledby="myAccountModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">My Account</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p style="color:#007A8A;">
-                                                    Coming soon....
-                                                    <br />
-                                                    <br />
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thank you for your patience while we work on making this feature available to you!
-                                                    <br />
-                                                    <br />
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The DezineCorp Team
-                                                </p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-                        <li>
-                            <div class="thumb-content">
-                                <a href="javascript:void(0);" onclick="$('#Quotes').modal('show');" data-toggle="model" data-target="#Quotes">Quotes</a>
-                                <div class="modal fade" id="Quotes" tabindex="-1" role="dialog" aria-labelledby="QuotesModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Quotes</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-
-                                                <p style="font-size:16px;">Send your Quote Request to our Customer Service team at <a href="mailto:support@dezinecorp.com" class="themes">support@dezinecorp.com</a>.</p>
-                                                <br />
-                                                <p style="font-size:15px;margin-left:30px;">Include the following information in your Quote Request</p>
-                                                <ul style="margin-left:50px;" type="circle">
-                                                    <li>
-                                                        <b>Company Name / Account Number</b>
-                                                    </li>
-                                                    <li>
-                                                        <b>Product –</b> product number / product colour / quantity required / gift packaging option
-                                                    </li>
-                                                    <li>
-                                                        <b>Decoration –</b> style of decoration / virtual of logo / location  on product /  # of colours & colour references
-                                                    </li>
-                                                    <li>
-                                                        <b>Shipping Information –</b> date required to ship / shipping method / ship to location
-                                                    </li>
-                                                    <li>
-                                                        <b>Event Date</b>
-                                                    </li>
-                                                    <li>
-                                                        <b>Describe your promotion –</b> we will gladly assist you with the options available
-                                                    </li>
-
-                                                </ul>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="thumb-content">
-                                <a href="http://www.dezinecorp.com/content/pdf/terms_conditions_1_march_2020.pdf" target="_blank">Terms & Conditions</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="thumb-content">
-                                <a href="javascript:void(0);" onclick="$('#Contact').modal('show');" data-toggle="model" data-target="#Contact">Contact Customer Services</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+<footer id="new-footer" class="section section-full-width">
+    <div class="footer-widget-wrap content-inner-width">
+        <!-********************************************->
+        <!- FOOTER WIDGET 1                            ->
+        <!-********************************************->
+        <div id="footer-widget-1" class="footer-widget footer-4col">
+            <img class="footer-logo" src=" ~/Content/DezineCorpImages/dezinecorp_logo_white.svg" />
+            <p class="widget-content">Since 2009, we have been transforming ideas into impressions. Clients trust us to fulfill complicated orders with ease. Peace of mind, delivered - that’s DezineCorp.</p>
+            <div class="footer-logo-wrapper">
+                <img class="footer-partner-logo" src="~/Content/DezineCorpImages/ASI_white.svg" alt="ASI" />
+                <img class="footer-partner-logo" src="~/Content/DezineCorpImages/CAMSC_white.svg" alt="CAMSC" />
+                <img class="footer-partner-logo" src="~/Content/DezineCorpImages/PPAI_white.svg" alt="PPAI" />
+                <img class="footer-partner-logo" src="~/Content/DezineCorpImages/PPPC_white.svg" alt="PPPC" />
+                <img class="footer-partner-logo" src="~/Content/DezineCorpImages/SAGE_white.svg" alt="SAGE" />
             </div>
+            <!-- .footer-logo-wrapper -->
         </div>
-        <div class="col-md-3">
-            <div class="row">
-                <div class="col-md-12 widget" style="text-align: center;">
-                    <div class="row" style="border-right:5px solid #fff;">
-                        <div class="footer-header">
-                            <p>&nbsp;</p>
-                        </div>
-                    </div>
-                    <img alt="footer-img" src="~/Content/DezineCorpImages/0005953.jpg" /><br>
-                    <img alt="footer-img" src="~/Content/DezineCorpImages/0005954.jpg">
-                </div>
-            </div>
+        <!-- /#footer-widget-1 -->
+        <!-********************************************->
+        <!- FOOTER WIDGET 2                            ->
+        <!-********************************************->
+        <div id="footer-widget-2" class="footer-widget footer-4col">
+            <h3 class="footer-widget">Site</h3>
+            <ul class="footer-nav">
+                <li class="footer-nav-item"><a href="/">Home</a></li>
+                <li class="footer-nav-item"><a href="/root-category">Products</a></li>
+                <li class="footer-nav-item"><a href="/brands">Brands</a></li>
+                <li class="footer-nav-item"><a href="#">Sales Tools</a></li>
+                <li class="footer-nav-item"><a href="@Url.Action("Contact","Common")">Contacts</a></li>
+                <li class="footer-nav-item"><a href="~/Content/PDF/DezineCorp_Terms and Conditions_20220215.pdf">Terms & Conditions</a></li>
+            </ul>
         </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row">
-        <footer id="" class="footer-1">
-            <div class="footer-copyright">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6 text-left">
-                            Powered by <a href="http://www.nopcommerce.com/">nopCommerce</a>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <p>Copyright Dezinecorp © @DateTime.Now.Year. All rights reserved.</p>
-                        </div>
-                    </div>
-                </div>
+        <!-- /#footer-widget-2 -->
+        <!-********************************************->
+        <!- FOOTER WIDGET 3                            ->
+        <!-********************************************->
+        <div id="footer-widget-3" class="footer-widget footer-4col">
+            <h3 class="footer-widget">Contact Us</h3>
+            <div class="footer-form-wrap">
+                <form id="footer-contact-form" class="footer-contact">
+                    <input class="clear-default-input inline-text-input corner-radius footer-field" id="footer_contactus_name" type="text" placeholder="Name" />
+                    <input class="clear-default-input inline-text-input corner-radius footer-field" id="footer_contactus_email" type="email" placeholder="Email" />
+                    <textarea class="clear-default-input inline-text-input corner-radius footer-field footer-textarea " id="footer_contactus_desc"  rows="3" placeholder="Message"></textarea>
+                    <button type="submit" id="footer-submit" class="clear-default-button text-submit-button new-button cta-button-yellow corner-radius">
+                        Send <i class="fas fa-paper-plane"></i>
+                    </button>
+                    <p class="footer-form-response"></p>
+                </form>
             </div>
-        </footer>
+            <!-- /.footer-form-wrap -->
+        </div>
+        <!-- /#footer-widget-1 -->
+        <!-********************************************->
+        <!- FOOTER WIDGET 4                          ->
+        <!-********************************************->
+        <div id="footer-widget-4" class="footer-widget footer-4col">
+            <h3 class="footer-widget">Contact</h3>
+            <p class="widget-content indent-widget">
+                <span class="indent-content-left">
+                    <i class="fas fa-map-marker-alt"></i>
+                </span>
+                <span class="indent-content-right">
+                    369 Britannia Rd East<br>
+                    Mississauga ON L4Z 2H5
+                </span>
+            </p>
+            <p class="widget-content indent-widget">
+                <i class="far fa-envelope"></i> <a href="mailto:support@dezinecorp.com">support@dezinecorp.com</a>
+            </p>
+            <p class="widget-content indent-widget">
+                <span class="indent-content-left">
+                    <i class="fas fa-mobile-alt"></i>
+                </span>
+                <span class="indent-content-right">
+                    <a href="tel:1-905-564-2011 ">905.564.2011</a><br>
+                    <a href="tel:1-866-625-7820">866.625.7820</a>
+                </span>
+            </p>
+            <p class="widget-content">
+                <a href="https://www.facebook.com/dezinecorppromo"><i class="fab fa-facebook-square"></i></a><a href="https://www.linkedin.com/company/dezinecorp/"><i class="fab fa-linkedin"></i></a>
+            </p>
+        </div>
+        <!-- /#footer-widget-2 -->
     </div>
-</div>
-
-<script>
-
-    $(function () {                            
-        $("#orderingAccordion,#decorationAccordion,#cataloguesAccordion,#paymentAccordion,#returnAccordion,#shippingAccordion,#packagingAccordion,#samplesAccordion").accordion(
-            {
-                heightStyle: "content",
-                header: "h3",
-                collapsible: true,
-                active: false
-            });
-        $('.collapse').collapse();
-    });
-
-
-    $('#account-repre-form,#graphic-form').click(function () {
-        if ($("#career-form").is(":visible") == false)
-            $("#career-form").show("slow");
-        if ($(this).attr('id') == 'graphic-form')
-            $('#Graphic_Artist').prop('checked', true);
-        else
-            $('#Account_Representative').prop('checked', true);
-    });
-
-    $('#contactUs').on('hidden.bs.modal', function (e) {
-        document.getElementById("formcontactUs").reset();
-    });
-
-
-    $('#sub-email').on('hidden.bs.modal', function (e) {
-        $("#styled-checkbox-1").attr('checked', false);
-        $("#Subscribtion").removeClass('in');
-        $("#styled-checkbox-2").attr('checked', false);
-        $("#noSubscribtion").removeClass('in');
-        document.getElementById("SubEmailForm").reset();
-        document.getElementById("NoSubEmailForm").reset();
-        //$('#message-area-sub').html("");;
-
-    });
-
-
-    function printDiv() {
-        var divToPrint = document.getElementById('contactuscontent');
-        var newWin = window.open('', 'Print-Window');
-        newWin.document.open();
-        newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
-        newWin.document.close();
-        setTimeout(function () { newWin.close(); }, 10);
-    }
-</script>
+    <!-- /footer-widget-wrap -->
+    <div id="sub-footer">
+        <p class="fine-print">
+            &copy;@DateTime.Now.Year DezineCorp | Powered by nopCommerce | <a href="~/Content/PDF/DezineCorp_Terms and Conditions_20220215.pdf">Privacy Policy</a>
+        </p>
+    </div>
+</footer>

@@ -14,6 +14,34 @@
 }
 
 <script>
+    $(document).ready(function () {
+        $('#flyer-submit').on('click', function (event) {
+            event.preventDefault();
+            var valdata = $("#friendform").serialize();
+            //to get alert popup   
+            alert(valdata);
+            $.ajax({
+                url: "@Url.Action("SubscriptionEmail", "Common")",
+                type: "POST",
+                dataType: 'json',
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                data: valdata,
+                success: function (result) {
+                    alert("success");
+                },
+                error: function (result) {
+                    alert("error");
+                }
+            });
+            //alert('to-do: form processing');
+        });
+    })
+
+
+    jQuery('#flyer-submit').on('click', function (event) {
+        event.preventDefault();
+        //alert('to-do: form processing');
+    });
     function HideFormSub() {
         //When the form is submitted, we hide the form
         $("#form-area-sub").hide();
@@ -26,19 +54,20 @@
     }
     function OnSuccessSub() {
         document.getElementById("SubEmailForm").reset();
-    } 
+    }
 </script>
 <style>
     #Subscribtion {
         background-color: #eee;
         padding: 10px;
     }
-        .input--form--css {
-            padding: 10px;
-            border: none;
-            margin-bottom: 10px;
-            width: 50%;
-        }
+
+    .input--form--css {
+        padding: 10px;
+        border: none;
+        margin-bottom: 10px;
+        width: 50%;
+    }
 </style>
 
 <div id="loading-area-sub" class="load" style="display:none;">
@@ -47,31 +76,22 @@
 
 <div id="message-area-sub"></div>
 
-<div id="form-area-sub">
-    @using (Ajax.BeginForm("SubscriptionEmail", null, ajaxOptions, new { id="SubEmailForm"}))
-    {
-        @Html.AntiForgeryToken()
-        if (!MvcHtmlString.IsNullOrEmpty(Html.ValidationSummary(true)))
-        {
-            <div class="message-error">@Html.ValidationSummary(true)</div>
-        }
-<div class="box">
-    @Html.TextBoxFor(model => model.FirstName, new { @class = "input--form--css", placeholder = "First Name", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span>
-    <br />
-    @Html.TextBoxFor(model => model.LastName, new { @class = "input--form--css", placeholder = "Last Name" }) <br />
-    @Html.TextBoxFor(model => model.Company, new { @class = "input--form--css", placeholder = "Company" }) <br />
-    @Html.TextBoxFor(model => model.Email, new { @class = "input--form--css", placeholder = "Email", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span> <br />
-    @Html.TextBoxFor(model => model.PostalCode, new { @class = "input--form--css", placeholder = "Postal Code", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span> <br />
-    @Html.TextBoxFor(model => model.Province, new { @class = "input--form--css", placeholder = "Province", @style = "margin-left: 12px;" }) &nbsp;<span style="color:red">*</span>
-</div>
-        @*<div class="captcha-box">
-            @Html.Raw(Html.GenerateCaptcha())
-        </div>*@
-        <br />
-        <div class="row" align="center">
-            <input type="submit" name="Subscribtion" class="send--mail" value="@T("Products.EmailAFriend.Button")" />
+<section id="section-flyer-cta" class="section section-inner-width">
+    <div class="content-inner-width">
+        <h2 class="section-header">Get the latest products and deals in your inbox</h2>
+        <div class="flyer-cta-inner">
+            <p class="column-content-text">Subscribe to our e-flyer and newsletter</p>
+            <div class="column-split-content">
+                <form id="flyer-cta-form" class="inline-form">
+                    <input id="flyer-cta-input" class="clear-default-input inline-text-input corner-radius" type="text" name="Email" placeholder="Enter email" />
+                    <button type="submit" id="flyer-submit" class="clear-default-button text-submit-button new-button cta-button-yellow corner-radius">
+                        Sign Me Up <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+            <!-- /.column-split-content -->
         </div>
-    }
-</div>
-
-
+        <!-- /.flyer-cta-inner -->
+    </div>
+    <!-- /.talk-cta-wrapper -->
+</section>

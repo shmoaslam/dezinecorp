@@ -7,25 +7,28 @@
 }
 @if (Model.Enabled)
 {
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="@Url.RouteUrl("HomePage")" itemprop="url" style="margin:0px;">
-                    <span itemprop="title" style="margin:0px;">@T("Products.Breadcrumb.Top")</span>
-                </a>
-            </li>
-            @foreach (var category in Model.CategoryBreadcrumb)
-            {
+    <div id="breadcrumb-holder" class="section-full-width content-inner-width">
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" itemprop="url" style="margin:0px;">
-                        <span itemprop="title" style="margin:0px;">@category.Name.Replace("Root Category", "Root")</span>
+                    <a href="@Url.RouteUrl("HomePage")" itemprop="url" style="margin:0px;">
+                        <span itemprop="title" style="margin:0px;">@T("Products.Breadcrumb.Top")</span>
                     </a>
                 </li>
-            }
-            <li class="breadcrumb-item active" aria-current="page">
-                @Model.ProductName
-            </li>
-        </ol>
-    </nav>
+                @foreach (var category in Model.CategoryBreadcrumb)
+                {
+                    <li class="breadcrumb-item">
+                        <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" itemprop="url" style="margin:0px;">
+                            <span itemprop="title" style="margin:0px;">@category.Name.Replace("Root Category", "Root")</span>
+                        </a>
+                    </li>
+                }
+                <li class="breadcrumb-item active" aria-current="page">
+                    @Model.ProductName
+                </li>
+            </ol>
+        </nav>
+    </div>
     @Html.Widget("productbreadcrumb_after", Model.ProductId)
-}   
+}

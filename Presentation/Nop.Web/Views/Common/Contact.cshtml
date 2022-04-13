@@ -1,0 +1,132 @@
+﻿@model Nop.Web.Models.Common.ContactUsModel
+@{
+    ViewBag.Title = "Contact";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<section id="section-mission" class="section section-full-width teal-bg">
+    <div class="home-mission content-inner-width">
+        <h1 class="mission-header">
+            <p class="category-header">Contacts</p>
+        </h1>
+    </div>
+    <!-- /.home-mission -->
+</section>
+
+<section id="contacts-page-content" class="section section-full-width">
+    <!--
+        <div class="content-inner-width">
+            <h2 class="section-header">Title</h2>
+        </div>
+    -->
+    <div class="product-category-wrapper contacts-content content-inner-width">
+        <div class="column-wrapper">
+            <div class="col3-split">
+
+                <h2>Corporate Office</h2>
+                <p>
+                    <strong>Dezine<span style="color:#007A8A;">Corp</span> Inc.</strong><br>
+                    369 Britannia Rd East<br>
+                    Mississauga ON L4Z 2H5
+                </p>
+
+                <h2>Main Office</h2>
+
+                <p>tel: 905.564.2011 | toll free tel: 866.625.7820</p>
+                <p>fax: 905.564.3351 | toll free fax: 888.493.3767</p>
+
+                <h2>Hours of Operation</h2>
+                <p>Monday to Friday, 8:30am to 5:00pm</p>
+
+            </div><!-- COL 1 -->
+
+            <div class="col3-split">
+
+                <h2>Customer Service</h2>
+                <p><a href="mailto:support@dezinecorp.com">support@dezinecorp.com</a></p>
+
+                <h2>Account Representative – Canada</h2>
+                <p>905.364.0429 | <a href="mailto:easternrep@dezinecorp.com">easternrep@dezinecorp.com</a></p>
+
+            </div><!-- COL 2-->
+
+            <div class="col3-split">
+
+                <h2>Orders/Artwork</h2>
+                <p>905.564.2011  | <a href="mailto:orders@dezinecorp.com">orders@dezinecorp.com</a></p>
+
+                <h2>Accounts</h2>
+                <p><a href="mailto:support@dezinecorp.com">support@dezinecorp.com</a></p>
+
+            </div><!-- COL 3 -->
+        </div>
+
+        <div class="location-map-wrapper contacts-content">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2887.6903615491615!2d-79.67163398460413!3d43.63380317912196!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b3f5c3145c0db%3A0x8f2d0d29f3605c00!2sDezineCorp+Inc!5e0!3m2!1sen!2sin!4v1532657571109" width="100%" height="400" frameborder="0" style="border:0" allowfullscreen=""></iframe>
+        </div>
+        @if (Model.SuccessfullySent)
+        {
+            <div class='alert alert-success'>
+                Thank you for your Query.
+                <br />Your query will be answered soon!.
+            </div>
+        }
+        else
+        {
+    <div class="contact-form-wrapper contacts-content">
+        <h2>We invite you to send us your questions and comments</h2>
+        @using (Html.BeginForm("Contact", "Common", FormMethod.Post))
+        {
+            <div class="form-group">
+                <label for="FullName" class="control-label">Name</label>
+                <input id="FullName" name="FullName" placeholder="Name" type="text" class="form-control" value="@Model.FullName">
+            </div>
+            <div class="form-group">
+                <label for="Email" class="control-label">Email</label>
+                <input id="Email" name="Email" placeholder="Email" type="text" required="required" class="form-control" value="@Model.Email">
+            </div>
+            <div class="form-group">
+                <label for="PhoneNumber" class="control-label">Phone number</label>
+                <input id="PhoneNumber" name="PhoneNumber" placeholder="Phone number" type="text" required="required" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="Company" class="control-label">Company</label>
+                <input id="Company" name="Company" placeholder="Company" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="Query" class="control-label">How can we help?</label>
+                <select id="Query" name="Query" required="required" class="select form-control">
+                    <option value="contact" selected="@(Model.Query == "contact")">Contact</option>
+                    <option value="quote" selected="@(Model.Query == "quote")">Quote</option>
+                    <option value="support" selected="@(Model.Query == "support")">Customer support</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="ProductNumber" class="control-label">Product (if applicable)</label>
+                <input id="ProductNumber" value="@Model.ProductNumber" name="ProductNumber" placeholder="Product (or product ID)" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="Quantity" class="control-label">Quantity (if applicable)</label>
+                <input id="Quantity" name="Quantity" placeholder="Quantity" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="Enquiry" class="control-label">Message</label>
+                <textarea id="Enquiry" name="Enquiry" cols="40" rows="5" aria-describedby="contact-messageHelpBlock" class="form-control">@Model.Enquiry</textarea>
+                <span id="contact-messageHelpBlock" class="help-block">Add any additional information here</span>
+            </div>
+            <div class="form-group">
+                <button id="contact-submit" name="submit" type="submit" class="btn btn-primary">Send</button>
+            </div>
+        }
+    </div>
+        }
+        <!-- /contact-from-wrapper -->
+    </div>
+    <!-- /.product-category-wrapper -->
+</section>
+
+@Html.Partial("_SearchOption")
+
+@Html.Partial("_DezinecorpDifference")
+
+@Html.Action("SubscriptionEmail", "Common")

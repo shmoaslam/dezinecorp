@@ -1782,11 +1782,14 @@ namespace Nop.Web.Controllers
 
             var model = new ProductEmailAFriendModel();
             model.ProductId = product.Id;
+            model.ProductDescription = product.ShortDescription;
             model.ProductName = product.GetLocalized(x => x.Name);
             model.ProductSeName = product.GetSeName();
+            ///model.Name = string.Empty;
             //model.CaptchaClientKey = System.Configuration.ConfigurationManager.AppSettings["captchaclientkey"];
             model.YourEmailAddress = _workContext.CurrentCustomer.Email;
             model.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnEmailProductToFriendPage;
+            //model.IsEmailForm = isEmailForm == 1;
             return View(model);
         }
 
@@ -1837,11 +1840,11 @@ namespace Nop.Web.Controllers
             //    ModelState.AddModelError("", _localizationService.GetResource("Common.WrongCaptcha"));
             //}
 
-            //validate CAPTCHA
-            if (!IsReCaptchValid())
-            {
-                ModelState.AddModelError("", "Captcha Validation failure!");
-            }
+            ////validate CAPTCHA
+            //if (!IsReCaptchValid())
+            //{
+            //    ModelState.AddModelError("", "Captcha Validation failure!");
+            //}
 
 
 
@@ -1863,7 +1866,7 @@ namespace Nop.Web.Controllers
                 model.ProductId = product.Id;
                 model.ProductName = product.GetLocalized(x => x.Name);
                 model.ProductSeName = product.GetSeName();
-
+               // model.IsEmailForm = true;
                 model.SuccessfullySent = true;
                 model.Result = _localizationService.GetResource("Products.EmailAFriend.SuccessfullySent");
 
@@ -1872,6 +1875,7 @@ namespace Nop.Web.Controllers
 
             //If we got this far, something failed, redisplay form
             model.ProductId = product.Id;
+            //del.IsEmailForm = true;
             model.ProductName = product.GetLocalized(x => x.Name);
             model.ProductSeName = product.GetSeName();
             model.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnEmailProductToFriendPage;

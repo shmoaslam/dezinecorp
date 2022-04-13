@@ -227,6 +227,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\DezineCorpCSS\style_new.css" />
     <Compile Include="Controllers\BasePublicController.cs" />
     <Compile Include="Controllers\BoardsController.cs" />
     <Compile Include="Controllers\BackInStockSubscriptionController.cs" />
@@ -515,11 +516,33 @@
     <Content Include="Content\DezineCorpImages\BOX4.jpg" />
     <Content Include="Content\DezineCorpImages\BOX5.jpg" />
     <Content Include="Content\DezineCorpImages\BOX6.jpg" />
+    <Content Include="Content\DezineCorpImages\boxes\BulkPackaged_ShipByPallet%28SmallBox%29_2022_340x200.jpg" />
+    <Content Include="Content\DezineCorpImages\boxes\BulkPackaged_ShipByPallet%28SmallBox%29_2022_450x800.jpg" />
+    <Content Include="Content\DezineCorpImages\boxes\Main-Page-Box-Canada.jpg" />
+    <Content Include="Content\DezineCorpImages\boxes\Main-Page-Box-Clearacnce.jpg" />
+    <Content Include="Content\DezineCorpImages\boxes\Main-Page-Box-Clearacnce1.jpg" />
+    <Content Include="Content\DezineCorpImages\boxes\Main-Page-Box-Clearance.jpg" />
+    <Content Include="Content\DezineCorpImages\boxes\Main-Page-Box-Coolers.jpg" />
+    <Content Include="Content\DezineCorpImages\boxes\Main-Page-Box-Digital Glass.jpg" />
+    <Content Include="Content\DezineCorpImages\boxes\Main-Page-Box-Digital SS.jpg" />
+    <Content Include="Content\DezineCorpImages\boxes\Main-Page-Box-Digital-Glass.jpg" />
+    <Content Include="Content\DezineCorpImages\boxes\Main-Page-Box-Digital-SS.JPG" />
+    <Content Include="Content\DezineCorpImages\boxes\Main-Page-Box-Hydeport.jpg" />
+    <Content Include="Content\DezineCorpImages\boxes\Main-Page-Box-Riedel.jpg" />
+    <Content Include="Content\DezineCorpImages\boxes\Main-Page-Box-Whats-new.jpg" />
+    <Content Include="Content\DezineCorpImages\boxes\Small-Clearancet_2022_450x800.jpg" />
+    <Content Include="Content\DezineCorpImages\boxes\Small-Hydport_2022_450x800.jpg" />
+    <Content Include="Content\DezineCorpImages\boxes\Small-Made-in-canada_2022_450x800.jpg" />
+    <Content Include="Content\DezineCorpImages\boxes\Small-New_2022_450x800.jpg" />
+    <Content Include="Content\DezineCorpImages\boxes\Small-Riedel_2022_450x800.jpg" />
     <Content Include="Content\DezineCorpImages\careers-banner.jpg" />
     <Content Include="Content\DezineCorpImages\contact_us.jpg" />
     <Content Include="Content\DezineCorpImages\dezinecorp.png" />
     <Content Include="Content\DezineCorpImages\DezineLogo.gif" />
+    <Content Include="Content\DezineCorpImages\diego-ph-fIq0tET6llw-unsplash.jpg" />
+    <Content Include="Content\DezineCorpImages\eric-zhu-FZwPklRRzrw-unsplash.jpg" />
     <Content Include="Content\DezineCorpImages\faq-banner.jpeg" />
+    <Content Include="Content\DezineCorpImages\faq_2000x1333.jpg" />
     <Content Include="Content\DezineCorpImages\flag.jpg" />
     <Content Include="Content\DezineCorpImages\free shipping 280 x 200 .jpg" />
     <Content Include="Content\DezineCorpImages\free shipping 572 x 410.jpg" />
@@ -535,7 +558,9 @@
     <Content Include="Content\DezineCorpImages\hydeport edited final.jpg" />
     <Content Include="Content\DezineCorpImages\loader.gif" />
     <Content Include="Content\DezineCorpImages\logo.png" />
+    <Content Include="Content\DezineCorpImages\mika-baumeister-PtabTe6iJ_8-unsplash.jpg" />
     <Content Include="Content\DezineCorpImages\new_logo.gif" />
+    <Content Include="Content\DezineCorpImages\opt-lasers-KshEaH06rV8-unsplash.jpg" />
     <Content Include="Content\DezineCorpImages\PartnerBrand.JPG" />
     <Content Include="Content\DezineCorpImages\PPAI_Logo%28100x50%29.png" />
     <Content Include="Content\DezineCorpImages\PPPC_Logo%28100x50%29.png" />
@@ -1161,6 +1186,7 @@
     <Content Include="Content\tinymce\tinymce.min.js" />
     <Content Include="Scripts\DezineCorp\bootstrap.js" />
     <Content Include="Scripts\DezineCorp\common.js" />
+    <Content Include="Scripts\DezineCorp\custom.js" />
     <Content Include="Scripts\DezineCorp\imageMapResizer.min.js" />
     <Content Include="Scripts\DezineCorp\jquery.elevateZoom-3.0.8.min.js" />
     <Content Include="Scripts\DezineCorp\jquery.flexslider.js" />
@@ -1248,6 +1274,7 @@
     <Content Include="Content\fonts\flexslider-icon.ttf" />
     <Content Include="Content\fonts\flexslider-icon.woff" />
     <Content Include="Content\PDF\Terms_Conditions_Decoration Charges_Website-2018.pdf" />
+    <None Include="Content\DezineCorpImages\about_team_2000x.jpg.webp" />
     <None Include="Properties\PublishProfiles\DezineCorp.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FTP_DEV_SERVER.pubxml" />
@@ -2156,8 +2183,20 @@
     <Content Include="Views\Common\Footer_Backup.cshtml" />
     <Content Include="Views\Catalog\CategoryTemplate.ProductsInGridOrLines - Copy.cshtml" />
     <Content Include="Views\Common\AboutUs.cshtml" />
+    <Content Include="Views\Common\FAQ.cshtml" />
+    <Content Include="Views\Shared\_HomePageSlider.cshtml" />
+    <Content Include="Views\Shared\_PopularProductIdeas.cshtml" />
+    <Content Include="Views\Shared\_TalkToExpert.cshtml" />
+    <Content Include="Views\Shared\_DezinecorpDifference.cshtml" />
+    <Content Include="Views\Shared\_HomePageDezineCorpDescription.cshtml" />
+    <Content Include="Views\Shared\_SearchOption.cshtml" />
+    <Content Include="Views\Shared\_ProductBoxSearch.cshtml" />
+    <Content Include="Views\Common\Contact.cshtml" />
+    <Content Include="Views\Common\Subscribe.cshtml" />
+    <Content Include="Views\Shared\_Subcribtions.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\DezineCorpImages\main-slider\" />
     <Folder Include="Content\Roxy_Fileman\tmp\" />
     <Folder Include="Plugins\bin\" />
   </ItemGroup>
@@ -2369,11 +2408,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>15536</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:2451/</IISUrl>
+          <IISUrl>https://localhost:44301/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -2,44 +2,33 @@
     Layout = "~/Views/Shared/_Root.Head.cshtml";
 }
 @Html.Widget("body_start_html_tag_after")
-@Html.Partial("_Notifications")
+@*@Html.Partial("_Notifications")*@
 @Html.Action("JavaScriptDisabledWarning", "Common")
 @Html.Partial("OldInternetExplorerWarning")
 
-<div class="container">
+<header id="new-header" class="header-full">
     @Html.Action("AdminHeaderLinks", "Common")
-</div>
 
-<div class="container">
     @Html.Partial("Header")
-</div>
-<script type="text/javascript">
-    AjaxCart.init(false, '.header-links .cart-qty', '.header-links .wishlist-qty', '#flyout-cart');
-</script>
-<div class="container">
-    @Html.Action("TopMenu", "Catalog")
-</div>
-    @if (IsSectionDefined("Breadcrumb"))
+</header>
+@*<div class="container">
+        @Html.Partial("Header")
+    </div>*@
+@*<script type="text/javascript">
+        AjaxCart.init(false, '.header-links .cart-qty', '.header-links .wishlist-qty', '#flyout-cart');
+    </script>*@
+@*<div class="container">
+        @Html.Action("TopMenu", "Catalog")
+    </div>*@
+@*@if (IsSectionDefined("Breadcrumb"))
     {
         @RenderSection("Breadcrumb")
-    }
-    @RenderBody()
+    }*@
+@RenderBody()
 
-    <!-- Commenting nopcommerce home page-->
-    @*<div class="master-wrapper-content">
-            @Html.Widget("content_before")
 
-            @if (IsSectionDefined("Breadcrumb"))
-            {
-                @RenderSection("Breadcrumb")
-            }
-            <div class="master-column-wrapper">
-                @RenderBody()
-            </div>
-            @Html.Widget("content_after")
-        </div>*@
-    @Html.Action("Footer", "Common")
+@Html.Action("Footer", "Common")
 
-    @Html.Action("EuCookieLaw", "Common")
-    @Html.Widget("body_end_html_tag_before")
+  @*  @Html.Action("EuCookieLaw", "Common")
+    @Html.Widget("body_end_html_tag_before")*@
 
