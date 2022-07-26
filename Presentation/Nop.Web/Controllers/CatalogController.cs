@@ -689,6 +689,44 @@ namespace Nop.Web.Controllers
         }
 
 
+        [ChildActionOnly]
+        public ActionResult TopMenuNew()
+        {
+            //categories
+            string categoryCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_MENU_MODEL_KEY,
+                _workContext.WorkingLanguage.Id,
+                string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()),
+                _storeContext.CurrentStore.Id);
+            var cachedCategoriesModel = _cacheManager.Get(categoryCacheKey, () => PrepareCategorySimpleModels(357));
+
+            //top menu topics
+            string topicCacheKey = string.Format(ModelCacheEventConsumer.TOPIC_TOP_MENU_MODEL_KEY,
+                _workContext.WorkingLanguage.Id,
+                _storeContext.CurrentStore.Id,
+                string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()));
+            var cachedTopicModel = _cacheManager.Get(topicCacheKey, () =>
+                _topicService.GetAllTopics(_storeContext.CurrentStore.Id)
+                .Where(t => t.IncludeInTopMenu)
+                .Select(t => new TopMenuModel.TopMenuTopicModel
+                {
+                    Id = t.Id,
+                    Name = t.GetLocalized(x => x.Title),
+                    SeName = t.GetSeName()
+                })
+                .ToList()
+            );
+            var model = new TopMenuModel
+            {
+                Categories = cachedCategoriesModel,
+                Topics = cachedTopicModel,
+                NewProductsEnabled = _catalogSettings.NewProductsEnabled,
+                BlogEnabled = _blogSettings.Enabled,
+                ForumEnabled = _forumSettings.ForumsEnabled
+            };
+            return PartialView(model);
+        }
+
+
 
         [ChildActionOnly]
         public ActionResult HomePageBoxMenu()

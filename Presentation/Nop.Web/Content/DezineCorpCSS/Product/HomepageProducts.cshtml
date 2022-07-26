@@ -1,0 +1,60 @@
+﻿@model IList<ProductOverviewModel>
+@using Nop.Web.Models.Catalog;
+@{
+    var products = Model.ToList();
+}
+
+<div class="container feature-p">
+    <div class="row">
+        <div class="controls main-header">
+            <div class="col-md-3 col-sm-3 col-xs-2">
+                <a class="pull-left fa fa-chevron-left btn" href="#carousel-example"
+                   data-slide="prev"></a>
+            </div>
+            <div class="col-md-6 col-sm-6  col-xs-8">
+                <p>Featured Products</p>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-2">
+                <a class="pull-right fa fa-chevron-right btn" href="#carousel-example"
+                   data-slide="next"></a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="carousel-example" class="carousel slide" data-ride="carousel">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+
+                @if (Model.Count > 0)
+                {
+                    var items = products.Take(6);
+                    var iterations = 0;
+
+                    while (items.Count() > 0)
+                    {
+                        <div class="item @( iterations == 0 ? "active": "")">
+                            @foreach (var item in items)
+                            {
+                                <div class="col-md-2 col-sm-3 col-xs-6 text-center mtb   ">
+                                    <div class="col-item">
+                                        <div style="width:150px;height:150px;">
+                                            <a href="@Url.RouteUrl("Product", new { SeName = item.SeName })" title="@item.Name">
+                                                <div style="width:100%;height:100%;background:url(@item.DefaultPictureModel.ImageUrl) center center no-repeat;" title="@item.DefaultPictureModel.Title">
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <p class="btb" title="@item.Name">@(item.Name.Length > 20 ? item.Name.Substring(0,20) + "..." : item.Name)</p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        iterations++;
+                        items = products.Skip(6 * iterations).Take(6);
+                    }
+
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

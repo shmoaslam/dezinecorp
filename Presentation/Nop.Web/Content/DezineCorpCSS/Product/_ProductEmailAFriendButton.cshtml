@@ -1,0 +1,15 @@
+﻿@model ProductDetailsModel
+@using Nop.Web.Models.Catalog;
+
+@if (Model.IsEmailButton)
+{
+    if (Model.EmailAFriendEnabled)
+    {
+        <a class="new-button cta-button-yellow action-cta corner-radius" href="@Url.RouteUrl("ProductEmailAFriend", new { productId = Model.Id})"><i class="far fa-envelope" ></i> Email Link</a>
+    }
+
+}
+else
+{
+    <a class="new-button cta-button-yellow action-cta corner-radius" href="@Url.Action("ContactUs", "Common", new { productId = Model.Id})"><i class="fas fa-tags" ></i> Get a quote</a>
+}

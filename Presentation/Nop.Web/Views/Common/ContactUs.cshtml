@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 
 }
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 
 <!-********************************************->
 		<!-                                            ->
@@ -15,7 +15,7 @@
     <div class="home-mission content-inner-width">
         <h1 class="mission-header">
             <p class="category-header">Contact Us</p>
-           
+
         </h1>
     </div>
     <!-- /.home-mission -->
@@ -54,7 +54,7 @@
                     </div>
                     <div class="form-group">
                         <label for="Email" class="control-label">Email</label>
-                        <input id="Email" name="Email" placeholder="Email" type="text" required="required" class="form-control"  value="@Model.Email">
+                        <input id="Email" name="Email" placeholder="Email" type="text" required="required" class="form-control" value="@Model.Email">
                     </div>
                     <div class="form-group">
                         <label for="PhoneNumber" class="control-label">Phone number</label>
@@ -100,9 +100,9 @@
     <!-- /.product-category-wrapper -->
 </section>
 
+@Html.Partial("_SearchOption")
 
-@Html.Action("TopicBlock", "Topic", new { systemName = "MostSearchOptions" })
 
-@Html.Action("TopicBlock", "Topic", new { systemName = "DezinecorpDifference" })
+@Html.Partial("_DezinecorpDifference")
 
-@Html.Action("SubscriptionEmail", "Common")
+@Html.Partial("_Subcribtions")

@@ -4,15 +4,16 @@
     Html.AddScriptParts("~/Scripts/jquery.magnific-popup.min.js");
     Html.AddCssFileParts("~/Content/magnific-popup/magnific-popup.css");
 }
-<script src="~/Scripts/DezineCorp/jquery.elevateZoom-3.0.8.min.js"></script>
+
+<!-- <script src="~/Scripts/DezineCorp/jquery.elevateZoom-3.0.8.min.js"></script> -->
 <!-********************************************->
 		<!-  Slick slider                              ->
 		<!-********************************************->
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <div class="product-images-wrapper ">
-    <div class="product-main-image-wrapper">
-        <img id="main-product-img" class="product-main-image" src="@Model.DefaultPictureModel.ImageUrl" data-zoom-image="@Model.DefaultPictureModel.FullSizeImageUrl" alt="@Model.DefaultPictureModel.AlternateText" itemprop="image" title="@Model.DefaultPictureModel.Title" />
+    <div id="product-image-zoom" class="product-main-image-wrapper">
+        <img id="main-product-img" class="product-main-image" src="@Model.DefaultPictureModel.FullSizeImageUrl" data-zoom-image="@Model.DefaultPictureModel.FullSizeImageUrl" alt="@Model.DefaultPictureModel.AlternateText" itemprop="image" />
     </div>
 </div>
 <!-- .product-images-wrapper -->
@@ -23,7 +24,7 @@
         {
             <div class="product-thumbnail-wrapper" id="gallery">
                 <a href="#" class="thumbnailImage" data-image="@Model.PictureModels[i].ImageUrl" data-zoom-image="@Model.PictureModels[i].FullSizeImageUrl">
-                    <img class="product-thumbnail" alt="@Model.PictureModels[i].AlternateText" src="@Model.PictureModels[i].ThumbImageUrl" data-zoom-image="@Model.PictureModels[i].FullSizeImageUrl" title="@Model.PictureModels[i].Title" />
+                    <img class="product-thumbnail" alt="@Model.PictureModels[i].AlternateText" src="@Model.PictureModels[i].ThumbImageUrl" data-zoom-image="@Model.PictureModels[i].FullSizeImageUrl"  />
                 </a>
             </div>
         }
@@ -47,8 +48,8 @@
                             for (int i = 0; i < Model.PictureModels.Count; i++)
                             {
                                 <div class="col-md-3 col-xs-3 border-r" id="gallery" style="text-align:center;">
-                                    <a href="#" class="thumbnailImage" data-image="@Model.PictureModels[i].ImageUrl" data-zoom-image="@Model.PictureModels[i].FullSizeImageUrl">
-                                        <img alt="@Model.PictureModels[i].AlternateText" src="@Model.PictureModels[i].ThumbImageUrl" data-zoom-image="@Model.PictureModels[i].FullSizeImageUrl" title="@Model.PictureModels[i].Title" />
+                                    <a href="#" class="product-secondary-thumbnail thumbnailImage" data-image="@Model.PictureModels[i].ImageUrl" data-zoom-image="@Model.PictureModels[i].FullSizeImageUrl">
+                                        <img alt="@Model.PictureModels[i].AlternateText" src="@Model.PictureModels[i].ThumbImageUrl" data-zoom-image="@Model.PictureModels[i].FullSizeImageUrl" />
                                     </a>
                                 </div>
                             }
@@ -60,12 +61,44 @@
     </div>
     <br>*@
 
-
+<!--
 <script>
     $("#main-product-img").elevateZoom({ gallery: 'gallery', galleryActiveClass: 'active', tint: true, tintOpacity: 0.5 });  //pass the images to Fancybox $("#zoom_03").bind("click", function(e) { var ez = $('#zoom_03').data('elevateZoom');	$.fancybox(ez.getGalleryList()); return false; }); - See more at: http://www.elevateweb.co.uk/image-zoom/examples#sthash.OxG7EsJE.dpuf
     $(window).load(function () {
         $("#main-product-img").parent(".zoomWrapper").css("width", "");
         $("#main-product-img").parent(".zoomWrapper").css("height", "");
         $("#main-product-img").css("position", "");
-    });
+    });   
+    
 </script>
+-->
+<script>
+ function onZoom(e) {
+        console.log('START ZOOM');
+        var img = document.getElementById("main-product-img");
+        const x = e.clientX - e.target.offsetLeft - 100;
+        const y = e.clientY - e.target.offsetTop - 200;
+        img.style.transformOrigin = `${x}px ${y}px`;
+        img.style.transform = "scale(2)"; //2.5
+    }
+    
+    function offZoom(e) {
+        console.log('END ZOOM');
+        var img = document.getElementById("main-product-img");
+        img.style.transformOrigin = `center center`;
+        img.style.transform = "scale(1)";
+    }
+
+    /* PRODUCT IMAGE ZOOM */
+    const container = document.getElementById("product-image-zoom");
+ 
+    if ($( window ).width() >= 640){	
+        
+        container.addEventListener("mousemove", onZoom);
+        container.addEventListener("mouseover", onZoom);
+        container.addEventListener("mouseleave", offZoom);
+       
+    }
+</script>
+
+

@@ -102,7 +102,7 @@
                                                     result["products[" + i + "]." + member] = entity[member];
                                                 }
                                             }
-                                            
+
                                             addAntiForgeryToken(result);
                                             return result;
                                         } else {
@@ -127,6 +127,7 @@
                                             ManageInventoryMethod: { editable: false, type: "string" },
                                             StockQuantity: { editable: true, type: "number" },
                                             Published: { editable: true, type: "boolean" },
+                                            DisplayOrder: { editable: true, type: "number" },
                                             Id: { editable: false, type: "number" }
                                         }
                                     }
@@ -210,8 +211,13 @@
                                     field: "Published",
                                     title: "@T("Admin.Catalog.BulkEdit.Fields.Published")",
                                     width: 200
-                                }, {
-                                    command: { name: "destroy", text: "@T("Admin.Common.Delete")" }, 
+                                },
+                                {
+                                    field: "DisplayOrder",
+                                    title: "@T("Admin.Catalog.BulkEdit.Fields.DisplayOrder")",
+                                    width: 200
+                                },{
+                                    command: { name: "destroy", text: "@T("Admin.Common.Delete")" },
                                     title: "@T("Admin.Common.Delete")",
                                     width: 100
                                 }

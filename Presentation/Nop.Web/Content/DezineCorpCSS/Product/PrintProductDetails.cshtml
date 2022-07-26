@@ -1,0 +1,397 @@
+﻿@model Nop.Web.Models.Catalog.ProductDetailsModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dezinecorp. @Model.Name-@Model.Sku</title>
+
+    <!-- Bootstrap -->
+    <link href="~/Content/DezineCorpCSS/bootstrap.css" rel="stylesheet">
+</head>
+<style>
+    .card {
+
+    }
+
+    hr {
+        border: 10px solid rgb(0, 122, 138);
+    }
+    .card-body{
+    }
+</style>
+@{
+    if (Model.PictureModels.Any())
+    {
+
+    }
+    var topThreePics = Model.PictureModels.Any();
+}
+<body style="font-size:12px;">
+    <div class="container">
+        <br />
+        <hr  style="width:100%;margin:0px;padding:0px">
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6 text-center">
+                <div class="card" style="margin-bottom: 30px;">
+                    <div class="card-body">
+                        <h3><strong>@Model.Name</strong> <small>@Model.Sku</small></h3>
+                        <img src="@Model.DefaultPictureModel.ImageUrl" alt="@Model.DefaultPictureModel.AlternateText" /><br><br />
+                        @if (Model.PictureModels.Any())
+                        {
+                            if (Model.PictureModels.Count() > 1)
+                            {
+                                int count = 0;
+                                foreach (var pictureModel in Model.PictureModels)
+                                {
+                                    if (count == 3)
+                                    {
+                                        break;
+                                    }
+                                    count = count + 1;
+                        <img id="img_@count" src="@pictureModel.ThumbImageUrl" style="height:70px" />
+                                }
+
+                            }
+                        }
+                        <br /><br />
+                        <p>@Model.ShortDescription</p>
+                    </div>
+                </div>
+                @*@if (Model.DData != null)
+                {
+                    <label>Note:</label>
+                    <p style="font-size:10px;text-align:left;">
+                        @Model.DData.RepeatTerm
+                    </p>
+                    <p style="font-size:10px;text-align:left;">
+                        @Model.DData.FinalNote
+                    </p>
+                }*@
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                <h3 class="text-center">Pricing</h3>
+                <div class="card" style="margin-bottom: 30px;">
+                    <div class="card-body">
+                        <table class="table"  style="margin-bottom:10px">
+                            <tbody>
+                                @{var priceLevel = 0;}
+                                @if (Model.DTierPrices != null)
+                                {
+                                    foreach (var tierprice in Model.DTierPrices)
+                                    {
+                                        if (tierprice.PriceName.Equals("Quantity"))
+                                        {
+                                            <tr style="color: white;background-color: #007A8A;font-weight:bold;">
+                                                <th scope="col">@tierprice.PriceName</th>
+                                                @if (!string.IsNullOrEmpty(tierprice.Price1))
+                                                {
+                                                    <th scope="col">@tierprice.Price1</th>
+                                                    priceLevel++;
+                                                }
+                                                @if (!string.IsNullOrEmpty(tierprice.Price2))
+                                                {
+                                                    <th scope="col">@tierprice.Price2</th>
+                                                    priceLevel++;
+                                                }
+                                                @if (!string.IsNullOrEmpty(tierprice.Price3))
+                                                {
+                                                    <th scope="col">@tierprice.Price3</th>
+                                                    priceLevel++;
+                                                }
+                                                @if (!string.IsNullOrEmpty(tierprice.Price4))
+                                                {
+                                                    <th scope="col">@tierprice.Price4</th>
+                                                    priceLevel++;
+                                                }
+                                                <th scope="col">@tierprice.DiscountCode</th>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            var isPriceRow = tierprice.PriceName.Equals("Price", StringComparison.OrdinalIgnoreCase);
+                                            <tr style="color:Black;background-color:white;@(isPriceRow ? "border-bottom: 2px solid #007A8A;" : string.Empty)">
+                                                <td>@tierprice.PriceName</td>
+                                                @if (priceLevel == 1)
+                                                {
+                                                    <td>@tierprice.Price1.Replace(" ", "")</td>
+                                                }
+                                                else if (priceLevel == 2)
+                                                {
+                                                    <td>@tierprice.Price1.Replace(" ", "")</td>
+                                                    <td>@tierprice.Price2.Replace(" ", "")</td>
+                                                }
+                                                else if (priceLevel == 3)
+                                                {
+                                                    <td>@tierprice.Price1.Replace(" ", "")</td>
+                                                    <td>@tierprice.Price2.Replace(" ", "")</td>
+                                                    <td>@tierprice.Price3.Replace(" ", "")</td>
+                                                }
+                                                else if (priceLevel == 4)
+                                                {
+                                                    <td>@tierprice.Price1.Replace(" ", "")</td>
+                                                    <td>@tierprice.Price2.Replace(" ", "")</td>
+                                                    <td>@tierprice.Price3.Replace(" ", "")</td>
+                                                    <td>@tierprice.Price4.Replace(" ", "")</td>
+                                                }
+                                                <td>@(isPriceRow ? priceLevel.ToString() : "")@tierprice.DiscountCode.Replace(" ", "").ToLower()</td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                        @if (Model.DData != null)
+                        {
+                            <p style="font-size:10px;">@Model.DData.PricingFooterNote</p>
+                        }
+                        <h3 style="font-size:15px;">Setup</h3>
+                        <table class="table table-responsive"  style="margin-bottom:10px">
+                            <tbody>
+                                @if (Model.DData != null)
+                                {
+                                    if (!string.IsNullOrEmpty(Model.DData.RepeatSetup))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><strong> Setup Per Colour:</strong></td>
+                                            <td style="border-top-width:0px;">@Model.DData.SetupPerColour</td>
+                                        </tr>
+                                    }
+                                    if (!string.IsNullOrEmpty(Model.DData.RepeatSetup))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><strong> Repeat Setup Per Colour:</strong></td>
+                                            <td style="border-top-width:0px;">@Model.DData.RepeatSetup</td>
+                                        </tr>
+                                    }
+                                    if (!string.IsNullOrEmpty(Model.DData.DebossSetup))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><strong> Deboss & Die Setup:</strong></td>
+                                            <td style="border-top-width:0px;">@Model.DData.DebossSetup</td>
+                                        </tr>
+                                    }
+                                    if (!string.IsNullOrEmpty(Model.DData.RepeatDeboss))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><strong> Repeat Deboss:</strong></td>
+                                            <td style="border-top-width:0px;">@Model.DData.RepeatDeboss</td>
+                                        </tr>
+                                    }
+                                    if (!string.IsNullOrEmpty(Model.DData.DecalSetup))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><strong> Decal Setup Per Colour :</strong></td>
+                                            <td style="border-top-width:0px;">@Model.DData.DecalSetup</td>
+                                        </tr>
+                                    }
+                                    if (!string.IsNullOrEmpty(Model.DData.RepeatDecal))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><strong> Repeat Decal Setup Per Colour :</strong></td>
+                                            <td style="border-top-width:0px;">@Model.DData.RepeatDecal</td>
+                                        </tr>
+                                    }
+                                    if (!string.IsNullOrEmpty(Model.DData.LaserSetup))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><strong> Laser Engraving Setup:</strong></td>
+                                            <td style="border-top-width:0px;">@Model.DData.LaserSetup</td>
+                                        </tr>
+                                    }
+                                    if (!string.IsNullOrEmpty(Model.DData.RepeatLaser))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><strong> Repeat Laser Engraving Setup:</strong></td>
+                                            <td style="border-top-width:0px;">@Model.DData.RepeatLaser</td>
+                                        </tr>
+                                    }
+                                    if (!string.IsNullOrEmpty(Model.DData.AdditionalCharge1))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><strong> Additional Charge:</strong></td>
+                                            <td style="border-top-width:0px;">@Model.DData.AdditionalCharge1</td>
+                                        </tr>
+                                    }
+                                    if (!string.IsNullOrEmpty(Model.DData.AdditionalCharge2))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><strong> Additional Charge:</strong></td>
+                                            <td style="border-top-width:0px;">@Model.DData.AdditionalCharge2</td>
+                                        </tr>
+                                    }
+
+                                    if (!string.IsNullOrEmpty(Model.DData.AdditionalCharge3))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><strong> Additional Charge:</strong></td>
+                                            <td style="border-top-width:0px;">@Model.DData.AdditionalCharge3</td>
+                                        </tr>
+                                    }
+
+                                    if (!string.IsNullOrEmpty(Model.DData.AdditionalCharge4))
+                                    {
+                                        <tr style="width:50%;">
+                                            <td style="border-top-width:0px;"><strong> Additional Charge:</strong></td>
+                                            <td style="border-top-width:0px;">@Model.DData.AdditionalCharge4</td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                <h3 class="text-center">Features</h3>
+                <div class="card">
+                    <div class="card-body">
+                        <div style="margin-left:15px">
+                            <div>
+                                @Model.ShortDescription
+                            </div>
+                            @if (@Model.DData != null)
+                            {
+                                <div>
+                                    @Html.Raw(Model.DData.Features.Replace("\n", "<br />"))
+                                </div>
+                            }
+                            <br>
+                            <div>
+                                <table class="table"  style="margin-bottom:10px">
+                                    @if (Model.DData != null)
+                                    {
+                                        if (!string.IsNullOrEmpty(Model.DData.Materials))
+                                        {
+                                            <tr>
+                                                <td style="width:50%;border-top-width: 0px;"><strong>Materials :</strong></td>
+                                                <td style="border-top-width:0px;">@Model.DData.Materials</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.Includes))
+                                        {
+                                            <tr>
+                                                <td style="width:50%;border-top-width: 0px;"><strong>Includes :</strong></td>
+                                                <td style="border-top-width:0px;">@Model.DData.Includes</td>
+                                            </tr>
+                                        }
+                                        if (!string.IsNullOrEmpty(Model.DData.SpecailPackaging))
+                                        {
+                                            <tr>
+                                                <td style="width:50%;border-top-width: 0px;"><strong>Special Packaging :</strong></td>
+                                                <td style="border-top-width:0px;">@Model.DData.SpecailPackaging</td>
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                <h3 class="text-center">Specification</h3>
+                <div class="card">
+                    <div class="card-body">
+                        <br>
+                        <table class="table" style="margin-bottom:10px">
+                            <tbody>
+                                @if (Model.DData != null)
+                                {
+                                    if (!string.IsNullOrEmpty(Model.DData.Capacity))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><label>Capacity:</label></td>
+                                            <td style="border-top-width:0px;"> @Model.DData.Capacity</td>
+                                        </tr>
+                                    }
+                                    if (!string.IsNullOrEmpty(Model.DData.Size))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><label> Size: </label></td>
+                                            <td style="border-top-width:0px;"> @Model.DData.Size</td>
+                                        </tr>
+                                    }
+                                    if (!string.IsNullOrEmpty(Model.DData.ImprintAreaInOutboard))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><label> Imprint area in/outboard: </label></td>
+                                            <td style="border-top-width:0px;"> @Model.DData.ImprintAreaInOutboard</td>
+                                        </tr>
+                                    }
+                                    if (!string.IsNullOrEmpty(Model.DData.ImprintAreaWrapAround))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><label>Imprint area wraparound: </label></td>
+                                            <td style="border-top-width:0px;"> @Model.DData.ImprintAreaWrapAround</td>
+                                        </tr>
+                                    }
+                                    if (!string.IsNullOrEmpty(Model.DData.DecoratingOption))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><label> Decorating options: </label></td>
+                                            <td style="border-top-width:0px;"> @Model.DData.DecoratingOption</td>
+                                        </tr>
+                                    }
+                                    if (!string.IsNullOrEmpty(Model.DData.PeicesPerCartoon))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><label> Pieces per carton</label></td>
+                                            <td style="border-top-width:0px;"> @Model.DData.PeicesPerCartoon</td>
+                                        </tr>
+                                    }
+                                    if (!string.IsNullOrEmpty(Model.DData.WeightPerCartoon))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><label>Weight per carton:</label></td>
+                                            <td style="border-top-width:0px;"> @Model.DData.WeightPerCartoon</td>
+                                        </tr>
+                                    }
+                                    if (!string.IsNullOrEmpty(Model.DData.ProtectivePackaging))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><label> Protective packaging:</label></td>
+                                            <td style="border-top-width:0px;"> @Model.DData.ProtectivePackaging</td>
+                                        </tr>
+                                    }
+                                    if (!string.IsNullOrEmpty(Model.DData.ReferToCataloguePage))
+                                    {
+                                        <tr>
+                                            <td style="width:50%;border-top-width: 0px;"><label> Refer to catalogue page #:</label></td>
+                                            <td style="border-top-width:0px;"> @Model.DData.ReferToCataloguePage</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <hr style="width:100%;margin:0px;padding:0px">
+        <div class="row">
+            <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12 pull-left">
+                <img src="~/Content/DezineCorpImages/logo.png" style="width:10%" />  <span style="font-size: 20px; font-weight: bold;">|</span>  <a href="http://dezinecorp.com/" target="_blank">www.dezinecorp.com</a>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="~/Scripts/DezineCorp/bootstrap.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            window.print();
+        });
+    </script>
+</body>
+</html>

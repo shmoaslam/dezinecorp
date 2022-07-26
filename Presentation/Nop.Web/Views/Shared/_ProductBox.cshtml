@@ -55,7 +55,7 @@
             <img class="propduct-category-image corner-radius" src="@Model.DefaultPictureModel.ImageUrl" alt="@Model.DefaultPictureModel.AlternateText" />
         </div>
         <div class="product-info-wrapper">
-            <h3 class="product-title">@(Model.Name.Length > 35 ? Model.Name.Substring(0,35) + "..." : Model.Name)</h3>
+            <h3 class="product-title">@(Model.Name)</h3>
             <div class="product-id">@Model.SKU</div>
             @if (!string.IsNullOrEmpty(material))
             {

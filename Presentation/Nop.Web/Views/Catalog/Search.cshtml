@@ -16,87 +16,13 @@
         </h1>
     </div>
 </section>
-<section id="section-search" class="section section-full-width">
-    <div class="search-wrapper content-inner-width">
-        <div class="search-page search-bar-wrapper">
-            <h2 class="search-header">Search thousands of promotional products</h2>
-            @using (Html.BeginRouteForm("ProductSearch", FormMethod.Get, new { @class = "search-page inline-form" }))
-            {
-                <input id="search-input" class="clear-default-input inline-text-input corner-radius" type="text" placeholder="What are you looking for?" />
-                <button type="submit" id="search-submit" class="clear-default-button new-button search-submit-button cta-button-yellow corner-radius">
-                    <i class="fas fa-search"></i>
-                </button>
-
-
-                <div class="advanced-search-input inputs reversed">
-                    <input class="" id="adv" name="adv" type="checkbox" value="true">
-                    <input name="adv" type="hidden" value="false">
-                    <label class="advanced-search-box" for="adv">Advanced search</label>
-                </div>
-
-                <div class="advanced-search" id="advanced-search-block">
-                    <div class="advanced-search-input inputs">
-                        @Html.LabelFor(model => model.cid, new { }, ":")
-                        @Html.DropDownListFor(model => model.cid, Model.AvailableCategories, new { @class = "advanced-search-select inline-text-input corner-radius", })
-                    </div>
-                    <div class="advanced-search-input inputs reversed">
-                        <input id="isc" name="isc" type="checkbox" value="true"><input name="isc" type="hidden" value="false">
-                        <label for="isc">Automatically search sub categories</label>
-                    </div>
-                    <div class="advanced-search-input inputs">
-                        <label>Price </label>
-                        <span class="price-range">
-
-                            <input class="price-from inline-text-input corner-radius" id="pf" name="pf" type="text" value="" placeholder="Minimum">
-                            to
-                            <input class="price-to inline-text-input corner-radius" id="pt" name="pt" type="text" value="" placeholder="Maximum">
-                        </span>
-                    </div>
-                    <div class="advanced-search-input inputs reversed">
-                        <input id="sid" name="sid" type="checkbox" value="true">
-                        <input name="sid" type="hidden" value="false">
-                        <label for="sid">Search In product descriptions</label>
-                    </div>
-
-                </div>
-
-
-
-
-            }
-        </div>
-        <!-- /.search-bar-wrapper -->
-        <div class="search-preset-wrapper">
-            <div class="search-hints">
-                <div class="search-hint-text">
-                    <p>Popular searches</p>
-                </div>
-                <div class="search-preset corner-radius">
-                    Ceramics
-                </div>
-                <div class="search-preset corner-radius">
-                    <i class="fab fa-canadian-maple-leaf"></i> Made in Canada
-                </div>
-                <div class="search-preset corner-radius">
-                    Stanley
-                </div>
-                <div class="search-preset corner-radius">
-                    Glassware
-                </div>
-                <div class="search-preset corner-radius">
-                    Clearance
-                </div>
-            </div>
-            <!-- .search-hints-->
-        </div>
-    </div>
-    <!-- /.search-wrapper -->
-</section>
+@Html.Partial("_SearchOption")
 
 <section id="section-product-categories" class="section section-full-width section-search-results">
     <div class="product-category-wrapper product-category-products content-inner-width">
         <div class="grid-wrapper">
-            <div class="sort-wrapper"><span class="sort-label">Sort by: </span>
+            <div class="sort-wrapper">
+                <span class="sort-label">Sort by: </span>
                 @Html.Partial("_CatalogSelectors", Model.PagingFilteringContext, new ViewDataDictionary())
             </div>
             @if (!String.IsNullOrEmpty(Model.Warning))

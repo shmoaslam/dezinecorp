@@ -34,7 +34,7 @@ namespace Nop.Web.Models.Common
         public string Company { get; set; }
         public string Query { get; set; }
         public string ProductNumber { get; set; }
-        public int Quantity { get; set; }
+        public string Quantity { get; set; }
         public bool SuccessfullySent { get; set; }
 
         public string Result { get; set; }

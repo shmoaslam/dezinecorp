@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Contact";
 }
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 <section id="section-mission" class="section section-full-width teal-bg">
     <div class="home-mission content-inner-width">
         <h1 class="mission-header">
@@ -72,53 +72,53 @@
         }
         else
         {
-    <div class="contact-form-wrapper contacts-content">
-        <h2>We invite you to send us your questions and comments</h2>
-        @using (Html.BeginForm("Contact", "Common", FormMethod.Post))
-        {
-            <div class="form-group">
-                <label for="FullName" class="control-label">Name</label>
-                <input id="FullName" name="FullName" placeholder="Name" type="text" class="form-control" value="@Model.FullName">
+            <div class="contact-form-wrapper contacts-content">
+                <h2>We invite you to send us your questions and comments</h2>
+                @using (Html.BeginForm("Contact", "Common", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <label for="FullName" class="control-label">Name</label>
+                        <input id="FullName" name="FullName" placeholder="Name" type="text" class="form-control" value="@Model.FullName">
+                    </div>
+                    <div class="form-group">
+                        <label for="Email" class="control-label">Email</label>
+                        <input id="Email" name="Email" placeholder="Email" type="text" required="required" class="form-control" value="@Model.Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="PhoneNumber" class="control-label">Phone number</label>
+                        <input id="PhoneNumber" name="PhoneNumber" placeholder="Phone number" type="text" required="required" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="Company" class="control-label">Company</label>
+                        <input id="Company" name="Company" placeholder="Company" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="Query" class="control-label">How can we help?</label>
+                        <select id="Query" name="Query" required="required" class="select form-control">
+                            <option value="contact" selected="@(Model.Query == "contact")">Contact</option>
+                            <option value="quote" selected="@(Model.Query == "quote")">Quote</option>
+                            <option value="support" selected="@(Model.Query == "support")">Customer support</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ProductNumber" class="control-label">Product (if applicable)</label>
+                        <input id="ProductNumber" value="@Model.ProductNumber" name="ProductNumber" placeholder="Product (or product ID)" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="Quantity" class="control-label">Quantity (if applicable)</label>
+                        <input id="Quantity" name="Quantity" placeholder="Quantity" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="Enquiry" class="control-label">Message</label>
+                        <textarea id="Enquiry" name="Enquiry" cols="40" rows="5" aria-describedby="contact-messageHelpBlock" class="form-control">@Model.Enquiry</textarea>
+                        <span id="contact-messageHelpBlock" class="help-block">Add any additional information here</span>
+                    </div>
+                    <div class="form-group">
+                        <button id="contact-submit" name="submit" type="submit" class="btn btn-primary">Send</button>
+                    </div>
+                }
             </div>
-            <div class="form-group">
-                <label for="Email" class="control-label">Email</label>
-                <input id="Email" name="Email" placeholder="Email" type="text" required="required" class="form-control" value="@Model.Email">
-            </div>
-            <div class="form-group">
-                <label for="PhoneNumber" class="control-label">Phone number</label>
-                <input id="PhoneNumber" name="PhoneNumber" placeholder="Phone number" type="text" required="required" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="Company" class="control-label">Company</label>
-                <input id="Company" name="Company" placeholder="Company" type="text" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="Query" class="control-label">How can we help?</label>
-                <select id="Query" name="Query" required="required" class="select form-control">
-                    <option value="contact" selected="@(Model.Query == "contact")">Contact</option>
-                    <option value="quote" selected="@(Model.Query == "quote")">Quote</option>
-                    <option value="support" selected="@(Model.Query == "support")">Customer support</option>
-                    <option value="other">Other</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="ProductNumber" class="control-label">Product (if applicable)</label>
-                <input id="ProductNumber" value="@Model.ProductNumber" name="ProductNumber" placeholder="Product (or product ID)" type="text" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="Quantity" class="control-label">Quantity (if applicable)</label>
-                <input id="Quantity" name="Quantity" placeholder="Quantity" type="text" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="Enquiry" class="control-label">Message</label>
-                <textarea id="Enquiry" name="Enquiry" cols="40" rows="5" aria-describedby="contact-messageHelpBlock" class="form-control">@Model.Enquiry</textarea>
-                <span id="contact-messageHelpBlock" class="help-block">Add any additional information here</span>
-            </div>
-            <div class="form-group">
-                <button id="contact-submit" name="submit" type="submit" class="btn btn-primary">Send</button>
-            </div>
-        }
-    </div>
         }
         <!-- /contact-from-wrapper -->
     </div>
@@ -128,5 +128,4 @@
 @Html.Partial("_SearchOption")
 
 @Html.Partial("_DezinecorpDifference")
-
-@Html.Action("SubscriptionEmail", "Common")
+@Html.Partial("_Subcribtions")

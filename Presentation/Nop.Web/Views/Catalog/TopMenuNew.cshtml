@@ -1,0 +1,66 @@
+﻿@model TopMenuModel
+@using Nop.Web.Models.Catalog;
+
+
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+        Products
+    </a>
+    <ul class="dropdown-menu">
+        @{
+            var rootCategories = Model.Categories.Where(x => x.IncludeInTopMenu).ToList();
+        }
+        @foreach (var category in rootCategories)
+        {
+            var isSubCategoryExist = category.SubCategories.Any();
+            var a_attr = isSubCategoryExist ? "role=button data-bs-toggle=dropdown" : "";
+            <li class="@(isSubCategoryExist ? "nav-item dropdown" : "")">
+                <a class="@(isSubCategoryExist ? "dropdown-item dropdown-toggle" : "dropdown-item")" @a_attr href="@Url.RouteUrl("Category", new { SeName = category.SeName })">
+                    @category.Name
+                </a>
+                @if (isSubCategoryExist)
+                {
+                    <ul class="dropdown-menu" style="top:0%;left:100%;">
+                        @foreach (var item in category.SubCategories)
+                        {
+                            <li><a class="dropdown-item" href="@Url.RouteUrl("Category", new { SeName = item.SeName })">@item.Name</a></li>
+                        }
+                    </ul>
+                }
+            </li>
+        }
+
+    </ul>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/brands">Brands</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/new-products">What's New!</a>
+</li>
+<li class="nav-item" style="color: #fff !important; background-color: #fe0000">
+    <a class="nav-link" href="/hot-deals" style="color:#fff !important">HOT DEALS</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/bulk-packaged-product-shipped-by-pallet">BULK / PALLET</a>
+</li>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Sales Tools</a>
+    <ul class="dropdown-menu">
+        @*<li><a href="https://www.viewmycatalogs.com/dezine#list/all">Catalogs</a></li>*@
+        <li><a class="dropdown-item" href="@Url.Action("Subscribe","Common")">Subscribe</a></li>
+        @*<li><a class="nav-member" href="https://dezinecorp.zoomcustom.com/catalogs">Customize Catalog</a></li>
+            <li><a class="nav-member" href="https://dezinecorp.zoomcustom.com/flyers">Customize Flyers</a></li>*@
+    </ul>
+</li>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Contact</a>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="@Url.Action("AboutUs","Common")">About Dezinecorp</a></li>
+        <li><a class="dropdown-item" href="@Url.Action("ContactUs","Common")">Contact Us</a></li>
+        <li><a class="dropdown-item" href="@Url.Action("Contact","Common")">Corporate Contact</a></li>
+        <li><a class="dropdown-item" href="/brands">Partner Brands</a></li>
+        <li><a class="dropdown-item" href="@Url.Action("FAQ","Common")">FAQ</a></li>
+    </ul>
+</li>

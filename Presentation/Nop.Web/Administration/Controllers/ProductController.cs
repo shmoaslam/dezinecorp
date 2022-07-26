@@ -3418,7 +3418,9 @@ namespace Nop.Admin.Controllers
                     Price = x.Price,
                     ManageInventoryMethod = x.ManageInventoryMethod.GetLocalizedEnum(_localizationService, _workContext.WorkingLanguage.Id),
                     StockQuantity = x.StockQuantity,
-                    Published = x.Published
+                    Published = x.Published,
+                    DisplayOrder = x.DisplayOrder
+                    
                 };
 
                 if (x.ManageInventoryMethod == ManageInventoryMethod.ManageStock && x.UseMultipleWarehouses)
@@ -3460,6 +3462,7 @@ namespace Nop.Admin.Controllers
                         product.OldPrice = pModel.OldPrice;
                         product.StockQuantity = pModel.StockQuantity;
                         product.Published = pModel.Published;
+                        product.DisplayOrder = pModel.DisplayOrder;
                         _productService.UpdateProduct(product);
 
                         //back in stock notifications

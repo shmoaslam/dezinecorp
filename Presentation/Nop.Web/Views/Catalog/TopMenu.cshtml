@@ -4,13 +4,11 @@
 
 
 
-<li class="nav-main-item nav-has-subnav">
-    <a>Products</a>
-
-
-
-
-    <ul class="subnav">
+<li>
+    <label for="drop-Products" class="toggle">Products</label>
+    <a href="#">Products</a>
+    <input type="checkbox" id="drop-Products" />
+    <ul>
         @{
             var rootCategories = Model.Categories.Where(x => x.IncludeInTopMenu).ToList();
         }
@@ -18,15 +16,16 @@
         {
             var isSubCategoryExist = category.SubCategories.Any();
 
-            <li class="@(isSubCategoryExist ? "nav-has-sub-subnav" : "")">
-                <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">
-                    @category.Name
-                </a>
+            <li>
                 @if (isSubCategoryExist)
                 {
-                    <ul class="sub-subnav">
+                    <label for="drop-@category.SeName" class="toggle">@category.Name</label>
+                    <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">@category.Name</a>
+                    <input type="checkbox" id="drop-@category.SeName">
+                    <ul>
                         @foreach (var item in category.SubCategories)
                         {
+
                             <li>
                                 <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })">
                                     @item.Name
@@ -37,23 +36,29 @@
 
                     </ul>
                 }
+                else
+                {
+                    <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">
+                        @category.Name
+                    </a>
+                }
             </li>
 
         }
     </ul>
 </li>
 <!-- /products -->
-<li class="nav-main-item">
+<li>
     <a href="/brands">Brands</a>
 </li>
-<li class="nav-main-item">
+<li>
     <a href="/new-products">What's New!</a>
 </li>
 
-<li class="nav-main-item" style="color: #fff !important; background-color: #fe0000">
-    <a href="/hot-deals"  style="color:#fff !important">HOT DEALS</a>
+<li style="color: #fff !important; background-color: #fe0000">
+    <a href="/hot-deals" style="color:#fff !important">HOT DEALS</a>
 </li>
-<li class="nav-main-item">
+<li>
     <a href="/bulk-packaged-product-shipped-by-pallet">BULK / PALLET</a>
 </li>
 <!--
@@ -65,20 +70,24 @@
             <li><a href="#">Process 2</a></li>
         </ul>
     </li> -->
-<!-- /customization -->
-<li class="nav-main-item nav-has-subnav">
-    <a>Sales Tools</a>
-    <ul class="subnav">
-        <li><a href="https://www.viewmycatalogs.com/dezine#list/all">Catalogs</a></li>
+
+
+<li>
+    <!-- Second Level Drop Down -->
+    <label for="drop-sales-tools" class="toggle">Sales Tools</label>
+    <a href="#">Sales Tools</a>
+    <input type="checkbox" id="drop-sales-tools" />
+    <ul>
         <li><a href="@Url.Action("Subscribe","Common")">Subscribe</a></li>
-        <li><a class="nav-member" href="https://dezinecorp.zoomcustom.com/catalogs">Customize Catalog</a></li>
-        <li><a class="nav-member" href="https://dezinecorp.zoomcustom.com/flyers">Customize Flyers</a></li>
     </ul>
 </li>
+<!-- /customization -->
 <!-- /sales tools -->
-<li class="nav-main-item nav-has-subnav">
-    <a>Contact</a>
-    <ul class="subnav">
+<li>
+    <label for="drop-Contact" class="toggle">Contact</label>
+    <a href="#">Contact</a>
+    <input type="checkbox" id="drop-Contact" />
+    <ul>
         <li><a href="@Url.Action("AboutUs","Common")">About Dezinecorp</a></li>
         <li><a href="@Url.Action("ContactUs","Common")">Contact Us</a></li>
         <li><a href="@Url.Action("Contact","Common")">Corporate Contact</a></li>
@@ -86,45 +95,3 @@
         <li><a href="@Url.Action("FAQ","Common")">FAQ</a></li>
     </ul>
 </li>
-
-<!--<div class="row">
-
-
-    <div id="header-area" class="header_area">
-        <div class="header_bottom">
-            <nav role="navigation" class="navbar navbar-default mainmenu">
-                <div class="navbar-header">
-                    <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div id="navbarCollapse" class="collapse navbar-collapse in">
-                    <ul id="fresponsive" class="nav navbar-nav dropdown">
-                        <li class="nav-br"><a href="/">Home</a></li>
-                        <li class="dropdown nav-br">
-                            <a data-toggle="dropdown" class="dropdown-toggle">Products <span class="caret"></span></a>
-                            <ul class="dropdown-menu">-->
-<!--</ul>
-</li>
-<li class="nav-br"><a href="/brands">Brands</a></li>
-<li class="nav-br only-active"><a href="/new-products">What's New!</a></li>
-<li class="nav-br">
-    <a data-toggle="dropdown" class="dropdown-toggle">Sales Tools <span class="caret"></span></a>
-    <ul class="dropdown-menu">
-        <li class="nav-br"><a href="https://www.viewmycatalogs.com/dezine#list/all">Catalogs</a></li>
-        <li class="nav-br"><a href="https://dezinecorp.zoomcustom.com/catalogs">Customize catalogs</a></li>
-        <li class="nav-br"><a href="https://dezinecorp.zoomcustom.com/flyers">Customize flyers</a></li>
-        <li class="nav-br"><a href="/blog">E-Flyers</a></li>
-    </ul>
-</li>
-<li class="nav-br"><a href="/clearance">Clearance Item</a> </li>-->
-@*<li><a href="@Url.Action("AboutUs", "Common")">About Us</a></li>*@
-<!--</ul>
-                </div>
-            </nav>
-        </div>
-    </div>
-</div>-->

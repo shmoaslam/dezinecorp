@@ -28,84 +28,90 @@
             }
             window.location = "/search?q=" + $("#small-searchterms").val();
         });
+
+        // mobile search
+        $('#mobile-small-searchterms').keypress(function (e) {
+            var key = e.which;
+            if (key == 13)  // the enter key code
+            {
+                $("#mobile-searchbutton").click();
+            }
+        });
+        $("#mobile-searchbutton").on("click", function myfunction() {
+            if ($("#mobile-small-searchterms").val() == "") {
+                alert('Please enter some search keyword');
+                $("#mobile-small-searchterms").focus();
+                return;
+            }
+            window.location = "/search?q=" + $("#mobile-small-searchterms").val();
+        });
+
+
     });
-   
+
 </script>
 <div class="header-wrap section section-full-width">
     <div class="content-inner-width header-inner-wrap">
         <div class="header-inner">
-            <div class="header-left">
+            <div id="logo" class="logo-wrap">
                 <div id="logo" class="logo-wrap">
                     <a href="/">
                         <img class="header-logo-img" src="~/Content/DezineCorpImages/dezinecorp_logo.svg" alt="Dezine Corp Logo" />
                     </a>
                 </div>
                 <!-- /.logo-wrap -->
-                <p class="logo-tagline"><i class="fab fa-canadian-maple-leaf"></i> 100% Canadian family owned and operated</p>
+
+            </div>
+            <p class="logo-tagline"><i class="fab fa-canadian-maple-leaf"></i> 100% Canadian family owned and operated</p>
+
+            <div class="nav-upper">
+                <ul class="nav-upper-list">
+                    <li class="nav-main-item"><img class="currency-flag" src="~/Content/DezineCorpImages/ca_flag.svg"><span class="fake-menu"> | $CAD</span></li>
+                    <li class="nav-main-item nav-login"><a href="/login">Login <i class="fas fa-key" aria-hidden="true"></i></a></li>
+                    <li class="nav-main-item nav-search-wrapper">
+                        <input type="text" class="clear-default-input inline-text-input corner-radius nav-search-input" placeholder="Search" id="small-searchterms" name="q" autocomplete="off">
+                        <a class="bt-g nav-search-button" id="searchbutton">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                </ul>
             </div>
             <!-- /header-left -->
-            <div class="header-right">
-
-                <!-- *************************************** -->
-                <!--                                         -->
-                <!-- DESKTOP NAV                             -->
-                <!--                                         -->
-                <!-- *************************************** -->
-
-               
-
-                <div class="nav-upper">
-                    <ul class="nav-upper-list">
-                        <li class="nav-main-item"><img class="currency-flag" src="~/Content/DezineCorpImages/ca_flag.svg"><span class="fake-menu"> | $CAD</span></li>
-                        <li class="nav-main-item nav-login"><a href="/login">Login <i class="fas fa-key" aria-hidden="true"></i></a></li>
-                        <li class="nav-main-item nav-search-wrapper">
-                            <input type="text" class="clear-default-input inline-text-input corner-radius nav-search-input" placeholder="Search" id="small-searchterms" name="q" autocomplete="off">
-                            <a class="bt-g nav-search-button" id="searchbutton" >
-                                <i class="fas fa-search" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="nav-lower nav-wrap desktop-nav">
-                    <ul class="nav-main nav-main-desktop">
-                        @Html.Action("TopMenu", "Catalog")
-                    </ul>
-                    <!-- /.nav-main -->
-
-                    <div class="mobile-nav-icon-wrap">
-                        <div id="mobile-menu-toggle" class="icon-wrapper">
-                            <!-- .scary-menu -->
-                            <svg id="icon-hamburger-expand" style="enable-background:new 0 0 32 32; fill: #000;" version="1.1" viewBox="0 0 32 32" height="32px" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path class="mobile-menu-icon" d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z" /></svg>
-                            <svg id="icon-hamburger-collapse" height="32px" width="32px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                 viewBox="0 0 32 32" style="enable-background:new 0 0 32 32; fill: #000;" xml:space="preserve">
-                            <path d="M28,14H4c-1.1,0-2,0.9-2,2s0.9,2,2,2h24c1.1,0,2-0.9,2-2S29.1,14,28,14z" />
-											</svg>
-                        </div>
-                    </div>	<!-- /.mobile-nav-icon-wrap -->
-                </div>
-            </div>
-            <!-- /header-right-->
         </div>
     </div>
+    <div class="main-nav-bar">
+        <div class="nav-lower nav-wrap desktop-nav">
+            <nav>
+                <div class="new-mobile-search-wrapper">
+                    <div class="new-mobile-search" style="display: flex; align-items: center;">
+                        <div class="new-mobile-search-inner" style="position: relative;">
+                            <input type="text" class="clear-default-input inline-text-input corner-radius nav-search-input" placeholder="Search" id="mobile-small-searchterms" name="q" autocomplete="off" />
+                            <a id="mobile-searchbutton" type="submit" class="bt-g mobile-nav-search-button">
+                                <i class="fas fa-search"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <label for="drop_top" class="toggle mobile-toggle">
+                    <div id="mobile-menu-toggle-new" class="icon-wrapper">
+                        <svg id="icon-hamburger-expand-new" style="enable-background:new 0 0 32 32; fill: #000;" version="1.1" viewBox="0 0 32 32" height="32px" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path class="mobile-menu-icon" d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z" /></svg>
+                        <svg id="icon-hamburger-collapse-new" style="display:none;" height="32px" width="32px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                             viewBox="0 0 32 32" style="enable-background:new 0 0 32 32; fill: #000;" xml:space="preserve">
+                        <path d="M28,14H4c-1.1,0-2,0.9-2,2s0.9,2,2,2h24c1.1,0,2-0.9,2-2S29.1,14,28,14z" />
+										</svg>
+                    </div>
+                </label>
+                <input type="checkbox" id="drop_top" />
+
+                <ul class="menu">
+                    @Html.Action("TopMenu", "Catalog")
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- /header-right-->
+
+
 </div>
 
-<!-- *************************************** -->
-<!--                                         -->
-<!-- MOBILE NAV                              -->
-<!--                                         -->
-<!-- *************************************** -->
-<div class="nav-wrap mobile-nav">
-
-    <div id="mobile-nav-roll" class="mobile-nav-container">
-        <!-- *************************************** -->
-        <!-- MOBILE NAV ITEMS                        -->
-        <!-- *************************************** -->
-        <ul class="nav-main nav-main-mobile">
-            @Html.Action("TopMenu", "Catalog")
-            <!-- /contact -->
-        </ul>
-        <!-- *************************************** -->
-        <!-- /END MOBILE NAVE ITEMS                  -->
-        <!-- *************************************** -->
-    </div><!-- /.mobile-nav-container -->
-</div>

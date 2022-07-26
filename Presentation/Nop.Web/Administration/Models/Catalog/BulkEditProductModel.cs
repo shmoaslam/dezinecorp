@@ -28,5 +28,8 @@ namespace Nop.Admin.Models.Catalog
 
         [NopResourceDisplayName("Admin.Catalog.BulkEdit.Fields.Published")]
         public bool Published { get; set; }
+        [NopResourceDisplayName("Admin.Catalog.BulkEdit.Fields.DisplayOrder")]
+        public int DisplayOrder { get; set; }
+
     }
 }

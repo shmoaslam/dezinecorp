@@ -27,7 +27,7 @@
     <div class="home-mission content-inner-width">
         <h1 class="mission-header">
             <p class="category-header">@Model.Name</p>
-            <p style="padding-bottom: 20px;">@Html.Raw(Model.Description)</p>
+            @*<p style="padding-bottom: 20px;">@Html.Raw(Model.Description)</p>*@
         </h1>
     </div>
     <!-- /.home-mission -->
@@ -36,7 +36,7 @@
 @if (Model.DisplayCategoryBreadcrumb)
 {
     <div id="breadcrumb-holder" class="section-full-width content-inner-width">
-        <nav aria-label="breadcrumb">
+        <div aria-label="breadcrumb">
             <ol class="breadcrumb top-bottom">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
                 @foreach (var cat in Model.CategoryBreadcrumb)
@@ -52,11 +52,15 @@
                     }
                 }
             </ol>
-        </nav>
+        </div>
     </div>
     @Html.Widget("categorydetails_after_breadcrumb", Model.Id)
 }
 
+<div class="sort-wrapper" style="padding: 10px 20px 0px;">
+    <span class="sort-label">Sort by: </span>
+    @Html.Partial("_CatalogSelectors", Model.PagingFilteringContext, new ViewDataDictionary())
+</div>
 
 @if (Model.SubCategories.Any())
 {
