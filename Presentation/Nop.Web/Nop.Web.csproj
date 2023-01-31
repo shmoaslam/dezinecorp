@@ -2197,6 +2197,7 @@
     <Content Include="Views\Common\Subscribe.cshtml" />
     <Content Include="Views\Shared\_Subcribtions.cshtml" />
     <Content Include="Views\Catalog\TopMenuNew.cshtml" />
+    <Content Include="Views\Common\RenderCatalogue.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\DezineCorpImages\main-slider\" />

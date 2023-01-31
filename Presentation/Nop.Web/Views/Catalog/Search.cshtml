@@ -104,3 +104,45 @@
     }
 </script>
 
+
+<style>
+    .color-dot {
+        height: 15px;
+        width: 15px;
+        background-color: #bbb;
+        display: inline-block;
+        cursor: pointer;
+        box-shadow: 1px 1px 1px 1px #aeaeae;
+        margin: 1px;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('.color-dot').unbind().click(function (e) {
+            e.preventDefault();
+            // e.stopPropagation();
+            var selectedProduct = $(this).attr('data-sku-color');
+            var familyCode = $(this).attr('data-family-code-color');
+            var allProduct = $("div[data-family-code='" + familyCode + "']");
+            var selectedProduct = $("div[data-sku='" + selectedProduct + "']");
+            $(allProduct).attr('style', 'display:none');
+            console.log(selectedProduct);
+            $(selectedProduct).removeAttr('style');
+
+        });
+        $('.color-dot').mouseenter(function () {
+            var selectedProduct = $(this).attr('data-sku-color');
+            var familyCode = $(this).attr('data-family-code-color');
+            var allProduct = $("div[data-family-code='" + familyCode + "']");
+            var selectedProduct = $("div[data-sku='" + selectedProduct + "']");
+            $(allProduct).attr('style', 'display:none');
+            console.log(selectedProduct);
+            $(selectedProduct).removeAttr('style');
+        });
+
+        $(".color-opt").on('click', function (e) {
+            e.preventDefault();
+        });
+    });
+</script>
+

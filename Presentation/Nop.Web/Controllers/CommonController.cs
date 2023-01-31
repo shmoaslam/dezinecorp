@@ -742,6 +742,12 @@ namespace Nop.Web.Controllers
         }
 
         [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult RenderCatalogue(string frameurl)
+        {
+            ViewBag.Url = frameurl;
+            return View();
+        }
+        [NopHttpsRequirement(SslRequirement.No)]
         public ActionResult ContactUs(int? productId)
         {
 

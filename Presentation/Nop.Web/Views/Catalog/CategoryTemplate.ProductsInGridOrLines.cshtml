@@ -13,6 +13,8 @@
     }
 
     var breadcrumbDelimiter = EngineContext.Current.Resolve<CommonSettings>().BreadcrumbDelimiter;
+    var catalogueUrl = "catalog-page";
+
 }
 @using Nop.Core.Domain.Common;
 @using Nop.Core.Domain.Seo;
@@ -33,34 +35,40 @@
     <!-- /.home-mission -->
 </section>
 
-@if (Model.DisplayCategoryBreadcrumb)
+
+
+@if (Model.SeName.ToLower() != catalogueUrl)
 {
-    <div id="breadcrumb-holder" class="section-full-width content-inner-width">
-        <div aria-label="breadcrumb">
-            <ol class="breadcrumb top-bottom">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                @foreach (var cat in Model.CategoryBreadcrumb)
-                {
-                    var isLastCategory = cat.Id == Model.Id;
-                    if (isLastCategory)
+    if (Model.DisplayCategoryBreadcrumb)
+    {
+        <div id="breadcrumb-holder" class="section-full-width content-inner-width">
+            <div aria-label="breadcrumb">
+                <ol class="breadcrumb top-bottom">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    @foreach (var cat in Model.CategoryBreadcrumb)
                     {
-                        <li class="breadcrumb-item active" aria-current="page">@cat.Name.Replace("Root Category", "Root")</li>
+                        var isLastCategory = cat.Id == Model.Id;
+                        if (isLastCategory)
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">@cat.Name.Replace("Root Category", "Root")</li>
+                        }
+                        else
+                        {
+                            <li class="breadcrumb-item"><a href="@Url.RouteUrl("Category", new { SeName = cat.SeName })">@cat.Name.Replace("Root Category", "Root")</a></li>
+                        }
                     }
-                    else
-                    {
-                        <li class="breadcrumb-item"><a href="@Url.RouteUrl("Category", new { SeName = cat.SeName })">@cat.Name.Replace("Root Category", "Root")</a></li>
-                    }
-                }
-            </ol>
+                </ol>
+            </div>
         </div>
+        @Html.Widget("categorydetails_after_breadcrumb", Model.Id)
+    }
+    <div class="sort-wrapper" style="padding: 10px 20px 0px;">
+        <span class="sort-label">Sort by: </span>
+        @Html.Partial("_CatalogSelectors", Model.PagingFilteringContext, new ViewDataDictionary())
     </div>
-    @Html.Widget("categorydetails_after_breadcrumb", Model.Id)
 }
 
-<div class="sort-wrapper" style="padding: 10px 20px 0px;">
-    <span class="sort-label">Sort by: </span>
-    @Html.Partial("_CatalogSelectors", Model.PagingFilteringContext, new ViewDataDictionary())
-</div>
+
 
 @if (Model.SubCategories.Any())
 {
@@ -80,11 +88,23 @@
                         foreach (var item in subCategories)
                         {
                             <div class="grid-product grid-4up">
-                                <a class="product-category-link" href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
-                                    <div class="product-category-image-container ">
-                                        <img class="propduct-category-image corner-radius" src="@item.PictureModel.ImageUrl" alt="@item.PictureModel.AlternateText" />
-                                    </div>
-                                </a>
+                                @if (Model.SeName.ToLower() == catalogueUrl)
+                                {
+                                    <a class="product-category-link" href="@Url.Action("RenderCatalogue","Common", new { frameurl = item.SeName})" title="@item.PictureModel.Title">
+                                        <div class="product-category-image-container ">
+                                            <img class="propduct-category-image corner-radius" src="@item.PictureModel.ImageUrl" alt="@item.PictureModel.AlternateText" />
+                                        </div>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="product-category-link" href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
+                                        <div class="product-category-image-container ">
+                                            <img class="propduct-category-image corner-radius" src="@item.PictureModel.ImageUrl" alt="@item.PictureModel.AlternateText" />
+                                        </div>
+                                    </a>
+                                }
+
                                 <div class="product-info-wrapper">
                                     <h3 class="product-title">@item.Name</h3>
                                 </div>
@@ -288,3 +308,44 @@
 
 @Html.Partial("_Subcribtions")
 
+
+<style>
+    .color-dot {
+        height: 15px;
+        width: 15px;
+        background-color: #bbb;
+        display: inline-block;
+        cursor: pointer;
+        box-shadow: 1px 1px 1px 1px #aeaeae;
+        margin: 1px;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('.color-dot').unbind().click(function (e) {
+            e.preventDefault();
+            // e.stopPropagation();
+            var selectedProduct = $(this).attr('data-sku-color');
+            var familyCode = $(this).attr('data-family-code-color');
+            var allProduct = $("div[data-family-code='" + familyCode + "']");
+            var selectedProduct = $("div[data-sku='" + selectedProduct + "']");
+            $(allProduct).attr('style', 'display:none');
+            console.log(selectedProduct);
+            $(selectedProduct).removeAttr('style');
+
+        });
+        $('.color-dot').mouseenter(function () {
+            var selectedProduct = $(this).attr('data-sku-color');
+            var familyCode = $(this).attr('data-family-code-color');
+            var allProduct = $("div[data-family-code='" + familyCode + "']");
+            var selectedProduct = $("div[data-sku='" + selectedProduct + "']");
+            $(allProduct).attr('style', 'display:none');
+            console.log(selectedProduct);
+            $(selectedProduct).removeAttr('style');
+        });
+
+        $(".color-opt").on('click', function (e) {
+            e.preventDefault();
+        });
+    });
+</script>

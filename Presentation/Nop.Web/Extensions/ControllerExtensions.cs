@@ -65,6 +65,24 @@ namespace Nop.Web.Extensions
                 }).ToList()
             );
         }
+       public static Dictionary<string, string> colorCodes = new Dictionary<string, string>();
+
+        public static string GetColorFromSKU(this string sku, string familyCode)
+        {
+            var colorCode = string.Empty;
+            if (string.IsNullOrEmpty(sku))
+                return string.Empty;
+
+            if (string.IsNullOrEmpty(familyCode))
+                return string.Empty;
+
+            colorCode = sku.Replace(familyCode, "").Substring(0,2);
+
+            if (colorCodes.Any(x=>x.Key.Trim().Equals( colorCode.Trim(), StringComparison.CurrentCultureIgnoreCase)))
+                return colorCodes.FirstOrDefault(x => x.Key.Trim().Equals(colorCode.Trim(), StringComparison.CurrentCultureIgnoreCase)).Value;
+
+            return string.Empty;
+        }
 
         public static IEnumerable<ProductOverviewModel> PrepareProductOverviewModels(this Controller controller,
             IWorkContext workContext,
@@ -92,6 +110,8 @@ namespace Nop.Web.Extensions
                 throw new ArgumentNullException("products");
 
             var models = new List<ProductOverviewModel>();
+
+
             foreach (var product in products)
             {
                 var model = new ProductOverviewModel
@@ -101,7 +121,9 @@ namespace Nop.Web.Extensions
                     ShortDescription = product.GetLocalized(x => x.ShortDescription),
                     FullDescription = product.GetLocalized(x => x.FullDescription),
                     SKU = product.Sku,
+                    FamilyCode = product.FamilyCode,
                     SeName = product.GetSeName(),
+                    //Color = product.Sku.GetColorFromSKU(product.FamilyCode),
                     MarkAsNew = product.MarkAsNew &&
                         (!product.MarkAsNewStartDateTimeUtc.HasValue || product.MarkAsNewStartDateTimeUtc.Value < DateTime.UtcNow) &&
                         (!product.MarkAsNewEndDateTimeUtc.HasValue || product.MarkAsNewEndDateTimeUtc.Value > DateTime.UtcNow)
@@ -337,7 +359,17 @@ namespace Nop.Web.Extensions
                     {
                         var dezineCorptData = product.DezineCorpDatas.FirstOrDefault();
                         if (dezineCorptData != null)
-                        { model.ItemIsNew = dezineCorptData.ItemIsNew; model.Material = dezineCorptData.Materials; }
+                        { 
+                            model.ItemIsNew = dezineCorptData.ItemIsNew;
+                            if (!string.IsNullOrEmpty(dezineCorptData.Materials))
+                            {
+                                model.Material = dezineCorptData.Materials.Length > 35 ? dezineCorptData.Materials.Substring(0, 35) + "..." : dezineCorptData.Materials;
+                            }
+                            else
+                            {
+                                model.Material = string.Empty;
+                            }
+                        }
                     }
 
                 //picture

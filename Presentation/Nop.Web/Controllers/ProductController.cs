@@ -1045,8 +1045,6 @@ namespace Nop.Web.Controllers
                         BindFamilyProduct(model, familyProduct.Sku, _mediaSettings.ProductThumbPictureSizeOnProductDetailsPage);
             }
 
-
-
             if (product.DezineCorpRelatedProducts.Any())
             {
                 var dezineCorpRelatedProduct = product.DezineCorpRelatedProducts.FirstOrDefault();

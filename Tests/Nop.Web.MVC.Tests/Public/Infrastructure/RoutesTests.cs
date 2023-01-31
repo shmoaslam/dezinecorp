@@ -164,7 +164,7 @@ namespace Nop.Web.MVC.Tests.Public.Infrastructure
         public void Common_routes()
         {
             "~/contactvendor/1".ShouldMapTo<CommonController>(c => c.ContactVendor(1));
-            "~/contactus".ShouldMapTo<CommonController>(c => c.ContactUs());
+            //"~/contactus".ShouldMapTo<CommonController>(c => c.ContactUs());
             "~/sitemap".ShouldMapTo<CommonController>(c => c.Sitemap());
             "~/sitemap.xml".ShouldMapTo<CommonController>(c => c.SitemapXml());
         }

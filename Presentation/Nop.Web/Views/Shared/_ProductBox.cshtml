@@ -1,4 +1,4 @@
-﻿@model ProductOverviewModel
+﻿@model ProductOverViewGroupModel
 @using Nop.Core
 @using Nop.Core.Domain.Orders
 @using Nop.Core.Domain.Tax
@@ -31,68 +31,98 @@
         }
 
     }*@
-@{
-    var material = string.Empty;
-    if (Model != null)
-    {
-        if (!string.IsNullOrEmpty(Model.Material))
-        {
-            material = (Model.Material.Length > 35 ? Model.Material.Substring(0, 35) + "..." : Model.Material);
 
-        }
-    }
+@{
+    bool isFirstProductRendered = false;
+    var colors = Model.ProductOverviewModels.Select(x => new { SKU = x.SKU, FirstColor = x.FirstColor, SecondColor = x.SecondColor }).ToList();
 }
 
-<div class="grid-product grid-4up product-box">
-    @if (!string.IsNullOrEmpty(Model.ItemIsNew))
-    {
-        <div class="product-flag">
-            @Model.ItemIsNew
-        </div>
-    }
-    <a class="product-category-link" href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title">
-        <div class="product-category-image-container ">
-            <img class="propduct-category-image corner-radius" src="@Model.DefaultPictureModel.ImageUrl" alt="@Model.DefaultPictureModel.AlternateText" />
-        </div>
-        <div class="product-info-wrapper">
-            <h3 class="product-title">@(Model.Name)</h3>
-            <div class="product-id">@Model.SKU</div>
-            @if (!string.IsNullOrEmpty(material))
-            {
-                <div class="product-attribute" title="@Model.Material">@material</div>
-            }
-            <div class="product-pricing-summary">
-                <ul class="product-grid-summary-items">
-                    <li class="product-grid-summary-item">
-                        @if (Model.ProductPrice != null)
+@for (int i = 0; i < Model.ProductOverviewModels.Count; i++)
+{
+    var item = Model.ProductOverviewModels[i];
+    <div class="grid-product grid-4up product-box" data-family-code="@Model.FamilyCode" data-sku="@item.SKU" style="@(i==0? "" : "display:none")">
+        @if (!string.IsNullOrEmpty(item.ItemIsNew))
+        {
+            <div class="product-flag">
+                @item.ItemIsNew
+            </div>
+        }
+        <a class="product-category-link" href="@Url.RouteUrl("Product", new { SeName = item.SeName })" title="@item.DefaultPictureModel.Title">
+            <div class="product-category-image-container ">
+                <img class="propduct-category-image corner-radius" src="@item.DefaultPictureModel.ImageUrl" alt="@item.DefaultPictureModel.AlternateText" />
+            </div>
+            <div class="product-info-wrapper">
+
+                <h3 class="product-title">@(item.Name)</h3>
+
+                @if (colors.Count() > 1)
+                {
+                    <div class="color-opt" style="text-align:center;padding:10px;margin-bottom:10px;background-color:#f6f6f6;border-radius:10px;">
+
+                        @foreach (var color in colors)
                         {
-                            if (!string.IsNullOrEmpty(Model.ProductPrice.PriceDesc))
+                            if (color.FirstColor != null && color.SecondColor != null)
                             {
-                                if (Model.ProductPrice.PriceDesc.Contains("\r\n"))
+                                <span class="color-dot" title="@color.SKU" data-family-code-color="@Model.FamilyCode" data-sku-color="@color.SKU" style="box-shadow: 1px 1px 1px 1px #@color.SecondColor.HexCode; background-color: #@color.FirstColor.HexCode;"></span>
+                            }
+                            else if (color.FirstColor != null)
+                            {
+                                <span class="color-dot" title="@color.SKU" data-family-code-color="@Model.FamilyCode" data-sku-color="@color.SKU" style="background-color: #@color.FirstColor.HexCode"></span>
+                            }
+                        }
+
+                    </div>
+                }
+                else
+                {
+                    <div class="color-opt" style="text-align:center;padding:10px;margin-bottom:10px;border-radius:10px;">
+                        <span class="color-dot" style="visibility:hidden"></span>
+                    </div>
+                }
+
+
+
+
+                <div class="product-id">@item.SKU</div>
+                @if (!string.IsNullOrEmpty(item.Material))
+                {
+                    <div class="product-attribute" title="@item.Material">@item.Material</div>
+                }
+                <div class="product-pricing-summary">
+                    <ul class="product-grid-summary-items">
+                        <li class="product-grid-summary-item">
+                            @if (item.ProductPrice != null)
+                            {
+                                if (!string.IsNullOrEmpty(item.ProductPrice.PriceDesc))
                                 {
-                                    var data = Model.ProductPrice.PriceDesc.Split(new string[] { "\r\n" }, StringSplitOptions.None);
-                                    if (!string.IsNullOrEmpty(data[1]))
+                                    if (item.ProductPrice.PriceDesc.Contains("\r\n"))
                                     {
-                                        <div class="product-price-min"><span class="product-price-preamble">@data[0]<br />@data[1]</span> <span class="product-price-amount">@Model.ProductPrice.Price</span></div>
+                                        var data = item.ProductPrice.PriceDesc.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+                                        if (!string.IsNullOrEmpty(data[1]))
+                                        {
+                                            <div class="product-price-min"><span class="product-price-preamble">@data[0]<br />@data[1]</span> <span class="product-price-amount">@item.ProductPrice.Price</span></div>
+                                        }
+                                        else
+                                        {
+                                            <div class="product-price-min"><span class="product-price-preamble">@data[0]</span> <span class="product-price-amount">@item.ProductPrice.Price</span></div>
+                                        }
                                     }
                                     else
                                     {
-                                        <div class="product-price-min"><span class="product-price-preamble">@data[0]</span> <span class="product-price-amount">@Model.ProductPrice.Price</span></div>
+                                        <div class="product-price-min"><span class="product-price-preamble">@item.ProductPrice.PriceDesc</span> <span class="product-price-amount">@item.ProductPrice.Price</span></div>
                                     }
-                                }
-                                else
-                                {
-                                    <div class="product-price-min"><span class="product-price-preamble">@Model.ProductPrice.PriceDesc</span> <span class="product-price-amount">@Model.ProductPrice.Price</span></div>
-                                }
 
 
+
+                                }
 
                             }
-
-                        }
-                    </li>
-                </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </a>
-</div>
+        </a>
+    </div>
+}
+
+

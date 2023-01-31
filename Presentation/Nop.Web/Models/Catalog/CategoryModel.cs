@@ -10,7 +10,7 @@ namespace Nop.Web.Models.Catalog
         {
             PictureModel = new PictureModel();
             FeaturedProducts = new List<ProductOverviewModel>();
-            Products = new List<ProductOverviewModel>();
+            Products = new List<ProductOverViewGroupModel>();
             PagingFilteringContext = new CatalogPagingFilteringModel();
             SubCategories = new List<SubCategoryModel>();
             CategoryBreadcrumb = new List<CategoryModel>();
@@ -33,7 +33,7 @@ namespace Nop.Web.Models.Catalog
         public IList<SubCategoryModel> SubCategories { get; set; }
 
         public IList<ProductOverviewModel> FeaturedProducts { get; set; }
-        public IList<ProductOverviewModel> Products { get; set; }
+        public IList<ProductOverViewGroupModel> Products { get; set; }
         
 
 		#region Nested Classes
