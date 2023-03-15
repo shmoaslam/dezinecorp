@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = T("Admin.Catalog.Products.DezineCorpImport").Text;
+}
+
+<h2>DezineCorpImport</h2>
+@using (Html.BeginForm("DezineCorpFrieghtImport", "Product", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmExcelUpload" }))
+{
+    @Html.AntiForgeryToken()
+    <table>
+        <tr>
+            <td>File:</td>
+            <td>
+                <input type="file" name="UploadedFile" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" name="Submit" value="Submit" />
+            </td>
+        </tr>
+    </table>
+    <div id="importStatus">
+       <table style="width:100%" border="1" cellpadding="1">
+           <tr>
+               <td width="20%;">
+                   Total Records
+               </td>
+               <td width="80%;">
+                   <span id="spanTotalRecord"></span>
+               </td>
+           </tr>
+           <tr>
+               <td>
+                   Record Processed Sucessfully
+               </td>
+               <td>
+                   <span id="spanRecordProcessSucessfully"></span>
+               </td>
+           </tr>
+           <tr>
+               <td>
+                   IsImportFinish
+               </td>
+               <td>
+                   <span id="spanIsImportFinish"></span>
+               </td>
+           </tr>
+           <tr>
+               <td>
+                   Record Failed
+               </td>
+               <td>
+                   <div style="width:100%;" id="spanRecordFailed"></div>
+               </td>
+           </tr>
+           
+       </table>
+    </div>
+}
+<script>
+    $('#frmExcelUpload').submit(function (event) {
+        var file = $('input[type="file"]').val();
+        var exts = ['xls'];
+        // first check if file field has any value
+        if (file) {
+            // split file name at dot
+            var get_ext = file.split('.');
+            // reverse name to check extension
+            get_ext = get_ext.reverse();
+            // check file type is valid as given in 'exts' array
+            if ($.inArray(get_ext[0].toLowerCase(), exts) > -1) {
+                alert('Allowed extension!');
+            } else {
+                alert('Invalid file!');
+                event.preventDefault();
+            }
+        }
+    });
+
+    clearInterval(updateInterval);
+
+    var updateInterval = setInterval(function () {
+        $.ajax({
+            url: '/admin/product/GetImportStatus',
+            success: function (response) {
+                if (response != null)
+                {
+                    $("#spanTotalRecord").html(response.TotalRecord);
+                    $("#spanRecordProcessSucessfully").html(response.RecordProcessSucessfully);
+                    $("#spanRecordFailed").html(response.RecordFailed);
+                    if (response.IsImportFinish == false)
+                        $("#spanIsImportFinish").html("In Progress");
+                    else {
+                        $("#spanIsImportFinish").html("Completed");
+                        //clearInterval(updateInterval);
+                    }
+                        
+                }
+            }
+        });
+    }, 15000);
+
+</script>

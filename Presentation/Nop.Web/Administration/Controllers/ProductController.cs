@@ -1076,6 +1076,47 @@ namespace Nop.Admin.Controllers
 
             return View();
         }
+
+        public ActionResult DezineCorpFrieghtImport()
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DezineCorpFrieghtImport(FormCollection formCollection)
+        {
+            if (Request != null)
+            {
+                HttpPostedFileBase file = Request.Files["UploadedFile"];
+                var allowedExtensions = new[] { ".xls" };
+                var ext = Path.GetExtension(file.FileName);
+                if (allowedExtensions.Contains(ext))
+                    if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+                    {
+                        string name = Path.GetFileNameWithoutExtension(file.FileName);
+                        string myfile = name + "_" + DateTime.Now.ToString("MMddyyyyyhhmmssfff") + ".xls";
+                        string fileName = file.FileName;
+                        string fileContentType = file.ContentType;
+                        byte[] fileBytes = new byte[file.ContentLength];
+                        var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                        var path = Path.Combine(Server.MapPath("~/Administration/DezineCorpImport"), myfile);
+                        file.SaveAs(path);
+                        DezineCorpImportService importservice = new DezineCorpImportService(path);
+                        Thread thread = new Thread(importservice.READFrieghtExcel);
+                        thread.Start();
+
+
+                    }
+            }
+            return View();
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DezineCorpImport(FormCollection formCollection)

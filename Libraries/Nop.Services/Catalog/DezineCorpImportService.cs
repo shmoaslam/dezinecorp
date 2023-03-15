@@ -381,7 +381,7 @@ namespace Nop.Services.Catalog
 
 
 
-                       
+
                         #region fetch excel row cell
 
                         bool isChangesMade = false;
@@ -2026,9 +2026,158 @@ namespace Nop.Services.Catalog
                 //Response.Write("Illegal permission");
                 var STRING = ex.Message + (ex.InnerException != null ? Environment.NewLine + ex.InnerException.Message : string.Empty);
 
-               // File.AppendAllText(Path.Combine(Path.GetDirectoryName(_path), "ImportErrorLog.txt"), STRING);
+                // File.AppendAllText(Path.Combine(Path.GetDirectoryName(_path), "ImportErrorLog.txt"), STRING);
 
-               // UpdateStatus(new ImportStatus { IsImportFinish = true, RecordFailed = ex.Message });
+                // UpdateStatus(new ImportStatus { IsImportFinish = true, RecordFailed = ex.Message });
+            }
+        }
+
+
+        public void READFrieghtExcel()
+        {
+            ImportStatus status = new ImportStatus();
+            try
+            {
+                FileStream stream = new FileStream(_path, FileMode.Open, FileAccess.ReadWrite);
+                HSSFWorkbook wb = new HSSFWorkbook(stream);
+                ISheet ws = wb.GetSheetAt(0);
+                int startFromRowNumber = 3; // starting from 0, ignore first 3 rows
+                int rows = ws.LastRowNum;
+                status.TotalRecord = rows - 2;
+                status.IsImportFinish = false;
+                string skus = string.Empty;
+                int skucount = 0;
+
+                if (string.IsNullOrEmpty(_path)) return;
+
+
+
+                for (int r = startFromRowNumber; r <= rows; r++)
+                {
+                    var sku = string.Empty;
+                    try
+                    {
+                        var row = ws.GetRow(r);
+                        if (row == null)
+                        {
+                            continue;
+                        }
+
+                        sku = GetCellValue(row.GetCell(ExcelColumnNameToNumber("A") - 1));
+                        var product = GetProductBySKU(sku);
+
+
+                        if (product == null)
+                            continue;
+
+                        if (product.Rows.Count <= 0)
+                            continue;
+
+
+                        int productid = Convert.ToInt32(product.Rows[0]["Id"].ToString());
+
+                        if (productid == 0)
+                            continue;
+
+
+                        string SKU = GetCellValue(row.GetCell(ExcelColumnNameToNumber("A") - 1));
+                        string Year1_Catalogue_page_number = GetCellValue(row.GetCell(ExcelColumnNameToNumber("B") - 1));
+                        string Year2_Catalogue_page_number = GetCellValue(row.GetCell(ExcelColumnNameToNumber("C") - 1));
+                        string OP_MasterPackQty = GetCellValue(row.GetCell(ExcelColumnNameToNumber("E") - 1));
+                        string OP_MasterPackWghtLBS = GetCellValue(row.GetCell(ExcelColumnNameToNumber("F") - 1));
+                        string OP_L = GetCellValue(row.GetCell(ExcelColumnNameToNumber("G") - 1));
+                        string OP_W = GetCellValue(row.GetCell(ExcelColumnNameToNumber("H") - 1));
+                        string OP_H = GetCellValue(row.GetCell(ExcelColumnNameToNumber("I") - 1));
+                        string OP_CW_LBS = GetCellValue(row.GetCell(ExcelColumnNameToNumber("J") - 1));
+                        string PP_MasterPackQty = GetCellValue(row.GetCell(ExcelColumnNameToNumber("K") - 1));
+                        string PP_BoxID = GetCellValue(row.GetCell(ExcelColumnNameToNumber("L") - 1));
+                        string SP_ProdWght_LBS = GetCellValue(row.GetCell(ExcelColumnNameToNumber("M") - 1));
+                        string SP_PcsPerSet = GetCellValue(row.GetCell(ExcelColumnNameToNumber("N") - 1));
+                        string SP_GiftBox_LBS = GetCellValue(row.GetCell(ExcelColumnNameToNumber("O") - 1));
+                        string SP_ProdWght_and_GB_Wght = GetCellValue(row.GetCell(ExcelColumnNameToNumber("P") - 1));
+                        string SP_WghtOfMaster_Carton_with_product = GetCellValue(row.GetCell(ExcelColumnNameToNumber("Q") - 1));
+                        string SP_Carton_Foam_Wght_Est_LBS = GetCellValue(row.GetCell(ExcelColumnNameToNumber("R") - 1));
+                        string PPMasterPack_Total_Wght_LBS = GetCellValue(row.GetCell(ExcelColumnNameToNumber("S") - 1));
+                        string PP_L = GetCellValue(row.GetCell(ExcelColumnNameToNumber("T") - 1));
+                        string PP_W = GetCellValue(row.GetCell(ExcelColumnNameToNumber("U") - 1));
+                        string PP_H = GetCellValue(row.GetCell(ExcelColumnNameToNumber("V") - 1));
+                        string PP_Cubed_Wght_LBS = GetCellValue(row.GetCell(ExcelColumnNameToNumber("W") - 1));
+                        string CartonsPerSkidLayer = GetCellValue(row.GetCell(ExcelColumnNameToNumber("X") - 1));
+                        string ProductFactor = GetCellValue(row.GetCell(ExcelColumnNameToNumber("Y") - 1));
+                        string Comments = GetCellValue(row.GetCell(ExcelColumnNameToNumber("Z") - 1));
+
+
+
+                        if (productid != 0)
+                        {
+                            #region DezineCorpFreight
+                            string DezineCorpFreightQuery = string.Empty;
+                            var isDezineCorpTierPrice = CheckisDezineCorpFreightRecordExist(productid);
+                            if (!isDezineCorpTierPrice)
+                                DezineCorpFreightQuery = "INSERT INTO [dbo].[DezineCorpFreightDimensions] (ProductId, [SKU],[Year1_Catalogue_page_number],[Year2_Catalogue_page_number],[OP_MasterPackQty],[OP_MasterPackWghtLBS],[OP_L],[OP_W],[OP_H],[OP_CW_LBS],[PP_MasterPackQty],[PP_BoxID],[PP_L],[PP_W],[PP_H],[PP_Cubed_Wght_LBS],[SP_ProdWght_LBS],[SP_PcsPerSet],[SP_GiftBox_LBS],[SP_ProdWght_and_GB_Wght],[SP_WghtOfMaster_Carton_with_product],[SP_Carton_Foam_Wght_Est_LBS],[PPMasterPack_Total_Wght_LBS],[CartonsPerSkidLayer],[ProductFactor],[Comments]) VALUES(@ProductId, @SKU, @Year1_Catalogue_page_number, @Year2_Catalogue_page_number, @OP_MasterPackQty, @OP_MasterPackWghtLBS, @OP_L, @OP_W, @OP_H, @OP_CW_LBS, @PP_MasterPackQty, @PP_BoxID, @PP_L, @PP_W, @PP_H, @PP_Cubed_Wght_LBS, @SP_ProdWght_LBS, @SP_PcsPerSet, @SP_GiftBox_LBS, @SP_ProdWght_and_GB_Wght, @SP_WghtOfMaster_Carton_with_product, @SP_Carton_Foam_Wght_Est_LBS, @PPMasterPack_Total_Wght_LBS, @CartonsPerSkidLayer, @ProductFactor, @Comments)";
+                            else
+                                DezineCorpFreightQuery = "UPDATE [dbo].[DezineCorpFreightDimensions] SET [SKU] = @SKU, [Year1_Catalogue_page_number] = @Year1_Catalogue_page_number, [Year2_Catalogue_page_number] = @Year2_Catalogue_page_number, [OP_MasterPackQty] = @OP_MasterPackQty, [OP_MasterPackWghtLBS] = @OP_MasterPackWghtLBS, [OP_L] = @OP_L, [OP_W] = @OP_W, [OP_H] = @OP_H, [OP_CW_LBS] = @OP_CW_LBS, [PP_MasterPackQty] = @PP_MasterPackQty, [PP_BoxID] = @PP_BoxID, [PP_L] = @PP_L, [PP_W] = @PP_W, [PP_H] = @PP_H, [PP_Cubed_Wght_LBS] = @PP_Cubed_Wght_LBS, [SP_ProdWght_LBS] = @SP_ProdWght_LBS, [SP_PcsPerSet] = @SP_PcsPerSet, [SP_GiftBox_LBS] = @SP_GiftBox_LBS, [SP_ProdWght_and_GB_Wght] = @SP_ProdWght_and_GB_Wght, [SP_WghtOfMaster_Carton_with_product] = @SP_WghtOfMaster_Carton_with_product, [SP_Carton_Foam_Wght_Est_LBS] = @SP_Carton_Foam_Wght_Est_LBS, [PPMasterPack_Total_Wght_LBS] = @PPMasterPack_Total_Wght_LBS, [CartonsPerSkidLayer] = @CartonsPerSkidLayer, [ProductFactor] = @ProductFactor, [Comments] = @Comments WHERE ProductId = @ProductId";
+
+                            SqlCommand cmdtier = new SqlCommand(DezineCorpFreightQuery);
+                            cmdtier.Parameters.AddWithValue("@ProductId", productid);
+                            cmdtier.Parameters.AddWithValue("@SKU", SKU);
+                            cmdtier.Parameters.AddWithValue("@Year1_Catalogue_page_number", Year1_Catalogue_page_number);
+                            cmdtier.Parameters.AddWithValue("@Year2_Catalogue_page_number", Year2_Catalogue_page_number);
+                            cmdtier.Parameters.AddWithValue("@OP_MasterPackQty", OP_MasterPackQty);
+                            cmdtier.Parameters.AddWithValue("@OP_MasterPackWghtLBS", OP_MasterPackWghtLBS);
+                            cmdtier.Parameters.AddWithValue("@OP_L", OP_L);
+                            cmdtier.Parameters.AddWithValue("@OP_W", OP_W);
+                            cmdtier.Parameters.AddWithValue("@OP_H", OP_H);
+                            cmdtier.Parameters.AddWithValue("@OP_CW_LBS", OP_CW_LBS);
+                            cmdtier.Parameters.AddWithValue("@PP_MasterPackQty", PP_MasterPackQty);
+                            cmdtier.Parameters.AddWithValue("@PP_BoxID", PP_BoxID);
+                            cmdtier.Parameters.AddWithValue("@PP_L", PP_L);
+                            cmdtier.Parameters.AddWithValue("@PP_W", PP_W);
+                            cmdtier.Parameters.AddWithValue("@PP_H", PP_H);
+                            cmdtier.Parameters.AddWithValue("@PP_Cubed_Wght_LBS", PP_Cubed_Wght_LBS);
+                            cmdtier.Parameters.AddWithValue("@SP_ProdWght_LBS", SP_ProdWght_LBS);
+                            cmdtier.Parameters.AddWithValue("@SP_PcsPerSet", SP_PcsPerSet);
+                            cmdtier.Parameters.AddWithValue("@SP_GiftBox_LBS", SP_GiftBox_LBS);
+                            cmdtier.Parameters.AddWithValue("@SP_ProdWght_and_GB_Wght", SP_ProdWght_and_GB_Wght);
+                            cmdtier.Parameters.AddWithValue("@SP_WghtOfMaster_Carton_with_product", SP_WghtOfMaster_Carton_with_product);
+                            cmdtier.Parameters.AddWithValue("@SP_Carton_Foam_Wght_Est_LBS", SP_Carton_Foam_Wght_Est_LBS);
+                            cmdtier.Parameters.AddWithValue("@PPMasterPack_Total_Wght_LBS", PPMasterPack_Total_Wght_LBS);
+                            cmdtier.Parameters.AddWithValue("@CartonsPerSkidLayer", CartonsPerSkidLayer);
+                            cmdtier.Parameters.AddWithValue("@ProductFactor", ProductFactor);
+                            cmdtier.Parameters.AddWithValue("@Comments", Comments);
+                            int rowCount = ExecuteQuery(cmdtier);
+
+                            if (rowCount <= 0)
+                            {
+                                throw new Exception("Error in executing sql query for product ");
+                            }
+
+
+                            cmdtier.Dispose();
+                            #endregion
+
+
+                        }
+                        else
+                        {
+                            skus += sku + "=>SKU Not available" + ", ";
+                            skucount++;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        skus += sku + "=>" + ex.Message + ", ";
+                    }
+                    status.RecordProcessSucessfully = r - 2;
+                    status.RecordFailed = skus;
+                    UpdateStatus(status);
+                }
+                status.IsImportFinish = true;
+                UpdateStatus(status);
+            }
+            catch (Exception ex)
+            {
+                var STRING = ex.Message + (ex.InnerException != null ? Environment.NewLine + ex.InnerException.Message : string.Empty);
             }
         }
 
@@ -2218,9 +2367,9 @@ namespace Nop.Services.Catalog
                             var mimeType = dataTable.Rows[0]["MimeType"] ?? string.Empty;
                             var pictureId = Convert.ToInt32(dataTable.Rows[0]["PictureId"]);
                             string lastPart = GetFileExtensionFromMimeType(mimeType.ToString());
-                             picUrl = !string.IsNullOrEmpty(seoFileName.ToString()) ?
-                                           string.Format("http://dezinecorp.com/content/images/thumbs/{0}_{1}.{2}", pictureId.ToString("0000000"), seoFileName, lastPart) :
-                                           string.Format("http://dezinecorp.com/content/images/thumbs/{0}.{1}", pictureId.ToString("0000000"), lastPart);
+                            picUrl = !string.IsNullOrEmpty(seoFileName.ToString()) ?
+                                          string.Format("http://dezinecorp.com/content/images/thumbs/{0}_{1}.{2}", pictureId.ToString("0000000"), seoFileName, lastPart) :
+                                          string.Format("http://dezinecorp.com/content/images/thumbs/{0}.{1}", pictureId.ToString("0000000"), lastPart);
                         }
                     }
 
@@ -2387,6 +2536,39 @@ namespace Nop.Services.Catalog
             return i == 0 ? false : true;
         }
 
+        private bool CheckisDezineCorpFreightRecordExist(int productid)
+        {
+            int i = 0;
+            using (SqlConnection con = new SqlConnection())
+            {
+                try
+                {
+
+                    con.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["conString"].ToString();
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.CommandText = "select Id from  DezineCorpFreightDimensions where ProductId = @productid";
+                    //"SELECT ProductID FROM dbo.Nop_ProductVariant AS npv WHERE SKU COLLATE Latin1_General_CS_AS ='" + sku + "'";
+                    cmd.Parameters.AddWithValue("@productid", productid);
+                    cmd.Connection = con;
+                    con.Open();
+
+
+                    i = Convert.ToInt32(cmd.ExecuteScalar());
+                    con.Close();
+                    con.Dispose();
+                }
+
+                catch (SqlException Ex)
+                {
+
+                    con.Close();
+                    con.Dispose();
+                    System.Diagnostics.Trace.WriteLine("CommonDBClass Has Exception " + Ex.Message);
+                }
+            }
+            return i == 0 ? false : true;
+        }
+        
         private bool CheckisDezineCorpRelatedProductQueryRecordExist(int productid)
         {
             int i = 0;
