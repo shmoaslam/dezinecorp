@@ -93,6 +93,7 @@
   <ItemGroup>
     <Compile Include="Caching\RedisCacheManager.cs" />
     <Compile Include="ComponentModel\WriteLockDisposable.cs" />
+    <Compile Include="Data\IRepositoryInfotrac.cs" />
     <Compile Include="Domain\Catalog\AdditionalTierPrice.cs" />
     <Compile Include="Domain\Catalog\AdditionalTierPriceType.cs" />
     <Compile Include="Domain\Catalog\DezineCorpAdditionalPricing.cs" />

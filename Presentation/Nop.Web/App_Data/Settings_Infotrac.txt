@@ -1,0 +1,2 @@
+﻿DataProvider: postgresql
+DataConnectionString:Host=dezine.fortiddns.com:5433;Username=website;Password=32@D4$wo5asfd2;Database=infotrac

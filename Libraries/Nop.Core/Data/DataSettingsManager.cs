@@ -114,6 +114,11 @@ namespace Nop.Core.Data
                 string text = File.ReadAllText(filePath);
                 return ParseSettings(text);
             }
+            if (File.Exists(Path.Combine(MapPath("~/App_Data/"), filePath)))
+            {
+                string text = File.ReadAllText(Path.Combine(MapPath("~/App_Data/"), filePath));
+                return ParseSettings(text);
+            }
             
             return new DataSettings();
         }

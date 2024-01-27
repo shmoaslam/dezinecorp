@@ -651,11 +651,23 @@ namespace Nop.Web.Controllers
             var colorCodes = GetColorValueFromColorCodes();
             foreach (var item in products1)
             {
-                if(!item.SKU.ToUpper().StartsWith("C"))
+                var groupProductByCategory = _localizationService.GetResource("dezinecorp.productgroup.category")?.Split(new string[] { ","}, StringSplitOptions.RemoveEmptyEntries).Select(x=> x.ToUpper()[0]).ToList();
+
+                if (groupProductByCategory.Any())
                 {
-                    productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.SKU, ProductOverviewModels = new List<ProductOverviewModel> { item } });
-                    continue;
+                    if (!groupProductByCategory.Any(x=> x== item.SKU.ToUpper()[0]))
+                    {
+                        productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.SKU, ProductOverviewModels = new List<ProductOverviewModel> { item } });
+                        continue;
+                    }
                 }
+                ////need to remove
+                //if (!item.SKU.ToUpper().StartsWith("C"))
+                //{
+                //    productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.SKU, ProductOverviewModels = new List<ProductOverviewModel> { item } });
+                //    continue;
+                //}
+
 
                 // if familycode is not availble then indiviaul product
                 if (string.IsNullOrEmpty(item.FamilyCode))
