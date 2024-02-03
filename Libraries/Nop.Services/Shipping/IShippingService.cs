@@ -201,5 +201,7 @@ namespace Nop.Services.Shipping
         /// <returns>Shipping options</returns>
         GetShippingOptionResponse GetShippingOptions(IList<ShoppingCartItem> cart, Address shippingAddress,
             string allowedShippingRateComputationMethodSystemName = "", int storeId = 0);
+
+
     }
 }

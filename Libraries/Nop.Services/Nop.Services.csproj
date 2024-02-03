@@ -250,6 +250,8 @@
     <Compile Include="Catalog\IBackInStockSubscriptionService.cs" />
     <Compile Include="Catalog\IInfotracDbService.cs" />
     <Compile Include="Catalog\IManufacturerTemplateService.cs" />
+    <Compile Include="Shipping\ICustomShippingService.cs" />
+    <Compile Include="Shipping\IShippingServiceFactory.cs" />
     <Compile Include="Catalog\RoundingHelper.cs" />
     <Compile Include="Catalog\ManufacturerTemplateService.cs" />
     <Compile Include="Catalog\ICategoryTemplateService.cs" />
@@ -322,6 +324,9 @@
     <Compile Include="Orders\RewardPointService.cs" />
     <Compile Include="Orders\ReturnRequestService.cs" />
     <Compile Include="Shipping\EventPublisherExtensions.cs" />
+    <Compile Include="Shipping\ShippingServiceFactory.cs" />
+    <Compile Include="Shipping\TForceShippingService.cs" />
+    <Compile Include="Shipping\UPSShippingService.cs" />
     <Compile Include="Topics\ITopicTemplateService.cs" />
     <Compile Include="Topics\TopicTemplateService.cs" />
     <Compile Include="Vendors\VendorExtensions.cs" />

@@ -102,7 +102,7 @@ namespace Nop.Web.Framework
             //data layer
             var dataSettingsManager = new DataSettingsManager();
             var dataProviderSettings = dataSettingsManager.LoadSettings();
-            var dataProviderSetttings_Infotrac = dataSettingsManager.LoadSettings("Settings_Infotrac.txt");
+            //var dataProviderSetttings_Infotrac = dataSettingsManager.LoadSettings("Settings_Infotrac.txt");
             builder.Register(c => dataSettingsManager.LoadSettings()).As<DataSettings>();
             builder.Register(x => new EfDataProviderManager(x.Resolve<DataSettings>())).As<BaseDataProviderManager>().InstancePerDependency();
 
@@ -122,7 +122,7 @@ namespace Nop.Web.Framework
                 builder.Register<IDbContext>(c => new NopObjectContext(dataSettingsManager.LoadSettings().DataConnectionString)).InstancePerLifetimeScope();
             }
 
-            builder.Register<IDbContextInfotrac>(c => new InfotracDbContext(dataProviderSetttings_Infotrac.DataConnectionString)).InstancePerLifetimeScope();
+            //builder.Register<IDbContextInfotrac>(c => new InfotracDbContext(dataProviderSetttings_Infotrac.DataConnectionString)).InstancePerLifetimeScope();
 
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
@@ -177,6 +177,8 @@ namespace Nop.Web.Framework
             builder.RegisterType<TopicTemplateService>().As<ITopicTemplateService>().InstancePerLifetimeScope();
 
             builder.RegisterType<InfotracDbService>().As<IInfotracDbService>().InstancePerLifetimeScope();
+            builder.RegisterType<ShippingServiceFactory>().As<IShippingServiceFactory>().InstancePerLifetimeScope();
+
             //use static cache (between HTTP requests)
             builder.RegisterType<ProductTagService>().As<IProductTagService>()
                 .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"))

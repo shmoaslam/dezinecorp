@@ -88,7 +88,6 @@ namespace Nop.Web.Controllers
         private readonly CaptchaSettings _captchaSettings;
         private readonly SeoSettings _seoSettings;
         private readonly ICacheManager _cacheManager;
-
         #endregion
 
         #region Constructors
