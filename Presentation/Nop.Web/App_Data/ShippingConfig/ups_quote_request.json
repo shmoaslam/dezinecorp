@@ -1,0 +1,297 @@
+{
+  "RateRequest": {
+    "PickupType": {
+      "Code": "06"
+    },
+    "CustomerClassification": {
+      "Code": "00"
+    },
+    "Shipment": {
+      "Shipper": {
+        "ShipperNumber": "5724A4",
+        "Address": {
+          "AddressLine": [
+            "369 Britannia Rd E",
+            "",
+            ""
+          ],
+          "City": "Mississauga",
+          "StateProvinceCode": "ON",
+          "PostalCode": "L4Z 2H5",
+          "CountryCode": "CA"
+        }
+      },
+      "ShipTo": {
+        "Address": {
+          "AddressLine": [
+            "345 Wilson Ave.",
+            "Suite 100",
+            ""
+          ],
+          "City": "Toronto",
+          "StateProvinceCode": "ON",
+          "PostalCode": "M3H 5W1",
+          "CountryCode": "CA"
+        }
+      },
+      "PaymentDetails": {
+        "ShipmentCharge": {
+          "Type": "01",
+          "BillShipper": {
+            "AccountNumber": "5724A4"
+          }
+        }
+      },
+      "Package": [
+        {
+          "PackagingType": {
+            "Code": "02"
+          },
+          "Dimensions": {
+            "UnitOfMeasurement": {
+              "Code": "IN"
+            },
+            "Length": "20",
+            "Width": "16",
+            "Height": "9"
+          },
+          "PackageWeight": {
+            "UnitOfMeasurement": {
+              "Code": "LBS"
+            },
+            "Weight": "24"
+          }
+        },
+        {
+          "PackagingType": {
+            "Code": "02"
+          },
+          "Dimensions": {
+            "UnitOfMeasurement": {
+              "Code": "IN"
+            },
+            "Length": "20",
+            "Width": "16",
+            "Height": "9"
+          },
+          "PackageWeight": {
+            "UnitOfMeasurement": {
+              "Code": "LBS"
+            },
+            "Weight": "24"
+          }
+        },
+        {
+          "PackagingType": {
+            "Code": "02"
+          },
+          "Dimensions": {
+            "UnitOfMeasurement": {
+              "Code": "IN"
+            },
+            "Length": "20",
+            "Width": "16",
+            "Height": "9"
+          },
+          "PackageWeight": {
+            "UnitOfMeasurement": {
+              "Code": "LBS"
+            },
+            "Weight": "24"
+          }
+        },
+        {
+          "PackagingType": {
+            "Code": "02"
+          },
+          "Dimensions": {
+            "UnitOfMeasurement": {
+              "Code": "IN"
+            },
+            "Length": "20",
+            "Width": "16",
+            "Height": "9"
+          },
+          "PackageWeight": {
+            "UnitOfMeasurement": {
+              "Code": "LBS"
+            },
+            "Weight": "24"
+          }
+        },
+        {
+          "PackagingType": {
+            "Code": "02"
+          },
+          "Dimensions": {
+            "UnitOfMeasurement": {
+              "Code": "IN"
+            },
+            "Length": "20",
+            "Width": "16",
+            "Height": "9"
+          },
+          "PackageWeight": {
+            "UnitOfMeasurement": {
+              "Code": "LBS"
+            },
+            "Weight": "24"
+          }
+        },
+        {
+          "PackagingType": {
+            "Code": "02"
+          },
+          "Dimensions": {
+            "UnitOfMeasurement": {
+              "Code": "IN"
+            },
+            "Length": "20",
+            "Width": "16",
+            "Height": "9"
+          },
+          "PackageWeight": {
+            "UnitOfMeasurement": {
+              "Code": "LBS"
+            },
+            "Weight": "24"
+          }
+        },
+        {
+          "PackagingType": {
+            "Code": "02"
+          },
+          "Dimensions": {
+            "UnitOfMeasurement": {
+              "Code": "IN"
+            },
+            "Length": "20",
+            "Width": "16",
+            "Height": "9"
+          },
+          "PackageWeight": {
+            "UnitOfMeasurement": {
+              "Code": "LBS"
+            },
+            "Weight": "24"
+          }
+        },
+        {
+          "PackagingType": {
+            "Code": "02"
+          },
+          "Dimensions": {
+            "UnitOfMeasurement": {
+              "Code": "IN"
+            },
+            "Length": "20",
+            "Width": "16",
+            "Height": "9"
+          },
+          "PackageWeight": {
+            "UnitOfMeasurement": {
+              "Code": "LBS"
+            },
+            "Weight": "24"
+          }
+        },
+        {
+          "PackagingType": {
+            "Code": "02"
+          },
+          "Dimensions": {
+            "UnitOfMeasurement": {
+              "Code": "IN"
+            },
+            "Length": "20",
+            "Width": "16",
+            "Height": "9"
+          },
+          "PackageWeight": {
+            "UnitOfMeasurement": {
+              "Code": "LBS"
+            },
+            "Weight": "24"
+          }
+        },
+        {
+          "PackagingType": {
+            "Code": "02"
+          },
+          "Dimensions": {
+            "UnitOfMeasurement": {
+              "Code": "IN"
+            },
+            "Length": "20",
+            "Width": "16",
+            "Height": "9"
+          },
+          "PackageWeight": {
+            "UnitOfMeasurement": {
+              "Code": "LBS"
+            },
+            "Weight": "24"
+          }
+        },
+        {
+          "PackagingType": {
+            "Code": "02"
+          },
+          "Dimensions": {
+            "UnitOfMeasurement": {
+              "Code": "IN"
+            },
+            "Length": "20",
+            "Width": "16",
+            "Height": "9"
+          },
+          "PackageWeight": {
+            "UnitOfMeasurement": {
+              "Code": "LBS"
+            },
+            "Weight": "24"
+          }
+        },
+        {
+          "PackagingType": {
+            "Code": "02"
+          },
+          "Dimensions": {
+            "UnitOfMeasurement": {
+              "Code": "IN"
+            },
+            "Length": "20",
+            "Width": "16",
+            "Height": "9"
+          },
+          "PackageWeight": {
+            "UnitOfMeasurement": {
+              "Code": "LBS"
+            },
+            "Weight": "24"
+          }
+        }
+      ],
+      "ShipmentRatingOptions": {
+        "NegotiatedRatesIndicator": "Y"
+      },
+      "NumOfPieces": 12,
+      "ShipmentTotalWeight": {
+        "UnitOfMeasurement": {
+          "Code": "LBS"
+        },
+        "Weight": "288"
+      },
+      "InvoiceLineTotal": {
+        "CurrencyCode": "USD",
+        "MonetaryValue": "400.00"
+      },
+      "DeliveryTimeInformation": {
+        "PackageBillType": "03",
+        "Pickup": {
+          "Date": "20240104"
+        }
+      }
+    }
+  }
+}

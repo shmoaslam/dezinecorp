@@ -1,0 +1,20 @@
+[
+  {
+    "ShippingCompany": "TForce",
+    "AuthUrl": "",
+    "AuthJsonFile": "",
+    "QuoteUrl": "https://flame11.com/api/tforce11",
+    "QuoteJsonFile": "ShippingConfig/tforce_quote_reqeust.json",
+    "Username": "",
+    "Password": ""
+  },
+  {
+    "ShippingCompany": "UPS",
+    "AuthUrl": "https://onlinetools.ups.com/security/v1/oauth/token",
+    "AuthJsonFile": "ShippingConfig/ups_auth_request.json",
+    "QuoteUrl": "https://onlinetools.ups.com/api/rating/v1/Shoptimeintransit",
+    "QuoteJsonFile": "ShippingConfig/ups_quote_request.json",
+    "Username": "jlFzGxpIuTume2rvv5xvEbZUBA8diTTEAf0IFD7PE6MyhiN4",
+    "Password": "9RE1YON1XaCIQ3GA1AGp02xHPV3g8RJCoT1YVAFtseAGxyZXPeG2H3l6ek0w4ctD"
+  }
+]

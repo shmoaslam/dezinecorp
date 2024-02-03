@@ -1295,6 +1295,10 @@
     <Content Include="Content\fonts\flexslider-icon.ttf" />
     <Content Include="Content\fonts\flexslider-icon.woff" />
     <Content Include="Content\PDF\Terms_Conditions_Decoration Charges_Website-2018.pdf" />
+    <Content Include="App_Data\ShippingConfig\shipping_config.json" />
+    <Content Include="App_Data\ShippingConfig\tforce_quote_reqeust.json" />
+    <Content Include="App_Data\ShippingConfig\ups_auth_request.json" />
+    <Content Include="App_Data\ShippingConfig\ups_quote_request.json" />
     <None Include="Content\DezineCorpImages\about_team_2000x.jpg.webp" />
     <None Include="Properties\PublishProfiles\DezineCorp.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />

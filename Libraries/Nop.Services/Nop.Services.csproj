@@ -324,6 +324,7 @@
     <Compile Include="Orders\RewardPointService.cs" />
     <Compile Include="Orders\ReturnRequestService.cs" />
     <Compile Include="Shipping\EventPublisherExtensions.cs" />
+    <Compile Include="Shipping\ShippingHelperService.cs" />
     <Compile Include="Shipping\ShippingServiceFactory.cs" />
     <Compile Include="Shipping\TForceShippingService.cs" />
     <Compile Include="Shipping\UPSShippingService.cs" />

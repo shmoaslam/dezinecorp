@@ -9,6 +9,6 @@ namespace Nop.Services.Shipping
 {
     public interface IShippingServiceFactory
     {
-        ICustomShippingService Create(ShippingConfig company);
+        ICustomShippingService Create(ShippingConfig company, string basePath);
     }
 }

@@ -15,12 +15,12 @@ namespace Nop.Services.Shipping
         {
 
         }
-        public ICustomShippingService Create(ShippingConfig company)
+        public ICustomShippingService Create(ShippingConfig company, string basePath)
         {
             if (company.ShippingCompany == ShippingCompany.TForce)
-                return new TForceShippingService(company);
+                return new TForceShippingService(company, basePath);
             else if (company.ShippingCompany == ShippingCompany.UPS)
-                return new UPSShippingService(company);
+                return new UPSShippingService(company, basePath);
             else
                 throw new ArgumentException("Invalid type", nameof(company));
         }
