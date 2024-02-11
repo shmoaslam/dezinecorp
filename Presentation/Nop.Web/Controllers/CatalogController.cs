@@ -438,9 +438,10 @@ namespace Nop.Web.Controllers
 
 
                 var sku_color = sku.ToArray().SkipWhile(x => !char.IsDigit(x)).SkipWhile(x => char.IsDigit(x)).ToList();
+                
                 if (sku_color.Any())
                 {
-                    var totalColorCode = new string(sku_color.ToArray());
+                    var totalColorCode = new string(sku_color.ToArray()).TrimEnd('X', 'x');
 
                     if (ignoreCode.Any(x => x == totalColorCode.Substring(0, 2).ToUpper()))
                         totalColorCode = totalColorCode.Remove(0, 2);
@@ -454,6 +455,7 @@ namespace Nop.Web.Controllers
                         result.Add(new string(totalColorCode.Take(2).ToArray()).ToUpper().Trim());
                         result.Add(new string(totalColorCode.Skip(2).Take(2).ToArray()).ToUpper().Trim());
                     }
+                    
                 }
             }
             catch
@@ -647,74 +649,8 @@ namespace Nop.Web.Controllers
                 pageIndex: command.PageNumber - 1,
                 pageSize: command.PageSize);
             var products1 = PrepareProductOverviewModels(products).ToList();
-            var productGroup = new List<ProductOverViewGroupModel>();
-            var colorCodes = GetColorValueFromColorCodes();
-            foreach (var item in products1)
-            {
-                var groupProductByCategory = _localizationService.GetResource("dezinecorp.productgroup.category")?.Split(new string[] { ","}, StringSplitOptions.RemoveEmptyEntries).Select(x=> x.ToUpper()[0]).ToList();
 
-                if (groupProductByCategory.Any())
-                {
-                    if (!groupProductByCategory.Any(x=> x== item.SKU.ToUpper()[0]))
-                    {
-                        productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.SKU, ProductOverviewModels = new List<ProductOverviewModel> { item } });
-                        continue;
-                    }
-                }
-                ////need to remove
-                //if (!item.SKU.ToUpper().StartsWith("C"))
-                //{
-                //    productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.SKU, ProductOverviewModels = new List<ProductOverviewModel> { item } });
-                //    continue;
-                //}
-
-
-                // if familycode is not availble then indiviaul product
-                if (string.IsNullOrEmpty(item.FamilyCode))
-                {
-                    productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.SKU, ProductOverviewModels = new List<ProductOverviewModel> { item } });
-                    continue;
-                }
-
-                var colorCode = GetColorCodeFromSku(item.SKU);
-                // no color code in sku
-                if (colorCode.Count == 0)
-                {
-                    productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.SKU, ProductOverviewModels = new List<ProductOverviewModel> { item } });
-                    continue;
-                }
-                var colors = (from cc in colorCode
-                              select colorCodes.FirstOrDefault(x => x.Code.Equals(cc))).ToList();
-                colors = colors.Where(x => x != null).ToList();
-                // no color mapping available
-                if (colors== null || colors.Count() == 0)
-                {
-                    productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.SKU, ProductOverviewModels = new List<ProductOverviewModel> { item } });
-                    continue;
-                }
-                // no hex code available for mapped color
-                if (colors.FirstOrDefault(x=> !string.IsNullOrEmpty(x.HexCode)) == null)
-                {
-                    productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.SKU, ProductOverviewModels = new List<ProductOverviewModel> { item } });
-                    continue;
-                }
-                foreach (var color in colors)
-                {
-                    if (string.IsNullOrEmpty(color.HexCode))
-                        continue;
-                    if (item.FirstColor == null)
-                        item.FirstColor = color;
-                    else
-                        item.SecondColor = color;
-                }
-
-                if (productGroup.Any(x => x.FamilyCode.Trim().Equals(item.FamilyCode.Trim(), StringComparison.CurrentCultureIgnoreCase)))
-                    productGroup.FirstOrDefault(x => x.FamilyCode.Trim().Equals(item.FamilyCode.Trim(), StringComparison.CurrentCultureIgnoreCase))?.ProductOverviewModels.Add(item);
-                else
-                    productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.FamilyCode, ProductOverviewModels = new List<ProductOverviewModel> { item } });
-               // productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.Key, ProductOverviewModels = item.ToList() });
-            }
-
+            List<ProductOverViewGroupModel> productGroup = GroupProductByColorCode(products1);
 
             model.Products = productGroup;// PrepareProductOverviewModels(products).ToList(); ;
             model.PagingFilteringContext.LoadPagedList(products);
@@ -1566,62 +1502,7 @@ namespace Nop.Web.Controllers
                         pageSize: command.PageSize);
                     var products1 = PrepareProductOverviewModels(products).ToList();
 
-                    var productGroup = new List<ProductOverViewGroupModel>();
-                    var colorCodes = GetColorValueFromColorCodes();
-                    foreach (var item in products1)
-                    {
-                        if (!item.SKU.ToUpper().StartsWith("C"))
-                        {
-                            productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.SKU, ProductOverviewModels = new List<ProductOverviewModel> { item } });
-                            continue;
-                        }
-
-                        // if familycode is not availble then indiviaul product
-                        if (string.IsNullOrEmpty(item.FamilyCode))
-                        {
-                            productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.SKU, ProductOverviewModels = new List<ProductOverviewModel> { item } });
-                            continue;
-                        }
-
-                        var colorCode = GetColorCodeFromSku(item.SKU);
-                        // no color code in sku
-                        if (colorCode.Count == 0)
-                        {
-                            productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.SKU, ProductOverviewModels = new List<ProductOverviewModel> { item } });
-                            continue;
-                        }
-                        var colors = (from cc in colorCode
-                                      select colorCodes.FirstOrDefault(x => x.Code.Equals(cc))).ToList();
-                        colors = colors.Where(x => x != null).ToList();
-                        // no color mapping available
-                        if (colors == null || colors.Count() == 0)
-                        {
-                            productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.SKU, ProductOverviewModels = new List<ProductOverviewModel> { item } });
-                            continue;
-                        }
-                        // no hex code available for mapped color
-                        if (colors.FirstOrDefault(x => !string.IsNullOrEmpty(x.HexCode)) == null)
-                        {
-                            productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.SKU, ProductOverviewModels = new List<ProductOverviewModel> { item } });
-                            continue;
-                        }
-                        foreach (var color in colors)
-                        {
-                            if (string.IsNullOrEmpty(color.HexCode))
-                                continue;
-                            if (item.FirstColor == null)
-                                item.FirstColor = color;
-                            else
-                                item.SecondColor = color;
-                        }
-
-                        if (productGroup.Any(x => x.FamilyCode.Trim().Equals(item.FamilyCode.Trim(), StringComparison.CurrentCultureIgnoreCase)))
-                            productGroup.FirstOrDefault(x => x.FamilyCode.Trim().Equals(item.FamilyCode.Trim(), StringComparison.CurrentCultureIgnoreCase))?.ProductOverviewModels.Add(item);
-                        else
-                            productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.FamilyCode, ProductOverviewModels = new List<ProductOverviewModel> { item } });
-                        // productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.Key, ProductOverviewModels = item.ToList() });
-                    }
-
+                    List<ProductOverViewGroupModel> productGroup = GroupProductByColorCode(products1);
 
                     model.Products = productGroup;// PrepareProductOverviewModels(products).ToList(); ;
 
@@ -1663,6 +1544,75 @@ namespace Nop.Web.Controllers
 
             model.PagingFilteringContext.LoadPagedList(products);
             return View(model);
+        }
+
+        private List<ProductOverViewGroupModel> GroupProductByColorCode(List<ProductOverviewModel> products1)
+        {
+            var productGroup = new List<ProductOverViewGroupModel>();
+            var colorCodes = GetColorValueFromColorCodes();
+            foreach (var item in products1)
+            {
+
+                var groupProductByCategory = _localizationService.GetResource("dezinecorp.productgroup.category")?.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.ToUpper()[0]).ToList();
+
+                if (groupProductByCategory.Any())
+                {
+                    if (!groupProductByCategory.Any(x => x == item.SKU.ToUpper()[0]))
+                    {
+                        productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.SKU, ProductOverviewModels = new List<ProductOverviewModel> { item } });
+                        continue;
+                    }
+                }
+
+              
+
+                // if familycode is not availble then indiviaul product
+                if (string.IsNullOrEmpty(item.FamilyCode))
+                {
+                    productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.SKU, ProductOverviewModels = new List<ProductOverviewModel> { item } });
+                    continue;
+                }
+
+                var colorCode = GetColorCodeFromSku(item.SKU);
+                // no color code in sku
+                if (colorCode.Count == 0)
+                {
+                    productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.SKU, ProductOverviewModels = new List<ProductOverviewModel> { item } });
+                    continue;
+                }
+                var colors = (from cc in colorCode
+                              select colorCodes.FirstOrDefault(x => x.Code.Equals(cc))).ToList();
+                colors = colors.Where(x => x != null).ToList();
+                // no color mapping available
+                if (colors == null || colors.Count() == 0)
+                {
+                    productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.SKU, ProductOverviewModels = new List<ProductOverviewModel> { item } });
+                    continue;
+                }
+                // no hex code available for mapped color
+                if (colors.FirstOrDefault(x => !string.IsNullOrEmpty(x.HexCode)) == null)
+                {
+                    productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.SKU, ProductOverviewModels = new List<ProductOverviewModel> { item } });
+                    continue;
+                }
+                foreach (var color in colors)
+                {
+                    if (string.IsNullOrEmpty(color.HexCode))
+                        continue;
+                    if (item.FirstColor == null)
+                        item.FirstColor = color;
+                    else
+                        item.SecondColor = color;
+                }
+
+                if (productGroup.Any(x => x.FamilyCode.Trim().Equals(item.FamilyCode.Trim(), StringComparison.CurrentCultureIgnoreCase)))
+                    productGroup.FirstOrDefault(x => x.FamilyCode.Trim().Equals(item.FamilyCode.Trim(), StringComparison.CurrentCultureIgnoreCase))?.ProductOverviewModels.Add(item);
+                else
+                    productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.FamilyCode, ProductOverviewModels = new List<ProductOverviewModel> { item } });
+                // productGroup.Add(new ProductOverViewGroupModel { FamilyCode = item.Key, ProductOverviewModels = item.ToList() });
+            }
+
+            return productGroup;
         }
 
         [ChildActionOnly]
