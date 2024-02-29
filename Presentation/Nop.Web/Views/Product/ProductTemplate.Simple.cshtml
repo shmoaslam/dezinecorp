@@ -12,7 +12,8 @@
     Html.AddMetaDescriptionParts(Model.MetaDescription);
     Html.AddMetaKeywordParts(Model.MetaKeywords);
 
-    var seoSettings = EngineContext.Current.Resolve<SeoSettings>();
+    var seoSettings = EngineContext.Current.Resolve<SeoSettings>
+    ();
 
     //canonical URL
     if (seoSettings.CanonicalUrlsEnabled)
@@ -24,7 +25,8 @@
     //open graph META tags
     if (seoSettings.OpenGraphMetaTags)
     {
-        var storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
+        var storeName = EngineContext.Current.Resolve<IStoreContext>
+            ().CurrentStore.GetLocalized(x => x.Name);
         Html.AddHeadCustomParts("<meta property=\"og:type\" content=\"product\" />");
         Html.AddHeadCustomParts("<meta property=\"og:title\" content=\"" + Html.Encode(Model.Name) + "\" />");
         Html.AddHeadCustomParts("<meta property=\"og:description\" content=\"" + Html.Encode(Model.MetaDescription) + "\" />");
@@ -36,7 +38,8 @@
     //Twitter META tags
     if (seoSettings.TwitterMetaTags)
     {
-        var storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
+        var storeName = EngineContext.Current.Resolve<IStoreContext>
+            ().CurrentStore.GetLocalized(x => x.Name);
         Html.AddHeadCustomParts("<meta property=\"twitter:card\" content=\"summary\" />");
         Html.AddHeadCustomParts("<meta property=\"twitter:site\" content=\"" + Html.Encode(storeName) + "\" />");
         Html.AddHeadCustomParts("<meta property=\"twitter:title\" content=\"" + Html.Encode(Model.Name) + "\" />");
@@ -51,6 +54,27 @@
         text-decoration: line-through;
         text-decoration-thickness: 3px;
         text-decoration-color: #C70039;
+    }
+
+    .quote-form {
+        position: relative;
+        border: solid 1px #d8dadb;
+        width: 85%;
+    }
+
+    .quote-form-text {
+        position: absolute;
+        top: -10px;
+        left: 10px;
+        background-color: white;
+        padding: 0 5px;
+    }
+
+    .quote-form-submit {
+        background: #077b8d !important;
+        min-width: 200px;
+        float: right;
+        display: inline-block;
     }
 </style>
 <div class="product-page-container" id="product-div-to-print">
@@ -76,7 +100,7 @@
                                         foreach (var item in items)
                                         {
                                             <div class="product-thumbnail-wrapper">
-                                                <a href="@Url.RouteUrl("Product", new { SeName = item.SEName })" title="@item.Name">
+                                                <a href="@Url.RouteUrl("Product", new { SeName=item.SEName })" title="@item.Name">
                                                     <img class="product-thumbnail" src="@item.DefaultPicture.ImageUrl" alt="@item.DefaultPicture.AlternateText" />
                                                 </a>
                                             </div>
@@ -104,7 +128,7 @@
                                         @foreach (var item in items)
                                         {
                                             <div class="grid-product grid-4up">
-                                                <a class="product-category-link" href="@Url.RouteUrl("Product", new { SeName = item.SEName })" title="@item.Name">
+                                                <a class="product-category-link" href="@Url.RouteUrl("Product", new { SeName=item.SEName })" title="@item.Name">
                                                     <div class="product-category-image-container ">
                                                         <img class="propduct-category-image corner-radius" src="@item.DefaultPicture.ImageUrl" alt="@item.DefaultPicture.AlternateText" />
                                                     </div>
@@ -123,7 +147,7 @@
 
                 <div class="column-split-right50">
                     <div class="product-info-wrapper">
-                        <h1 class="product-title">@Model.Name</h1>           
+                        <h1 class="product-title">@Model.Name</h1>
                         <div class="product-number">@Model.Sku</div>
                         <div class"product-long-title">@Model.ShortDescription </div>
                         <div class="product-pricing-summary">
@@ -135,10 +159,10 @@
                                     <div class="product-qty-min"><span class="list-label"><i class="fas fa-th"></i> Minimum</span><span class="list-value">72pc</span></div>
                                 </li>
                                 <!--
-            <li class="product-summary-item">
-                <div class="product-price-code"><span class="list-label"><i class="fas fa-star-of-life"></i> Code</span><span class="list-value">4c</span></div>
-            </li>
-            -->
+                                <li class="product-summary-item">
+                                    <div class="product-price-code"><span class="list-label"><i class="fas fa-star-of-life"></i> Code</span><span class="list-value">4c</span></div>
+                                </li>
+                                -->
                             </ul>
                         </div>
                         <div class="product-cta full-pad">
@@ -148,7 +172,91 @@
                             <!-- <a class="new-button cta-button-yellow home-hero-slide-cta more-products-cta corner-radius" href="#">Purchase now</a> -->
                             @{ Model.IsEmailButton = true;}
                             @Html.Partial("_ProductEmailAFriendButton", Model)
-                            <a id="action-print" class="new-button cta-button-yellow action-cta corner-radius" onclick="window.open('@Url.Action("PrintProductDetails", new { id = Model.Id})','_blank')"> <i class="fas fa-print"></i> Print</a>
+                            <a id="action-print" class="new-button cta-button-yellow action-cta corner-radius" onclick="window.open('@Url.Action(" PrintProductDetails", new { id=Model.Id})','_blank')"> <i class="fas fa-print"></i> Print</a>
+                           
+
+
+
+                        </div>
+                        <div class="product-cta full-pad" style="padding-top:0px">
+                            <a id="freight-estimate" class="new-button cta-button-yellow action-cta corner-radius"> <i class="fas fa-truck"></i> FREIGHT ESTIMATE</a>
+                            <a  class="new-button cta-button-yellow action-cta corner-radius" style="visibility:hidden"> <i class="fas fa-truck"></i> FREIGHT ESTIMATE</a>
+                            <a class="new-button cta-button-yellow action-cta corner-radius" style="visibility:hidden"> <i class="fas fa-truck"></i> FREIGHT ESTIMATE</a>
+                        </div>
+                        <img src="~/Content/DezineCorpImages/loader.gif" id="loader" style="width: 10%;display: none;" />
+                        <div class="product-cta full-pad" id="quote-result-div" style="display: none;">
+
+
+
+                        </div>
+                        <div class="product-cta full-pad" id="quote-form-div" style="display: none;">
+
+
+                            <div class="product-category-wrapper quote-form product-category-products content-inner-width">
+                                <span class="quote-form-text">FREIGHT ESTIMATE : <b>@Model.Sku</b></span>
+                                <div class="contact-form-wrapper" style="padding-bottom:0px">
+                                    <form method="get" id="freight-estimate-form">
+                                        <input id="ProductNumber" value="@Model.Sku" name="ProductNumber" type="hidden">
+                                        <div class="form-group row">
+                                            <label for="PostalCode" class="control-label  col-form-label col-sm-4">POSTAL CODE<sup>*</sup> : </label>
+                                            <div class="col-sm-8">
+                                                <input id="PostalCode" name="PostalCode" placeholder="Postal Code" value="A1A 1A1" type="text" required class="form-control" pattern="[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d" title="Please enter a valid Canadian postal code">
+                                            </div>
+                                        </div>
+                                        <br />
+
+                                        <div class="form-group  row">
+                                            <label for="State" class="control-label  col-form-label col-sm-4">PROVINCE<sup>*</sup> : </label>
+                                            <div class="col-sm-8">
+                                                <select name="State" class="form-control" id="State">
+                                                    <option value="">Select Province</option>
+                                                    <option value="AB" selected>Alberta</option>
+                                                    <option value="BC">British Columbia</option>
+                                                    <option value="MB">Manitoba</option>
+                                                    <option value="NB">New Brunswick</option>
+                                                    <option value="NL">Newfoundland and Labrador</option>
+                                                    <option value="NS">Nova Scotia</option>
+                                                    <option value="ON">Ontario</option>
+                                                    <option value="PE">Prince Edward Island</option>
+                                                    <option value="QC">Quebec</option>
+                                                    <option value="SK">Saskatchewan</option>
+                                                    <option value="NT">Northwest Territories</option>
+                                                    <option value="NU">Nunavut</option>
+                                                    <option value="YT">Yukon</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                        <br />
+                                        <div class="form-group row">
+                                            <label for="IsQuoteForResidential" class="control-label  col-form-label col-sm-4">RESIDENTIAL : </label>
+                                            <div class="col-sm-8">
+                                                <select name="IsQuoteForResidential" class="form-control" id="IsQuoteForResidential">
+                                                    <option value="">Select</option>
+                                                    <option value="Yes" selected>Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                        <br />
+
+                                        <div class="form-group  row">
+                                            <label for="Quantity" class="control-label  col-form-label col-sm-4">QUANTITY<sup>*</sup> : </label>
+                                            <div class="col-sm-8">
+                                                <input id="Quantity" name="Quantity" placeholder="Quantity" type="number" required class="form-control" value="250">
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group  row">
+                                            <div class="col-sm-8">&nbsp;</div>
+                                            <button id="submit-freight-estimate" name="submit" type="submit" class="btn btn-primary  col-sm-4 quote-form-submit">SUBMIT</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                         <!-- /.product-cta -->
                         <div class="product-description full-pad">
@@ -209,16 +317,16 @@
                                         {
                                             if (item.BrandingType.Contains("screen"))
                                             {
-                                                <li class="product-customization-option no-bullet"><a class="decoration-select @(Model.Sku.ToLower().Trim() == item.SKU.ToLower().Trim() ? "decoration-active" : "")" href="@Url.RouteUrl("Product", new { SeName = item.SEName })" title="@item.Name"><i class="fas fa-paint-brush"></i> Screenprint</a></li>
+                                                <li class="product-customization-option no-bullet"><a class="decoration-select @(Model.Sku.ToLower().Trim() == item.SKU.ToLower().Trim() ? " decoration-active" : "" )" href="@Url.RouteUrl("Product", new { SeName=item.SEName })" title="@item.Name"><i class="fas fa-paint-brush"></i> Screenprint</a></li>
                                             }
 
                                             else if (item.BrandingType.ToLower().Contains("laser"))
                                             {
-                                                <li class="product-customization-option no-bullet"><a class="decoration-select @(Model.Sku.ToLower().Trim() == item.SKU.ToLower().Trim() ? "decoration-active" : "")" href="@Url.RouteUrl("Product", new { SeName = item.SEName })" title="@item.Name"><i class="fas fa-bolt"></i> Laser etching</a></li>
+                                                <li class="product-customization-option no-bullet"><a class="decoration-select @(Model.Sku.ToLower().Trim() == item.SKU.ToLower().Trim() ? " decoration-active" : "" )" href="@Url.RouteUrl("Product", new { SeName=item.SEName })" title="@item.Name"><i class="fas fa-bolt"></i> Laser etching</a></li>
                                             }
                                             else
                                             {
-                                                <li class="product-customization-option no-bullet"><a class="decoration-select @(Model.Sku.ToLower().Trim() == item.SKU.ToLower().Trim() ? "decoration-active" : "")" href="@Url.RouteUrl("Product", new { SeName = item.SEName })" title="@item.Name">@item.BrandingType</a></li>
+                                                <li class="product-customization-option no-bullet"><a class="decoration-select @(Model.Sku.ToLower().Trim() == item.SKU.ToLower().Trim() ? " decoration-active" : "" )" href="@Url.RouteUrl("Product", new { SeName=item.SEName })" title="@item.Name">@item.BrandingType</a></li>
                                             }
                                         }
                                     </ul>
@@ -286,25 +394,25 @@
                                                         <td class="row-head">@tierprice.PriceName</td>
                                                         @if (priceLevel == 1)
                                                         {
-                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? "product-strike-out" : "")">@tierprice.Price1.Replace(" ", "")</td>
+                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? " product-strike-out" : "" )">@tierprice.Price1.Replace(" ", "")</td>
                                                         }
                                                         else if (priceLevel == 2)
                                                         {
-                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? "product-strike-out" : "")">@tierprice.Price1.Replace(" ", "")</td>
-                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? "product-strike-out" : "")">@tierprice.Price2.Replace(" ", "")</td>
+                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? " product-strike-out" : "" )">@tierprice.Price1.Replace(" ", "")</td>
+                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? " product-strike-out" : "" )">@tierprice.Price2.Replace(" ", "")</td>
                                                         }
                                                         else if (priceLevel == 3)
                                                         {
-                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? "product-strike-out" : "")">@tierprice.Price1.Replace(" ", "")</td>
-                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? "product-strike-out" : "")">@tierprice.Price2.Replace(" ", "")</td>
-                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? "product-strike-out" : "")">@tierprice.Price3.Replace(" ", "")</td>
+                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? " product-strike-out" : "" )">@tierprice.Price1.Replace(" ", "")</td>
+                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? " product-strike-out" : "" )">@tierprice.Price2.Replace(" ", "")</td>
+                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? " product-strike-out" : "" )">@tierprice.Price3.Replace(" ", "")</td>
                                                         }
                                                         else if (priceLevel == 4)
                                                         {
-                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? "product-strike-out" : "")">@tierprice.Price1.Replace(" ", "")</td>
-                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? "product-strike-out" : "")">@tierprice.Price2.Replace(" ", "")</td>
-                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? "product-strike-out" : "")">@tierprice.Price3.Replace(" ", "")</td>
-                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? "product-strike-out" : "")">@tierprice.Price4.Replace(" ", "")</td>
+                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? " product-strike-out" : "" )">@tierprice.Price1.Replace(" ", "")</td>
+                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? " product-strike-out" : "" )">@tierprice.Price2.Replace(" ", "")</td>
+                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? " product-strike-out" : "" )">@tierprice.Price3.Replace(" ", "")</td>
+                                                            <td class="table-price @(tierprice.IsPrice1StrikeOut ? " product-strike-out" : "" )">@tierprice.Price4.Replace(" ", "")</td>
                                                         }
                                                         <td class="greyed-out">@(isPriceRow || tierprice.IsManufacturePrice ? priceLevel.ToString() : "")@tierprice.DiscountCode.Replace(" ", "").ToLower()</td>
                                                     </tr>
@@ -524,7 +632,7 @@
                         foreach (var item in items)
                         {
                             <div class="product-thumbnail-wrapper">
-                                <a href="@Url.RouteUrl("Product", new { SeName = item.SEName })" title="@item.Name">
+                                <a href="@Url.RouteUrl("Product", new { SeName=item.SEName })" title="@item.Name">
                                     <img class="product-thumbnail" src="@item.DefaultPicture.ImageUrl" alt="@item.DefaultPicture.AlternateText" />
                                 </a>
                             </div>
@@ -555,7 +663,7 @@
                                 @foreach (var item in items)
                                 {
                                     <div class="grid-product grid-4up">
-                                        <a class="product-category-link" href="@Url.RouteUrl("Product", new { SeName = item.SEName })" title="@item.Name">
+                                        <a class="product-category-link" href="@Url.RouteUrl("Product", new { SeName=item.SEName })" title="@item.Name">
                                             <div class="product-category-image-container ">
                                                 <img class="propduct-category-image corner-radius" src="@item.DefaultPicture.ImageUrl" alt="@item.DefaultPicture.AlternateText" />
                                             </div>
@@ -587,16 +695,43 @@
 </div>
 <script>
     $(document).ready(function () {
-        //$('#action-print').on('click', function (e) {
-        //    e.preventDefault();
-        //    var restorepage = $('body').html();
-        //    var printcontent = $('#action-print').clone();
-        //    $('body').empty().html(printcontent);
-        //    window.print();
-        //    $('body').html(restorepage);
+        $('#loader').hide();
+        $('#freight-estimate').on('click', function (e) {
+            $('#quote-form-div').toggle();
+            $('#quote-result-div').hide();
+        });
 
+
+
+        $("#freight-estimate-form").submit(function (event) {
+            event.preventDefault(); // Prevent the form from submitting via the browser.
+
+            var form = $(this);
            
-        //});
+            $.ajax({
+                type: "GET",
+                url: '/Common/Quote',
+                data: form.serialize(),
+                beforeSend: function () {
+                    $('#loader').show(); // Show the loader
+                    $('#quote-form-div').hide();
+                    $('#quote-result-div').hide();
+                },
+                success: function (data) {
+                    $('#quote-result-div').show();
+
+                    $('#quote-result-div').html(data);
+                },
+                error: function (data) {
+                    $('#quote-result-div').show();
+                    $('#quote-result-div').html(data);
+                },
+                complete: function () {
+                    $('#loader').hide(); // Hide the loader
+
+                }
+            });
+        });
 
     });
 

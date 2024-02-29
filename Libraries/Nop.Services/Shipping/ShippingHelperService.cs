@@ -15,9 +15,11 @@ namespace Nop.Services.Shipping
 
         private static string GetFileContent(string filePath) => File.ReadAllText(filePath);
 
-        private static T ParseJsonToType<T>(string filePath, string basePath) => JsonConvert.DeserializeObject<T>(GetFileContent(Path.Combine(basePath, filePath)));
+        public static T ParseJsonToType<T>(string filePath, string basePath) => JsonConvert.DeserializeObject<T>(GetFileContent(Path.Combine(basePath, filePath)));
 
         public static HttpContent GetJsonContent<T>(string filePath, string basePath) => new StringContent(JsonConvert.SerializeObject(ParseJsonToType<T>(filePath, basePath)), Encoding.UTF8, "application/json");
+
+        public static HttpContent GetJsonContent<T>(T obj) => new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
 
 
         public static HttpContent GetFromUrlEncodedContent(string filePath, string basePath)

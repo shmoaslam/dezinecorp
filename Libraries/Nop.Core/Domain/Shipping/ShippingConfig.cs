@@ -14,7 +14,7 @@ namespace Nop.Core.Domain.Shipping
 
         public string QuoteUrl { get; set; }
 
-
+        public string BasePath { get; set; }
         public string AuthJsonFile { get; set; }
 
         public string QuoteJsonFile { get; set; }

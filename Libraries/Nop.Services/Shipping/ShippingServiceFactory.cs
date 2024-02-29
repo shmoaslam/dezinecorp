@@ -10,17 +10,17 @@ namespace Nop.Services.Shipping
 {
     public class ShippingServiceFactory : IShippingServiceFactory
     {
-
-        public ShippingServiceFactory()
+        private readonly  IInfotracDbService _infotracDbService;
+        public ShippingServiceFactory(IInfotracDbService infotracDbService)
         {
-
+            _infotracDbService = infotracDbService; 
         }
-        public ICustomShippingService Create(ShippingConfig company, string basePath)
+        public ICustomShippingService Create(ShippingConfig company)
         {
             if (company.ShippingCompany == ShippingCompany.TForce)
-                return new TForceShippingService(company, basePath);
+                return new TForceShippingService(company, _infotracDbService);
             else if (company.ShippingCompany == ShippingCompany.UPS)
-                return new UPSShippingService(company, basePath);
+                return new UPSShippingService(company);
             else
                 throw new ArgumentException("Invalid type", nameof(company));
         }

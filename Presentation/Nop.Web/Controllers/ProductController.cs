@@ -90,7 +90,6 @@ namespace Nop.Web.Controllers
         private readonly CaptchaSettings _captchaSettings;
         private readonly SeoSettings _seoSettings;
         private readonly ICacheManager _cacheManager;
-        private readonly IShippingServiceFactory _shippingServiceFactory;
         #endregion
 
         #region Constructors
@@ -134,8 +133,7 @@ namespace Nop.Web.Controllers
             CustomerSettings customerSettings,
             CaptchaSettings captchaSettings,
             SeoSettings seoSettings,
-            ICacheManager cacheManager,
-            IShippingServiceFactory shippingServiceFactory)
+            ICacheManager cacheManager)
         {
             this._categoryService = categoryService;
             this._manufacturerService = manufacturerService;
@@ -177,7 +175,6 @@ namespace Nop.Web.Controllers
             this._captchaSettings = captchaSettings;
             this._seoSettings = seoSettings;
             this._cacheManager = cacheManager;
-            this._shippingServiceFactory = shippingServiceFactory;
         }
 
         #endregion
@@ -1325,36 +1322,6 @@ namespace Nop.Web.Controllers
 
             //activity log
             _customerActivityService.InsertActivity("PublicStore.ViewProduct", _localizationService.GetResource("ActivityLog.PublicStore.ViewProduct"), product.Name);
-
-
-            /*
-             * Shipping quote code start here
-             * 
-             */
-
-            string shippingConfigFileName = "ShippingConfig/shipping_config.json";
-            var shippingConfigFile = Path.Combine(Server.MapPath("~/App_Data/"), shippingConfigFileName);
-            //if (!File.Exists(shippingConfigFile)) return;
-
-            var shippingConfigData = System.IO.File.ReadAllText(shippingConfigFile);
-            //if (string.IsNullOrWhiteSpace(shippingConfigData)) return;
-
-            var shippingConfig = JsonConvert.DeserializeObject<List<ShippingConfig>>(shippingConfigData);
-            //if (shippingConfig == null) return;
-            //if (!shippingConfig.Any()) return;
-
-
-            var shippingCompanyConfig = shippingConfig.FirstOrDefault(x => x.ShippingCompany == ShippingCompany.UPS); ///
-            //if (shippingCompanyConfig == null) return;
-
-            var shippingService = _shippingServiceFactory.Create(shippingCompanyConfig, Server.MapPath("~/App_Data/"));
-
-            shippingService.GetShippingQuote();
-            /*
-             * Shipping quote code end here
-             * 
-             */
-
 
             return View(model.ProductTemplateViewPath, model);
         }

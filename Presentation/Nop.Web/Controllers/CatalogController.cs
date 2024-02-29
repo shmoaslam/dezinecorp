@@ -438,7 +438,7 @@ namespace Nop.Web.Controllers
 
 
                 var sku_color = sku.ToArray().SkipWhile(x => !char.IsDigit(x)).SkipWhile(x => char.IsDigit(x)).ToList();
-                
+
                 if (sku_color.Any())
                 {
                     var totalColorCode = new string(sku_color.ToArray()).TrimEnd('X', 'x');
@@ -455,8 +455,12 @@ namespace Nop.Web.Controllers
                         result.Add(new string(totalColorCode.Take(2).ToArray()).ToUpper().Trim());
                         result.Add(new string(totalColorCode.Skip(2).Take(2).ToArray()).ToUpper().Trim());
                     }
-                    
+
                 }
+
+                // ignore ss if it is first color
+                result = result.Count == 2 && result[0] == "SS" ? result.Skip(1).ToList() : result;
+
             }
             catch
             {
@@ -1564,7 +1568,7 @@ namespace Nop.Web.Controllers
                     }
                 }
 
-              
+
 
                 // if familycode is not availble then indiviaul product
                 if (string.IsNullOrEmpty(item.FamilyCode))

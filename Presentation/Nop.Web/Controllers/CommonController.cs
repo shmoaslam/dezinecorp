@@ -42,6 +42,12 @@ using Nop.Web.Models.Catalog;
 using Nop.Web.Models.Common;
 using Nop.Web.Models.Topics;
 using Nop.Web.Framework.Controllers;
+using Newtonsoft.Json;
+using Nop.Core.Domain.Shipping;
+using System.IO;
+using Nop.Services.Shipping;
+using System.Threading.Tasks;
+using Microsoft.Office.Interop.Excel;
 
 namespace Nop.Web.Controllers
 {
@@ -70,6 +76,7 @@ namespace Nop.Web.Controllers
         private readonly ICacheManager _cacheManager;
         private readonly ICustomerActivityService _customerActivityService;
         private readonly IVendorService _vendorService;
+        private readonly IShippingServiceFactory _shippingServiceFactory;
 
         private readonly CustomerSettings _customerSettings;
         private readonly TaxSettings _taxSettings;
@@ -109,6 +116,7 @@ namespace Nop.Web.Controllers
             ICacheManager cacheManager,
             ICustomerActivityService customerActivityService,
             IVendorService vendorService,
+            IShippingServiceFactory shippingServiceFactory,
             CustomerSettings customerSettings,
             TaxSettings taxSettings,
             CatalogSettings catalogSettings,
@@ -143,6 +151,7 @@ namespace Nop.Web.Controllers
             this._cacheManager = cacheManager;
             this._customerActivityService = customerActivityService;
             this._vendorService = vendorService;
+            this._shippingServiceFactory = shippingServiceFactory;
 
             this._customerSettings = customerSettings;
             this._taxSettings = taxSettings;
@@ -513,7 +522,7 @@ namespace Nop.Web.Controllers
         [HttpPost]
         public ActionResult SubscriptionEmail(string Email)
         {
-            return  PartialView("_SubmitMessageSub", false);
+            return PartialView("_SubmitMessageSub", false);
         }
 
 
@@ -578,7 +587,7 @@ namespace Nop.Web.Controllers
 
         //    }
         //    return PartialView("_SubmitMessageSub", false);
-            
+
         //}
 
 
@@ -667,7 +676,7 @@ namespace Nop.Web.Controllers
         public ActionResult Subscribe()
         {
 
-           
+
 
 
             return View();
@@ -738,7 +747,7 @@ namespace Nop.Web.Controllers
 
             model.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnContactUsPage;
             return View("Contact", model);
-           
+
         }
 
         [NopHttpsRequirement(SslRequirement.No)]
@@ -747,16 +756,18 @@ namespace Nop.Web.Controllers
             ViewBag.Url = frameurl;
             return View();
         }
+
         [NopHttpsRequirement(SslRequirement.No)]
         public ActionResult ContactUs(int? productId)
         {
 
             ContactUsModel contactUsModel = new ContactUsModel();
-            if (Request.QueryString.Count>0)
+            if (Request.QueryString.Count > 0)
             {
                 contactUsModel.FullName = Request.QueryString["name"]?.ToString();
                 contactUsModel.Email = Request.QueryString["email"]?.ToString();
                 contactUsModel.Enquiry = Request.QueryString["desc"]?.ToString();
+
             }
 
             Product product = null;
@@ -778,14 +789,19 @@ namespace Nop.Web.Controllers
             {
                 contactUsModel.ProductNumber = product.Sku;
                 contactUsModel.Query = "quote";
+                //contactUsModel.IsQuoteRequest = true;
             }
+            //else
+            //{
+            //    contactUsModel.IsQuoteRequest = false;
+            //}
+            //contactUsModel.IsQuoteForResidential = false;
             return View(contactUsModel);
         }
-      
         [HttpPost, ActionName("ContactUs")]
         public ActionResult ContactUsSend(ContactUsModel model)//, bool captchaValid)
         {
-           
+
             if (ModelState.IsValid)
             {
                 string email = model.Email.Trim();
@@ -806,7 +822,7 @@ namespace Nop.Web.Controllers
                 {
                     model.Enquiry = Environment.NewLine + "Product Number : " + model.ProductNumber + Environment.NewLine + "Quantity : " + model.Quantity + Environment.NewLine + model.Enquiry;
                 }
-                string body = Core.Html.HtmlHelper.FormatText(model.Enquiry , false, true, false, false, false, false);
+                string body = Core.Html.HtmlHelper.FormatText(model.Enquiry, false, true, false, false, false, false);
                 //required for some SMTP servers
                 if (_commonSettings.UseSystemEmailForContactUsForm)
                 {
@@ -845,9 +861,54 @@ namespace Nop.Web.Controllers
                 return PartialView("ContactUs", model);
             }
 
+
+
+
+
+
             model.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnContactUsPage;
             return View("ContactUs", model);
         }
+
+
+
+        [NopHttpsRequirement(SslRequirement.No)]
+        [HttpGet, ActionName("Quote")]
+        public async Task<PartialViewResult> GetQuote(QuoteModel model)
+        {
+
+            try
+            {
+                model.SuccessfullySent = true;
+                if (model.Quantity <= 0 || string.IsNullOrWhiteSpace(model.ProductNumber) || string.IsNullOrWhiteSpace(model.PostalCode))
+                    throw new Exception("Bad Request, missing Quantity / Product Info / Postal Code!");
+
+
+                string shippingConfigFileName = "ShippingConfig/shipping_config.json";
+                var shippingConfigFile = Path.Combine(Server.MapPath("~/App_Data/"), shippingConfigFileName);
+                if (!System.IO.File.Exists(shippingConfigFile))
+                    throw new Exception("Server error, unalble to bind shipping config!");
+
+                var shippingConfigData = System.IO.File.ReadAllText(shippingConfigFile);
+                var shippingConfig = JsonConvert.DeserializeObject<List<ShippingConfig>>(shippingConfigData);
+                var shippingCompanyConfig = shippingConfig?.FirstOrDefault(x => x.ShippingCompany == ShippingCompany.TForce);
+                if (shippingCompanyConfig == null)
+                    throw new Exception("Server error, unalble to bind shipping config!");
+
+                shippingCompanyConfig.BasePath = Server.MapPath("~/App_Data/");
+                var shippingService = _shippingServiceFactory.Create(shippingCompanyConfig);
+                var finalQuote = await shippingService.GetShippingQuote(new QuoteDezinecorpInput { IsResidentialAddress = model.IsQuoteForResidential == "Yes", ProductNumber = model.ProductNumber, Quantity = model.Quantity, ZipCode = model.PostalCode, State = model.State });
+                model.FinalQuote = Convert.ToDouble(finalQuote);
+                return PartialView("Quote", model);
+            }
+            catch (Exception)
+            {
+                model.SuccessfullySent = false;
+                model.ErrorMessage = "Please contact Customer Service for assistance";
+                return PartialView("Quote", model);
+            }
+        }
+
         //contact vendor page
         [NopHttpsRequirement(SslRequirement.Yes)]
         public ActionResult ContactVendor(int vendorId)

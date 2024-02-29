@@ -347,6 +347,7 @@
     <Compile Include="Models\Common\AdminHeaderLinksModel.cs" />
     <Compile Include="Models\Common\AddressAttributeModel.cs" />
     <Compile Include="Models\Common\CareerEmailModel.cs" />
+    <Compile Include="Models\Common\QuoteModel.cs" />
     <Compile Include="Models\Common\ContactVendorModel.cs" />
     <Compile Include="Models\Common\FooterModel.cs" />
     <Compile Include="Models\Common\FaviconModel.cs" />
@@ -424,6 +425,7 @@
     <Compile Include="Validators\Catalog\ProductReviewsValidator.cs" />
     <Compile Include="Validators\Common\AddressValidator.cs" />
     <Compile Include="Validators\Common\CareerEmailValidator.cs" />
+    <Compile Include="Validators\Common\QuoteValidator.cs" />
     <Compile Include="Validators\Common\ContactVendorValidator.cs" />
     <Compile Include="Validators\Common\NoSubscriptionEmailValidator.cs" />
     <Compile Include="Validators\Common\SubscriptionEmailValidator.cs" />
@@ -2221,6 +2223,7 @@
     <Content Include="Views\Shared\_Subcribtions.cshtml" />
     <Content Include="Views\Catalog\TopMenuNew.cshtml" />
     <Content Include="Views\Common\RenderCatalogue.cshtml" />
+    <Content Include="Views\Common\Quote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\DezineCorpImages\main-slider\" />

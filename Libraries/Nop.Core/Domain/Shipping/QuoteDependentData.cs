@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nop.Core.Domain.Common
+namespace Nop.Core.Domain.Shipping
 {
     public class QuoteDependentData
     {
@@ -15,7 +15,7 @@ namespace Nop.Core.Domain.Common
         public double? Width { get; set; }
         public double? Height { get; set; }
         public double? Weight { get; set; }
-        public string CartoonPerSkidLayer { get; set; }
+        public double? CartoonPerSkidLayer { get; set; }
         public string Cartoon { get; set; }
     }
 }

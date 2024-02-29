@@ -1,0 +1,79 @@
+﻿@model Nop.Web.Models.Common.QuoteModel
+
+<div class="alert @(Model.SuccessfullySent ? "alert-success" : "alert-warning")" role="alert" style="width:90%">
+    <div class="row">
+        <div class="col-sm-11">&nbsp;</div>
+        <div class="col-sm-1 close-me" style="text-align:right;">x</div>
+    </div>
+    @if (Model.SuccessfullySent)
+    {
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row">
+                    <label class="control-label col-sm-6 col-md-3">PRODUCT NUMBER</label>
+                    <label class="control-label col-sm-6  col-md-3"> :&nbsp;&nbsp;&nbsp;&nbsp;@Model.ProductNumber</label>
+                    <label class="control-label col-sm-6  col-md-6">&nbsp;</label>
+                </div>
+                <div class="row">
+                    <label class="control-label col-sm-6 col-md-3">RESIDENTIAL</label>
+                    <label class="control-label col-sm-6  col-md-3"> :&nbsp;&nbsp;&nbsp;&nbsp;@Model.IsQuoteForResidential</label>
+                    <label class="control-label col-sm-6">&nbsp;</label>
+                </div>
+                <div class="row">
+                    <label class="control-label col-sm-6 col-md-3">POSTAL CODE</label>
+                    <label class="control-label col-sm-6  col-md-3"> :&nbsp;&nbsp;&nbsp;&nbsp;@Model.PostalCode</label>
+                    <label class="control-label col-sm-6">&nbsp;</label>
+                </div>
+                <div class="row">
+                    <label class="control-label col-sm-6 col-md-3">QUANTITY</label>
+                    <label class="control-label col-sm-6  col-md-3"> :&nbsp;&nbsp;&nbsp;&nbsp;@Model.Quantity</label>
+                    <label class="control-label col-sm-6">&nbsp;</label>
+                </div>
+                <br />
+                <div class="row">
+                    <label class="control-label col-sm-6 col-md-3">Estimated FREIGHT <sup>*</sup></label>
+                    <label class="control-label col-sm-6  col-md-3"> :&nbsp;&nbsp;&nbsp;&nbsp;<b>$@Model.FinalQuote</b></label>
+                    <label class="control-label col-sm-6">&nbsp;</label>
+                </div>
+            </div>
+           
+            <div class="col-sm-12">
+                <br />
+                <br />
+                <div class="row" style="font-size:smaller;font-style:italic;">
+                    <div id="disclaimer" style="padding-bottom:5px">
+                        <span><sup>*</sup>Estimate as of @DateTime.Now.ToShortDateString() / Disclaimer (click for more info)</span>
+                    </div>
+                    <div id="disclaimermessage" style="display:none;">
+                        <div style="padding-bottom:5px;">
+                            Freight shown is an estimate only and is subject to confirmation at the time of Order Acknowledgement.
+                            Estimated freight charges are based on FOB Mississauga ON L4Z 2H5, standard ground courier service, full cartons, and the higher of actual and dimensional weights using our Preferred Carriers.  Additional charges will apply for all additional handling services incurred.
+                        </div>
+                        <div>
+                            **Users are cautioned that the estimate shown here may not be suitable for their purposes.  Larger volume shipments and shipments to remote areas will require specific quotes by our Customer Service Team.  We would be pleased to assist.  Please contact us at <a href="mailto:support@dezinecorp.com" target="_blank">Send Email</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @Model.ErrorMessage
+        </div>
+    }
+</div>
+
+
+<script>
+    $(document).ready(function (e) {
+        $(".close-me").on('click', function (e) {
+            $('#quote-result-div').hide();
+        });
+
+        $('#disclaimer').on('click', function (e) {
+            $('#disclaimermessage').toggle();
+        });
+    });
+</script>

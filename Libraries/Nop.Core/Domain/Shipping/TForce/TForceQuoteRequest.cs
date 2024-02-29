@@ -16,17 +16,17 @@ namespace Nop.Core.Domain.Shipping.TForce
         public string Country { get; set; }
         public string Service { get; set; }
         public int Pieces { get; set; }
-        public int Weight { get; set; }
+        public double Weight { get; set; }
         public string Accessorials { get; set; }
         public List<Package> Package { get; set; }
     }
 
     public class Package
     {
-        public int length { get; set; }
-        public int width { get; set; }
-        public int height { get; set; }
-        public int weight { get; set; }
+        public double length { get; set; }
+        public double width { get; set; }
+        public double height { get; set; }
+        public double weight { get; set; }
         public string type { get; set; }
     }
 
